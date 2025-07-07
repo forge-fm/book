@@ -114,4 +114,6 @@ The current draft has benefitted from the feedback of many people, including:
 Shriram Krishnamurthi, 
 Emily Nelson, 
 Hillel Wayne, 
+Siddhartha Prasad,
 ...
+and the many CSCI 1710 students and TAs at Brown who have kindly given their thoughts.
