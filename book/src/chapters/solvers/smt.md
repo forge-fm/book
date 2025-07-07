@@ -1,5 +1,7 @@
 # Satisfiability Modulo Theories (SMT)
 
+**Note well: the 2nd part of this chapter is very rough!**
+
 [Livecode link](./z3demo.py)
 
 Boolean solvers are powerful, but not very expressive. If you want to use them to solve a problem involving (e.g.)  arithmetic, you need to encode that idea with booleans. Forge does this with a technique called "bit-blasting": one boolean variable per bit in a fixed bitwidth, along with formulas that build boolean adders, multipliers, etc. as needed. This works well for small examples, but can quickly run into performance issues&mdash;and if you need actual mathematical integers (to say nothing of real numbers!) you're out of luck.

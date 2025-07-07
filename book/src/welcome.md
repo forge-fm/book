@@ -23,7 +23,7 @@ The book is organized into a series of short sections, each of which are grouped
 * **Chapter 4 (Modeling Relationships)** enriches the modeling language to support arbitrary relations between objects in the world.
 * **Chapter 5 (Temporal Specification)** covers temporal operators, which are commonly used in industrial modeling and specification, and how to use them. 
 * **Chapter 6 (Case Studies)** touches on some larger applications of lightweight formal methods. Some of these will involve large models written in Forge, and others will lean more heavily on industrial systems.
-* The **Forge Documentation**, which covers the syntax of the language more concisely and isn't focused on teaching. At the moment, this is in a [separate document](https://csci1710.github.io/forge-documentation/) in order to make searching easier.
+* The **Forge Documentation**, which covers the syntax of the language more concisely and isn't focused on teaching. At the moment, this is in a [separate document](https://forge-fm.github.io/forge-documentation/) in order to make searching easier.
 
 Each chapter contains a variety of examples: data structures, puzzles, algorithms, hardware concepts, etc. We hope that the diversity of domains covered means that everyone will see an example that resonates with them. Full language and tool documentation come _after_ the main body of the book. 
 

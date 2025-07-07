@@ -13,6 +13,8 @@ def demoBool():
     print(s.model().evaluate(p)) # can pass a formula    
 
 
+
+
 def demoUninterpreted():
     s = Solver()
     # ; Ints, UNINTERPRETED Functions (think of as like relations in Alloy)        
@@ -25,9 +27,14 @@ def demoUninterpreted():
         print(s.model().evaluate(f(b)))
         print(s.model().evaluate(f(1000000)))
 
+
+
+
+
  # Real numbers
 def demoReals():
     s = Solver()
+    # TN TODO: what's going on with Int
     x = Real('x') # contrast to: Int('x')  
     s.add(x*x > 4)
     s.add(x*x < 9)
@@ -36,6 +43,10 @@ def demoReals():
         print(s.model())    
     else: 
         print(result)
+
+
+
+
 
 def demoFactoringIntWithUniversal():
     s = Solver()
@@ -67,6 +78,9 @@ def demoFactoringIntWithUniversal():
     else: 
         print(result)
     # Note how fast, even with numbers up to almost 40k. Power of theory solver.
+
+
+
 
 
 def demoFactoringReals():
@@ -109,6 +123,11 @@ def demoFactoringRealsUnsat():
         print(s.unsat_core())
         
 
+
+
+
+
+
 def nQueens(numQ):
     s = Solver()
     # Model board as 2d list of booleans. Note the list is *Python*, booleans are *Solver*
@@ -139,7 +158,8 @@ def nQueens(numQ):
                         for i in range(0, numQ)])
     #print(queenThreats) # for demo only
     s.add(queenThreats)
-
+    
+    # print(s)
     if s.check() == sat:
         for i in range(0, numQ):
             print(' '.join(["Q" if s.model().evaluate(cells[i][j]) else "_" for j in range(0, numQ) ]))
@@ -147,15 +167,20 @@ def nQueens(numQ):
         print("unsat")
 
 
+
+
+
+
+
+
 if __name__ == "__main__":
-    # demoBool()
-    # demoUninterpreted()
-    # demoReals()
+    #demoBool()
+    #demoUninterpreted()
+    #demoReals()
     
-    # demoFactoringIntWithUniversal()
-    # demoFactoringInt()
-    # demoFactoringReals()
-    # demoFactoringRealsUnsat()
+    #demoFactoringIntWithUniversal()
+    #demoFactoringReals()
+    #demoFactoringRealsUnsat()
     
     nQueens(8)
 

@@ -872,15 +872,15 @@ run {
 
 Unsatisfiable _again_! But this isn't unusual; often when we make a change there's some factor we forgot to account for. We'll follow the same recipe as before, removing constraints from the end of the prefix until we reach satisfiability. We don't have to do much, because only the last transition seems to cause a problem&mdash;unsurprising, since the conditions for winning are what we just changed. 
 
-The unsat core has only 3 formulas in it. Rather than just looking at code location, let's examine what the command-line output says. I'll add newlines to make it a bit more readable:
+The unsat core has only 3 formulas in it. Rather than just looking at code location, let's examine what the command-line output says. I'll add newlines and truncate file paths to make it a bit more readable:
 
 ```
 Unsat core available (3 formulas):
-Core(part 1/3): [/Users/tbn/repos/cs1710/newbook/book/src/chapters/raft/messages.frg:32:4 (span 40)] 
+Core(part 1/3): [raft/messages.frg:32:4 (span 40)] 
 (Network.messages' = Network.messages - {m : Network.messages & RequestVoteReply | m.to = s})
-Core(part 2/3): [/Users/tbn/repos/cs1710/newbook/book/src/chapters/raft/raft_2.frg:124:8 (span 59)] 
+Core(part 2/3): [raft/raft_2.frg:124:8 (span 59)] 
 (#{m : {m : Network.messages & RequestVoteReply | m.to = s} | some m.voteGranted} > divide[#Server, 2])
-Core(part 3/3): [/Users/tbn/repos/cs1710/newbook/book/src/chapters/raft/messages.frg:47:4 (span 61)] 
+Core(part 3/3): [raft/messages.frg:47:4 (span 61)] 
 (Network.messages' = Network.messages - none  & Message + none  & Message)
 ```
 
