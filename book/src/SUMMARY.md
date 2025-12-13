@@ -2,12 +2,11 @@
 <!-- This will be ignored by the mdbook parser -->
 <!-- # Logic for Systems: Lightweight Formal Methods for the Practical Engineer -->
 # Summary 
-<!-- [How to Read this book](./welcome.md) -->
-[View for new book link](./welcome.md)
+[How to Read this book](./welcome.md)
 <!-- [TEMP: todos index](./todo.md) -->
 <!-- "prefix chapters"; cannot be nested -->
 
-<!-- # Preamble: Beyond Testing
+# Preamble: Beyond Testing
 - [What good is this book?](./chapters/manifesto/job.md) 
 - [Logic for Systems](./chapters/manifesto/manifesto.md)
 - [From Tests to Properties](./chapters/properties/pbt.md)
@@ -23,24 +22,24 @@
 - [Counterexamples to Induction](./chapters/inductive/bsearch.md)
 - [BSTs: Recursive Descent](./chapters/bst/descent.md)
 - [Validating Models](./chapters/validation/validating_events.md) 
-- [Q&A: Event Systems](./chapters/qna/events.md)  -->
+- [Q&A: Event Systems](./chapters/qna/events.md) 
 
-<!-- # Modeling Relationships 
+# Modeling Relationships 
 - [Relational Forge, Modeling Logic](./chapters/relations/modeling-booleans-1.md)
 - [Transitive Closure](./chapters/relations/reachability.md)
 - [Modeling Mutual Exclusion](./chapters/relations/sets-induction-mutex.md)
-- [Going Beyond Assertions](./chapters/relations/sets-beyond-assertions.md) -->
+- [Going Beyond Assertions](./chapters/relations/sets-beyond-assertions.md)
 <!-- - [Reference-Counting Memory Management (FILL; low priority)]() -->
-<!-- - [How does Forge Work?](./chapters/solvers/bounds_booleans_how_forge_works.md)
-- [Q&A: Relations](./chapters/qna/relations.md)  -->
+- [How does Forge Work?](./chapters/solvers/bounds_booleans_how_forge_works.md)
+- [Q&A: Relations](./chapters/qna/relations.md) 
 
-<!-- # Temporal Specification
+# Temporal Specification
 - [Liveness and Lassos](./chapters/temporal/liveness_and_lassos.md)
 - [Temporal Forge](./chapters/temporal/temporal_operators.md)
 - [Linear Temporal Logic](./chapters/temporal/temporal_operators_2.md)
 - [Obligations and the Past](./chapters/temporal/obligations_past.md)
 - [Mutual Exclusion, Revisited](./chapters/temporal/fixing_lock_temporal.md)
-- [Testing Temporally](./chapters/temporal/testing_temporal.md) -->
+- [Testing Temporally](./chapters/temporal/testing_temporal.md)
 <!-- - [Q&A: Temporal Logic (FILL; any not covered before?)]()  -->
 
 <!--  
@@ -101,9 +100,9 @@
 - tips and tricks
 - modeling pitfalls (a la Jackson) – higher-order quant, bounds, etc.  
  -->
-<!-- # Boolean Solver Algorithms
+# Boolean Solver Algorithms
   - [Boolean SAT (DPLL)](./chapters/solvers/dpll.md)
-  - [Witnessing Unsat: Propositional resolution](./chapters/solvers/resolution.md) -->
+  - [Witnessing Unsat: Propositional resolution](./chapters/solvers/resolution.md)
 
 <!-- 
   - SMT: eager vs. lazy, boolean skeletons
@@ -113,14 +112,14 @@
 
   - Decidability, completeness, and incompleteness -->
 
-<!-- # Beyond SAT
+# Beyond SAT
 - [Satisfiability Modulo Theories (SMT)](./chapters/solvers/smt.md) 
 - [Learning with Solvers: CEGIS](./chapters/solvers/cegis.md)
 
 # Case Studies and Further Reading
-- [Modeling Raft in Anger]() -->
+- [Modeling Raft in Anger]()
 <!-- (./chapters/raft/raft.md) -->
-<!-- - [Forge: Comparing Prim's and Dijkstra's Algorithms]() -->
+- [Forge: Comparing Prim's and Dijkstra's Algorithms]()
 <!-- - [Model-Based ("Stateful") Testing]() -->
 <!-- - [Industry: Concolic Execution (DEMO: KLEE)]()  -->
 <!-- - [Forge+Industry: Policy and Network Analysis (e.g., Margrave, Zelkova)]() -->
