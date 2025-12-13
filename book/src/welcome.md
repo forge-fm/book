@@ -1,4 +1,8 @@
-## How To Read This Book 
+## Outdated 
+
+This book version should be inaccessible. If you are seeing it, please report this fact to `tim_nelson@brown.edu` and follow [this link](http://forge-fm.github.io/book) instead.
+
+<!-- ## How To Read This Book 
 
 Welcome to Logic for Systems! Here are some quick hints that will help you use this book effectively.
 
@@ -116,4 +120,4 @@ Emily Nelson,
 Hillel Wayne, 
 Siddhartha Prasad,
 ...
-and the many CSCI 1710 students and TAs at Brown who have kindly given their thoughts.
+and the many CSCI 1710 students and TAs at Brown who have kindly given their thoughts. -->
