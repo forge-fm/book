@@ -96,7 +96,7 @@ If a symbol (function, relation, constant, ...) is _interpreted_, then its meani
 * `add` is an interpreted function, since Forge assigns it a meaning innately; but
 * relations you add as sig fields are uninterpreted, since without constraints you add yourself, Forge treats their values as arbitrary.
 
-~~~admonish warning title=Functions, not relations" 
+~~~admonish warning title="Functions, not relations" 
 With some exceptions, SMT solvers usually focus on functions, not relations. This is another reason for Froglet to be about functions: they're more useful as a foundation in other tools!
 ~~~
 

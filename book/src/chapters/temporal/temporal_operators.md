@@ -1,5 +1,11 @@
 # Temporal Forge
 
+~~~admonish tip title="LTL Tutor"
+**We recommend pairing this chapter with exercises in Brown PLT's [LTLTutor](https://ltl-tutor.xyz/).**
+
+To best align with this textbook, make sure to switch to `(Forge Syntax)` in the Dashboard. 
+~~~
+
 Temporal Forge works by adding additional operators to the language. You can still do everything you could before (with one exception that we'll get to) in Relational Forge, but you get new operators&mdash;new operators like `always` and `eventually`&mdash;that make describing properties and specifying systems easier. Moreover, these operators are standard in industrial model-checking tools.
 
 

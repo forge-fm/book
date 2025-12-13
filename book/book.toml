@@ -10,7 +10,7 @@ title = "Logic for Systems: Lightweight Formal Methods for Everybody"
 [preprocessor.admonish]
 command = "mdbook-admonish"
 assets_version = "3.0.2" # do not edit: managed by `mdbook-admonish install`
-# on_failure = "bail" # remove for warn and to allow build to continue
+on_failure = "bail" # remove for warn and to allow build to continue
 
 [preprocessor.katex]
 renderers = ["html"]
