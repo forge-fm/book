@@ -3,7 +3,7 @@ authors = ["Tim Nelson"]
 language = "en"
 multilingual = false
 src = "src"
-title = "Logic for Systems: Lightweight Formal Methods for Everybody"
+title = "Logic for Systems: Lightweight Formal Methods for Everybody" 
 
 [preprocessor]
 
