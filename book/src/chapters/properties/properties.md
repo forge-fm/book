@@ -65,7 +65,7 @@ Wait -- you found a different path? G to D to B to E?
 And another path? G to H to F to E?
 </details>
 
-If we add a traditional test case corresponding to _one_ of the correct answers, our test suite will falsely raise alarms for correct implementations that happen to find different answers. In short, we'll be over-fitting our tests to @italic{one specific implementation}: ours. But there's a fix. Maybe instead of writing:
+If we add a traditional test case corresponding to _one_ of the correct answers, our test suite will falsely raise alarms for correct implementations that happen to find different answers. In short, we'll be over-fitting our tests to _one specific implementation_: ours. But there's a fix. Maybe instead of writing:
 
 `shortest(GRAPH, G, E) == [(G, A), (A, B), (B, E)]`
 
