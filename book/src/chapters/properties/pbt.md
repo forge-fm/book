@@ -294,6 +294,6 @@ Between the other two options (adding an error term and changing libraries) it d
 
 We'll close this section by noticing two things:
 
-First, being precise about _what correctness means_ is powerful. With ordinary unit tests, we're able to think about behavior only _point-wise_. Here, we need to broadly describe our goals, and tere's a cost to that, but also advantages: comprehensibility, more powerful testing, better coverage, etc. And we can still get value from a partial definition, because we can then at least apply PBT to that portion of the program's behavior. 
+First, being precise about _what correctness means_ is powerful. With ordinary unit tests, we're able to think about behavior only _point-wise_. Here, we need to broadly describe our goals, and there's a cost to that, but also advantages: comprehensibility, more powerful testing, better coverage, etc. And we can still get value from a partial definition, because we can then at least apply PBT to that portion of the program's behavior. 
 
 Second, the very act of trying to precisely express, and test, correctness for `median` _taught us (or reminded us about) something subtle about how our programming language works_, which tightened our definition of correctness. Modeling often leads to such a virtuous cycle. 
