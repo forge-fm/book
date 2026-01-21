@@ -1,0 +1,11 @@
+/* Custom styles for Logic for Systems book */
+
+/* Ensure code blocks don't overflow */
+.md-typeset pre > code {
+  overflow-x: auto;
+}
+
+/* Style for Forge code blocks */
+.highlight .language-forge {
+  /* Add any Forge-specific styling here */
+}
