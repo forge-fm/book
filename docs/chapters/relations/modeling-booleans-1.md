@@ -263,6 +263,8 @@ pred semantics
 
 No. In fact, there are some _Forge_ semantics questions you might have. That's not a joke: are you sure that you know the _meaning_ of `=` in Forge now? Suppose I started explaining Forge's set-operator semantics like so:
 
+#### Set Operators: Union (`+`), Intersection (`&`), and Difference (`-`)
+
 * Set union (`+`) in Forge produces a set that contains exactly those elements that are in one or both of the two arguments. 
 * Set intersection (`&`) in Forge produces a set that contains exactly those elements that are in both of the two arguments.
 * Set difference (`-`) in Forge produces a set that contains exactly those elements of the first argument that are not present in the second argument.

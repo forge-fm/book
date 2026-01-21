@@ -64,7 +64,7 @@ What do you notice about this result? Recall that this is just a parenthetical w
 
 The `.` operator in Forge isn't exactly field access. It behaves that way in Froglet, but now that we have sets in the language, it's more powerful. It lets us combine relations in a path-like way.
 
-### Relational Join
+### Relational Join (`.`)
 
 Here's the precise definition of the _relational join_ operator (`.`):
 

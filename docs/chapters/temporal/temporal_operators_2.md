@@ -21,7 +21,7 @@ Evaluation always _starts_ at the first state. This corresponds to the top-level
 
 As soon as temporal operators become involved, however, the "evaluate in the first state" rule starts to change because the current time index may change.
 
-## Moving Forward In Time
+## Moving Forward In Time: `next_state`
 
 You can refer to the _next_ state (relative to the current one, whatever it is) by using the `next_state` operator. If I wanted to say that the _second_ and _third_ states would also need to be initial states, I'd write more in the top-level `run` block:
 
@@ -40,7 +40,7 @@ It's rare you'd do something like this in practice, but it's a good first demons
     * I've heard `afterward` suggested, but that risks confusion with `always` or `eventually`.
 
 
-## Quantifying Over Time
+## Quantifying Over Time: `always` and `eventually`
 
 What does it mean for something to `always` be true, or to `eventually` hold? These terms quantify over time: if something is `always` true, it's true at all time indexes (starting now). If something is `eventually` true, it's true at _some_ time index (possibly now). 
 

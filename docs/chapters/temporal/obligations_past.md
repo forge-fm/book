@@ -28,6 +28,8 @@ We can write the first easily enough: `eventually green`. But what about the sec
 
 ---
 
+### The `until` Operator
+
 In LTL, the `until` operator can be used to express a stronger sort of `eventually`. If I write `stopped until green_light`, it encodes the meaning above. This operator is a great way to phrase obligations that might hold only until some releasing condition occurs.
 
 !!! tip "Strong vs. Weak Until"
@@ -42,11 +44,11 @@ In LTL, the `until` operator can be used to express a stronger sort of `eventual
 
 Forge also includes temporal operators corresponding to the _past_. This isn't standard in some LTL tools, but we include it for convenience. It turns out that past-time operators don't increase the expressive power of the language, but they do make it much easier and sometimes _much_ more concise to write some constraints. Here are some examples:
 
-### `prev_state init` 
+### The `prev_state` Operator
 
-This means that the _previous_ state satisfied the initial-state predicate. **Beware**: traces are infinite in the forward direction, but _not_ infinite in the backward direction. For any subformula `myPredicate`, `prev_state myPredicate` is _false_ if the current state is the first state of the trace.
+The expression `prev_state init` means that the _previous_ state satisfied the initial-state predicate. **Beware**: traces are infinite in the forward direction, but _not_ infinite in the backward direction. For any subformula `myPredicate`, `prev_state myPredicate` is _false_ if the current state is the first state of the trace.
 
-### Past-Time `always` and `eventually`: `historically` and `once`
+### Past-Time Operators: `historically` and `once`
 
 We can use `historically` to mean that something held in all past states and in the current one. I can write "I've never been skydiving" as `historically {not skydiving[Tim]}`. But if I go skydiving tomorrow, that formula won't be true tomorrow.
 

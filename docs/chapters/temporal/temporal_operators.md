@@ -119,7 +119,11 @@ pred raise[p: Process] {
 }
 ```
 
-I've left the old version commented out so you can contrast the two. Again, the predicate is true subject to an implicit moment in time. **The priming (') operator means "this expression in the next state"**; so if `raise` holds at some point in time, it means there is a specific relationship between the current and next moments.
+I've left the old version commented out so you can contrast the two. Again, the predicate is true subject to an implicit moment in time.
+
+### The Prime Operator (`'`)
+
+**The priming (`'`) operator means "this expression in the next state"**; so if `raise` holds at some point in time, it means there is a specific relationship between the current and next moments.
 
 We'll convert the other predicates similarly, and then run the model:
 
