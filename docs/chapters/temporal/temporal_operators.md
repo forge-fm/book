@@ -67,7 +67,7 @@ Second, this is _satisfiable_, as we might expect. But what happens if you chang
 
 Let's convert the mutual-exclusion model into Temporal Forge. We'll add the necessary options first:
 
-```alloy
+```forge
 #lang forge/temporal
 
 option max_tracelength 10
@@ -79,7 +79,7 @@ option max_tracelength 10
 
 Now we'll update the data definitions. We no longer have a `State` sig. Or rather, we do, but we would only have one of them and let its fields vary with time. Because both the `flags` and `loc` fields change over time, we'll make both of them `var`, and we'll change the name of `State` to avoid confusion:
 
-```alloy
+```forge
 one sig World {
   var loc: func Thread -> Location,
   var flags: set Thread
@@ -90,7 +90,7 @@ At any moment in time, every thread is in exactly one location. And, at any mome
 
 Now for the predicates. In Temporal Forge, we don't have the ability to talk about specific pre- and post-states: the language handles the structure of traces for us. This means we have to change the types of our predicates. For `init`, we have:
 
-```alloy
+```forge
 -- No argument! Temporal mode is implicitly aware of time
 pred init {
     all p: Process | World.loc[p] = Uninterested
@@ -102,7 +102,7 @@ The loss of a `State` `sig` is perhaps disorienting. How does Forge evaluate `in
 
 Similarly, we'll need to change our transition predicates:
 
-```alloy
+```forge
 -- Only one argument; same reason as above
 pred raise[p: Process] {
     // pre.loc[p] = Uninterested
@@ -127,7 +127,7 @@ I've left the old version commented out so you can contrast the two. Again, the 
 
 We'll convert the other predicates similarly, and then run the model:
 
-```alloy
+```forge
 run {
     -- start in an initial state
     init
@@ -142,7 +142,7 @@ This is the general shape of things! There are still some potential problems rem
 
 When we run, we get something that looks like this:
 
-![](https://i.imgur.com/LsN0gfB.png)
+![](./sterling_temporal.png)
 
 ### New Buttons!
 
@@ -159,7 +159,7 @@ In Temporal Forge, Sterling shows a "mini-map" of the trace in the "Time" tab. Y
 
 You can use the navigation arrows, or click on specific states to move the visualization to that state: 
 
-![](https://i.imgur.com/KnLqfJm.png)
+![](./sterling_minimap.png)
 
 Theming works as normal, as do custom visualizers (although read the documentation if you're writing your own visualizer; there are some small changes like using `instances` instead of `instance` to access data). 
 

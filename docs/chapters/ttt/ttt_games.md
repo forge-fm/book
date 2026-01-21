@@ -11,7 +11,7 @@ What do you think a _game_ of tic-tac-toe looks like? Crucially, a game involves
 
     Think of the game as a big graph, where the nodes are the _states_ (possible board configurations) and the edges are _transitions_ between states (in this case, legal moves of the game). Here's a rough sketch:  
 
-    ![](https://i.imgur.com/YmsbRp8.png)
+    ![](./ttt_state_graph.png)
 
 <br/>
 
@@ -41,7 +41,7 @@ For the action:
 
 Now we can fill in the predicate. Let's try something like this:
 
-```alloy
+```forge
 pred move[pre: Board, row: Int, col: Int, p: Player, post: Board] {
   -- guard:
   no pre.board[row][col]   -- nobody's moved there yet
@@ -77,7 +77,7 @@ There are many ways to write this predicate. However, we're going to stick with 
 
     Our frame condition was _too weak_! We need to have it take effect whenever _either_ the row or column is different. Something like this will work:
 
-    ```alloy
+    ```forge
       all row2: Int, col2: Int | 
         ((row2 != row) or (col2 != col)) implies {    
            post.board[row2][col2] = pre.board[row2][col2]     
@@ -98,7 +98,7 @@ Once someone wins a game, does their win still persist, even if more moves are m
 
 We'll tell Forge to find us pairs of states, connected by a move: the _pre-state_ before the move, and the _post-state_ after it. That's _any_ potential transition in tic-tac-toe&mdash;at least, following the rules as we defined them. To apply this technique, all we need to do is add two more constraints that reflect a winner existing in the pre-state, but that there's no winner in the post-state.
 
-```alloy
+```forge
 pred winningPreservedCounterexample {
   -- There is some pair of states
   some pre, post: Board | {
@@ -129,7 +129,7 @@ Recall that our worldview for this model is that systems _transition_ between _s
 
 Today, we'll ask Forge to find us _full traces of the system_, starting from an initial state. We'll also add a `Game` sig to incorporate some metadata.
 
-```alloy
+```forge
 -- Generate *one* game of tic-tac-toe
 one sig Game {
   -- What state does the game start in?
@@ -152,7 +152,7 @@ pred traces {
 
 By itself, this wouldn't be quite enough; we might see a bunch of disjoint traces. We could add more constraints manually, but there's a better option: tell Forge, at `run`time, that `nextState` represents a linear ordering on states. This is similar to what we did back in the [ripple-carry adder](../adder/rca.md):
 
-```alloy
+```forge
 run { traces } for {nextState is linear}
 ```
 
@@ -160,7 +160,7 @@ It's worth recalling what's happening here. The phrase `nextState is linear` isn
 
 In general, Forge syntax allows such annotations _after_ numeric bounds. E.g., if we wanted to see full games, rather than unfinished game prefixes (the default bound on any sig, including `Board`, is up to 4) we could have asked:
 
-```alloy
+```forge
 run {
   traces
 } for exactly 10 Board for {nextState is linear}
@@ -172,7 +172,7 @@ You might notice that because of this, some traces are excluded. That's because 
 
 Moreover, since we're now viewing a single fixed instance, we can _evaluate_ Forge expressions in it. This is great for debugging, but also for just understanding Forge a little bit better. Open the evaluator here at the bottom of the right-side tray, under theming. Then enter an expression or constraint here:
 
-![](https://i.imgur.com/tnT8cgo.png)
+![](./ttt_trace1.png)
 
 Type in something like `some s: Board | winner[s, X]`. Forge should give you either `#t` (for true) or `#f` (for false) depending on whether the game includes `X` winning in some state.
 
@@ -180,7 +180,7 @@ Type in something like `some s: Board | winner[s, X]`. Forge should give you eit
 
 You might notice that this model takes a while to run. Something happened after we started reasoning about full games. Why might that be? Let's re-examine our bounds and see if there's anything we can adjust. In particular, here's what the evaluator says we've got for integers:
 
-![](https://i.imgur.com/UJJUqdB.png)
+![](./ttt_trace2.png)
 
 Wow---wait, do we really **need** to be able to count up to `7` for this model? Even more, do we really need to count all the way down to `-8`? Probably not. If we change our integer bounds to `3 Int` we'll still be able to use `0`, `1`, and `2`, and the search space is much smaller.
 
@@ -188,7 +188,7 @@ Wow---wait, do we really **need** to be able to count up to `7` for this model? 
 
 Recall that we just ran this command:
 
-```alloy
+```forge
 run {
   wellformed
   traces
@@ -211,7 +211,7 @@ Do you have any worries about the way this is set up?
 
 Let's add the following guard constraint to the `move` transition predicate, which forces games to end as soon as somebody wins.
 
-```alloy
+```forge
 all p: Player | not winner[pre, p]
 ```
 
@@ -233,7 +233,7 @@ But now we need to work around this limitation. Any ideas? Hint: do we need to h
 
 Let's add an additional transition that does nothing. We can't "do nothing" in the predicate body, though&mdash;an empty predicate body would just mean _anything_ could happen. What we mean to say is that the state of the board remains the same, even if the before and after `Board` objects differ.
 
-```alloy
+```forge
 pred doNothing[pre: Board, post: Board] {
     all row2: Int, col2: Int | 
         post.board[row2][col2] = pre.board[row2][col2]
@@ -246,7 +246,7 @@ pred doNothing[pre: Board, post: Board] {
 
 We also need to edit the `traces` predicate to allow `doNothing` to take place:
 
-```alloy
+```forge
 pred traces {
     -- The trace starts with an initial state
     starting[Game.initialState]
@@ -266,7 +266,7 @@ As it stands, this fix solves the _overconstraint_ problem of never seeing an ea
 
 Here's how I like to fix it:
 
-```alloy
+```forge
 pred gameOver[s: Board] {
   some p: Player | winner[s, p]
 }
@@ -276,7 +276,7 @@ Why a new predicate? Because I want to use different predicates to represent dif
 
 When should a `doNothing` transition be possible? _Only when the game is over!_
 
-```alloy
+```forge
 pred doNothing[pre: State, post: State] {
     gameOver[pre] -- guard of the transition
     pre.board = post.board -- effect of the transition
@@ -289,7 +289,7 @@ If we wanted to, we could add a `not gameOver[pre]` guard constraint to the `mov
 
 Let's ask Forge whether a `cheating` state is possible under the rules. 
 
-```alloy
+```forge
 pred cheating[b: Board] {
   -- It's neither X's nor O's turn; the balance is way off! 
   not XTurn[b] 
@@ -311,7 +311,7 @@ When I was very small, I thought that moving in the middle of the board would gu
 ??? note "Think, then Click!"
     Here's how I did it:    
 
-    ```alloy
+    ```forge
     run {
       wellformed
       traces
@@ -330,7 +330,7 @@ We should get a counterexample if we run that predicate.
 
 We could also write this using an assertion (which would fail) rather than a `run`:
 
-```
+```forge
 pred xWins {
   all s: State | not winner[s, X]
 }
@@ -346,7 +346,7 @@ You might wonder how `assert` can be used for predicates that take arguments. Fo
 
 Here's how we'd write that. Notice we don't even need to use the `Game` here (and thus don't need to give the `is linear` annotation)! We're just asking Forge about 2 boards at a time:
 
-```
+```forge
 pred someMoveFromWF[pre, post: Board] { 
   wellformed[pre]
   some r, c: Int, p: Player | move[pre, r, c, p, post]
@@ -358,13 +358,13 @@ assert all pre,post: Board | move[pre,post] is sufficient for wellformed[post]
 
 If you're viewing an instance, you can always select the evaluator tray and enter Forge syntax to see what it evaluates to in the instance shown. You can enter both formulas and expressions. We also have the ability to refer to atoms in the world directly. E.g., we could try:
 
-```alloy
+```forge
 all s: Board | not winner[s, X]
 ```
 
 but also (assuming `Board0` is an atom in the instance we're currently viewing):
 
-```alloy
+```forge
 winner[Board0, X]
 ```
 
@@ -392,7 +392,7 @@ The idea is: encode an instance you'd expect to see as a set of constraints, run
 
 **TODO: this is taken from a homework, not one of the above... should rewrite**
 
-```alloy
+```forge
 #lang froglet 
 
 sig State {
@@ -416,7 +416,7 @@ test expect {
 
 This test fails. But why?
 
-```alloy
+```forge
 run {
   some st1, st2: State |
   some ele1, ele2: Element | {
@@ -467,7 +467,7 @@ Why use `example` at all? A couple of reasons:
 
 You may be wondering whether there's a way to leverage that same speedup in a `run` command. Yes, there is! But for now, let's get used to the syntax just for writing examples. Here are some, well, examples:
 
-```alloy
+```forge
 pred someXTurn {some s: State | XTurn[s]}
 example emptyBoardXturn is {someXTurn} for {
   State = `State0
@@ -477,7 +477,7 @@ example emptyBoardXturn is {someXTurn} for {
 
 Here, we've said that there is one state in the instance, and its `board` field has no entries. We could have also just written `no board`, and it would have worked the same.
 
-```alloy
+```forge
 -- You need to define all the sigs that you'll use values from
 pred someOTurn {some b: Board | OTurn[b]}
 example xMiddleOturn is {someOTurn} for {
@@ -491,7 +491,7 @@ example xMiddleOturn is {someOTurn} for {
 
 What about assertions, though? You can think of assertions as _generalizing_ examples. I could have written something like this:
 
-```alloy
+```forge
 pred someXTurn {some b: Board | xturn[b]}
 pred emptySingleBoard {
   one b: Board | true
@@ -502,7 +502,7 @@ assert emptySingleBoard is sufficient for someXTurn
 
 That's pretty coarse-grained, though. So let's write it in a better way:
 
-```alloy
+```forge
 pred emptyBoard[b: Board] { all r, c: Int | no b.board[r][c] }
 assert all b: Board | emptyBoard[b] is sufficient for xturn[b]
 ```
@@ -565,7 +565,7 @@ This technique isn't only applicable in Forge. It's used in many other solver-ba
 
 **Step 1: are there any bad states that are also starting states?**
 
-```alloy
+```forge
 assert all b: Board | initial[b] is sufficient for balanced[b]
   for 1 Board, 3 Int
 ```
@@ -576,7 +576,7 @@ Notice that we didn't _need_ to use the `next is linear` annotation, because we'
 
 Again, we don't need a full trace for this to work. We only need 2 boards: the pre-state and post-state of the transition:
 
-```alloy
+```forge
 pred moveFromBalanced[pre: Board, row, col: Int, p: Player, post: board] {
   balanced[pre]
   move[pre, row, col, p, post]

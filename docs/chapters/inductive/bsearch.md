@@ -8,7 +8,7 @@ This section contains a running exercise where we model binary search on an arra
 
 When we're talking about whether or not a reachable state violates a desirable property $P$ (recall we sometimes say that if this holds, $P$ is an _invariant_ of the system), it's useful to think geometrically. Here's a picture of the space of _all states_, with the cluster of "good" states separated from the "bad":
 
-![](https://i.imgur.com/n3F16P4.png)
+![](./bsearch_1.png)
 
 If this space is large, we probably can't use trace-finding to get a real _proof_: we'd have to either:
 
@@ -29,7 +29,7 @@ Let's break the problem down. What if we just consider reachability for traces o
 
 This we can check in Forge just by asking for a state `s` satisfying `{initial[s] and wellformed[s] and not P[s]}.` There's no exponential blowup with trace length since the transition predicates are never even involved! If we see something like this:
 
-![](https://i.imgur.com/Aia9V0q.png)
+![](./bsearch_2.png)
 
 We know that at least the starting states are good. If instead there was a region of the starting states that overlapped the bad states, then we immediately know that the property isn't invariant.
 
@@ -39,7 +39,7 @@ We can also check whether there are bad states within $1$ transition. We're usin
 
 If Forge doesn't find any way for the second state to violate $P$, it means we have a picture like this:
 
-![](https://i.imgur.com/NdA7RwF.png)
+![](./bsearch_3.png)
 
 Note that in general, there might be overlap (as shown) between the set of possible initial states and the set of possible second states. For example, imagine if we allowed a `doNothing` transition at any time&mdash;then the starting state could be reached in any number of steps.
 
@@ -51,7 +51,7 @@ We can (often) use these small, efficient queries to show that $P$ holds at _any
 
 We'll ask Forge whether `{P[s0] and someTransition[s0, s1] and not P[s1]}` is satisfiable for _any_ pair of states. Just so long as the pre-state satisfies $P$ and the post-state doesn't. We're asking Forge if it can find a transition that looks like this:
 
-![](https://i.imgur.com/CWSjSrr.png)
+![](./bsearch_4.png)
 
 If the answer is _no_, then it is simply impossible (up to the bounds we gave Forge) for any transition predicate to stop property $P$ from holding: if it holds in the pre-state, it _must_ hold in the post-state. 
 

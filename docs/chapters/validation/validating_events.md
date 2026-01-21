@@ -22,7 +22,7 @@ Is this testing the model, or testing the system?
 
 We then wrote a check like this:
 
-```
+```forge
 pred bs_correct {
     all n: Node | {
         n.key = SearchState.target => 

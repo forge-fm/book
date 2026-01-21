@@ -26,7 +26,7 @@ this.flag = false
 
 Because we're modeling individual operations executing, we'll need to add a new location to the state, which I'll call `Halfway`. We'll also need a new transition (and to change existing transitions in some places). The new transition might look something like this:
 
-```alloy
+```forge
 pred enabledNoYou[p: Process] {
     World.loc[p] = Halfway
 }
@@ -53,7 +53,7 @@ World.loc'[p] = Waiting
 
 and a modification to the `enter` transition so that it's enabled if _either_ nobody else has their flag raised _or_ the current process isn't the one being polite anymore:
 
-```alloy
+```forge
 pred enabledEnter[p: Process] {
     World.loc[p] = Waiting 
     -- no other processes have their flag raised *OR* this process isn't the polite one
@@ -71,7 +71,7 @@ We also need to expand the frame conditions of all other transitions to keep `po
 
 ### Let's Check Non-Starvation
 
-```alloy
+```forge
 noStarvation: {
     lasso implies {
         all p: Process | {
@@ -122,7 +122,7 @@ Let's add the precondition, which we'll call "fairness". Again, keep in mind tha
 
 There are many ways to phrasing fairness, and since we're making it an assumption about the world outside our algorithm, we'd really like to pick something that suffices for our needs, but _isn't any stronger than that._ Once we add the `weakFairness` predicate below as an assumption, the properties pass. 
 
-```alloy
+```forge
 pred weakFairness {
     all p: Process | {
         (eventually always 

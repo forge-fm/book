@@ -37,7 +37,7 @@ These questions have a different character, even though they may seem similar.
 
 We've set up this kind of analysis before. We'll just say:
 
-```alloy
+```forge
 one sig Helper { t2: set Node -> Node -> Int }
 run {
   runPrimComplete    
@@ -59,7 +59,7 @@ What does it mean to find a _minimum spanning tree_ for an undirected, weighted 
 
 Checking the final criterion requires higher-order universal quantification. We'd need to write something like this (don't try it!):
 
-```alloy
+```forge
 some t: set Node->Node |
   isSpanningTree[t]
   all t2: set Node->Node | 
@@ -76,7 +76,7 @@ We need a different way to attack this problem.
 
 Suppose that, instead of the above shape, we had a specific edge set `t` handed to us, with the claim that `t` was a minimal spanning tree. Well, we could try to falsify `t`'s minimality:
 
-```alloy
+```forge
   // ... definition of t is given to us ...
 
   // Search for a counter-example to `t` being a MST
@@ -108,7 +108,7 @@ Not all higher-order universal constraints exhibit these nice properties, and ot
 
 Here's a classical example from formal methods: program synthesis. Suppose we were trying to [synthesize a program (see this link for the full work)](http://www.csl.sri.com/users/tiwari/papers/pldi2011-bitvector.pdf) that takes a machine integer as input, and outputs the number of `1` bits in that number. We might express the goal roughly as:
 
-```alloy
+```forge
 some p: program |  
   all i: Int | 
     p[i] = countBitsInInteger[i] // assume we have this helper

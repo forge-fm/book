@@ -38,15 +38,15 @@ I really don't want to draw 36 states along with all their corresponding transit
 
 **TODO: redraw with "un" rather than "dis"**
 
-![](https://i.imgur.com/02KboGA.png)
+![](./mutex_state1.png)
 
 Fill in the rest of the reachable states and transitions; don't add unreachable states at all. You should find the picture is significantly smaller than it would be if we had drawn _all_ states.
 
-![](https://i.imgur.com/PQraiC7.png)
+![](./mutex_state2.png)
 
 Keep going! In diagrams like this, where there are only 2 processes, I like to split the state and draw the transition arcs for each process moving separately in different directions. (We're assuming, for now, that only one process moves at a time, even though they are executing concurrently.)
 
-![](https://i.imgur.com/EPMcgrl.png)
+![](./mutex_reachable.png)
 
 I've marked the inability of a process to make progress with an "**X**"; it's a transition that can't be taken.
 
@@ -86,7 +86,7 @@ We could either try the inductive approach, or use the finite-trace method. In t
 
 We could add a transition from the deadlock state. Maybe we could allow the first thread to always take priority over the second:
 
-![](https://i.imgur.com/gyt75Bk.png)
+![](./mutex_state3.png)
 
 This might manifest in the code as an extra way to escape the `while` loop. Of course, if we prioritize the first thread, the second thread is going to be very unhappy with this fix! But, regardless, adding this transition technically fixes the deadlock problem, and this property will now pass as well.
 

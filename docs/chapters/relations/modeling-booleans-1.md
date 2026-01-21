@@ -27,7 +27,7 @@ The conditional inside the `if` is a boolean formula with two _boolean variables
 
 <center><img width="40%" src="./Ifcond.png"/></center>
 
-<!-- ```alloy
+<!-- ```forge
 example leftBranchFormula is {} for {
   And = `And0
   Var = `VarNeqNull + `VarLTLeft
@@ -39,7 +39,7 @@ example leftBranchFormula is {} for {
 
 Let's define some types for formulas. Like we've done before when defining a hierarchy of types, we'll make an `abstract sig` to represent the collection of _all_ kinds of formulas, and have child `sig`s that represent specific kinds:
 
-```alloy
+```forge
 -- Syntax: formulas
 abstract sig Formula {}
 sig Var extends Formula {} 
@@ -57,7 +57,7 @@ sig And extends Formula {a_left, a_right: one Formula}
 
 As always, we need a notion of wellformedness. What would make a formula tree "garbage"? Well, if the syntax tree contained a cycle, the tree wouldn't be a tree, and the formula wouldn't be a formula! We'll write a `wellformed` predicate where an assertion like this will pass:
 
-```alloy
+```forge
 pred trivialLeftCycle { 
     some a: And | a.a_left = a
 }
@@ -69,7 +69,7 @@ assert trivialLeftCycle is sufficient for notWellformed
 
 Like in binary trees, there are multiple fields that a cycle could use. Then, we only needed to worry about `left` and `right`; here there are many more. Let's build a helper predicate that evaluates whether a formula is a smaller part of another:
 
-```alloy
+```forge
 -- IMPORTANT: remember to update this if adding new formula types!
 pred subFormulaOf[sub: Formula, f: Formula] {
   reachable[sub, f, child, a_left, o_left, a_right, o_right]
@@ -78,7 +78,7 @@ pred subFormulaOf[sub: Formula, f: Formula] {
 
 At first, this might seem like a strange use of a helper. There's just one line, and all it does is call the `reachable` built-in predicate. However, we probably need to check for subformulas in multiple places in our model. And, we might anticipate a need to add more formula types (maybe we get around to adding `Implies`). Then we need to remember to add the fields of the new `sig` everywhere that `reachable` is used. And if we leave one out, we probably won't get an error. So making this helper is just good engineering practice; this way, we minimize the number of places that need the change. 
 
-```alloy
+```forge
 pred wellformed {
   -- no cycles
   all f: Formula | not subFormulaOf[f, f]
@@ -91,7 +91,7 @@ pred wellformed {
 
 We'll want to add `wellformed` to the first example we wrote, but it should still pass. Let's run the model and look at some formulas! We could just `run {wellformed}`, but that might be prone to giving uninteresting examples. Let's try identifying the root node in our `run` constraint, which would let us ask for something more complex:
 
-```alloy
+```forge
 run {
   wellformed
   some top: Formula | {
@@ -159,7 +159,7 @@ Right now we're modeling boolean formulas. So let's understand the meaning of fo
 
 We'll need a way to represent "sets of variable values". Sometimes these are called a "valuation", so let's make a new `sig` for that. 
 
-```alloy
+```forge
 sig Valuation {
   -- [HELP: what do we put here? Read on...]
 }
@@ -167,7 +167,7 @@ sig Valuation {
 
 We have to decide what fields a `Valuation` should have. Once we do that, we might start out by writing a _recursive_ predicate or function, kind of like this pseudocode:
 
-```alloy
+```forge
 pred semantics[f: Formula, val: Valuation] {
   f instanceof Var => val sets the f var true
   f instanceof And => semantics[f.a_left, val] and semantics[f.a_right, val]
@@ -177,12 +177,12 @@ pred semantics[f: Formula, val: Valuation] {
 
 **This _won't work!_** Forge is not a recursive language; you won't be able to write a predicate that calls itself like this. So we've got to do something different. Let's move the recursion into the model itself, by adding a mock-boolean sig: 
 
-```alloy
+```forge
 one sig Yes {}
 ```
 and then adding a new field to our `Formula` sig (which we will, shortly, constrain to encode the semantics of formulas):
 
-```alloy
+```forge
    satisfiedBy: pfunc Valuation -> Yes
 ```
 
@@ -198,7 +198,7 @@ First, let's change our language to `#lang forge`. This gives us a language with
 
 Now, we can write that every formula is satisfied by some _set_ of valuations:
 
-```alloy
+```forge
 abstract sig Formula {
   -- Work around the lack of recursion by reifying satisfiability into a field.
   -- f.satisfiedBy contains an instance IFF that instance makes f true.
@@ -212,7 +212,7 @@ We can now infer what field(s) `Valuation` should have. A `Valuation` isn't a fo
 **Exercise:** What does a `Valuation` contain, and how does that translate to its field(s) in Forge?
 
 ??? note "Think, then click!"
-    ```alloy
+    ```forge
     sig Valuation {
       trueVars: set Var
     }
@@ -223,7 +223,7 @@ We can now infer what field(s) `Valuation` should have. A `Valuation` isn't a fo
 
 Now we can encode the meaning of each formula as a predicate like this:
 
-```alloy
+```forge
 -- IMPORTANT: remember to update this if adding new fmla types!
 -- Beware using this fake-recursion trick in general cases (e.g., graphs with cycles)
 -- It's safe to use here because the data are tree shaped. 
@@ -300,7 +300,7 @@ In conversation, we're often dismissive of semantics. You'll hear people say, in
 
 Now we have a new kind of ill-formed formula: one where the `semantics` haven't been properly applied. So we enhance our `wellformed` predicate:
 
-```alloy
+```forge
 pred wellformed {
   -- no cycles
   all f: Formula | not subFormulaOf[f, f]
@@ -317,7 +317,7 @@ Here are some examples of things you might check in the model. Notice that some 
 
 ### Consistency Checks
 
-```alloy
+```forge
 -- First, some tests for CONSISTENCY. We'll use test-expect/is-sat for these. 
 test expect {
   nuancePossible: {
@@ -342,7 +342,7 @@ test expect {
 
 ### Properties of Boolean Logic
 
-```alloy
+```forge
 -- What are some properties we'd like to check? 
 -- We already know a double-negation is possible, so let's write a predicate for it
 -- and use it in an assertion. Since it's satisfiable (above) we need not worry 

@@ -209,7 +209,7 @@ When we click the play button in the VSCode extension, the engine solves the con
 <!-- <img style="float: right;"  src="https://i.imgur.com/jTwED1K.png"/> -->
 
 <!-- 
-<img style="float: right;" src="https://i.imgur.com/34krUGX.png"/>
+<img style="float: right;" src="./ttt_example.png"/>
  -->
 
 !!! warning "Running Forge on Windows"
@@ -401,7 +401,7 @@ The `run` command can be used to give Forge more detailed instructions for its s
 
 **Exercise:** Is it possible for an instance with _no_ boards to still satisfy constraints like these?
 
-```alloy
+```forge
 run {    
      all b: Board | {
          -- X has won, and the board looks OK
@@ -420,7 +420,7 @@ run {
 
 This addition also requires that `X` moved in the middle of the board:
 
-```alloy
+```forge
 run {    
      all b: Board | {
          -- X has won, and the board looks OK
@@ -441,9 +441,9 @@ We'll come back to tic-tac-toe [soon](./ttt_games.md). The [next section](../bst
 
 ## Testing with assertions 
 
-Before we move on, I want to quickly note that `example` isn't the only way you can write tests in Forge. The `example` construct is powerful if you want to write "pointwise" tests in terms of single instances, but can quickly become verbose. If you know what properties you're interested in testing for, you can encode that into an `assert` in Forge. For example: 
+Before we move on, I want to quickly note that `example` isn't the only way you can write tests in Forge. The `example` construct is powerful if you want to write "pointwise" tests in terms of single instances, but can quickly become verbose. If you know what properties you're interested in testing for, you can encode that into an `assert` in Forge. For example:
 
-```
+```forge
 // I want to check that this predicate is satisfiable for some set of arguments, 
 // but I don't care about the specific instance(s) that satisfy it.
 assert {some b: Board | XTurn[b]} is sat

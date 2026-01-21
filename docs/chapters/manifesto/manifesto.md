@@ -72,7 +72,7 @@ Neither the wizard nor the gnomes can cheat. It's against magical law. The gnome
 
 Here's an example configuration of the puzzle room:
 
-| ![Picture of gnomes-puzzle setup](https://i.imgur.com/SFAoYZy.jpg) |
+| ![Picture of gnomes-puzzle setup](./gnomes_puzzle.jpg) |
 |:--:| 
 |  *(Why are they smiling?)* |
 

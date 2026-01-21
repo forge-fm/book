@@ -42,7 +42,7 @@ The problem statement seems simple: take a graph $GRAPH$ and two vertex names $V
 
 **Exercise:** Find the cheapest path from vertex $G$ to vertex $E$ on the graph below.
 
-![](https://i.imgur.com/CT7MSgl.jpg)
+![](./pbt_hypothesis.jpg)
 
 ??? note "Think, then click!"
     The path is G to A to B to E.    
@@ -154,7 +154,7 @@ Random inputs are used for many purposes in software engineering: "fuzz testing"
 
 Concretely:
 
-![A diagram of property-based testing. A random input generator, plus some manually-chosen inputs, are sent to the implementation under test. The outputs are then run through the validator function.](https://i.imgur.com/gCGDK6m.jpg)
+![A diagram of property-based testing. A random input generator, plus some manually-chosen inputs, are sent to the implementation under test. The outputs are then run through the validator function.](./pbt_diagram.jpg)
 
 It's important to note that some creativity is still involved here: you need to come up with an `is_valid` function (the "property"), and you'll almost always want to create some hand-crafted inputs (don't trust a random generator to find the subtle corner cases you already know about!) The strength of this approach lies in its resilience against problems with multiple correct answers, and in its ability to _mine for bugs while you sleep_. Did your random testing find a bug? Fix it, and then add that input to your list of regression tests. Rinse, repeat.
 

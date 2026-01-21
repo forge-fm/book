@@ -4,7 +4,7 @@ Let's return to thinking about our [mutual-exclusion](../relations/sets-inductio
 
 In a finite-state system, checking a liveness property amounts to looking for a bad cycle: some trace, starting from an initial state, that loops back on itself. Since these traces don't always loop back to the first state, we'll often call these _lasso traces_, named after a loop of rope. Here's an example. Consider the (reachable states only) transition system we drew last time:
 
-![](https://i.imgur.com/EPMcgrl.png)
+![](../relations/mutex_reachable.png)
 
 **Exercise:** Can you find a lasso trace that violates our liveness property?
 
@@ -29,7 +29,7 @@ How could we encode this sort of check in Forge? We wouldn't be able to use the 
 
 We'll add the same finite-trace infrastructure as before. This time we're able to use full Forge, so we can use the transpose (`~`) operator to say that the initial state has no predecessors.
 
-```alloy
+```forge
 one sig Trace {
     initialState: one State,
     nextState: pfunc State -> State
@@ -49,7 +49,7 @@ pred lasso {
 
 Let's test our `lasso` predicate to make sure it's satisfiable. And, because we're careful, let's make sure it's _not_ satisfiable if we don't give the trace enough states to loop back on itself:
 
-```alloy
+```forge
 test expect {
   lassoVacuity: { lasso } is sat
   lassoVacuityNotEnough: { lasso } for 2 State is unsat
@@ -77,7 +77,7 @@ This is why thinking through vacuity testing is important. It's also a reason wh
 
 If we know that the trace is a lasso, we can write a predicate that identifies some process being starved. This isn't easy, though. To see why, look at this initial attempt, which says that our property fails if `ProcessA` never enters the critical section:
 
-```alloy
+```forge
 pred badLasso {
   lasso
   all s: State | s.loc[ProcessA] != InCS

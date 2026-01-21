@@ -238,9 +238,9 @@ pred fullAdderBehavior[f: FullAdder] {
     The general design principle here is to think about _compositionality and reuse_: we'd like to be able to use the same predicates to reason about full adders by themselves, or what would happen if we connected them differently. As written, the `fullAdderBehavior` predicate doesn't allow for that; we'd have to refactor it. But I'll leave that as an exercise for now.
 
 
-Finally, we'll make a predicate that describes the behavior of the overall ripple-carry adder: 
+Finally, we'll make a predicate that describes the behavior of the overall ripple-carry adder:
 
-```
+```forge
 // Top-level system specification: compose preds above
 pred rca {  
   wellformed

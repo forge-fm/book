@@ -235,7 +235,7 @@ But how should we go about returning an instance, rather than `True`? To find ou
 
 `(!x1 or !x2) and (!x1 or !x3) and (x2 or x3)`
 
-![](https://i.imgur.com/odianeQ.jpg)
+![](./dpll_diagram.jpg)
 
 In that bottom left call, how do we conclude "conflict?" In the other bottom call, how do we conclude "success"?
 
@@ -343,7 +343,7 @@ Two formulas A and B are said to be _equisatisfiable_ when A is satisfiable if a
 
 Let's look at that formula again: `(x1 and x2) or (x3 and x4)`. View it as a boolean circuit. 
 
-![](https://i.imgur.com/fDHDyEe.png)
+![](./dpll_tree.png)
 
 What if we assigned a new variable for every internal node of the tree? We'd have `a1` and `a2` for the `and` nodes, and `o1` for the `or` node. The formula is true if and only if the `or` node is, so we'd have a unit clause: `o1` in the new formula. 
 

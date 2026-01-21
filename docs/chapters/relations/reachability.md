@@ -12,7 +12,7 @@
 
 Consider this [small Relational Forge model](reach.frg):
 
-```alloy
+```forge
 #lang forge
 sig Person {
     friends: set Person,
@@ -110,7 +110,7 @@ Forge provides an operator that does this directly for binary relations: transpo
 
 Which should you use? It's up to you! Regardless, we could now answer this question with:
 
-```alloy
+```forge
 reachable[Nim, Tim, ~followers]
 ```
 
@@ -230,7 +230,7 @@ Finally, we generate a new row in the result for every pair of matching rows, de
 
 If we wanted to encode reachability without using the built-in `reachable` predicate, we could start by writing a helper predicate:
 
-```alloy
+```forge
 pred reachable2[to: Person, from: Person, via: Person -> Person]: set Person {
     to in 
     from.via +
@@ -253,7 +253,7 @@ The _transitive closure_ `^R` of a binary relation `R` is the _smallest_ binary 
 
 That is, `^R` encodes exactly what we were trying to achieve above. The `reachable[to, from, f1, ...]` built-in is just syntactic sugar for:
 
-```alloy
+```forge
     to in from.^(f1 + ...)
 ```
 

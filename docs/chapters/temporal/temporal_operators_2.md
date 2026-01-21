@@ -143,7 +143,7 @@ Let's solve the second challenge first, since it's more foundational.
 
 We could prevent this issue by allowing a `doNothing` transition from every state. Then from Forge's perspective there's no "deadlock", and a lasso trace can be found. We can add such a transition easily enough: 
 
-```alloy
+```forge
 pred doNothing {
     flags' = flags
     loc' = loc
@@ -167,7 +167,7 @@ We saw this phenomenon earlier when we were modeling [tic-tac-toe games](../ttt/
 
 Let's look at one of our transitions:
 
-```alloy
+```forge
 pred raise[p: Process] {
     // GUARD
     World.loc[p] = Disinterested
@@ -180,7 +180,7 @@ pred raise[p: Process] {
 
 Notice it's split into a "guard" and an "action". If all the constraints in the guard are true, the transition _can_ occur. Formally, we say that if all the guard constraints hold, then the transition is _enabled_. When should `doNothing` be enabled? When no other transition is. What if we made an "enabled" predicate for each of our other transitions? Then we could write: 
 
-```alloy
+```forge
 pred doNothing {
     -- GUARD (nothing else can happen)
     not (some p: Process | enabledRaise[p]) 
@@ -194,7 +194,7 @@ pred doNothing {
 
 We won't create a separate `enabledDoNothing` predicate. But we will add `doNothing` to the set of possible moves:
 
-```alloy
+```forge
 always { 
     (some p: Process | {raise[p] or enter[p] or leave[p]})
     or doNothing 
@@ -202,7 +202,7 @@ always {
 ```
 
 And we'd also better create those 3 `enabled` predicates, too. E.g., we might write:
-```
+```forge
 pred raiseEnabled[t: Thread] {
     World.loc[t] = Uninterested 
 }
@@ -212,7 +212,7 @@ which we would then use in the `raise` transition predicate.
 
 Finally, we can write a check looking for deadlocks:
 
-```alloy
+```forge
 test expect {
     noDeadlocks_counterexample: {
         -- setup conditions

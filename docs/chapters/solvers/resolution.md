@@ -151,7 +151,7 @@ What is a proof? For our purposes today, it's a tree where:
 
 Here's an example resolution proof that shows the combination of a specific 4 clauses is contradictory:
 
-![](https://i.imgur.com/fEBkPm7.png)
+![](./resolution_1.png)
 
 !!! tip "Proof trees are data!"
     This tree is not a paragraph of text, and it isn't even a picture written on a sheet of paper. It is a _data structure_, a computational object, which we can process and manipulate in a program.
@@ -183,7 +183,7 @@ Can you prove that there's a contradiction here?
 ??? note "Prove, then click!"
     Let's just start applying the rule and generating everything we can...    
 
-    ![](https://i.imgur.com/o9sNUzk.png)
+    ![](./resolution_2.png)
 
     Wow, this is a lot of work! Notice two things:
     * we're going to end up with the same kind of 4-clause contradiction pattern as in the prior example; 
@@ -287,7 +287,7 @@ The `(-2, 4)` was an input clause. The `(2)` was an assumption.
 
 Now we're done; we have a proof:
 
-![](https://i.imgur.com/H6iqwAf.png)
+![](./resolution_3.png)
 
 Using only those two input clauses, we know that assuming `(2)` won't be productive, and (because we have a proof) we can explain why. And, crucially, because the proof is a data structure, we can manipulate it if we need to.
 
@@ -297,7 +297,7 @@ This is promising: we have a _piece_ of the overall proof of unsatisfiability th
 
 Let's rewrite the proof we generated before. We'll *remove* assumptions from the tree and recompute the result of every resolution step, resulting in a proof of something weaker that isn't contingent on any assumptions. To do this, we'll recursively walk the tree, treating inputs as the base case and resolution steps as the recursive case. In the end, we should get something like this:
 
-![](https://i.imgur.com/oAjYL8V.png)
+![](./resolution_4.png)
 
 Notice that we need to re-run resolution _after processing each node's children_ to produce the new result for that node. This suggests some of the structure we'll need:
 

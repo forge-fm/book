@@ -131,7 +131,7 @@ Now that you know how to read the input format, you might be able to see how the
 
 Consider this Forge model and corresponding `run` command:
 
-```alloy
+```forge
 abstract sig Person {
   followers: set Person
 }
@@ -160,7 +160,7 @@ The timing may vary, but the other stats will be the same. The thing to focus on
 
 Let's try increasing the size of the world:
 
-```alloy
+```forge
 run {some followers} for 4 Person
 ```
 
@@ -185,7 +185,7 @@ This is how Forge translates statements about atoms into statements about boolea
 
 Not every potential boolean needs to actually be considered, however. You might [remember](../qna/events.md) that annotations like `{next is linear}` or partial instances defined by `example` or `inst` further limit the set of variables before the boolean solver encounters them. To understand this better, let's increase the verbosity setting in Forge. This will let us look at what Forge produces as an intermediate problem description before converting to boolean logic.
 
-```alloy
+```forge
 option verbose 5
 ```
 
@@ -240,7 +240,7 @@ _Any tuple in the upper bound of a relation, that isn't also in the lower bound,
 
 Once we know the set of Boolean variables we'll use, we can translate Forge constraints to purely Boolean ones via substitution. Here's an example of how a basic compiler, without optimizations, might work.  Suppose we have the constraint:
 
-```alloy
+```forge
 all p: Person | Alice in p.followers
 ```
 
@@ -249,7 +249,7 @@ There are no `all` quantifiers in Boolean logic. How can we get rid of it?
 ??? note "Think, then click!"
     An `all` is just a big `and` over the upper bound on `Person`. So we substitute (note here we're using $Person3$ as if it were defined in our model, because it's a _potential_ part of every instance):
 
-    ```alloy
+    ```forge
     Alice in Alice.followers
     Alice in Bob.followers
     Alice in Charlie.followers
@@ -282,7 +282,7 @@ By convention, these variables are prefixed with a `$`. So if you see a relation
 
 Let's return to the original Followers model:
 
-```alloy
+```forge
 abstract sig Person {
   followers: set Person
 }
@@ -292,7 +292,7 @@ run {some followers} for exactly 3 Person
 
 We decided it probably had $512$ instances. But does it _really_? Let's hit `Next` a few times, and count! Actually, that sounds like a lot of work. Let's simplify things a bit more, instead:
 
-```alloy
+```forge
 abstract sig Person {
   follower: one Person -- changed: replace `set` with `one` 
 }
@@ -304,7 +304,7 @@ Now everybody has exactly one follower. There are still 9 potential tuples, but 
 
 Now suppose we didn't name the 3 people, but just had 3 anonymous `Person` objects:
 
-```alloy
+```forge
 sig Person {
   follower: one Person
 }

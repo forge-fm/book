@@ -6,7 +6,7 @@ This part of the notes is meant to reinforce what we'd previously done with rela
 
 Let's go back to the directed-graph model we used before:
 
-```alloy
+```forge
 #lang forge
 sig Person {
     friends: set Person,
@@ -43,7 +43,7 @@ However, there's more to `.` than this.
 
 Let's run this model, and open up the evaluator. I'll show the first instance Forge found using the table view:
 
-![](https://i.imgur.com/CXrslMn.png)
+![](./eval_table.png)
 
 We saw that `Tim.friends` produces the set of `Tim`'s friends, and that `Tim.friends.friends` produces the set of `Tim`'s friends' friends. But let's try something else. Enter this into the evaluator:
 
@@ -53,7 +53,7 @@ friends.friends
 
 This looks like a nonsense expression: there's no object to reference the `friends` field of. But it means something in Forge:
 
-![](https://i.imgur.com/2m2esUg.png)
+![](./eval_friends.png)
 
 What do you notice about this result? Recall that this is just a parenthetical way to show a set of tuples: it's got $(Person0, Person0)$ in it, and so on.
 
@@ -76,23 +76,23 @@ In a path-finding context, this is why `Tim.friends.friends.friends.friends` has
 
 Let's try this out in the evaluator:
 
-![](https://i.imgur.com/oeZWrIT.png)
+![](./eval_join1.png)
 
-![](https://i.imgur.com/B3Hyk8h.png)
+![](./eval_join2.png)
 
 Does this mean that we can write something like `followers.Tim`? Yes; it denotes the set of everyone who has `Tim` as a follower:
 
-![](https://i.imgur.com/yVaYWoz.png)
+![](./eval_followers_tim.png)
 
 Note that this is very different from `Tim.followers`, which is the set of everyone who follows `Tim`:
 
-![](https://i.imgur.com/MKu2M29.png)
+![](./eval_tim_followers.png)
 
 ### Testing Our Definition
 
 We can use Forge to validate the above definition, for relations with fixed arity. So if we want to check the definition for pairs of *binary* relations, up to a bound of `10`, we'd run:
 
-```alloy
+```forge
 test expect {
     joinDefinitionForBinary: {
         friends.followers = 
@@ -108,7 +108,7 @@ Notice that we don't include `wellformed` here: if we did, we wouldn't be checki
 
 Here's an example. Suppose you're modeling something like Dijkstra's algorithm. You'd need a weighted directed graph, which might be something like this:
 
-```alloy
+```forge
 sig Node {
     edges: Node -> Int
 }

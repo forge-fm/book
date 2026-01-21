@@ -46,7 +46,7 @@ Notice we aren't modeling the critical section itself. The exact nature of that 
 
 Let's start with a simple model. We'll critique this model as the semester progresses, but this will be useful enough to get us started. 
 
-```alloy
+```forge
 abstract sig Location {}
 one sig Uninterested, Waiting, InCS extends Location {}
 
@@ -61,7 +61,7 @@ sig State {
 
 An initial state is one where all processes are uninterested, and no process has raised its flag:
 
-```alloy
+```forge
 pred init[s: State] {
     all p: Process | s.loc[p] = Uninterested
     no s.flags 
@@ -70,7 +70,7 @@ pred init[s: State] {
 
 We then have three different transition predicates, each corresponding to one of the lines of code above, and a transition predicate `delta` that represents _any_ currently-possible transition:
 
-```alloy
+```forge
 
 pred raise[pre: State, p: Process, post: State] {
     pre.loc[p] = Uninterested
@@ -109,7 +109,7 @@ We won't create a `Trace` sig or `traces` predicate at all, because we're going 
 
 We should do some quick validation at this point. The most basic would be checking that each of our transitions is satisfiable:
 
-```alloy
+```forge
 test expect {
     canEnter: {        
         some p: Process, pre, post: State | enter[pre, p, post]        
@@ -131,7 +131,7 @@ Before we run Forge, ask yourself whether the algorithm above guarantees mutual 
 
 It seems reasonable that the property holds. But if we try to use the inductive approach to prove that:
 
-```alloy
+```forge
 pred good[s: State] {
     #{p: Process | s.loc[p] = InCS} <= 1
 }
@@ -146,7 +146,7 @@ assert all pre, post: State | startGoodTransition[pre, post] is sufficient for g
 
 The inductive case _fails_. Let's see what the counterexample is:
 
-```alloy
+```forge
     run {
       not {
         all pre, post: State | 
@@ -157,7 +157,7 @@ The inductive case _fails_. Let's see what the counterexample is:
 
 Yields, in the table view:
 
-![](https://i.imgur.com/tJsdyDV.png)
+![](./mutex_state_graph.png)
 
 Notice that neither process has raised its flag in either state. This seems suspicious, and might remind you of the binary-search model, where the `good` predicate wasn't strong enough to be inductive, but the counterexample Forge found wasn't actually reachable. This is another such situation.
 
@@ -165,7 +165,7 @@ Notice that neither process has raised its flag in either state. This seems susp
 
 This counterexample shows that the property we wrote _isn't inductive_. But it might still an invariant of the system&mdash;it's just that Forge has found an unreachable prestate. To prevent that, we'll add more conditions to the `good` predicate (recall: we call this _enriching the invariant_; it's a great demo of something apparently paradoxical: _proving something stronger can be easier_). Let's _also_ say that, in order for a process to be in the critical section, its flag needs to be true:
 
-```alloy
+```forge
 pred good2[s: State] {
     -- enrichment: if in CS, flag must be raised
     all p: Process | s.loc[p] = InCS implies p in s.flags  
@@ -176,7 +176,7 @@ pred good2[s: State] {
 
 We re-run this, and the inductive case still fails! Look closely at the counterexample. The problem now is that the flag _also_ has to be raised if a process is `Waiting`.
 
-```alloy
+```forge
 pred good3[s: State] {
     -- enrichment: if in CS or Waiting, flag must be raised
     all p: Process | (s.loc[p] = InCS or s.loc[p] = Waiting) implies p in s.flags    
@@ -195,7 +195,7 @@ At this point, the inductive check passes. **We've just shown that this algorith
 
 We should probably make sure the two proof steps (the base case and the inductive step) aren't passing vacuously:
 
-```alloy
+```forge
 test expect {
     baseCaseVacuity: {
         some s: State | init[s] and good1[s]

@@ -294,7 +294,7 @@ x < 2y
 
 Could you find a solution? Probably (at least, if you Googled or had an old algebra textbook to hand). Or, if you're like me, you might [enter it into Wolfram Alpha](https://www.wolframalpha.com/input?i=plot++x+%2B+y+%3C+3+and+x+%3C+2y):
 
-![](https://i.imgur.com/NAETuFr.png)
+![](./smt_1.png)
 
 But suppose we added a bunch of boolean operators into the mix. Now what? You can't solve a "system" if the input involves "or". 
 
@@ -358,23 +358,23 @@ f2(a) = f4(a)
 
 This system of equalities can be solved via an algorithm called _congruence closure_. It goes something like this. First, collect all the terms involved in equalities and make
 
-![](https://i.imgur.com/BKRgQH7.png)
+![](./smt_2.png)
 
 Now draw undirected edges between the terms that the positive equality constraints force to be equivalent. Since we're being told that `f3(a) = a`, we'd draw an edge between those nodes. And similarly between `f5(a)` and `a`:
 
-![](https://i.imgur.com/FnX80hb.png)
+![](./smt_3.png)
 
 But equality is transitive! So we have learned that `f5(a)` and `f3(a)` are equivalent. (This is the "closure" part of the algorithm's name.)
 
 From there, what else can we infer? Well, if `f3(a)` is the same as `a`, we can substitute `a` for `f(f(f(a)))` inside `f(f(f(f(f(a)))))`, giving us that `f(f(a))` (which we're calling `f2(a)` for brevity) is equivalent to `a` as well, since `f5(a) = a`. And since equality is transitive, `f2(a)` equals all the other things that equal `a`.
 
-![](https://i.imgur.com/NweNJdR.png)
+![](./smt_4.png)
 
 And if `f2(a) = a`, we can substitute `a` for `f(f(a))` within `f(f(f(a)))`, to get `f(a) = a`. 
 
 But this contradicts the negative equality constraint `f(a) != a`. So we've found a contradiction.
 
-![](https://i.imgur.com/6s7Rv6N.png)
+![](./smt_5.png)
 
 Now we've invented a second theory solver. The more of these we have, the more domains the solver can handle intelligently. (A natural question is: will all of these solvers work well together? The answer is not always, but we won't need to worry about that this semester.)
 
@@ -432,7 +432,7 @@ But then, counter-intuitively, $\mathbb{N}$ and $\mathbb{N} \cup \{BrownU\}$ are
 ??? note "Think, then click!"
     Yes! Here's how. For every room $i$, tell that guest to move into room $i+1$. You'll never run out of rooms, and room 0 will be free for the new guest. Every guest will need to do a finite amount of work, but assuming we can send this message to everyone at once, it works out.
 
-    ![](https://i.imgur.com/vLlsryz.png)
+    ![](./smt_6.png)
 
 
 So, it's the late 1800's. Hilbert's Hotel (and related ideas) have excited the mathematical world. Indeed, can we use this trick to show that _every_ infinite set is the same size? Are all infinities one, in a philosophical sense?
@@ -517,7 +517,7 @@ Argh! Assuming that our halting function h is a program itself: CANNOT EXIST! Th
 
   "Undecidability"
     
-![](https://i.imgur.com/1VISrAR.png)
+![](./smt_7.png)
 
 ### What Does This Have To Do With SMT?
 

@@ -10,7 +10,7 @@ The syntax that you use in `example`s and to say `is linear` for a field (like y
 
 You can even define a reusable partial instance using the `inst` command, and use it in the same place you'd use `{next is linear}` in a `run`, `assert`, etc. For example, we could pre-define the set of full adders in the [ripple-carry adder](../adder/rca.md) model, giving each an atom name:
 
-```alloy
+```forge
 inst fiveBits {
   FA = `FA0 + `FA1 + `FA2 + `FA3 + `FA4 + `FA5
 } 
@@ -19,7 +19,7 @@ run {rca} for exactly 1 RCA for {fiveBits}
 
 Because this defines the set of `FA` atoms that must exist, it does something quite similar to just saying `for exactly 5 FA`. If we then add entries for the `RCA`'s fields, we manually accomplish what `nextAdder is linear` would as well, while simultaneously making sure the first full adder in that ordering is what we see in `RCA.firstAdder`:
 
-```alloy
+```forge
 inst fiveBits {
   RCA = `RCA0 
   FA = `FA0 + `FA1 + `FA2 + `FA3 + `FA4 + `FA5

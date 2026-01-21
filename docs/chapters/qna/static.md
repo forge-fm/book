@@ -41,7 +41,7 @@ In Forge, there is a special value called `none`. It's analogous (but not exactl
 
 Suppose I add this predicate to our `run` command in the tic-tac-toe model:
 
-```alloy
+```forge
 pred myIdea {
     -- no 2 locations can share the same mark
     all rowA, colA, rowB, colB: Int | 
@@ -100,7 +100,7 @@ Checking whether or not two predicates are _equivalent_ is the core of quite a f
 
 How do you check for predicate equivalence? Well, suppose we tried to write a predicate in two different ways, like this:
 
-```alloy
+```forge
 pred myPred1 {
     some i1, i2: Int | i1 = i2
 }
@@ -113,7 +113,7 @@ assert myPred2 is necessary for myPred1
 
 These `assert` statements will pass, because the two predicates _are_ logically equivalent. But if we had written (forgetting the `not`):
 
-```alloy
+```forge
 pred myPred2 {
     all ii, i2: Int | i1 != i2
 }
@@ -149,7 +149,7 @@ Because thinking through `one` and `lone` quantifiers can be subtle, we strongly
 
 The `test expect` syntax lets you check for satisfiability directly. This is quite powerful, and lets us illustrate a fairly common mistake. Here is a test block with 2 tests in it. Both of them may look like they are comparing `myPred1` and `myPred2` for equivalence:
 
-```alloy
+```forge
 test expect {
     -- correct: "no counterexample exists"
     -- Forge tries to find an instance where myPred1 and myPred2 disagree
