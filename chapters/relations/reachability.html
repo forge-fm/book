@@ -1,0 +1,437 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Transitive Closure - Logic for Systems: Lightweight Formal Methods for Everybody</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../././mdbook-admonish.css">
+        <link rel="stylesheet" href="../.././mdbook-admonish.css">
+        <link rel="stylesheet" href="../.././custom.css">
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><a href="../../welcome.html">How to Read this book</a></li><li class="chapter-item affix "><li class="part-title">Preamble: Beyond Testing</li><li class="chapter-item "><a href="../../chapters/manifesto/job.html">What good is this book?</a></li><li class="chapter-item "><a href="../../chapters/manifesto/manifesto.html">Logic for Systems</a></li><li class="chapter-item "><a href="../../chapters/properties/pbt.html">From Tests to Properties</a></li><li class="chapter-item affix "><li class="part-title">Modeling Static Scenarios</li><li class="chapter-item "><a href="../../chapters/ttt/ttt.html">Tic-Tac-Toe</a></li><li class="chapter-item "><a href="../../chapters/bst/bst.html">Binary Search Trees</a></li><li class="chapter-item "><a href="../../chapters/adder/rca.html">Ripple-Carry Adder</a></li><li class="chapter-item "><a href="../../chapters/qna/static.html">Q&A: Static Modeling</a></li><li class="chapter-item affix "><li class="part-title">Discrete Event Systems</li><li class="chapter-item "><a href="../../chapters/ttt/ttt_games.html">Transitions, Traces, and Verification</a></li><li class="chapter-item "><a href="../../chapters/inductive/bsearch.html">Counterexamples to Induction</a></li><li class="chapter-item "><a href="../../chapters/bst/descent.html">BSTs: Recursive Descent</a></li><li class="chapter-item "><a href="../../chapters/validation/validating_events.html">Validating Models</a></li><li class="chapter-item "><a href="../../chapters/qna/events.html">Q&A: Event Systems</a></li><li class="chapter-item affix "><li class="part-title">Modeling Relationships</li><li class="chapter-item "><a href="../../chapters/relations/modeling-booleans-1.html">Relational Forge, Modeling Logic</a></li><li class="chapter-item expanded "><a href="../../chapters/relations/reachability.html" class="active">Transitive Closure</a></li><li class="chapter-item "><a href="../../chapters/relations/sets-induction-mutex.html">Modeling Mutual Exclusion</a></li><li class="chapter-item "><a href="../../chapters/relations/sets-beyond-assertions.html">Going Beyond Assertions</a></li><li class="chapter-item "><a href="../../chapters/solvers/bounds_booleans_how_forge_works.html">How does Forge Work?</a></li><li class="chapter-item "><a href="../../chapters/qna/relations.html">Q&A: Relations</a></li><li class="chapter-item affix "><li class="part-title">Temporal Specification</li><li class="chapter-item "><a href="../../chapters/temporal/liveness_and_lassos.html">Liveness and Lassos</a></li><li class="chapter-item "><a href="../../chapters/temporal/temporal_operators.html">Temporal Forge</a></li><li class="chapter-item "><a href="../../chapters/temporal/temporal_operators_2.html">Linear Temporal Logic</a></li><li class="chapter-item "><a href="../../chapters/temporal/obligations_past.html">Obligations and the Past</a></li><li class="chapter-item "><a href="../../chapters/temporal/fixing_lock_temporal.html">Mutual Exclusion, Revisited</a></li><li class="chapter-item "><a href="../../chapters/temporal/testing_temporal.html">Testing Temporally</a></li><li class="chapter-item affix "><li class="part-title">Boolean Solver Algorithms</li><li class="chapter-item "><a href="../../chapters/solvers/dpll.html">Boolean SAT (DPLL)</a></li><li class="chapter-item "><a href="../../chapters/solvers/resolution.html">Witnessing Unsat: Propositional resolution</a></li><li class="chapter-item affix "><li class="part-title">Beyond SAT</li><li class="chapter-item "><a href="../../chapters/solvers/smt.html">Satisfiability Modulo Theories (SMT)</a></li><li class="chapter-item "><a href="../../chapters/solvers/cegis.html">Learning with Solvers: CEGIS</a></li><li class="chapter-item affix "><li class="part-title">Case Studies and Further Reading</li><li class="chapter-item "><div>Modeling Raft in Anger</div></li><li class="chapter-item "><div>Forge: Comparing Prim's and Dijkstra's Algorithms</div></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Logic for Systems: Lightweight Formal Methods for Everybody</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h1 id="relations-and-reachability"><a class="header" href="#relations-and-reachability">Relations and Reachability</a></h1>
+<!-- ~~~admonish note title="Brown CSCI 1710"
+
+* Hopefully everyone has been making good progress with Curiosity Modeling! I'm seeing a lot of awesome questions on Ed and at hours. 
+* Some of you are curious about how far you need to go to earn a check on the project. This is hard to give a precise answer to, because everyone's models will be different. However, I can say that we're looking for:
+    * evidence that you explored your topic of choice;
+    * evidence that you validated your model;
+    * something you _got_ from the model (generating or solving puzzles, checking a property, or even just understanding a domain better).
+* **There's a lab this week** that focuses on _sets_ and other _relational_ concepts. You'll be exploring automated memory management in Forge. This lab leads directly into the next homework, and is meant to give you useful insight into how these systems work.
+
+~~~ -->
+<p>Consider this <a href="reach.frg">small Relational Forge model</a>:</p>
+<pre><code class="language-alloy">#lang forge
+sig Person {
+    friends: set Person,
+    followers: set Person
+}
+one sig Nim, Tim extends Person {}
+
+pred wellformed {
+    -- friends is symmetric (followers might not be)
+    all disj p1, p2: Person | p1 in p2.friends implies p2 in p1.friends 
+    -- you cannot follow or friend yourself
+    all p: Person | p not in p.friends and p not in p.followers
+}
+run {wellformed} for exactly 8 Person
+</code></pre>
+<p>Let's run it, get a reasonably large instance, and try to figure out how to express some goals in the evaluator. </p>
+<p><strong>EXERCISE</strong>: You'll be following along with each of these questions. Use the evaluator heavily---it's great for figuring out what different expressions evaluate to.</p>
+<h4 id="expression-nims-followers"><a class="header" href="#expression-nims-followers">Expression: Nim's followers</a></h4>
+<details>
+<summary>Think, then click!</summary>
+<p>This is just <code>Nim.followers</code>.</p>
+</details>
+<h4 id="formula-nim-is-reachable-from-tim-via-followers"><a class="header" href="#formula-nim-is-reachable-from-tim-via-followers">Formula: Nim is reachable from Tim via &quot;followers&quot;</a></h4>
+<details>
+<summary>Think, then click!</summary>
+<p>We can use the <code>reachable</code> built-in: <code>reachable[Nim, Tim, followers]</code>.</p>
+</details>
+<h4 id="expression-nims-followers-followers"><a class="header" href="#expression-nims-followers-followers">Expression: Nim's followers' followers</a></h4>
+<details>
+<summary>Think, then click!</summary>
+<p>Another application of the field! <code>Nim.followers.followers</code>.</p>
+<p>But wait, what does this really mean? Since <code>Nim.followers</code> is a set, rather than a <code>Person</code>, should I be able to apply <code>.followers</code> to it? If we try this in the evaluator, it works, but we're no longer just doing a &quot;field access&quot;; something more must be going on. </p>
+</details>
+<h4 id="formula-nim-is-reachable-from-tim-via-the-inverse-of-followers-what-we-might-call-following"><a class="header" href="#formula-nim-is-reachable-from-tim-via-the-inverse-of-followers-what-we-might-call-following">Formula: Nim is reachable from Tim via the inverse of &quot;followers&quot; (what we might call &quot;following&quot;)?</a></h4>
+<details>
+<summary>Think, then click!</summary>
+<p>Hmm. This seems harder. We don't have a field called <code>following</code>, and the <code>reachable</code> built-in takes fields! </p>
+<p>...it does take fields, right? Or might it take something more flexible? Can we use <em>set operations</em> to adjust the potential edges that <code>reachable</code> looks at?</p>
+</details>
+<p>To figure that out, let's try something else.</p>
+<h4 id="formula-nim-is-reachable-from-tim-via-followers-but-not-including-tims-friends"><a class="header" href="#formula-nim-is-reachable-from-tim-via-followers-but-not-including-tims-friends">Formula: Nim is reachable from Tim via followers, but not including Tim's friends?</a></h4>
+<details>
+<summary>Think, then click!</summary>
+<p>We might try <code>reachable[Nim, Tim, (followers-Tim.friends)]</code> but this will produce an error. Why? Well, one reason we might give is:</p>
+<blockquote>
+<p>...because <code>followers</code> is a field but <code>Tim.friends</code> is a set.</p>
+</blockquote>
+<p>But is that the real answer? The error complains about &quot;arity&quot;: 2 vs 1. Let's type those two expressions into the evaluator and see what we get. For <code>followers</code>, we get a set of <em>pairs</em> of people. But <code>Tim.friends</code> is a set of <em>singletons</em>. </p>
+</details>
+<!-- ~~~admonish warning title="Evaluator Output" 
+The evaluator prints expression values as parenthesized lists of lists. But don't be fooled! It's really printing a _set_ of _lists_. The order in which the inner lists print shouldn't matter.
+~~~ -->
+<div id="admonition-arity-relations-and-tuples" class="admonition admonish-tip">
+<div class="admonition-title">
+<p>Arity, Relations, and Tuples</p>
+<p><a class="admonition-anchor-link" href="#admonition-arity-relations-and-tuples"></a></p>
+</div>
+<div>
+<p><em>Arity</em> is another word for how wide the elements of a set are. Here, we'd say that <code>followers</code> has arity 2 since elements of <code>followers</code> are pairs of atoms. Similarly, <code>Tim.friends</code> has arity 1 since its elements are singletons. So Forge is pointing out that taking the set difference of these two makes no sense; their elements are shaped differently.</p>
+<p>When we're talking about sets in this way, we sometimes call them <em>relations</em>. E.g., the <code>followers</code> field is a <em>binary relation</em> because it has arity 2. We'll call elements of relations <em>tuples</em>. E.g., if <code>Nim</code> follows <code>Tim</code>, the tuple <code>(Tim, Nim)</code> would be present in <code>followers</code>.</p>
+</div>
+</div>
+<p>In Relational Forge, <code>reachable</code> doesn't take &quot;fields&quot;; it takes relations. Specifically, binary relations, which define the steps it can use to connect the two objects. That's the fact we'll use to solve the 2 problems above. </p>
+<h4 id="attempt-2-formula-nim-is-reachable-from-tim-via-the-inverse-of-followers-what-we-might-call-following"><a class="header" href="#attempt-2-formula-nim-is-reachable-from-tim-via-the-inverse-of-followers-what-we-might-call-following">(Attempt 2) Formula: Nim is reachable from Tim via the inverse of &quot;followers&quot; (what we might call &quot;following&quot;)?</a></h4>
+<p>Now that we know <code>followers</code> is a binary relation, we can imagine flipping it to get its inverse. How can we do that? Well, there are multiple ways! We could write a set-comprehension:</p>
+<pre><code>{p1, p2: Person | p1 in p2.followers}
+</code></pre>
+<p>The order matters here! If <code>p1</code> is in <code>p2.followers</code>, then there is an entry in the relation that looks like <code>(p2, p1)</code>. We could make this more explicit by writing:</p>
+<pre><code>{p1, p2: Person | p2-&gt;p1 in followers}
+</code></pre>
+<p>Now that we know <code>followers</code> is a set, this makes sense! The <em>product</em> (<code>-&gt;</code>) operator combines <code>p2</code> and <code>p1</code> into a binary tuple, which may (or may not) be in <code>followers</code>.</p>
+<p>Forge provides an operator that does this directly for binary relations: transpose (<code>~</code>). So we could write instead:</p>
+<pre><code>~followers
+</code></pre>
+<p>Which should you use? It's up to you! Regardless, we could now answer this question with:</p>
+<pre><code class="language-alloy">reachable[Nim, Tim, ~followers]
+</code></pre>
+<h4 id="attempt-2-formula-nim-is-reachable-from-tim-via-followers-but-not-including-tims-friends"><a class="header" href="#attempt-2-formula-nim-is-reachable-from-tim-via-followers-but-not-including-tims-friends">(Attempt 2) Formula: Nim is reachable from Tim via followers, but not including Tim's friends?</a></h4>
+<p>Everything is a set, so let's build the subset of <code>followers</code> that doesn't involve anyone in <code>Tim.friends</code>. We can't write <code>followers-(Tim.friends)</code>, since that's an arity mismatch. Somehow, we need to remove entries in <code>followers</code> involving one of Tim's friends <em>and anybody else</em>. </p>
+<p>One way is to use the product operator to build the binary relation we want <code>reachable</code> to use. E.g.:</p>
+<pre><code>reachable[Nim, Tim, followers-(Tim.friends-&gt;Person)]
+</code></pre>
+<div id="admonition-default" class="admonition admonish-tip">
+<div>
+<p>You may notice that we've now used <code>-&gt;</code> in what seems like 2 different ways. We used it to combine specific people, <code>p1</code> and <code>p2</code> above into a single tuple. But now we're using it to combine two <em>sets</em> into a <em>set</em> of tuples. This flexibility is a side effect of sets being the fundamental concept in Relational Forge:</p>
+<ul>
+<li>the product of <code>((Tim))</code> and <code>((Nim))</code> is <code>((Tim, Nim))</code>; </li>
+<li>the product of <code>((Person1), (Person2))</code> and <code>((Person3), (Person4))</code> is <code>((Person1, Person3), (Person1, Person4), (Person2, Person3), (Person2, Person4))</code>. </li>
+</ul>
+<p>Formally, <code>-&gt;</code> is the cross-product operation on sets. </p>
+<p>You'll see this apparently double-meaning when using <code>in</code> and <code>=</code>, too: singletons are single-element sets, where the element is a one-column tuple.</p>
+</div>
+</div>
+<h2 id="what-is-dot-really"><a class="header" href="#what-is-dot-really">What is Dot, Really?</a></h2>
+<p>In Relational Forge, the dot operator is called <em>relational join</em>. The expression <code>A.B</code> combines two arbitrary relations <code>A</code> and <code>B</code> by seeking out rows with common values in their rightmost (in <code>A</code>) and leftmost (in <code>B</code>) columns. Concretely, if <code>A</code> is an <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">n</span></span></span></span>-ary relation, and <code>B</code> is <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">m</span></span></span></span>-ary, then <code>A.B</code> equals the <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal">m</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span></span></span></span>-ary relation:</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">{</span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">...</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">b</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">...</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">b</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">m</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord">∣</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord">∃</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mord">∣</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">...</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">n</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2083em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">A</span><span class="mord text"><span class="mord"> and </span></span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">b</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">...</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">b</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">m</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.05017em;">B</span><span class="mclose">}</span></span></span></span></span></p>
+<p>That's a lot, so let's work through some examples. Suppose that we have the following relation for the <code>friend</code> field of <code>Person</code>:</p>
+<div class="table-wrapper"><table><thead><tr><th>column 1</th><th>column 2</th></tr></thead><tbody>
+<tr><td><code>Tim</code></td><td><code>Person0</code></td></tr>
+<tr><td><code>Tim</code></td><td><code>Person1</code></td></tr>
+<tr><td><code>Person0</code></td><td><code>Person1</code></td></tr>
+<tr><td><code>Person0</code></td><td><code>Tim</code></td></tr>
+<tr><td><code>Person1</code></td><td><code>Person0</code></td></tr>
+<tr><td><code>Person1</code></td><td><code>Person2</code></td></tr>
+<tr><td><code>Person1</code></td><td><code>Tim</code></td></tr>
+<tr><td><code>Person2</code></td><td><code>Person1</code></td></tr>
+<tr><td><code>Person2</code></td><td><code>Nim</code></td></tr>
+<tr><td><code>Nim</code></td><td><code>Person2</code></td></tr>
+</tbody></table>
+</div>
+<p>We know that join can often work like field access. So we'd expect <code>Tim.friend</code> to produce a set containing <code>Person0</code> and <code>Person1</code>. Why? Because we see <code>Tim</code> in the <em>left</em> column of 2 rows, and the <em>right</em> columns of those rows contain <code>Person0</code> and <code>Person1</code>. </p>
+<p>But what about each of the following?</p>
+<div id="admonition-try-the-evaluator" class="admonition admonish-tip">
+<div class="admonition-title">
+<p>Try the evaluator!</p>
+<p><a class="admonition-anchor-link" href="#admonition-try-the-evaluator"></a></p>
+</div>
+<div>
+<p>To build intuition for <code>.</code>, try expressions like this in the evaluator after reading the following examples.</p>
+</div>
+</div>
+<h4 id="friendtim"><a class="header" href="#friendtim"><code>friend.Tim</code></a></h4>
+<p>Here we run the same process that gave us a value for <code>Tim.friend</code>, but in reverse. Which rows do we see <code>Tim</code> in the <em>right</em> column? </p>
+<center><img width="40%" src="./Join2.png" style="background-color:white"/></center>
+<p>Because <code>friend</code> is symmetric, it's the same: <code>friend.Tim</code> is the same as <code>Tim.friend</code>, a set containing <code>Person0</code> and <code>Person1</code>. </p>
+<hr />
+<h4 id="friendfriend"><a class="header" href="#friendfriend"><code>friend.friend</code></a></h4>
+<p>Before trying to compute the value, first answer: </p>
+<p><strong>Exercise:</strong> What is the arity of <code>friend.friend</code>?</p>
+<details>
+<summary>Think, then click!</summary>
+<p>Well, <code>friend</code> has arity <code>2</code>, and a join subtracts one column from each side. So we expect <code>friend.friend</code> to have arity <code>1+1=2</code>. </p>
+</details>
+<p>Now, what's the value? Start by looking for matches. Here are some of them (the ones on <code>Person0</code>): </p>
+<center><img width="40%" src="./Join3.png" style="background-color:white"/></center>
+<p>Continuing, we'll find matches on <code>Person1</code>, <code>Tim</code>, and others. Because some people have a lot of friends, the graph is getting difficult to read, but notice what's happening: we're identifying <em>matching pairs of rows</em> in each relation.</p>
+<center><img width="40%" src="./Join4.png" style="background-color:white"/></center>
+<p>Finally, we generate a new row in the result for every pair of matching rows, deleting the inner columns we matched on: <code>Tim-&gt;Person1</code> is in the result because <code>Tim-&gt;Person0</code> is in <code>friends</code> (the left-hand side of the join) and <code>Person0-&gt;Person1</code> is in <code>friends</code> (the right-hand side of the join). We'll get one row for every match (but we won't keep duplicates):</p>
+<div class="table-wrapper"><table><thead><tr><th>column 1</th><th>column 2</th></tr></thead><tbody>
+<tr><td><code>Tim</code></td><td><code>Person1</code></td></tr>
+<tr><td><code>Tim</code></td><td><code>Person2</code></td></tr>
+<tr><td><code>Tim</code></td><td><code>Tim</code></td></tr>
+<tr><td><code>Person0</code></td><td><code>Person0</code></td></tr>
+<tr><td><code>Person0</code></td><td><code>Person1</code></td></tr>
+<tr><td><code>Person0</code></td><td><code>Person2</code></td></tr>
+<tr><td><code>Person0</code></td><td><code>Tim</code></td></tr>
+<tr><td><code>Person1</code></td><td><code>Person0</code></td></tr>
+<tr><td><code>Person1</code></td><td><code>Person1</code></td></tr>
+<tr><td><code>Person1</code></td><td><code>Tim</code></td></tr>
+<tr><td><code>Person1</code></td><td><code>Nim</code></td></tr>
+<tr><td><code>Person2</code></td><td><code>Person0</code></td></tr>
+<tr><td><code>Person2</code></td><td><code>Person2</code></td></tr>
+<tr><td><code>Person2</code></td><td><code>Tim</code></td></tr>
+<tr><td><code>Nim</code></td><td><code>Nim</code></td></tr>
+<tr><td><code>Nim</code></td><td><code>Person2</code></td></tr>
+</tbody></table>
+</div>
+<p><strong>This is the set of <em>friend-of-friend</em> relationships.</strong> If we computed <code>friend.friend.friend</code>, we'd get the <em>friend-of-friend-of-friend</em> relationships, and so on.</p>
+<p><strong>TODO: double-check this</strong></p>
+<hr />
+<p><strong>Exercise:</strong> What about <code>Tim.Tim</code>?</p>
+<details>
+<summary>Think, then click!</summary>
+<p>This will give an error because the result has arity <code>0</code>. </p>
+</details>
+<h2 id="how-reachability-works"><a class="header" href="#how-reachability-works">How Reachability Works</a></h2>
+<p>If we wanted to encode reachability without using the built-in <code>reachable</code> predicate, we could start by writing a helper predicate:</p>
+<pre><code class="language-alloy">pred reachable2[to: Person, from: Person, via: Person -&gt; Person]: set Person {
+    to in 
+    from.via +
+    from.via.via +
+    from.via.via.via 
+    -- ...and so on...
+}
+</code></pre>
+<p>But we always have to stop writing somewhere. We could write the union out to 20 steps, and still we wouldn't catch some very long (length 21 or higher) paths. So we need some way to talk about <em>unbounded reachability</em>, or at least reachability up to a path length that's influenced by the problem bounds.</p>
+<p>Forge's <code>reachable</code> built-in does this, but it's just a facade over a new relational operator: transitive closure (<code>^R</code>).</p>
+<p>The <em>transitive closure</em> <code>^R</code> of a binary relation <code>R</code> is the <em>smallest</em> binary relation such that:</p>
+<ul>
+<li>if <code>x-&gt;y</code> is in <code>R</code>, then <code>x-&gt;y</code> is in <code>^R</code>; and</li>
+<li>if <code>x-&gt;z</code> is in <code>R</code> and <code>z-&gt;y</code> is in <code>^R</code> then <code>x-&gt;y</code> is in <code>R</code>.</li>
+</ul>
+<p>That is, <code>^R</code> encodes exactly what we were trying to achieve above. The <code>reachable[to, from, f1, ...]</code> built-in is just syntactic sugar for:</p>
+<pre><code class="language-alloy">    to in from.^(f1 + ...)
+</code></pre>
+<p>You might remember that <code>reachable</code> always evaluates to true if we give <code>none</code> as its first argument. This is because of the translation above: if <code>to</code> is the empty set, then it is a subset of anything. </p>
+<!-- ~~~admonish tip title="Design Discussion"
+You might wonder why we don't translate `reachable[to, from, f1, ...]` to something like `to in from.^(f1 + ...) and some to`. This would, after all, fix the problem of `none` being reachable from everything! The answer is that this fix might cause other confusion, and either way the ...
+...
+~~~ -->
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../chapters/relations/modeling-booleans-1.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../chapters/relations/sets-induction-mutex.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../chapters/relations/modeling-booleans-1.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../chapters/relations/sets-induction-mutex.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../../ace.js"></script>
+        <script src="../../editor.js"></script>
+        <script src="../../mode-rust.js"></script>
+        <script src="../../theme-dawn.js"></script>
+        <script src="../../theme-tomorrow_night.js"></script>
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

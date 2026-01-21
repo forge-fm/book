@@ -1,0 +1,415 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Logic for Systems - Logic for Systems: Lightweight Formal Methods for Everybody</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../././mdbook-admonish.css">
+        <link rel="stylesheet" href="../.././mdbook-admonish.css">
+        <link rel="stylesheet" href="../.././custom.css">
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><a href="../../welcome.html">How to Read this book</a></li><li class="chapter-item affix "><li class="part-title">Preamble: Beyond Testing</li><li class="chapter-item "><a href="../../chapters/manifesto/job.html">What good is this book?</a></li><li class="chapter-item expanded "><a href="../../chapters/manifesto/manifesto.html" class="active">Logic for Systems</a></li><li class="chapter-item "><a href="../../chapters/properties/pbt.html">From Tests to Properties</a></li><li class="chapter-item affix "><li class="part-title">Modeling Static Scenarios</li><li class="chapter-item "><a href="../../chapters/ttt/ttt.html">Tic-Tac-Toe</a></li><li class="chapter-item "><a href="../../chapters/bst/bst.html">Binary Search Trees</a></li><li class="chapter-item "><a href="../../chapters/adder/rca.html">Ripple-Carry Adder</a></li><li class="chapter-item "><a href="../../chapters/qna/static.html">Q&A: Static Modeling</a></li><li class="chapter-item affix "><li class="part-title">Discrete Event Systems</li><li class="chapter-item "><a href="../../chapters/ttt/ttt_games.html">Transitions, Traces, and Verification</a></li><li class="chapter-item "><a href="../../chapters/inductive/bsearch.html">Counterexamples to Induction</a></li><li class="chapter-item "><a href="../../chapters/bst/descent.html">BSTs: Recursive Descent</a></li><li class="chapter-item "><a href="../../chapters/validation/validating_events.html">Validating Models</a></li><li class="chapter-item "><a href="../../chapters/qna/events.html">Q&A: Event Systems</a></li><li class="chapter-item affix "><li class="part-title">Modeling Relationships</li><li class="chapter-item "><a href="../../chapters/relations/modeling-booleans-1.html">Relational Forge, Modeling Logic</a></li><li class="chapter-item "><a href="../../chapters/relations/reachability.html">Transitive Closure</a></li><li class="chapter-item "><a href="../../chapters/relations/sets-induction-mutex.html">Modeling Mutual Exclusion</a></li><li class="chapter-item "><a href="../../chapters/relations/sets-beyond-assertions.html">Going Beyond Assertions</a></li><li class="chapter-item "><a href="../../chapters/solvers/bounds_booleans_how_forge_works.html">How does Forge Work?</a></li><li class="chapter-item "><a href="../../chapters/qna/relations.html">Q&A: Relations</a></li><li class="chapter-item affix "><li class="part-title">Temporal Specification</li><li class="chapter-item "><a href="../../chapters/temporal/liveness_and_lassos.html">Liveness and Lassos</a></li><li class="chapter-item "><a href="../../chapters/temporal/temporal_operators.html">Temporal Forge</a></li><li class="chapter-item "><a href="../../chapters/temporal/temporal_operators_2.html">Linear Temporal Logic</a></li><li class="chapter-item "><a href="../../chapters/temporal/obligations_past.html">Obligations and the Past</a></li><li class="chapter-item "><a href="../../chapters/temporal/fixing_lock_temporal.html">Mutual Exclusion, Revisited</a></li><li class="chapter-item "><a href="../../chapters/temporal/testing_temporal.html">Testing Temporally</a></li><li class="chapter-item affix "><li class="part-title">Boolean Solver Algorithms</li><li class="chapter-item "><a href="../../chapters/solvers/dpll.html">Boolean SAT (DPLL)</a></li><li class="chapter-item "><a href="../../chapters/solvers/resolution.html">Witnessing Unsat: Propositional resolution</a></li><li class="chapter-item affix "><li class="part-title">Beyond SAT</li><li class="chapter-item "><a href="../../chapters/solvers/smt.html">Satisfiability Modulo Theories (SMT)</a></li><li class="chapter-item "><a href="../../chapters/solvers/cegis.html">Learning with Solvers: CEGIS</a></li><li class="chapter-item affix "><li class="part-title">Case Studies and Further Reading</li><li class="chapter-item "><div>Modeling Raft in Anger</div></li><li class="chapter-item "><div>Forge: Comparing Prim's and Dijkstra's Algorithms</div></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Logic for Systems: Lightweight Formal Methods for Everybody</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h1 id="logic-for-systems"><a class="header" href="#logic-for-systems">Logic for Systems</a></h1>
+<h2 id="setting-the-stage"><a class="header" href="#setting-the-stage">Setting the Stage</a></h2>
+<p>If you're reading this book, you've probably had to complete some programming assignments—or at least written some small program for a course or an online tutorial. Take a moment to list a handful of such assignments: what did you have to build? </p>
+<p>Now ask yourself:</p>
+<ul>
+<li>How did you know what behavior to implement?</li>
+<li>How did you know which data structures or algorithms were the right ones to use?</li>
+<li>How did you know your program &quot;worked&quot;, in the end?</li>
+</ul>
+<p>In the context of assignments, there are expected answers to these questions. For instance, you might say you know your code worked because you tested it (<em>very</em> thoroughly, I'm sure)! But is that really the truth? In terms of consequences, the true bar for excellence in a programming class is the grade you got. That is:</p>
+<ul>
+<li>You knew what to do because <em>you were told what to do</em>.</li>
+<li>You probably knew which algorithms to use because they'd <em>just been taught to you</em>.</li>
+<li>You were confident that your programs worked because <em>you were told by an authority figure</em>.</li>
+</ul>
+<p>But outside that context, as (say) a professional engineer, you lose the safety net. You might be working on a program that controls the fate of billions of dollars, tempers geopolitical strife, or controls a patient's insulin pump. Even if you had a TA, would you trust them to tell you that those programs worked? Would you trust your boss to understand <em>exactly</em> what needed to happen, and tell you <em>exactly</em> how to do it? Probably not! Instead, you need to think carefully about what you want, how to build it, and how to evaluate what you and others have built. </p>
+<div id="admonition-dont-let-the-perfect-be-the-enemy-of-the-good" class="admonition admonish-warning">
+<div class="admonition-title">
+<p>Don't let the perfect be the enemy of the good.</p>
+<p><a class="admonition-anchor-link" href="#admonition-dont-let-the-perfect-be-the-enemy-of-the-good"></a></p>
+</div>
+<div>
+<p>As engineers, we strive for perfection. But perfection is an ideal; it's not obtainable. Why? First: we're human. Even if we could read our customers' minds, that's no guarantee that <em>they</em> know what they really need. And even if we can prove our code is correct, we might be checking for the wrong things. Second: our environment is hostile. Computers break. Patches to dependencies introduce errors. Cosmic radiation can flip bits in memory. 100% reliability is hopeless. Anyone who tells you differently is trying to sell you something. </p>
+<p>But that doesn't mean we should give up. It just means that we should moderate our expectations. Instead of focusing on perfect correctness, instead try to <em>increase your confidence</em> in correctness.</p>
+</div>
+</div>
+<h2 id="unit-testing"><a class="header" href="#unit-testing">Unit Testing</a></h2>
+<p>Hopefully we all agree that unit testing with concrete input-output pairs has its virtues and that we should keep doing it. But let's investigate what it does and doesn't do well. </p>
+<p><strong>Exercise:</strong> Make two lists: What does unit testing do well? What doesn't it do well? (Hint: Why do we test? What could go wrong, and how can the sort of testing you've done in other classes let us down?)</p>
+<details>
+<summary>Think, then click!</summary>
+<p>You might have observed that (for most interesting programs, anyway) tests cannot be exhaustive because there are infinitely many possible inputs. And since we're forced to test non-exhaustively, we have to hope we pick good tests---tests that not only focus on our own implementation, but on others (like the implementation that replaces yours eventually) too.</p>
+<p>Worse, we can't test the things we don't think of, or don't know about; we're vulnerable to our limited knowledge, the availability heuristic, confirmation bias, and so on. In fact, we humans are generally ill equipped for logical reasoning, even if trained. </p>
+</details> 
+<h2 id="humans-and-reasoning"><a class="header" href="#humans-and-reasoning">Humans and Reasoning</a></h2>
+<h3 id="a-toy-example"><a class="header" href="#a-toy-example">A Toy Example</a></h3>
+<p>Suppose we're thinking about the workings of a small company. We're given some facts about the company, and have to answer a question based on those facts. Here's an example. We know that:</p>
+<ul>
+<li>Alice directly supervises Bob.</li>
+<li>Bob directly supervises Charlie.</li>
+<li>Alice graduated Brown.</li>
+<li>Charlie graduated Harvale.</li>
+</ul>
+<p>To keep things simple, we'll assume that all three people graduated some university.</p>
+<p><strong>Exercise:</strong> Does someone who graduated from Brown directly supervise someone who graduated from another University?</p>
+<details>
+<summary>Think, then click.</summary>
+<p>Yes! Regardless of whether Bob graduated from Brown, <em>some</em> Brown graduate supervises <em>some</em> non-Brown graduate. Reasoning by hypotheticals, there is one fact we don't know: where Bob graduated. In case he graduated Brown, he supervises Charlie, a non-Brown graduate. In case he graduated from another school, he's supervised by Alice, a Brown graduate.</p>
+<p>Humans tend to be very bad at reasoning by hypotheticals. There's a temptation to think that this puzzle isn't solvable because we don't know where Bob graduated from. Even Tim thought this at first after seeing the puzzle—in grad school! For logic!</p>
+</details>
+<hr />
+<p>Now imagine a puzzle with a thousand of these unknowns. A thousand boolean variables means <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1000</span></span></span></span></span></span></span></span></span></span></span></span> cases to reason through. Want to use a computer yet?</p>
+<!-- ### Reasoning about knowledge
+
+There is a prison in a magical world where an evil wizard holds a family of four gnomes. Every day, the wizard forces the gnomes to play a game for their freedom: he lines them up, single-file, in one or more rooms, facing the wall. The gnomes cannot move or communicate with each other; they can only look straight ahead. The wizard then pulls out four hats: two orange and two blue, and magics one onto each gnome's head.
+
+The wizard then walks the line, asking each gnome: "What is your hat color?" They may try to answer, or remain silent for 10 seconds (and then the wizard moves on). If a gnome guesses correctly, they all immediately go free. But if one guesses incorrectly, they become the wizard's magical servants forever. So it's in their best interest to not answer unless they are absolutely convinced that they have guessed correctly.
+
+Neither the wizard nor the gnomes can cheat. It's against magical law. The gnomes are, however, very intelligent. Smarter than the wizard for sure: they're perfect logical reasoners.
+
+Here's an example configuration of the puzzle room:
+
+| ![Picture of gnomes-puzzle setup](https://i.imgur.com/SFAoYZy.jpg) |
+|:--:| 
+|  *(Why are they smiling?)* |
+
+**Exercise:** In this configuration, can the gnomes escape? If so, why?
+
+<details>
+    <summary>Think, then click.</summary>
+
+Yes! The gnomes can escape, because they're able to use the knowledge of other gnomes _without explicit communication_. When the wizard asks Gnome #2 what color their hat is, Gnome #2 can conclude nothing, and is silent. Gnome #3 can then reason that his hat, and the hat of Gnome #4, must be different colors. Only two colors are possible. And so the wizard is thwarted.
+</details>
+
+To solve this puzzle, you need to reason about what the other agents know, and what we expect them to do with that knowledge. These sorts of epistemic statements can be useful in practice. -->
+<p><strong>This isn't really about logic puzzles.</strong></p>
+<h3 id="a-real-scenario"><a class="header" href="#a-real-scenario">A Real Scenario</a></h3>
+<p>There's a real cryptographic protocol called the Needham-Schroeder public-key protocol. You can read about it <a href="https://en.wikipedia.org/wiki/Needham%E2%80%93Schroeder_protocol#The_public-key_protocol">here</a>. Unfortunately the protocol has a bug: it's vulnerable to attack if one of the principles can be fooled into starting an exchange with a badly-behaved or compromised agent. We won't go into specifics. Instead, let's focus on the fact that it's quite easy to get things like protocols wrong, and sometimes challenging for us humans to completely explore all possible behaviors -- especially since there might be behaviors we'd never even considered! It sure would be nice if we could get a computer to help out with that.</p>
+<p>A pair of former 1710 students did an <a href="http://cs.brown.edu/~tbn/publications/ssdnk-fest21-forge.pdf">ISP on modeling crypto protocols</a>, using the tools you'll learn in class. Here's an example picture, generated by their model, of the flaw in the Needham-Schroeder protocol:</p>
+<p><img src="./ns-custom.png" alt="An execution of the Needham-Schroeder protocol." /></p>
+<p>You don't need to understand the specifics of the visualization; the point is that someone who has studied crypto protocols <strong>would</strong>. And this really does show the classic attack on Needham-Schroeder. You may not be a crypto-protocol person, but you probably are an expert in something subtle that you'd like to model, reason about, and understand better. </p>
+<div id="admonition-brown-csci-1710" class="admonition admonish-warning">
+<div class="admonition-title">
+<p>Brown CSCI 1710</p>
+<p><a class="admonition-anchor-link" href="#admonition-brown-csci-1710"></a></p>
+</div>
+<div>
+<p>In fact, if you're reading this as part of your coursework for CSCI 1710, you will be <em>expected</em> to select, research, and model something yourself based on your interests. This is one of our main end-goals for the course.</p>
+</div>
+</div>
+<h2 id="automated-reasoning-as-an-assistive-device"><a class="header" href="#automated-reasoning-as-an-assistive-device">Automated Reasoning as an Assistive Device</a></h2>
+<p>The human species has been so successful, in part, because of our ability to use assistive devices—tools! Eyeglasses, bicycles, hammers, bridges: all devices that assist us in navigating the world in our fragile meat-bodies. One of our oldest inventions, writing, is an assistive device that increases our long-term memory space and makes that memory <em>persistent</em>. Computers are only one in a long line of such inventions.</p>
+<p>So, naturally, we've found ways to:</p>
+<ul>
+<li>use computers to help us test our ideas;</li>
+<li>use computers to exhaustively check program correctness;</li>
+<li>use computers to help us find gaps in our intuition about a program;</li>
+<li>use computers to help us explore the design space of a data structure, or algorithm, card game, or chemical reaction; </li>
+<li>etc.</li>
+</ul>
+<p>There's a large body of work in Computer Science that uses logic to do all those things. We tend to call it <em>formal methods</em>, especially when the focus is on reasoning about systems. It touches on topics like system modeling, constraint solving, program analysis, design exploration, and more. That's what this book is about: the foundational knowledge to engage with many different applications of these ideas, even if you don't end up working with them directly every day. </p>
+<p>More concretely, we'll focus on a class of techniques called <em>lightweight</em> formal methods, which are characterized by tradeoffs that favor ease of use over strong guarantees (although we'll sometimes achieve those as well).</p>
+<div id="admonition-further-reading" class="admonition admonish-tip">
+<div class="admonition-title">
+<p>Further Reading</p>
+<p><a class="admonition-anchor-link" href="#admonition-further-reading"></a></p>
+</div>
+<div>
+<p>Jeanette Wing and Daniel Jackson wrote a short article coining the term &quot;lightweight FM&quot; in the 90's, which you can find <a href="http://www.cs.cmu.edu/~wing/publications/JacksonWing96.pdf">online</a>.</p>
+</div>
+</div>
+<div id="admonition-what-is-a-system" class="admonition admonish-warning">
+<div class="admonition-title">
+<p>What is a system?</p>
+<p><a class="admonition-anchor-link" href="#admonition-what-is-a-system"></a></p>
+</div>
+<div>
+<p>When we say &quot;systems&quot; in this book we don't necessarily mean the kind of systems you see in a class on networks, hardware architecture, or operating systems. You can apply the techniques in this book to those subjects quite naturally, but you can also apply it to user interfaces, type systems in programming, hardware, version control systems like Git, web security, cryptographic protocols, robotics, puzzles, sports and games, and much more. So we construe the word &quot;system&quot; very broadly.</p>
+<p>Here are some examples of &quot;systems&quot; that students have modeled in Forge: lifetimes in Rust, network reachability, and poker!</p>
+<div class="showcase">
+  <div class="example">
+    <div class="vizimg"><img width="100%" src="./borrow-newt-custom.png"/></div>
+    <div class="viztext">
+      <div class="vizlabel">Rust Lifetimes and Borrowing</div>
+      <div class="vizauthor">Thomas Castleman and Ria Rajesh</div>
+      <div class="vizpub">Course Project</div>
+    </div>
+  </div>
+  <div class="example">
+    <div class="vizimg"><img width="100%" src="./netlab-custom-def1.png"/></div>
+    <div class="viztext">
+      <div class="vizlabel">Network Reachability</div>
+      <div class="vizauthor">Tim Nelson and Pamela Zave</div>
+      <div class="vizpub"><a href="https://fm.csl.sri.com/SSFT23/">(link to lab)</a></div>
+    </div>
+  </div>
+  <div class="example">
+    <div class="vizimg"><img width="100%" src="./texas.png"/></div>
+    <div class="viztext">
+      <div class="vizlabel">Texas Hold 'Em</div>
+      <div class="vizauthor">Matthew Boranian and Austin Lang</div>
+      <div class="vizpub">Course Project</div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<h2 id="the-future-of-computing"><a class="header" href="#the-future-of-computing">The Future of Computing</a></h2>
+<p>For better or worse, The shape of engineering is changing. Lots of people are excited, scared, or both about large language models like ChatGPT. This book won't teach you how to use generative AI, so it's reasonable to wonder: <em>why learn from this book, instead of reading yet another book on another (deservedly) hot topic, like machine learning?</em></p>
+<p>There are two questions that will never go out of style, and won't be answered by AI (at least, not in our lifetimes):</p>
+<ul>
+<li><strong>What do you want to build?</strong> What does your customer really need? Answering this requires talking to them and other stakeholders, watching their processes, seeking their feedback, and adjusting your design based on it. And no matter who (or what) is writing the actual code, you need to be able to express all this precisely enough that they (or it) can succeed at the implementation.</li>
+<li><strong>How will you evaluate what you get?</strong> No matter who (or what) is building the system, verification is needed before the system can be trusted.</li>
+</ul>
+<p>Even setting aside the customer-facing aspects, we'll still need to think critically about what it is we want and how to evaluate whether we're getting it. The skills you learn here will remain useful (or become even more so) as engineering evolves. In the next chapter, we'll try to convince you that these skills will be useful for more than just code.</p>
+<h2 id="formal-methods"><a class="header" href="#formal-methods">&quot;Formal Methods&quot;</a></h2>
+<p><em>Formal methods</em> (FM) are ways to help you think carefully about a domain, process, or system. They use math-based techniques (which are usually implemented in tools) to help. They aren't an academic exercise; they are used widely in industry and have likely saved billions of dollars and thousands of lives.</p>
+<p>Some industrial examples I'm fond of include:</p>
+<ul>
+<li><a href="https://aws.amazon.com/blogs/security/protect-sensitive-data-in-the-cloud-with-automated-reasoning-zelkova/">Amazon Web Services' Zelkova</a>, which helps administrators author better security policies for their services. This book will give you the tools to build a policy-analysis system like Zelkova yourself. </li>
+<li><a href="https://www.microsoft.com/en-us/research/publication/thorough-static-analysis-of-device-drivers/">Microsoft's static driver verifier</a>, which helps increase the reliability of low-level device drivers in Windows. While this book doesn't cover the techniques they used, I love to showcase this work (which helped Microsoft ship more stable drivers and, at this point, is now decades old).</li>
+<li><a href="https://github.com/visualzhou/mongo-repl-tla">MongoDB's work on modeling replication</a>, which found a real bug in their code. Quoting the linked page: &quot;We've never encountered this issue in testing or in the field and only found it by reasoning about the edge cases. This shows writing and model checking ... specs is an excellent alternative way to find and verify edge cases.&quot; (Ellipsis mine.) We won't use this exact <em>tool</em>, but we'll cover other model checkers in this book.</li>
+</ul>
+<p>We can find real applications for FM outside Computer Science too---even the law. <a href="https://roundtablelaw.medium.com/utterly-unpersuasive-formal-methods-and-law-bb8ecf048374">Here's an article</a> about the value of modeling <em>legal concepts</em> to find loopholes in the law. This is the sort of FM we'll be learning how to do in 1710.</p>
+<p><a href="https://github.com/ligurio/practical-fm">This Github repository</a> keeps a (reasonably up to date, but not exhaustive!) list of other industrial applications of formal methods. Check it out! </p>
+<h3 id="exercise"><a class="header" href="#exercise">Exercise</a></h3>
+<p>Can you think of one or two domains, systems, or processes that especially interest you? Think about the kinds of &quot;system&quot; you interact with regularly or have learned about in your life. What would you like to understand better about those systems? </p>
+<p>Remember that we construe the word <em>system</em> broadly. A cryptographic protocol is a system, but so is the game of baseball. A data structure is a system, but so are chemical reactions. </p>
+<h2 id="looking-ahead-tools"><a class="header" href="#looking-ahead-tools">Looking Ahead: Tools</a></h2>
+<p>The main tool we'll use in this book is <a href="http://forge-fm.org">Forge</a>, a tool for modeling systems. In the course of the book, we'll be progressing through three <em>language levels</em> in Forge:</p>
+<ul>
+<li><strong>Froglet</strong>, which restricts the set of operations so that we can jump right in more easily. If you have intuitions about object-oriented programming, those intuitions will be useful in Froglet, although there are a few important differences that we'll talk about.</li>
+<li><strong>Relational Forge</strong>, which expands the set of operations available to include sets, relations, and relational operators. These are useful for reasoning about complex relationships between objects and for representing certain domains, like databases or graphs.</li>
+<li><strong>Temporal Forge</strong>, which helps us cleanly model how a system's state evolves over time. Temporal Forge is based on the industry-standard specification language LTL—Linear Temporal Logic.</li>
+</ul>
+<p>We'll also use some other tools, like:</p>
+<ul>
+<li><a href="https://hypothesis.readthedocs.io/en/latest/">Hypothesis</a>, a testing library for Python; and</li>
+<li><a href="https://github.com/Z3Prover/z3">Z3</a>, an SMT solver library. </li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../chapters/manifesto/job.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../chapters/properties/pbt.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../chapters/manifesto/job.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../chapters/properties/pbt.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../../ace.js"></script>
+        <script src="../../editor.js"></script>
+        <script src="../../mode-rust.js"></script>
+        <script src="../../theme-dawn.js"></script>
+        <script src="../../theme-tomorrow_night.js"></script>
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

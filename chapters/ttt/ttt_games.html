@@ -1,0 +1,698 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Transitions, Traces, and Verification - Logic for Systems: Lightweight Formal Methods for Everybody</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../././mdbook-admonish.css">
+        <link rel="stylesheet" href="../.././mdbook-admonish.css">
+        <link rel="stylesheet" href="../.././custom.css">
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><a href="../../welcome.html">How to Read this book</a></li><li class="chapter-item affix "><li class="part-title">Preamble: Beyond Testing</li><li class="chapter-item "><a href="../../chapters/manifesto/job.html">What good is this book?</a></li><li class="chapter-item "><a href="../../chapters/manifesto/manifesto.html">Logic for Systems</a></li><li class="chapter-item "><a href="../../chapters/properties/pbt.html">From Tests to Properties</a></li><li class="chapter-item affix "><li class="part-title">Modeling Static Scenarios</li><li class="chapter-item "><a href="../../chapters/ttt/ttt.html">Tic-Tac-Toe</a></li><li class="chapter-item "><a href="../../chapters/bst/bst.html">Binary Search Trees</a></li><li class="chapter-item "><a href="../../chapters/adder/rca.html">Ripple-Carry Adder</a></li><li class="chapter-item "><a href="../../chapters/qna/static.html">Q&A: Static Modeling</a></li><li class="chapter-item affix "><li class="part-title">Discrete Event Systems</li><li class="chapter-item expanded "><a href="../../chapters/ttt/ttt_games.html" class="active">Transitions, Traces, and Verification</a></li><li class="chapter-item "><a href="../../chapters/inductive/bsearch.html">Counterexamples to Induction</a></li><li class="chapter-item "><a href="../../chapters/bst/descent.html">BSTs: Recursive Descent</a></li><li class="chapter-item "><a href="../../chapters/validation/validating_events.html">Validating Models</a></li><li class="chapter-item "><a href="../../chapters/qna/events.html">Q&A: Event Systems</a></li><li class="chapter-item affix "><li class="part-title">Modeling Relationships</li><li class="chapter-item "><a href="../../chapters/relations/modeling-booleans-1.html">Relational Forge, Modeling Logic</a></li><li class="chapter-item "><a href="../../chapters/relations/reachability.html">Transitive Closure</a></li><li class="chapter-item "><a href="../../chapters/relations/sets-induction-mutex.html">Modeling Mutual Exclusion</a></li><li class="chapter-item "><a href="../../chapters/relations/sets-beyond-assertions.html">Going Beyond Assertions</a></li><li class="chapter-item "><a href="../../chapters/solvers/bounds_booleans_how_forge_works.html">How does Forge Work?</a></li><li class="chapter-item "><a href="../../chapters/qna/relations.html">Q&A: Relations</a></li><li class="chapter-item affix "><li class="part-title">Temporal Specification</li><li class="chapter-item "><a href="../../chapters/temporal/liveness_and_lassos.html">Liveness and Lassos</a></li><li class="chapter-item "><a href="../../chapters/temporal/temporal_operators.html">Temporal Forge</a></li><li class="chapter-item "><a href="../../chapters/temporal/temporal_operators_2.html">Linear Temporal Logic</a></li><li class="chapter-item "><a href="../../chapters/temporal/obligations_past.html">Obligations and the Past</a></li><li class="chapter-item "><a href="../../chapters/temporal/fixing_lock_temporal.html">Mutual Exclusion, Revisited</a></li><li class="chapter-item "><a href="../../chapters/temporal/testing_temporal.html">Testing Temporally</a></li><li class="chapter-item affix "><li class="part-title">Boolean Solver Algorithms</li><li class="chapter-item "><a href="../../chapters/solvers/dpll.html">Boolean SAT (DPLL)</a></li><li class="chapter-item "><a href="../../chapters/solvers/resolution.html">Witnessing Unsat: Propositional resolution</a></li><li class="chapter-item affix "><li class="part-title">Beyond SAT</li><li class="chapter-item "><a href="../../chapters/solvers/smt.html">Satisfiability Modulo Theories (SMT)</a></li><li class="chapter-item "><a href="../../chapters/solvers/cegis.html">Learning with Solvers: CEGIS</a></li><li class="chapter-item affix "><li class="part-title">Case Studies and Further Reading</li><li class="chapter-item "><div>Modeling Raft in Anger</div></li><li class="chapter-item "><div>Forge: Comparing Prim's and Dijkstra's Algorithms</div></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Logic for Systems: Lightweight Formal Methods for Everybody</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h2 id="from-boards-to-games"><a class="header" href="#from-boards-to-games">From Boards to Games</a></h2>
+<p>Now that we've gotten some experience modeling in Forge, let's start thinking about <em>change</em>.</p>
+<p>What do you think a <em>game</em> of tic-tac-toe looks like? Crucially, a game involves <em>moves</em>. </p>
+<p><strong>Exercise:</strong> How could we model the moves between board states? (Hint: start thinking in terms of a graph—nodes and edges!)</p>
+<details>
+<summary>Think, then click!</summary>
+<p>It's often convenient to use the following idiom. </p>
+<p>Think of the game as a big graph, where the nodes are the <em>states</em> (possible board configurations) and the edges are <em>transitions</em> between states (in this case, legal moves of the game). Here's a rough sketch:</p>
+<p><img src="https://i.imgur.com/YmsbRp8.png" alt="" /></p>
+</details>
+<br/>
+<p>A game of tic-tac-toe is a sequence of steps in a state graph, starting from the empty board. Let's model it.</p>
+<p>First, what does a move look like? A player puts their mark at a specific location. In Forge, we'll represent this using a <em>transition predicate</em>: a predicate that says when it's legal for one state to evolve into another. We'll often call these the <em>pre-state</em> and <em>post-state</em> of the transition:</p>
+<pre><code class="language-forge">pred move[pre: Board, row: Int, col: Int, p: Player, post: Board] {
+  // ...
+}
+</code></pre>
+<p>What constraints should we add? It's useful to divide a transition predicate into:</p>
+<ul>
+<li>a <em>guard</em>, which allows the move only if the pre-state is suitable; and </li>
+<li>an <em>action</em>, which defines what is in the post-state based on the pre-state and the move parameters.</li>
+</ul>
+<p>For the guard, in order for the move to be valid, it must hold that in the pre-state:</p>
+<ul>
+<li>nobody has already moved at the target location; and</li>
+<li>it's the moving player's turn.</li>
+</ul>
+<p>For the action:</p>
+<ul>
+<li>the new board is the same as the old, except for the addition of the player's mark at the target location.</li>
+</ul>
+<p>Now we can fill in the predicate. Let's try something like this:</p>
+<pre><code class="language-alloy">pred move[pre: Board, row: Int, col: Int, p: Player, post: Board] {
+  -- guard:
+  no pre.board[row][col]   -- nobody's moved there yet
+  p = X implies XTurn[pre] -- appropriate turn
+  p = O implies OTurn[pre]  
+  
+  -- action:
+  post.board[row][col] = p
+  all row2: Int, col2: Int | (row!=row2 and col!=col2) implies {        
+     post.board[row2][col2] = pre.board[row2][col2]     
+  }  
+}
+</code></pre>
+<p>There are many ways to write this predicate. However, we're going to stick with this general form because it calls out an important point. Suppose we had only written <code>post.board[row][col] = p</code> for the action, without the <code>all</code> on the next following lines. Those added lines, which we'll call a <em>frame condition</em>, say that all other squares remain unchanged; without them, the contents of any other square might change in any way. Leaving them out would cause an <em>underconstraint</em> bug: the predicate would be too weak to accurately describe moves in tic-tac-toe. But that's not the only source of problems...</p>
+<p><strong>Exercise</strong>: Could there be a bug in this predicate? (Run Forge and find out!)</p>
+<details>
+<summary>Think, then click</summary>
+<p>The <code>all row2...</code> formula says that for any board location where <em>both the row and column differ</em> from the move's, the board remains the same. But is that what we really wanted? Suppose <code>X</code> moves at location <code>1</code>, <code>1</code>. Then of the 9 locations, which is actually protected?</p>
+<div class="table-wrapper"><table><thead><tr><th>Row</th><th>Column</th><th>Protected?</th></tr></thead><tbody>
+<tr><td>0</td><td>0</td><td>yes</td></tr>
+<tr><td>0</td><td>1</td><td>no (column 1 = column 1)</td></tr>
+<tr><td>0</td><td>2</td><td>yes</td></tr>
+<tr><td>1</td><td>0</td><td>no (row 1 = row 1)</td></tr>
+<tr><td>1</td><td>1</td><td>no (as intended)</td></tr>
+<tr><td>1</td><td>2</td><td>no (row 1 = row 1)</td></tr>
+<tr><td>2</td><td>0</td><td>yes</td></tr>
+<tr><td>2</td><td>1</td><td>no (column 1 = column 1)</td></tr>
+<tr><td>2</td><td>2</td><td>yes</td></tr>
+</tbody></table>
+</div>
+<p>Our frame condition was <em>too weak</em>! We need to have it take effect whenever <em>either</em> the row or column is different. Something like this will work:</p>
+<pre><code class="language-alloy">  all row2: Int, col2: Int | 
+    ((row2 != row) or (col2 != col)) implies {    
+       post.board[row2][col2] = pre.board[row2][col2]     
+  }  
+
+</code></pre>
+</details>
+<p><strong>Exercise</strong>: Make the suggested fix to the predicate above. Comment out the 3 frame-condition lines and run the model. Do you see moves where the other 8 squares change arbitrarily? You should, because Forge is free to make such changes.</p>
+<h3 id="property-preservation"><a class="header" href="#property-preservation">Property Preservation</a></h3>
+<p>Once someone wins a game, does their win still persist, even if more moves are made? I'd like to think so: moves never get undone, and in our model winning just means the existence of 3-in-a-row for some player. We probably even believe this property without checking it. However, it won't always be so straightforward to show that properties are preserved by the system. We'll check this one in Forge as an example of how you might prove something similar in a more complex system.</p>
+<div id="admonition-looking-ahead" class="admonition admonish-note">
+<div class="admonition-title">
+<p>Looking ahead</p>
+<p><a class="admonition-anchor-link" href="#admonition-looking-ahead"></a></p>
+</div>
+<div>
+<p>This is our first step into the world of verification. Asking whether or not a program, algorithm, or other system always satisfies some assertion is a core problem in engineering, and has a centuries-long history.</p>
+</div>
+</div>
+<p>We'll tell Forge to find us pairs of states, connected by a move: the <em>pre-state</em> before the move, and the <em>post-state</em> after it. That's <em>any</em> potential transition in tic-tac-toe—at least, following the rules as we defined them. To apply this technique, all we need to do is add two more constraints that reflect a winner existing in the pre-state, but that there's no winner in the post-state.</p>
+<pre><code class="language-alloy">pred winningPreservedCounterexample {
+  -- There is some pair of states
+  some pre, post: Board | {
+    -- such that the first transitions to the second
+    some row, col: Int, p: Player | 
+      move[pre, post, row, col, p]
+    -- the first state has a winner
+    some p: Player | winner[pre, p]
+    -- the second state has no winner
+    all o: Player | not winner[post, p]
+  }
+}
+run {
+  all s: Board | wellformed[s]
+  winningPreservedCounterexample
+}
+</code></pre>
+<p>The <code>run</code> is unsatisfiable. Forge can't find any counterexamples. We'll see this reported as &quot;UNSAT&quot; (short for &quot;unsatisfiable&quot;) in the visualizer. </p>
+<div id="admonition-next-button" class="admonition admonish-tip">
+<div class="admonition-title">
+<p>Next button</p>
+<p><a class="admonition-anchor-link" href="#admonition-next-button"></a></p>
+</div>
+<div>
+<p>Remember that the visualizer also has a &quot;Next&quot; button; you can browse many different solution instances. Of course, if you press it enough times, Forge (eventually) runs out of solutions to show.</p>
+</div>
+</div>
+<h2 id="generating-complete-games"><a class="header" href="#generating-complete-games">Generating Complete Games</a></h2>
+<p>Recall that our worldview for this model is that systems <em>transition</em> between <em>states</em>, and thus we can think of a system as a directed graph. If the transitions have arguments, we'll sometimes label the edges of the graph with those arguments. This view is sometimes called a <em>discrete event</em> model, because one event happens at a time. Here, the events are moves of the game. In a bigger model, there might be many different types of events.</p>
+<p>Today, we'll ask Forge to find us <em>full traces of the system</em>, starting from an initial state. We'll also add a <code>Game</code> sig to incorporate some metadata.</p>
+<pre><code class="language-alloy">-- Generate *one* game of tic-tac-toe
+one sig Game {
+  -- What state does the game start in?
+  initialState: one Board,
+  -- How does the game evolve from state to state?
+  nextState: pfunc Board -&gt; Board
+}
+
+pred traces {
+    -- The trace starts with an initial state
+    starting[Game.initialState]
+    no sprev: Board | Game.nextState[sprev] = Game.initialState
+    -- Every transition is a valid move
+    all s: Board | some Game.nextState[s] implies {
+      some row, col: Int, p: Player |
+        move[s, row, col, p, Game.nextState[s]]
+    }
+}
+</code></pre>
+<p>By itself, this wouldn't be quite enough; we might see a bunch of disjoint traces. We could add more constraints manually, but there's a better option: tell Forge, at <code>run</code>time, that <code>nextState</code> represents a linear ordering on states. This is similar to what we did back in the <a href="../adder/rca.html">ripple-carry adder</a>:</p>
+<pre><code class="language-alloy">run { traces } for {nextState is linear}
+</code></pre>
+<p>It's worth recalling what's happening here. The phrase <code>nextState is linear</code> isn't a <em>constraint</em>; it's a separate annotation given to Forge alongside a <code>run</code> or a test. Never put such an annotation in a constraint block; Forge won't understand it. These annotations narrow Forge's <em>bounds</em> (the space of possible worlds to check) before the solver begins its work.</p>
+<p>In general, Forge syntax allows such annotations <em>after</em> numeric bounds. E.g., if we wanted to see full games, rather than unfinished game prefixes (the default bound on any sig, including <code>Board</code>, is up to 4) we could have asked:</p>
+<pre><code class="language-alloy">run {
+  traces
+} for exactly 10 Board for {nextState is linear}
+</code></pre>
+<p>You might notice that because of this, some traces are excluded. That's because <code>nextState is linear</code> forces exact bounds on <code>Board</code>. This is in contrast to <code>plinear</code>, which we used for the ripple-carry adder, and which didn't force exact bounds. Use whichever of the two is more appropriate to your needs.</p>
+<h2 id="the-evaluator"><a class="header" href="#the-evaluator">The Evaluator</a></h2>
+<p>Moreover, since we're now viewing a single fixed instance, we can <em>evaluate</em> Forge expressions in it. This is great for debugging, but also for just understanding Forge a little bit better. Open the evaluator here at the bottom of the right-side tray, under theming. Then enter an expression or constraint here:</p>
+<p><img src="https://i.imgur.com/tnT8cgo.png" alt="" /></p>
+<p>Type in something like <code>some s: Board | winner[s, X]</code>. Forge should give you either <code>#t</code> (for true) or <code>#f</code> (for false) depending on whether the game includes <code>X</code> winning in some state.</p>
+<h3 id="optimization"><a class="header" href="#optimization">Optimization</a></h3>
+<p>You might notice that this model takes a while to run. Something happened after we started reasoning about full games. Why might that be? Let's re-examine our bounds and see if there's anything we can adjust. In particular, here's what the evaluator says we've got for integers:</p>
+<p><img src="https://i.imgur.com/UJJUqdB.png" alt="" /></p>
+<p>Wow---wait, do we really <strong>need</strong> to be able to count up to <code>7</code> for this model? Even more, do we really need to count all the way down to <code>-8</code>? Probably not. If we change our integer bounds to <code>3 Int</code> we'll still be able to use <code>0</code>, <code>1</code>, and <code>2</code>, and the search space is much smaller.</p>
+<h2 id="back-to-tic-tac-toe-ending-games"><a class="header" href="#back-to-tic-tac-toe-ending-games">Back To Tic-Tac-Toe: Ending Games</a></h2>
+<p>Recall that we just ran this command:</p>
+<pre><code class="language-alloy">run {
+  wellformed
+  traces
+} for exactly 10 Board for {nextState is linear}
+</code></pre>
+<div id="admonition-nothing-without-a-command" class="admonition admonish-note">
+<div class="admonition-title">
+<p>Nothing without a command</p>
+<p><a class="admonition-anchor-link" href="#admonition-nothing-without-a-command"></a></p>
+</div>
+<div>
+<p>Without a <code>run</code>, an <code>example</code>, or a similar <em>command</em>, running a Forge model will do nothing.</p>
+</div>
+</div>
+<p>From this <code>run</code> command, Forge will find <em>traces</em> of the system (here, games of Tic-Tac-Toe) represented as a linear sequence of exactly 10 <code>State</code> atoms.</p>
+<p>Do you have any worries about the way this is set up?</p>
+<details>
+<summary>Think, then click!</summary>
+Are all Tic-Tac-Toe games 10 states long? 
+<p>Well, <em>maybe</em>; it depends on how we define a game. If we want a game to stop as soon as nobody can win, our <code>exactly 10 State</code> bound is going to prevent us from finding games that are won before the final cell of the board is filled.</p>
+</details>
+<p>Let's add the following guard constraint to the <code>move</code> transition predicate, which forces games to end as soon as somebody wins.</p>
+<pre><code class="language-alloy">all p: Player | not winner[pre, p]
+</code></pre>
+<p>Now we've got problems, because once we add this constraint, Forge will omit games that end before all square of the board are filled.</p>
+<p>This behavior, which may initially seem strange, exists for two reasons:</p>
+<ul>
+<li>History: Forge's ancestor language, Alloy, has something very similar to <code>is linear</code>, with the same semantics.</li>
+<li>Performance: since the <code>is linear</code> annotation is almost always used for trace-generation, and trace-generation solving time grows (in the worst case) exponentially in the length of the trace, we will almost always want to reduce unnecessary uncertainty. Forcing the trace length to always be the same reduces the load on the solver, and makes trace-generation somewhat more efficient.</li>
+</ul>
+<p>But now we need to work around this limitation. Any ideas? Hint: do we need to have <em>only one</em> kind of transition in our system?</p>
+<details>
+<summary>Think, then click!</summary>
+<p>No. A common way to allow trace length to vary is by adding a &quot;do nothing&quot; transition. (In the literature, this is called a <em>stutter transition</em>.) </p>
+<p>The trick is in how to add it without also allowing a &quot;game&quot; to consist of nobody doing anything. To do that requires some more careful modeling.</p>
+</details>
+</br>
+<p>Let's add an additional transition that does nothing. We can't &quot;do nothing&quot; in the predicate body, though—an empty predicate body would just mean <em>anything</em> could happen. What we mean to say is that the state of the board remains the same, even if the before and after <code>Board</code> objects differ.</p>
+<pre><code class="language-alloy">pred doNothing[pre: Board, post: Board] {
+    all row2: Int, col2: Int | 
+        post.board[row2][col2] = pre.board[row2][col2]
+}
+</code></pre>
+<div id="admonition-variable-names" class="admonition admonish-warning">
+<div class="admonition-title">
+<p>Variable names</p>
+<p><a class="admonition-anchor-link" href="#admonition-variable-names"></a></p>
+</div>
+<div>
+<p>Remember that <code>row2</code> and <code>col2</code> are just variable names that could stand for any <code>Int</code>; they aren't necessarily the row or column index value <code>2</code>.</p>
+</div>
+</div>
+<p>We also need to edit the <code>traces</code> predicate to allow <code>doNothing</code> to take place:</p>
+<pre><code class="language-alloy">pred traces {
+    -- The trace starts with an initial state
+    starting[Game.initialState]
+    no sprev: Board | Game.nextState[sprev] = Game.initialState
+    -- Every transition is a valid move
+    all s: Board | some Game.nextState[s] implies {
+      some row, col: Int, p: Player | {
+        move[s, row, col, p, Game.nextState[s]] 
+      }
+      or
+      doNothing[s, Game.nextState[s]]      
+    } 
+}
+</code></pre>
+<p>As it stands, this fix solves the <em>overconstraint</em> problem of never seeing an early win, but introduces a new <em>underconstraint</em> problem: we don't want <code>doNothing</code> transitions to happen just anywhere!</p>
+<p>Here's how I like to fix it:</p>
+<pre><code class="language-alloy">pred gameOver[s: Board] {
+  some p: Player | winner[s, p]
+}
+</code></pre>
+<p>Why a new predicate? Because I want to use different predicates to represent different concepts, and enable re-use.</p>
+<p>When should a <code>doNothing</code> transition be possible? <em>Only when the game is over!</em></p>
+<pre><code class="language-alloy">pred doNothing[pre: State, post: State] {
+    gameOver[pre] -- guard of the transition
+    pre.board = post.board -- effect of the transition
+}
+</code></pre>
+<p>If we wanted to, we could add a <code>not gameOver[pre]</code> guard constraint to the <code>move</code> predicate, enforcing that nobody can move at all after someone has won.</p>
+<h2 id="do-the-rules-allow-cheating"><a class="header" href="#do-the-rules-allow-cheating">Do The Rules Allow Cheating?</a></h2>
+<p>Let's ask Forge whether a <code>cheating</code> state is possible under the rules. </p>
+<pre><code class="language-alloy">pred cheating[b: Board] {
+  -- It's neither X's nor O's turn; the balance is way off! 
+  not XTurn[b] 
+  not OTurn[b]
+}
+run {
+  wellformed
+  traces
+  some bad: Board | cheating[bad]
+} for exactly 10 State for {next is linear}
+</code></pre>
+<p>This should work—assuming we don't drop the <code>is linear</code> annotation. Without it, nothing says that every state must be in the trace, and so Forge could produce an instance with an &quot;unused&quot; cheating state that's not reachable from the start.</p>
+<h2 id="checking-conjectures"><a class="header" href="#checking-conjectures">Checking Conjectures</a></h2>
+<p>When I was very small, I thought that moving in the middle of the board would guarantee a win at Tic-Tac-Toe. Now I know that isn't true. Could I have used Forge to check my conjecture?</p>
+<details>
+<summary>Think, then Click!</summary>
+Here's how I did it:    
+<pre><code class="language-alloy">run {
+  wellformed
+  traces
+  -- &quot;let&quot; lets us locally define an expression, which can
+  -- be good for clarity in the model!
+  -- here we say that X first moved in the middle
+  let second = Game.nextState[Game.initialState] |
+    second.board[1][1] = X
+  -- ...but X didn't win
+  all s: State | not winner[s, X]
+} for exactly 10 State for {nextState is linear}
+</code></pre>
+</details>
+<p>We should get a counterexample if we run that predicate.</p>
+<p>We could also write this using an assertion (which would fail) rather than a <code>run</code>:</p>
+<pre><code>pred xWins {
+  all s: State | not winner[s, X]
+}
+assert moveInMiddle is sufficient for xWins 
+  for exactly 10 State for {nextState is linear}
+</code></pre>
+<hr />
+<p>You might wonder how <code>assert</code> can be used for predicates that take arguments. For example, suppose we had defined <code>wellformed</code> to take a board, rather than quantifying over <code>all</code> boards in its body. The <code>assert</code> syntax can take (one layer of) quantification. Would <code>move</code> preserve <code>wellformed</code>-ness?</p>
+<p><strong>TODO: mismatch; prior sections do have a 1-ary wellformed?</strong></p>
+<p>Here's how we'd write that. Notice we don't even need to use the <code>Game</code> here (and thus don't need to give the <code>is linear</code> annotation)! We're just asking Forge about 2 boards at a time:</p>
+<pre><code>pred someMoveFromWF[pre, post: Board] { 
+  wellformed[pre]
+  some r, c: Int, p: Player | move[pre, r, c, p, post]
+}
+assert all pre,post: Board | move[pre,post] is sufficient for wellformed[post] 
+</code></pre>
+<h3 id="reminder-the-evaluator"><a class="header" href="#reminder-the-evaluator">Reminder: The Evaluator</a></h3>
+<p>If you're viewing an instance, you can always select the evaluator tray and enter Forge syntax to see what it evaluates to in the instance shown. You can enter both formulas and expressions. We also have the ability to refer to atoms in the world directly. E.g., we could try:</p>
+<pre><code class="language-alloy">all s: Board | not winner[s, X]
+</code></pre>
+<p>but also (assuming <code>Board0</code> is an atom in the instance we're currently viewing):</p>
+<pre><code class="language-alloy">winner[Board0, X]
+</code></pre>
+<h3 id="going-further"><a class="header" href="#going-further">Going Further</a></h3>
+<p>This illustrates a new class of queries we can ask Forge. Given parties following certain <em>strategies</em>, is it possible to find a trace where one strategy fails to succeed vs. another? </p>
+<p><strong>Challenge exercise:</strong> Write a <code>run</code> that searches for a game where both parties always <em>block</em> immediate wins by their opponent. Is it ever possible for one party to win, if both will act to prevent a 3-in-a-row on the next turn?</p>
+<h2 id="modeling-tip-dealing-with-unsatisfiability"><a class="header" href="#modeling-tip-dealing-with-unsatisfiability">Modeling Tip: Dealing with Unsatisfiability</a></h2>
+<p>Overconstraint bugs, where some instances may be unintentionally ruled out by our model, can be a nightmare to detect and fix. Maybe you wrote an <code>assert</code> and it seemed to never stop. Maybe you wrote a <code>run</code> command and Forge just produced an <code>UNSAT</code> result—after a long wait.</p>
+<p>Getting back an unsat result <em>can</em> take a long time. Why? Think of the search process. If there is a satisfying instance, the solver can find it early. If there isn't, the solver needs to explore the entire space of possibilities. There are smart algorithms for this, and the solver is not <em>really</em> enumerating the entire space of instances, but the general idea holds. </p>
+<p>So if you run Forge and it doesn't seem to ever terminate, it's not necessarily a Forge problem. Overconstraint bugs can produce this behavior, too.</p>
+<p>So, how do you debug a problem like this? The first thing I like to do is reduce the bounds (if possible) and, if I still get unsat, I'll use that smaller, faster run to debug. But at that point, we're kind of stuck. <code>UNSAT</code> isn't very helpful. </p>
+<p>Today I want to show you a very useful technique for discovering the problem. There are more advanced approaches we'll get to later in the course, but for now this one should serve you well. </p>
+<p><strong>TODO: insert unsat core, now that we have good highlighting!</strong></p>
+<p>The idea is: encode an instance you'd expect to see as a set of constraints, run <em>those</em> constraints only, and then use the evaluator to explore why it fails your other constraints. Let's do an example!</p>
+<p><strong>TODO: this is taken from a homework, not one of the above... should rewrite</strong></p>
+<pre><code class="language-alloy">#lang froglet 
+
+sig State {
+  top: lone Element
+}
+sig Element {
+  next: lone Element             
+}
+
+pred buggy {
+  all s: State | all e: Element {
+    s.top = e or reachable[e, s.top, next]
+  }
+  some st1, st2: State | st1.top != st2.top     
+  all e: Element | not reachable[e, e, next]
+}
+test expect {
+  exampleDebug: {buggy} is sat
+}
+</code></pre>
+<p>This test fails. But why?</p>
+<pre><code class="language-alloy">run {
+  some st1, st2: State |
+  some ele1, ele2: Element | {
+    st1.top = ele1
+    st2.top = ele2
+    ele1.next = ele2   
+    no ele2.next    
+  }
+} for exactly 2 State, exactly 2 Element
+</code></pre>
+<p>Given this instance, the question is: <strong>why didn't Forge accept it?</strong> There must be some constraint, or constraints, that it violates. Let's find out which one. We'll paste them into the evaluator...</p>
+<ul>
+<li><code>some st1, st2: State | st1.top != st2.top</code>? This evaluates to <code>#t</code> (true). No problem there.</li>
+<li><code>  all s: State | all e: Element { s.top = e or reachable[e, s.top, next] }</code>? This evaluates to <code>#f</code> (false). So this is a problem.</li>
+</ul>
+<p>Now we proceed by breaking down the constraint. The outer shell is an <code>all</code>, so let's plug in a concrete value:</p>
+<ul>
+<li><code>all e: Element { State0.top = e or reachable[e, State0.top, next] }</code>? This evaluates to <code>#f</code>. So the constraint fails for <code>State0</code>. </li>
+</ul>
+<p><strong>Important</strong>: Don't try to name specific states in your model. They <em>don't exist</em> at that point. </p>
+<p>Which element does the constraint fail on? Again, we'll substitute concrete values and experiment:</p>
+<ul>
+<li><code>State0.top = Element0 or reachable[Element0, State0.top, next]</code>? This evaluates to <code>#t</code>. What about <code>State0.top = Element1 or reachable[Element1, State0.top, next]</code>?</li>
+</ul>
+<p>Following this process very often leads to discovering an over-constraint bug, or a misconception the author had about the goals of the model or the meaning of the constraints. </p>
+<p><strong>Question: What's the problem here?</strong></p>
+<details>
+<summary>Think, then click!</summary>
+<p>Since the <code>next</code> field never changes with time, the <code>all</code> constraint doesn't allow states to vary the <code>top</code> of the stack. Instead, we need a weaker constraint to enforce that the stack is shaped like a state.</p>
+</details>
+<h2 id="aside-reminder-about-examples"><a class="header" href="#aside-reminder-about-examples">Aside: Reminder About Examples</a></h2>
+<p><strong>TODO: should this part go to the Q and A for traces?</strong></p>
+<p>Where an <code>assert</code> or <code>run</code> is about checking satisfiability or unsatisfiability of some set of constraints, an <code>example</code> is about whether a <em>specific</em> instance satisfies a given predicate. This style of test can be extremely useful for checking that (e.g.) small helper predicates do what you expect.</p>
+<p>Why use <code>example</code> at all? A couple of reasons:</p>
+<ul>
+<li>It is often much more convenient (once you get past the odd syntax) than adding <code>one sig</code>s or <code>some</code> quantification for every object in the instance, provided you're trying to describe an <em>instance</em> rather than a property that defines a set of them---which becomes a better option as models become more complex.</li>
+<li>Because of how it's compiled, an <code>example</code> can sometimes run faster than a constraint-based equivalent. </li>
+</ul>
+<p>You may be wondering whether there's a way to leverage that same speedup in a <code>run</code> command. Yes, there is! But for now, let's get used to the syntax just for writing examples. Here are some, well, examples:</p>
+<pre><code class="language-alloy">pred someXTurn {some s: State | XTurn[s]}
+example emptyBoardXturn is {someXTurn} for {
+  State = `State0
+  no `State0.board
+}
+</code></pre>
+<p>Here, we've said that there is one state in the instance, and its <code>board</code> field has no entries. We could have also just written <code>no board</code>, and it would have worked the same.</p>
+<pre><code class="language-alloy">-- You need to define all the sigs that you'll use values from
+pred someOTurn {some b: Board | OTurn[b]}
+example xMiddleOturn is {someOTurn} for {
+  Board = `Board0
+  Player = `X0 + `O0
+  X = `X0
+  O = `O0
+  `Board0.board =  (1, 1) -&gt; `X0
+}
+</code></pre>
+<p>What about assertions, though? You can think of assertions as <em>generalizing</em> examples. I could have written something like this:</p>
+<pre><code class="language-alloy">pred someXTurn {some b: Board | xturn[b]}
+pred emptySingleBoard {
+  one b: Board | true
+  all b: Board, r,c: Int | no b.board[r][c]
+}
+assert emptySingleBoard is sufficient for someXTurn  
+</code></pre>
+<p>That's pretty coarse-grained, though. So let's write it in a better way:</p>
+<pre><code class="language-alloy">pred emptyBoard[b: Board] { all r, c: Int | no b.board[r][c] }
+assert all b: Board | emptyBoard[b] is sufficient for xturn[b]
+</code></pre>
+<p>Notice how, by adding variables to the assertion, we're able to write less-verbose assertions and re-use our predicates better. </p>
+<div id="admonition-but-if-examples-are-faster-why-use-assertions" class="admonition admonish-tip">
+<div class="admonition-title">
+<p>But if examples are faster, why use assertions?</p>
+<p><a class="admonition-anchor-link" href="#admonition-but-if-examples-are-faster-why-use-assertions"></a></p>
+</div>
+<div>
+<p>First, examples aren't <em>always</em> faster. There are also some models we'll write later where <code>example</code> isn't supported. And, of course, as the model becomes more complex, the example becomes longer and longer as you try to define the value of all fields.</p>
+<p>But there's a more important reason: assertions can express <em>properties</em>. Because they can state arbitrary constraints, there's an analogy to property-based testing: where <code>example</code>s are like traditional unit tests, <code>assert</code>ions are like the checker predicates you wrote in Hypothesis. </p>
+<p>So there's a role for both of them.</p>
+</div>
+</div>
+<h2 id="traces-good-and-bad"><a class="header" href="#traces-good-and-bad">Traces: Good and Bad</a></h2>
+<p>We've finished our model of tic-tac-toe. We could generate a full game of up to 10 board states, and reason about what was possible in any game. </p>
+<p>This works great for tic-tac-toe, and also in many other real verification settings. But there's a huge problem ahead. Think about verifying properties about a more complex system—one that didn't always stop after at most 9 steps. If we want to confirm that some bad condition can never be reached, <em>how long a trace do we need to check?</em></p>
+<details>
+<summary>Think, then click!</summary>
+<p>What's the longest (simple—i.e., no cycles) path in the transition system? That's the trace length we'd need. </p>
+</details>
+<p>That's potentially a lot of states in a trace. Hundreds, thousands, billions, ... So is this entire approach doomed from the start? </p>
+<p>No, for at least two reasons:</p>
+<ul>
+<li>Often there <em>are</em> &quot;shallow&quot; bugs that can be encountered in only a few steps. In something like a protocol or algorithm, scaling to traces of length 10 or 20 can still find real bugs and increase confidence in correctness. </li>
+<li>There's more than one way to verify. Generating <em>full traces</em> wasn't the only technique we used to check properties of tic-tac-toe; let's look deeper at something we saw awhile back.</li>
+</ul>
+<h2 id="proving-preservation-inductively"><a class="header" href="#proving-preservation-inductively">Proving Preservation Inductively</a></h2>
+<p>Let's turn to a <em>programming</em> problem. Suppose that we've just been asked to write the <code>add</code> method for a linked list class in Java. The code involves a <code>start</code> reference to the first node in the list, and every node has a <code>next</code> reference (which may be null). </p>
+<p>Here's what we hope is a <em>property of linked lists</em>: <strong>the last node of a non-empty list always has <code>null</code> as its value for <code>next</code></strong>. </p>
+<p>How can we prove that our <code>add</code> method preserves this property, <em>without</em> generating traces of ever-increasing length? There's no limit to how long the list might get, and so the length of the longest path in the transition system is infinite: 0 nodes, 1 node, 2 nodes, 3 nodes,...</p>
+<p>This might not be immediately obvious. After all, it's not as simple as asking Forge to run <code>all s: State | last.next = none</code>. </p>
+<p><strong>Exercise:</strong> Why not?</p>
+<details>
+<summary>Think, then click!</summary>
+<p>Because that would just be asking Forge to find us instances full of good states. Really, we want a sort of higher-level <code>all</code>, something that says: &quot;for all <strong>runs of the system</strong>, it's impossible for the run to contain a bad linked-list state.</p>
+</details>
+<p>This illustrates a <strong>central challenge in software and hardware verification</strong>. Given a discrete-event model of a system, how can we check whether all reachable states satisfy some property? You might have heard properties like this called <em>invariants</em> of the system.</p>
+<p>One way to solve the problem <em>without</em> the limitation of bounded-length traces goes something like this:</p>
+<ul>
+<li>Step 1: Ask whether any starting states are bad states. If not, then at least we know that executions with no moves obey our invariant. (It's not much, but it's a start. It's also easy for Forge to check.)</li>
+<li>Step 2: Ask whether it's possible, in any good state, to transition to a bad state. </li>
+</ul>
+<p>Consider what it means if both checks pass. We'd know that runs of length <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span> cannot involve a bad state. And since we know that good states can't transition to bad states, runs of length <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span> can't involve bad states either. And for the same reason, runs of length <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">2</span></span></span></span> can't involve bad states, nor games of length <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">3</span></span></span></span>, and so on.</p>
+<h3 id="how-do-we-write-this-in-forge"><a class="header" href="#how-do-we-write-this-in-forge">How do we write this in Forge?</a></h3>
+<p>This technique isn't only applicable in Forge. It's used in many other solver-based tools, including those used in industry. And modeling linked lists in Forge is very doable, but more complicated than I'd like to do at this point. So we'll demonstrate the idea on the tic-tac-toe model. </p>
+<p><strong>Step 1: are there any bad states that are also starting states?</strong></p>
+<pre><code class="language-alloy">assert all b: Board | initial[b] is sufficient for balanced[b]
+  for 1 Board, 3 Int
+</code></pre>
+<p>Notice that we didn't <em>need</em> to use the <code>next is linear</code> annotation, because we're not asking for traces at all. We've also limited our scope to exactly 1 Board. We also don't need 4 integer bits; 3 suffices. This should be quite efficient. It should also pass, because the empty board isn't unbalanced. </p>
+<p><strong>Step 2: are there any transitions from a good state to a bad state?</strong></p>
+<p>Again, we don't need a full trace for this to work. We only need 2 boards: the pre-state and post-state of the transition:</p>
+<pre><code class="language-alloy">pred moveFromBalanced[pre: Board, row, col: Int, p: Player, post: board] {
+  balanced[pre]
+  move[pre, row, col, p, post]
+}
+assert all pre, post: Board, row, col: Int, p: Player | 
+  moveFromBalanced[pre, row, col, p, post] is sufficient for balanced[post]
+    for 2 Board, 3 Int
+</code></pre>
+<p>If both of these pass, we've just shown that bad states are impossible to reach via valid moves of the system.</p>
+<div id="admonition-aside-performance" class="admonition admonish-note">
+<div class="admonition-title">
+<p>Aside: Performance</p>
+<p><a class="admonition-anchor-link" href="#admonition-aside-performance"></a></p>
+</div>
+<div>
+<p>That second step is still pretty slow on my laptop: around 10 or 11 seconds to yield <code>UNSAT</code>. Can we give the solver any help? Hint: <strong>is the set of possible values for <code>pre</code> bigger than it really needs to be?</strong></p>
+<details>
+<summary>Think, then click!</summary>
+<p>If we assume the <code>pre</code> board is well-formed, we'll exclude transitions involving invalid boards. There are a lot of these, even at <code>3 Int</code>, since row and column indexes will range from <code>-4</code> to <code>3</code> (inclusive). We could do this either by asserting <code>wellformed[pre]</code> or by refining the bounds we give Forge.</p>
+</div>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../chapters/qna/static.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../chapters/inductive/bsearch.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../chapters/qna/static.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../chapters/inductive/bsearch.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../../ace.js"></script>
+        <script src="../../editor.js"></script>
+        <script src="../../mode-rust.js"></script>
+        <script src="../../theme-dawn.js"></script>
+        <script src="../../theme-tomorrow_night.js"></script>
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,635 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Binary Search Trees - Logic for Systems: Lightweight Formal Methods for Everybody</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../././mdbook-admonish.css">
+        <link rel="stylesheet" href="../.././mdbook-admonish.css">
+        <link rel="stylesheet" href="../.././custom.css">
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><a href="../../welcome.html">How to Read this book</a></li><li class="chapter-item affix "><li class="part-title">Preamble: Beyond Testing</li><li class="chapter-item "><a href="../../chapters/manifesto/job.html">What good is this book?</a></li><li class="chapter-item "><a href="../../chapters/manifesto/manifesto.html">Logic for Systems</a></li><li class="chapter-item "><a href="../../chapters/properties/pbt.html">From Tests to Properties</a></li><li class="chapter-item affix "><li class="part-title">Modeling Static Scenarios</li><li class="chapter-item "><a href="../../chapters/ttt/ttt.html">Tic-Tac-Toe</a></li><li class="chapter-item expanded "><a href="../../chapters/bst/bst.html" class="active">Binary Search Trees</a></li><li class="chapter-item "><a href="../../chapters/adder/rca.html">Ripple-Carry Adder</a></li><li class="chapter-item "><a href="../../chapters/qna/static.html">Q&A: Static Modeling</a></li><li class="chapter-item affix "><li class="part-title">Discrete Event Systems</li><li class="chapter-item "><a href="../../chapters/ttt/ttt_games.html">Transitions, Traces, and Verification</a></li><li class="chapter-item "><a href="../../chapters/inductive/bsearch.html">Counterexamples to Induction</a></li><li class="chapter-item "><a href="../../chapters/bst/descent.html">BSTs: Recursive Descent</a></li><li class="chapter-item "><a href="../../chapters/validation/validating_events.html">Validating Models</a></li><li class="chapter-item "><a href="../../chapters/qna/events.html">Q&A: Event Systems</a></li><li class="chapter-item affix "><li class="part-title">Modeling Relationships</li><li class="chapter-item "><a href="../../chapters/relations/modeling-booleans-1.html">Relational Forge, Modeling Logic</a></li><li class="chapter-item "><a href="../../chapters/relations/reachability.html">Transitive Closure</a></li><li class="chapter-item "><a href="../../chapters/relations/sets-induction-mutex.html">Modeling Mutual Exclusion</a></li><li class="chapter-item "><a href="../../chapters/relations/sets-beyond-assertions.html">Going Beyond Assertions</a></li><li class="chapter-item "><a href="../../chapters/solvers/bounds_booleans_how_forge_works.html">How does Forge Work?</a></li><li class="chapter-item "><a href="../../chapters/qna/relations.html">Q&A: Relations</a></li><li class="chapter-item affix "><li class="part-title">Temporal Specification</li><li class="chapter-item "><a href="../../chapters/temporal/liveness_and_lassos.html">Liveness and Lassos</a></li><li class="chapter-item "><a href="../../chapters/temporal/temporal_operators.html">Temporal Forge</a></li><li class="chapter-item "><a href="../../chapters/temporal/temporal_operators_2.html">Linear Temporal Logic</a></li><li class="chapter-item "><a href="../../chapters/temporal/obligations_past.html">Obligations and the Past</a></li><li class="chapter-item "><a href="../../chapters/temporal/fixing_lock_temporal.html">Mutual Exclusion, Revisited</a></li><li class="chapter-item "><a href="../../chapters/temporal/testing_temporal.html">Testing Temporally</a></li><li class="chapter-item affix "><li class="part-title">Boolean Solver Algorithms</li><li class="chapter-item "><a href="../../chapters/solvers/dpll.html">Boolean SAT (DPLL)</a></li><li class="chapter-item "><a href="../../chapters/solvers/resolution.html">Witnessing Unsat: Propositional resolution</a></li><li class="chapter-item affix "><li class="part-title">Beyond SAT</li><li class="chapter-item "><a href="../../chapters/solvers/smt.html">Satisfiability Modulo Theories (SMT)</a></li><li class="chapter-item "><a href="../../chapters/solvers/cegis.html">Learning with Solvers: CEGIS</a></li><li class="chapter-item affix "><li class="part-title">Case Studies and Further Reading</li><li class="chapter-item "><div>Modeling Raft in Anger</div></li><li class="chapter-item "><div>Forge: Comparing Prim's and Dijkstra's Algorithms</div></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Logic for Systems: Lightweight Formal Methods for Everybody</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h1 id="intro-to-modeling-systems-part-2-bsts"><a class="header" href="#intro-to-modeling-systems-part-2-bsts">Intro to Modeling Systems (Part 2: BSTs)</a></h1>
+<p>Now that we've written our first model—tic-tac-toe boards—let's switch to something a bit more serious: binary search trees. A binary search tree (BST) is a binary tree with an added property about its structure that allows it to efficiently answer many search queries related to the values it stores. Here's an example, drawn by hand:</p>
+<!-- sips -s format png Bintree.pdf --out BinTree.png  -->
+<center>
+<img alt="a hand-drawn binary search tree" src="./Bintree.png" width=40%/>
+</center>
+<p>Each node of the tree holds some value that the tree supports searching for. We'll call this value the search key, or just the <em>key</em> for each node. The common ancestor of every node in the tree is called the <em>root</em>. </p>
+<p>This is obviously a <em>binary tree</em>, since it is a tree where every node has <em>at most</em> 2 children. What makes it a binary <em>search</em> tree is the invariant that every node <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> obeys: </p>
+<ul>
+<li>all left-descendants of <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> have a key less than <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span>'s key; and </li>
+<li>all right-descendants of <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> have a key greater than or equal to <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span>'s key.</li>
+</ul>
+<div id="admonition-a-common-mistake" class="admonition admonish-warning">
+<div class="admonition-title">
+<p>A common mistake</p>
+<p><a class="admonition-anchor-link" href="#admonition-a-common-mistake"></a></p>
+</div>
+<div>
+<p>When you're first learning about binary search trees, it's easy to phrase the invariant wrong: </p>
+<ul>
+<li>the left child of <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> (if any) has a key less than <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span>'s key; and </li>
+<li>the right child of <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> (if any) has a key greater than or equal to <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span>'s key.
+With experience, it's straightforward to see that this is too weak; search will break. But at first that isn't so obvious. It would be interesting if we could use Forge to help us understand the difference and its impact on searching the tree.</li>
+</ul>
+</div>
+</div>
+<p>Let's start modeling. As with programming, it's a good idea to start simple, and add complexity and optimization after. So we'll start with plain binary trees, and then add the invariant.</p>
+<div id="admonition-the-recipe" class="admonition admonish-tip">
+<div class="admonition-title">
+<p>the recipe</p>
+<p><a class="admonition-anchor-link" href="#admonition-the-recipe"></a></p>
+</div>
+<div>
+<p>Like with tic-tac-toe, we'll follow this rough 5-step progression:</p>
+<ul>
+<li>define the pertinent datatypes and fields;</li>
+<li>define a well-formedness predicate;</li>
+<li>write some examples;</li>
+<li>run and exercise the base model; </li>
+<li>write domain predicates. 
+Keep in mind that this isn't a strict &quot;waterfall&quot; style progression; we may return to previous steps if we discover it's necessary.</li>
+</ul>
+</div>
+</div>
+<h2 id="datatypes"><a class="header" href="#datatypes">Datatypes</a></h2>
+<p>A binary tree is made up of nodes. Each node in the tree has at most one left child and at most one right child. While nodes in the tree can hold values of most any type, for simplicity we'll stick to integers. </p>
+<p>Unlike in tic-tac-toe, this definition is recursive:</p>
+<pre><code class="language-forge runnable">#lang forge/froglet
+sig Node {
+  key: one Int,     -- every node has some key 
+  left: lone Node,  -- every node has at most one left-child
+  right: lone Node  -- every node has at most one right-child
+}
+</code></pre>
+<div id="admonition-teminology-reminder" class="admonition admonish-note">
+<div class="admonition-title">
+<p>Teminology Reminder</p>
+<p><a class="admonition-anchor-link" href="#admonition-teminology-reminder"></a></p>
+</div>
+<div>
+<p>Recall that a <code>sig</code> is a datatype, each of which may have a set of <em>fields</em>. Here, we're saying that there is a datatype called <code>Node</code>, and that every <code>Node</code> has a <code>key</code>, <code>left</code>, and <code>right</code> field.</p>
+</div>
+</div>
+<h2 id="wellformedness-for-binary-trees"><a class="header" href="#wellformedness-for-binary-trees">Wellformedness for Binary Trees</a></h2>
+<p>What makes a binary tree a binary tree? We might start by saying that: </p>
+<ul>
+<li>it's <em>single-tree-shaped</em>: there are no cycles and all nodes have at most one parent node; and </li>
+<li>it's <em>connected</em>: all non-root nodes have a common ancestor. </li>
+</ul>
+<p>It's sometimes useful to write domain predicates early, and then use them to define wellformedness more clearly. For example, it might be useful to write a helper that describes what it means for a node to be a <em>root</em> node, i.e., the common ancestor of every node in the tree:</p>
+<pre><code class="language-forge runnable"><span class="boring">#lang forge/froglet
+</span><span class="boring">sig Node {
+</span><span class="boring">  key: one Int,     -- every node has some key 
+</span><span class="boring">  left: lone Node,  -- every node has at most one left-child
+</span><span class="boring">  right: lone Node  -- every node has at most one right-child
+</span><span class="boring">}
+</span><span class="boring">
+</span>pred isRoot[n: Node] {
+  -- a node is a root if it has no ancestor
+  no n2: Node | n = n2.left or n = n2.right
+}
+</code></pre>
+<p>Then we'll use the <code>isRoot</code> helper in our <code>wellformed</code> predicate. But to write this predicate, there's a new challenge. We'll need to express constraints like &quot;no node can reach itself via <code>left</code> or <code>right</code> fields&quot;. So far we've only spoken of a node's <em>immediate left or right child</em>. Instead, we now need a way to talk about <em>reachability</em> over any number of <code>left</code> or <code>right</code> fields. Forge provides a helper, <code>reachable</code>, that makes this straightforward.</p>
+<div id="admonition-the-reachable-built-in" class="admonition admonish-tip">
+<div class="admonition-title">
+<p>The <code>reachable</code> built-in</p>
+<p><a class="admonition-anchor-link" href="#admonition-the-reachable-built-in"></a></p>
+</div>
+<div>
+<p>The built-in <code>reachable</code> predicate returns true if and only if its first argument is reachable from its second argument, via all of the remaining arguments. Thus, <code>reachable[n1, anc, left, right]</code> means: &quot;<code>anc</code> can reach <code>n1</code> via some sequence of <code>left</code> and <code>right</code> fields.&quot;</p>
+<p>For reasons we'll explore later, <code>reachable</code> can be subtle; if you're curious now, see the <a href="../qna/static.html">Static Models Q&amp;A</a> for a discussion of this.</p>
+</div>
+</div>
+<p>Using <code>reachable</code>, we can now write:</p>
+<pre><code class="language-forge editable">pred wellformed {
+  -- no cycles: no node can reach itself via a succession of left and right fields
+  all n: Node | not reachable[n, n, left, right] 
+  
+  -- all non-root nodes have a common ancestor from which both are reachable
+  -- the &quot;disj&quot; keyword means that n1 and n2 must be _different_
+  all disj n1, n2: Node | (not isRoot[n1] and not isRoot[n2]) implies {
+    some anc: Node | reachable[n1, anc, left, right] and 
+                     reachable[n2, anc, left, right] }
+
+  -- nodes have a unique parent (if any)
+  all disj n1, n2, n3: Node | 
+    not ((n1.left = n3 or n1.right = n3) and (n2.left = n3 or n2.right = n3))
+}
+</code></pre>
+<h2 id="write-an-example-or-two"><a class="header" href="#write-an-example-or-two">Write an example or two</a></h2>
+<p>Let's write a few examples of well-formed and non-well-formed trees. I've listed some possibilities below.</p>
+<div id="admonition-are-these-examples-enough" class="admonition admonish-note">
+<div class="admonition-title">
+<p>Are these examples enough?</p>
+<p><a class="admonition-anchor-link" href="#admonition-are-these-examples-enough"></a></p>
+</div>
+<div>
+<p>Just like with testing a program, it's not always immediately clear when to <em>stop</em> testing a model. 
+Fortunately, Forge gives us the ability to explore and exercise the model more thoroughly than just 
+running a program does. So, while we're not completely out of danger, we do have new tools to protect
+ourselves with.</p>
+</div>
+</div>
+<h3 id="positive-examples"><a class="header" href="#positive-examples">Positive examples</a></h3>
+<h4 id="a-binary-tree-with-no-nodes-should-be-considered-well-formed"><a class="header" href="#a-binary-tree-with-no-nodes-should-be-considered-well-formed">A binary tree with no nodes should be considered well-formed.</a></h4>
+<pre><code class="language-forge editable">example p_no_nodes is wellformed for {
+  no Node  -- there are no nodes in the tree; it is empty
+}
+</code></pre>
+<p>Drawing this one wouldn't be very interesting.</p>
+<h4 id="a-binary-tree-with-a-single-node-should-be-considered-well-formed"><a class="header" href="#a-binary-tree-with-a-single-node-should-be-considered-well-formed">A binary tree with a single node should be considered well-formed.</a></h4>
+<pre><code class="language-forge editable">example p_one_nodes is wellformed for {
+  Node = `Node0 -- there is exactly one node in the tree, named &quot;Node0&quot;.
+  no left       -- there are no left-children
+  no right      -- there are no right-children
+}
+</code></pre>
+<p>If we were going to draw the single-node example, we might draw it something like this:</p>
+<img alt="a tree with a single node and no edges" src="./p_one_nodes.png" width=60%/>
+<p>In fact, this is what Forge's default visualizer can generate. Notice that the node has:</p>
+<ul>
+<li>a <em>name</em> or identity, which we supplied when we named it <code>Node0</code> in the example; and </li>
+<li>a value for its <code>key</code> field, which we did not supply (and so Forge filled in). 
+Be careful not to confuse these! There's a rough analogy to programming: it's very possible that (especially if we have a buggy program or model) there might be different nodes with the same key value.</li>
+</ul>
+<p><strong>(TODO: decide: discussion of partial vs. total examples goes where?)</strong></p>
+<h4 id="a-binary-tree-with-more-than-one-row-should-be-considered-well-formed"><a class="header" href="#a-binary-tree-with-more-than-one-row-should-be-considered-well-formed">A binary tree with more than one row should be considered well-formed.</a></h4>
+<pre><code class="language-forge editable">example p_multi_row is wellformed for {
+  Node = `Node0 +                               -- row 0
+         `Node1 + `Node2 +                      -- row 1
+         `Node3 + `Node4 + `Node5 + `Node6      -- row 2
+  
+  -- Define the child relationships (and lack thereof, for leaves)
+  -- This is a bit verbose; we'll learn more concise syntax for this soon!
+  `Node0.left = `Node1 
+  `Node0.right = `Node2
+  `Node1.left = `Node3
+  `Node1.right = `Node4
+  `Node2.left = `Node5
+  `Node2.right = `Node6
+  no `Node3.left  no `Node3.right 
+  no `Node4.left  no `Node4.right 
+  no `Node5.left  no `Node5.right 
+  no `Node6.left  no `Node6.right 
+}
+</code></pre>
+<center>
+<img alt="a tree with more than one row" src="./p_multi_row.png" width=60%/>
+</center>
+<p>Wait a moment; there's something strange here. What do you notice about the way we've visualized this tree? </p>
+<details> 
+<summary>Think, then click!</summary>
+<p>That visualization is not how we'd choose to draw the tree: it has the <code>left</code> field to the right and the <code>right</code> field to the left! This is because we used Forge's default visualizer. By default, Forge has no way to understand what &quot;left&quot; and &quot;right&quot; mean. We'll come back to this problem soon. </p>
+</details>
+<h4 id="an-unbalanced-binary-tree-is-still-well-formed"><a class="header" href="#an-unbalanced-binary-tree-is-still-well-formed">An unbalanced binary tree is still well-formed.</a></h4>
+<p>When we draw binary trees, often we draw them in a <em>balanced</em> way: nice and &quot;bushy&quot;, with roughly even distribution of nodes to the left and right. But an unbalanced tree is still a tree, and we should make sure it counts as one.</p>
+<pre><code class="language-forge editable">example p_unbalanced_chain is wellformed for {
+  Node = `Node0 + `Node1 + `Node2 + `Node3
+  
+  -- Form a long chain; it is still a binary tree.
+  `Node0.left = `Node1 
+  no `Node0.right 
+  `Node1.left = `Node2
+  no `Node1.right
+  `Node2.left = `Node3
+  no `Node2.right 
+  
+  no `Node3.left  no `Node3.right 
+}
+</code></pre>
+<center>
+<img alt="an unbalanced chain is still a tree" src="./p_unbalanced_chain.png" width=50%/>
+</center>
+<h3 id="negative-examples"><a class="header" href="#negative-examples">Negative examples</a></h3>
+<p>It's best to write some positive <em>and</em> negative examples. Why? Well, suppose you needed to test a method or function that returned a boolean, like checking whether an integer is even. Here's an example in Python:</p>
+<pre><code class="language-python">def is_even(x: int) -&gt; bool: return x % 2 == 0
+</code></pre>
+<p>What's wrong with this test suite? </p>
+<pre><code class="language-python">assert is_even(0) == True 
+assert is_even(2) == True 
+assert is_even(10000) == True 
+assert is_even(-10000) == True 
+</code></pre>
+<p>The problem isn't only the <em>size</em> of the suite! By testing only values for which we expect <code>True</code> to be returned, we're neglecting half the problem. We'd never catch buggy implementations like this one:</p>
+<pre><code class="language-python">def is_even(x: int) -&gt; bool: return True
+</code></pre>
+<p>Forge predicates are very like boolean-valued functions, so it's important to exercise them in both directions. Here are some negative examples:</p>
+<h4 id="a-single-node-that-is-its-own-left-child-is-not-well-formed"><a class="header" href="#a-single-node-that-is-its-own-left-child-is-not-well-formed">A single node that is its own left-child is not well-formed.</a></h4>
+<pre><code class="language-forge editable">example n_own_left is {not wellformed} for {
+  Node = `Node0 
+  `Node0.left = `Node0
+  no `Node0.right
+}
+</code></pre>
+<img alt="a node that is its own left child" src="./n_own_left.png" width=60%/>
+<h4 id="a-single-node-that-is-its-own-right-child-is-not-well-formed"><a class="header" href="#a-single-node-that-is-its-own-right-child-is-not-well-formed">A single node that is its own right-child is not well-formed.</a></h4>
+<pre><code class="language-forge editable">example n_own_right is {not wellformed} for {
+  Node = `Node0 
+  no `Node0.left
+  `Node0.right = `Node0
+}
+</code></pre>
+<img alt="a node that is its own right child" src="./n_own_right.png" width=60%/>
+<h4 id="a-single-node-thats-reachable-via-a-longer-cycle-using-both-left--and-right-children-is-not-well-formed"><a class="header" href="#a-single-node-thats-reachable-via-a-longer-cycle-using-both-left--and-right-children-is-not-well-formed">A single node that's reachable via a longer cycle using both left- and right-children is not well-formed.</a></h4>
+<pre><code class="language-forge editable">example n_mixed_cycle is {not wellformed} for {
+  Node = `Node0 + `Node1 + `Node2
+  
+  `Node0.left = `Node1 
+  no `Node0.right 
+  no `Node1.left
+  `Node1.right = `Node2
+  
+  `Node2.left = `Node0
+  no `Node2.right 
+}
+</code></pre>
+<img alt="a cycle using both left and right" src="./n_mixed_cycle.png" width=60%/>
+<h4 id="a-forest-of-multiple-disconnected-trees-is-not-well-formed"><a class="header" href="#a-forest-of-multiple-disconnected-trees-is-not-well-formed">A &quot;forest&quot; of multiple, disconnected trees is not well-formed.</a></h4>
+<pre><code class="language-forge editable">example n_forest is {not wellformed} for {
+  Node = `Node0 + `Node1
+  no `Node0.left
+  no `Node0.right 
+  no `Node1.left 
+  no `Node1.right 
+}
+</code></pre>
+<img alt="a forest, not a single tree" src="./n_forest.png" width=60%/>
+<div id="admonition-sometimes-it-helps-to-_start_-with-an-example" class="admonition admonish-note">
+<div class="admonition-title">
+<p>Sometimes it helps to <em>start</em> with an example.</p>
+<p><a class="admonition-anchor-link" href="#admonition-sometimes-it-helps-to-_start_-with-an-example"></a></p>
+</div>
+<div>
+<p>We wouldn't normally be able to <em>check</em> these examples until we'd finished writing the <code>wellformed</code> predicate, but it can still be useful to create a few examples first, to help guide the constraints you write. Binary trees are a quite simple domain; imagine modeling something like the Java class system. Things can get tricky fast, and it's good to have a few concrete cases in mind.</p>
+</div>
+</div>
+<h3 id="run-the-examples"><a class="header" href="#run-the-examples">Run the examples</a></h3>
+<p>Click the run button, and Forge will check that all of the examples satisfy (or dissatisfy) the <code>wellformed</code> predicate. One fails, but why? Notice two things:</p>
+<ul>
+<li>The failing example is a <em>negative</em> one. We expected this instance to be ruled out by <code>wellformed</code>, but it was not. This points to a potential <em>under</em>-constraint bug in <code>wellformed</code>. </li>
+<li>We intended the example to fail because it contains separate, disconnected trees. This gives us a hint about the nature of the missing constraint. Except...</li>
+</ul>
+<p>We already added a constraint that forces connectivity. Didn't we? </p>
+<pre><code class="language-forge editable">  all disj n1, n2: Node | (not isRoot[n1] and not isRoot[n2]) implies {
+    some anc: Node | reachable[n1, anc, left, right] and 
+                     reachable[n2, anc, left, right] }
+</code></pre>
+<p>So what's the problem? </p>
+<details>
+<summary>Think, then click!</summary>
+<p>This constraint only applies for pairs of <em>non-root</em> nodes. That is, any two non-root nodes must have a common parent. So we ruled out forests of separate, bushy <em>trees</em>, but we neglected to exclude isolated roots!</p>
+</details>
+<hr />
+<p>In modeling, it's common for there to be a few ways to fix problems like this. We could go back and edit the constraint we wrote before, or we could write a new constraint to handle roots. In <em>this</em> case, let's edit the original. We said that any two non-roots have a common ancestor. Why did we say &quot;non-root&quot;? Because if one of the nodes happened to be a root, it would have no such ancestors. </p>
+<p>What if we allowed the node itself to count as the common ancestor? Then we would have two obligations (as before), but each would have another way to become true. </p>
+<pre><code class="language-forge editable">  -- for _any_ pair of nodes, there is some ancestor node, such that...
+  all disj n1, n2: Node | {
+    some anc: Node | { 
+      -- either n1 is the ancestor itself, or the ancestor reaches n1...
+      ((n1 = anc) or reachable[n1, anc, left, right])
+      -- ...and either n2 is the ancestor itself, or the ancestor reaches n2
+      ((n2 = anc) or reachable[n2, anc, left, right]) 
+    } }
+</code></pre>
+<p>Now all of our examples pass. While that doesn't mean the constraints are exactly right yet, it does increase our confidence in them. </p>
+<h2 id="view-some-instances"><a class="header" href="#view-some-instances">View some instances</a></h2>
+<p>Before we move on, let's at least look at some new instances of <code>wellformed</code>, as generated by Forge. By viewing a few of these, we can often spot issues in the initial stages of a model. </p>
+<pre><code>-- View a tree or two
+run {wellformed} for exactly 8 Node
+</code></pre>
+<!-- Note: custom visualization is _bad_ for this, because it may hide the problem due to 
+     structural assumptions it makes. -->
+<p>The <code>run</code> command searches for instances that satisfy the constraints it is given, and then automatically opens the visualizer to explore those instances. </p>
+<div id="admonition-visualization" class="admonition admonish-tip">
+<div class="admonition-title">
+<p>Visualization</p>
+<p><a class="admonition-anchor-link" href="#admonition-visualization"></a></p>
+</div>
+<div>
+<p>By default, the visualizer will show nearly all relationships as arcs; e.g., the <code>key</code> field of each node will be shown as an arc from the node to the (numeric) key. If you want, you can clean this up a bit by opening the <code>Theme</code> drawer, selecting the <code>key</code> field, and checking to view the field as an attribute.</p>
+</div>
+</div>
+<p>Here's something you might see in one of the instances:</p>
+<p><img src="same-left-right.png" alt="A fragment of an instance visualization, showing a node whose left and right children are the same" /></p>
+<p>This doesn't look right, does it? We have a node whose left and right child are the same; that's not tree-like. Again, we have an <em>under</em>-constraint bug: there's some instance(s) that are permitted by <code>wellformed</code>, but shouldn't be. In fact, we completely forgot to add a constraint like:</p>
+<pre><code class="language-forge editable">  -- left+right differ (unless both are empty)
+  all n: Node | some n.left =&gt; n.left != n.right 
+</code></pre>
+<p>With that constraint added to <code>wellformed</code>, we don't see any more wrong-looking binary trees.</p>
+<h2 id="validation"><a class="header" href="#validation">Validation</a></h2>
+<p>So far we've tested our model in two ways:</p>
+<ul>
+<li>checking that specific instances satisfy, or don't satisfy, a Forge predicate; and </li>
+<li>manually viewing generated instances. 
+In Forge, we have recourse to more powerful techniques. </li>
+</ul>
+<p>Notice that, when we were writing <code>binary_tree</code>, we never said explicitly that there must be a single unique root in the instance. It should be true, of course, that such a root exists and is unique. But that is (or should be!) a <em>consequence</em> of what we wrote. In Forge, this is easy to test:</p>
+<pre><code class="language-forge editable">-- Run a test: our predicate enforces a unique root exists (if any node exists)
+pred unique_root {   
+  no Node or {
+    one root: Node | 
+      all other: Node-root | other in descendantsOf[root]}}
+assert binary_tree is sufficient for unique_root for 5 Node  
+</code></pre>
+<p>This passes; there is no counterexample using fewer than than 6 Nodes. Our confidence increases.</p>
+<div id="admonition-different-ways-of-writing-predicates" class="admonition admonish-note">
+<div class="admonition-title">
+<p>Different ways of writing predicates</p>
+<p><a class="admonition-anchor-link" href="#admonition-different-ways-of-writing-predicates"></a></p>
+</div>
+<div>
+<p>You might be thinking that we could have just added the unique-root property as a constraint to <code>wellformed</code> directly! That's a reasonable thought, and it's true that we could have. I left it out deliberately here, for a few reasons:</p>
+<ul>
+<li>It's usually a good idea to not overload predicates with constraints that are really unnecessary. There's some wiggle room here in the service of making your model robust, but if we had added every possible property we could think of for a tree to have, the predicate would have become quite unwieldy, harder to understand, and (vitally) harder to debug. </li>
+<li>When we start modeling, we often don't know exactly what we want. Sure, we might be able to describe it in broad terms, but 
+and, of course...</li>
+<li>it allowed demonstration of this general technique: checking that one predicate enforces another.</li>
+</ul>
+</div>
+</div>
+<p>Now our model is looking pretty good, although we haven't yet added the &quot;search&quot; part of &quot;binary search tree&quot;.</p>
+<h2 id="more-domain-predicates-search-invariants"><a class="header" href="#more-domain-predicates-search-invariants">More Domain Predicates: Search Invariants</a></h2>
+<p>Let's express our two alternative BST invariants. As a reminder, they were: </p>
+<p><strong>Version 1</strong> For all nodes <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span>:</p>
+<ul>
+<li>all left-descendants of <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> have a key less than <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span>'s key; and </li>
+<li>all right-descendants of <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> have a key greater than or equal to <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span>'s key.</li>
+</ul>
+<p><strong>Version 2</strong> For all nodes <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span>:</p>
+<ul>
+<li>the left child of <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> (if any) has a key less than <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span>'s key; and </li>
+<li>the right child of <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> (if any) has a key greater than or equal to <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span>'s key.</li>
+</ul>
+<p>Notice that both are phrased in terms of single nodes, and should apply to all nodes. For convenience, we'll split these up into 2 predicates each: one to represent the per-node requirement, and another to represent the global requirement. </p>
+<pre><code class="language-forge editable">pred invariant_v1[n: Node] {
+  -- &quot;Every node's left-descendants...&quot; (if any)
+  some n.left =&gt; {
+    n.left.key &lt; n.key
+    all d: Node | reachable[d, n.left, left, right] =&gt; d.key &lt; n.key
+  }
+  -- &quot;Every node's right-descendants...&quot; (if any)
+  some n.right =&gt; {
+    n.right.key &lt; n.key
+    all d: Node | reachable[d, n.right, left, right] =&gt; d.key &gt; n.key
+  }
+}
+pred binary_search_tree_v1 {
+  binary_tree  -- a binary tree, with an added invariant
+  all n: Node | invariant_v1[n]  
+}
+</code></pre>
+<p>Here's the same pair of predicates for the second (<em>wrong</em>) invariant:</p>
+<pre><code class="language-forge editable">pred invariant_v2[n: Node] {
+  -- &quot;Every node's immediate children...&quot;
+  some n.left implies n.left.key &lt; n.key
+  some n.right implies n.right.key &gt; n.key
+}
+pred binary_search_tree_v2 {
+  binary_tree  -- a binary tree, with an added invariant
+  all n: Node | invariant_v2[n]
+}
+</code></pre>
+<h3 id="semantic-differencing"><a class="header" href="#semantic-differencing">Semantic Differencing</a></h3>
+<p>Forge supports a useful trick: comparing the <em>meaning</em> of two different predicates. What do we mean by &quot;meaning&quot;? Suppose that we ran <code>diff</code> on the two versions above. We'd get a report of where the <em>text</em> of the two differed. But that isn't very informative; we'd really like to know <em>which actual binary trees</em> the two disagree on. That's a better way of understanding how the meaning of the two might differ, and start to grasp the consequences. </p>
+<pre><code class="language-forge editable">-- Get examples of the difference between the two. Here we name the run &quot;bstdiff&quot;.
+bstdiff: run {not { binary_search_tree_v1 iff binary_search_tree_v2}} for 5 Node 
+-- But how do they differ? We'd expect the first invariant to be _stronger_ than the second:
+v1_is_stronger: assert binary_search_tree_v1 is sufficient for binary_search_tree_v2 for 5 Node 
+</code></pre>
+<p>The <code>v1_is_strong</code> test passes. The <code>run</code> command produces an instance (actually many) where the two invariants disagree. The test, however, passes, indicating that version 1 is strictly more selective than version 2: no matter how many times we clicked &quot;Next&quot;, we'd only see trees where <code>binary_search_tree_v2</code> is satisfied but <code>binary_search_tree_v1</code> isn't.</p>
+<div id="admonition-differencing-for-debugging" class="admonition admonish-tip">
+<div class="admonition-title">
+<p>Differencing for Debugging</p>
+<p><a class="admonition-anchor-link" href="#admonition-differencing-for-debugging"></a></p>
+</div>
+<div>
+<p>This simple technique really is powerful. You might use it to check whether two versions of the same constraint are equivalent when debugging or optimizing your model. <strong>We'll use this idea in a few examples later, too.</strong></p>
+</div>
+</div>
+<p>We'll return to binary search trees soon, to model how the recursive descent search works. That will let us see how the different invariants impact the correctness of search. But first, let's get a bit more experience with Forge.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../chapters/ttt/ttt.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../chapters/adder/rca.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../chapters/ttt/ttt.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../chapters/adder/rca.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../../ace.js"></script>
+        <script src="../../editor.js"></script>
+        <script src="../../mode-rust.js"></script>
+        <script src="../../theme-dawn.js"></script>
+        <script src="../../theme-tomorrow_night.js"></script>
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

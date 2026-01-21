@@ -1,0 +1,351 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Mutual Exclusion, Revisited - Logic for Systems: Lightweight Formal Methods for Everybody</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../././mdbook-admonish.css">
+        <link rel="stylesheet" href="../.././mdbook-admonish.css">
+        <link rel="stylesheet" href="../.././custom.css">
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><a href="../../welcome.html">How to Read this book</a></li><li class="chapter-item affix "><li class="part-title">Preamble: Beyond Testing</li><li class="chapter-item "><a href="../../chapters/manifesto/job.html">What good is this book?</a></li><li class="chapter-item "><a href="../../chapters/manifesto/manifesto.html">Logic for Systems</a></li><li class="chapter-item "><a href="../../chapters/properties/pbt.html">From Tests to Properties</a></li><li class="chapter-item affix "><li class="part-title">Modeling Static Scenarios</li><li class="chapter-item "><a href="../../chapters/ttt/ttt.html">Tic-Tac-Toe</a></li><li class="chapter-item "><a href="../../chapters/bst/bst.html">Binary Search Trees</a></li><li class="chapter-item "><a href="../../chapters/adder/rca.html">Ripple-Carry Adder</a></li><li class="chapter-item "><a href="../../chapters/qna/static.html">Q&A: Static Modeling</a></li><li class="chapter-item affix "><li class="part-title">Discrete Event Systems</li><li class="chapter-item "><a href="../../chapters/ttt/ttt_games.html">Transitions, Traces, and Verification</a></li><li class="chapter-item "><a href="../../chapters/inductive/bsearch.html">Counterexamples to Induction</a></li><li class="chapter-item "><a href="../../chapters/bst/descent.html">BSTs: Recursive Descent</a></li><li class="chapter-item "><a href="../../chapters/validation/validating_events.html">Validating Models</a></li><li class="chapter-item "><a href="../../chapters/qna/events.html">Q&A: Event Systems</a></li><li class="chapter-item affix "><li class="part-title">Modeling Relationships</li><li class="chapter-item "><a href="../../chapters/relations/modeling-booleans-1.html">Relational Forge, Modeling Logic</a></li><li class="chapter-item "><a href="../../chapters/relations/reachability.html">Transitive Closure</a></li><li class="chapter-item "><a href="../../chapters/relations/sets-induction-mutex.html">Modeling Mutual Exclusion</a></li><li class="chapter-item "><a href="../../chapters/relations/sets-beyond-assertions.html">Going Beyond Assertions</a></li><li class="chapter-item "><a href="../../chapters/solvers/bounds_booleans_how_forge_works.html">How does Forge Work?</a></li><li class="chapter-item "><a href="../../chapters/qna/relations.html">Q&A: Relations</a></li><li class="chapter-item affix "><li class="part-title">Temporal Specification</li><li class="chapter-item "><a href="../../chapters/temporal/liveness_and_lassos.html">Liveness and Lassos</a></li><li class="chapter-item "><a href="../../chapters/temporal/temporal_operators.html">Temporal Forge</a></li><li class="chapter-item "><a href="../../chapters/temporal/temporal_operators_2.html">Linear Temporal Logic</a></li><li class="chapter-item "><a href="../../chapters/temporal/obligations_past.html">Obligations and the Past</a></li><li class="chapter-item expanded "><a href="../../chapters/temporal/fixing_lock_temporal.html" class="active">Mutual Exclusion, Revisited</a></li><li class="chapter-item "><a href="../../chapters/temporal/testing_temporal.html">Testing Temporally</a></li><li class="chapter-item affix "><li class="part-title">Boolean Solver Algorithms</li><li class="chapter-item "><a href="../../chapters/solvers/dpll.html">Boolean SAT (DPLL)</a></li><li class="chapter-item "><a href="../../chapters/solvers/resolution.html">Witnessing Unsat: Propositional resolution</a></li><li class="chapter-item affix "><li class="part-title">Beyond SAT</li><li class="chapter-item "><a href="../../chapters/solvers/smt.html">Satisfiability Modulo Theories (SMT)</a></li><li class="chapter-item "><a href="../../chapters/solvers/cegis.html">Learning with Solvers: CEGIS</a></li><li class="chapter-item affix "><li class="part-title">Case Studies and Further Reading</li><li class="chapter-item "><div>Modeling Raft in Anger</div></li><li class="chapter-item "><div>Forge: Comparing Prim's and Dijkstra's Algorithms</div></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Logic for Systems: Lightweight Formal Methods for Everybody</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h1 id="peterson-lock-and-fairness"><a class="header" href="#peterson-lock-and-fairness">Peterson Lock and Fairness</a></h1>
+<p>Let's finally <em>fix</em> <a href="../relations/sets-induction-mutex.html">the broken locking algorithm</a> <a href="../relations/sets-beyond-assertions.html">we modeled before</a>. We <a href="./liveness_and_lassos.html">decided</a> that it would be a bother to encode lasso traces manually in Relational Forge, but it seems like Temporal Forge might give us exactly what we need.</p>
+<p>The final version of the model will be in <a href="./peterson.frg">peterson.frg</a>.</p>
+<h2 id="fixing-deadlock"><a class="header" href="#fixing-deadlock">Fixing Deadlock</a></h2>
+<p>Our little algorithm is 90% of the way to a <em>working</em> mutex called the <a href="https://en.wikipedia.org/wiki/Peterson%27s_algorithm">Peterson lock</a>.  The Peterson lock just adds one extra bit of state, and one transition to set that bit. In short, if our current algorithm is analogous to raising hands for access, the other bit added is like a &quot;no, you first&quot; when two people are trying to get through the door at the same time; that's exactly the sort of situation our both-flags-raised deadlock represented.</p>
+<p><strong>TODO: add transition diagram here, and probably for lock1</strong></p>
+<p>To represent which process (if any) has most recently said &quot;no, you go first&quot;, we'll add a <code>polite: lone Process</code> field to each <code>Process</code>. The algorithm now needs to take a step to set this value. It goes something like this (in pseudocode) after the process becomes interested:</p>
+<pre><code>// location: uninterested 
+this.flag = true
+// location: halfway   (NEW)
+polite = me         
+// location: waiting 
+while(other.flag == true || polite == me) {} // hold until their flag is lowered _or_ the other is being polite
+// location: in CS 
+run_critical_section_code(); // don't care details
+this.flag = false
+</code></pre>
+<p>Because we're modeling individual operations executing, we'll need to add a new location to the state, which I'll call <code>Halfway</code>. We'll also need a new transition (and to change existing transitions in some places). The new transition might look something like this:</p>
+<pre><code class="language-alloy">pred enabledNoYou[p: Process] {
+    World.loc[p] = Halfway
+}
+pred noYou[p: Process] {
+    -- GUARD
+    enabledNoYou[p]
+    -- ACTION
+    World.loc'[p] = Waiting
+    World.flags' = World.flags
+    World.polite' = p
+    all p2: Process - p | World.loc'[p2] = World.loc[p2]
+}
+</code></pre>
+<p>We'll need a small edit in <code>raise</code>, to set </p>
+<pre><code>World.loc'[p] = Halfway
+</code></pre>
+<p>instead of </p>
+<pre><code>World.loc'[p] = Waiting
+</code></pre>
+<p>and a modification to the <code>enter</code> transition so that it's enabled if <em>either</em> nobody else has their flag raised <em>or</em> the current process isn't the one being polite anymore:</p>
+<pre><code class="language-alloy">pred enabledEnter[p: Process] {
+    World.loc[p] = Waiting 
+    -- no other processes have their flag raised *OR* this process isn't the polite one
+    (World.flags in p or World.polite != p)
+}
+</code></pre>
+<p>Then we add the new transition to the overall transition predicate, to <code>doNothing</code>, to the deadlock check test—anywhere we previously enumerated possible transitions.</p>
+<p>We also need to expand the frame conditions of all other transitions to keep <code>polite</code> constant if we aren't explicitly modifying it.</p>
+<div id="admonition-watch-out" class="admonition admonish-warning">
+<div class="admonition-title">
+<p>Watch out!</p>
+<p><a class="admonition-anchor-link" href="#admonition-watch-out"></a></p>
+</div>
+<div>
+<p>Beware of forgetting (or accidentally including) primes. This can lead to unsatisfiable results, since the constraints won't do what you expect between states. E.g., an accidental double-prime will mean &quot;in the state <em>after</em> next&quot;.</p>
+</div>
+</div>
+<h3 id="lets-check-non-starvation"><a class="header" href="#lets-check-non-starvation">Let's Check Non-Starvation</a></h3>
+<pre><code class="language-alloy">noStarvation: {
+    lasso implies {
+        all p: Process | {
+            always {
+                -- Beware saying &quot;p in World.flags&quot;. Why? Read on...
+                p in World.flags =&gt;
+                eventually World.loc[p] = InCS
+            }
+        }
+    }
+} is checked
+</code></pre>
+<p>This passes. Yay!</p>
+<div id="admonition-should-we-be-suspicious" class="admonition admonish-tip">
+<div class="admonition-title">
+<p>Should we be suspicious?</p>
+<p><a class="admonition-anchor-link" href="#admonition-should-we-be-suspicious"></a></p>
+</div>
+<div>
+<p>That was really easy. Everything seems to be working perfectly. Maybe we can stop early and go get ice cream. </p>
+<p>But we should probably do some validation to make sure we haven't missed something. Here's a question: <em>is our domain model realistic enough to trust these results?</em></p>
+</div>
+</div>
+<h2 id="abstraction-choices-we-made"><a class="header" href="#abstraction-choices-we-made">Abstraction Choices We Made</a></h2>
+<p>We made a choice to model processes as always eventually <em>interested</em> in accessing the critical section. There's no option to remain uninterested, or even to terminate (as many processes do in real life). Suppose we allowed processes to become uninterested and go to sleep. How could this affect the correctness of our algorithm, or threaten our ability to verify the non-starvation property with the current model? </p>
+<details>
+<summary>Think, then click!</summary>
+<p>The property might break because a process's flag is still raised as it is <em>leaving</em> the critical section, even if it never actually wants access again. So the implication is too strong. It is more correct to say <code>World.loc[p] = Waiting =&gt; ...</code> than <code>p in World.flags</code>, which is why we use it in the above. </p>
+<p>But even the correct property will fail in this case: there's nothing that says one process can't completely dominate the overall system, locking its counterpart out. Suppose that <code>ProcessA</code> is <code>Waiting</code> and then <code>ProcessB</code> stops being interested. <em>If we modeled disinterest as a while loop</em>, perhaps using <code>doNothing</code> or a custom <code>stillDisinterested</code> transition, then <code>ProcessA</code> could follow that loop forever, leaving <code>ProcessB</code> enabled, but frozen, because our model only lets one process transition at a time.</p>
+</details>
+<p>Let's deal with that second problem now.</p>
+<!-- In your next homework, you'll be _critiquing_ a set of properties and algorithms for managing an elevator. Channel your annoyance at the CIT elevators, here! Of course, none of our models encompass the complexity of the CIT elevators... -->
+<h2 id="fairness"><a class="header" href="#fairness">Fairness</a></h2>
+<p>In the real world, it's not just the process itself that says whether or not it runs forever; it's also up to the operating system's scheduler, the system's hardware, etc. Thus, non-starvation is contingent on some <strong>preconditions</strong> that the domain must provide. 
+Without the scheduler being at least <em>somewhat</em> fair, even the best algorithm can guarantee very little. </p>
+<p>Let's add the precondition, which we'll call &quot;fairness&quot;. Again, keep in mind that, in this context, fairness is <em>not a property our locking system must guarantee</em>. Rather, it's something our locking system needs from its environment. This is a common thing to see in verification and, for that matter, in all of computer science. To underscore this point, you might review the <a href="../bst/bst.html">binary search tree</a> invariant. Is the BST invariant a properties for the search to guarantee, or a precondition for its correctness? Of course, the status of a given property can shift depending on our perspective: if we're modeling the algorithm to <em>add</em> to the binary search tree, preserving the invariant is now very important.</p>
+<div id="admonition-other-precondition-examples" class="admonition admonish-note">
+<div class="admonition-title">
+<p>Other precondition examples</p>
+<p><a class="admonition-anchor-link" href="#admonition-other-precondition-examples"></a></p>
+</div>
+<div>
+<p>Is Dijkstra's algorithm always correct, on any weighted directed graph? Is RSA encryption absolutely secure, no matter how powerful or how lucky the adversary is?</p>
+</div>
+</div>
+<h3 id="expressing-fairness"><a class="header" href="#expressing-fairness">Expressing Fairness</a></h3>
+<p>There are many ways to phrasing fairness, and since we're making it an assumption about the world outside our algorithm, we'd really like to pick something that suffices for our needs, but <em>isn't any stronger than that.</em> Once we add the <code>weakFairness</code> predicate below as an assumption, the properties pass. </p>
+<pre><code class="language-alloy">pred weakFairness {
+    all p: Process | {
+        (eventually always 
+                (enabledRaise[p] or
+                enabledEnter[p] or
+                enabledLeave[p] or
+                enabledNoYou[p])) 
+        =&gt; 
+        (always eventually (enter[p] or raise[p] or leave[p] or noYou[p]))        
+    }
+}
+</code></pre>
+<p>This may initially look a little strange. It still looks rather strange to me, years after learning it. It just happens that there are multiple ways to express fairness. Hillel Wayne has a <a href="https://www.hillelwayne.com/post/fairness/">great blog post</a> on the differences between them. (Unfortunately it's in a different modeling language, but the ideas come across well.) Regardless, &quot;weak&quot; fairness is sufficient for our needs! It says that if a process remains ready to move forward forever (possibly via a different transition per state), it must be allowed to proceed infinitely often.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../chapters/temporal/obligations_past.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../chapters/temporal/testing_temporal.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../chapters/temporal/obligations_past.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../chapters/temporal/testing_temporal.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../../ace.js"></script>
+        <script src="../../editor.js"></script>
+        <script src="../../mode-rust.js"></script>
+        <script src="../../theme-dawn.js"></script>
+        <script src="../../theme-tomorrow_night.js"></script>
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

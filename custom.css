@@ -1,0 +1,58 @@
+.showcase {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}   
+
+.example {
+    color: black;
+    display: flex;
+    align-items:center;
+    margin-top: 10px;
+}
+
+.vizimg {
+    color: gray;
+    float: left;
+    margin-top: 10px;
+    border-style: solid;
+    width: 60%;
+}
+.logoimg {
+    color: gray;
+    float: left;
+    margin-top: -10px;
+    /* border-style: solid; */
+    width: 35%;
+}
+
+.viztext {
+    display: flex;
+    flex-direction: column;
+}
+.vizlabel {
+    color: black;
+    float: left;
+    font-weight: 500;
+    font-size:large;
+    margin-left: 10px;
+}
+.vizauthor {
+    color: black;
+    float: left;
+    font-weight: 300;
+    margin-left: 10px;
+}
+.viznote {
+    color: black;
+    float: left;
+    /* font-weight: 300; */
+    margin-left: 10px;
+}
+.vizpub {
+    color: black;
+    float: left;
+    font-weight: 300;
+    font-style:italic;
+    margin-left: 10px;
+}

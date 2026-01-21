@@ -1,0 +1,564 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Boolean SAT (DPLL) - Logic for Systems: Lightweight Formal Methods for Everybody</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../././mdbook-admonish.css">
+        <link rel="stylesheet" href="../.././mdbook-admonish.css">
+        <link rel="stylesheet" href="../.././custom.css">
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><a href="../../welcome.html">How to Read this book</a></li><li class="chapter-item affix "><li class="part-title">Preamble: Beyond Testing</li><li class="chapter-item "><a href="../../chapters/manifesto/job.html">What good is this book?</a></li><li class="chapter-item "><a href="../../chapters/manifesto/manifesto.html">Logic for Systems</a></li><li class="chapter-item "><a href="../../chapters/properties/pbt.html">From Tests to Properties</a></li><li class="chapter-item affix "><li class="part-title">Modeling Static Scenarios</li><li class="chapter-item "><a href="../../chapters/ttt/ttt.html">Tic-Tac-Toe</a></li><li class="chapter-item "><a href="../../chapters/bst/bst.html">Binary Search Trees</a></li><li class="chapter-item "><a href="../../chapters/adder/rca.html">Ripple-Carry Adder</a></li><li class="chapter-item "><a href="../../chapters/qna/static.html">Q&A: Static Modeling</a></li><li class="chapter-item affix "><li class="part-title">Discrete Event Systems</li><li class="chapter-item "><a href="../../chapters/ttt/ttt_games.html">Transitions, Traces, and Verification</a></li><li class="chapter-item "><a href="../../chapters/inductive/bsearch.html">Counterexamples to Induction</a></li><li class="chapter-item "><a href="../../chapters/bst/descent.html">BSTs: Recursive Descent</a></li><li class="chapter-item "><a href="../../chapters/validation/validating_events.html">Validating Models</a></li><li class="chapter-item "><a href="../../chapters/qna/events.html">Q&A: Event Systems</a></li><li class="chapter-item affix "><li class="part-title">Modeling Relationships</li><li class="chapter-item "><a href="../../chapters/relations/modeling-booleans-1.html">Relational Forge, Modeling Logic</a></li><li class="chapter-item "><a href="../../chapters/relations/reachability.html">Transitive Closure</a></li><li class="chapter-item "><a href="../../chapters/relations/sets-induction-mutex.html">Modeling Mutual Exclusion</a></li><li class="chapter-item "><a href="../../chapters/relations/sets-beyond-assertions.html">Going Beyond Assertions</a></li><li class="chapter-item "><a href="../../chapters/solvers/bounds_booleans_how_forge_works.html">How does Forge Work?</a></li><li class="chapter-item "><a href="../../chapters/qna/relations.html">Q&A: Relations</a></li><li class="chapter-item affix "><li class="part-title">Temporal Specification</li><li class="chapter-item "><a href="../../chapters/temporal/liveness_and_lassos.html">Liveness and Lassos</a></li><li class="chapter-item "><a href="../../chapters/temporal/temporal_operators.html">Temporal Forge</a></li><li class="chapter-item "><a href="../../chapters/temporal/temporal_operators_2.html">Linear Temporal Logic</a></li><li class="chapter-item "><a href="../../chapters/temporal/obligations_past.html">Obligations and the Past</a></li><li class="chapter-item "><a href="../../chapters/temporal/fixing_lock_temporal.html">Mutual Exclusion, Revisited</a></li><li class="chapter-item "><a href="../../chapters/temporal/testing_temporal.html">Testing Temporally</a></li><li class="chapter-item affix "><li class="part-title">Boolean Solver Algorithms</li><li class="chapter-item expanded "><a href="../../chapters/solvers/dpll.html" class="active">Boolean SAT (DPLL)</a></li><li class="chapter-item "><a href="../../chapters/solvers/resolution.html">Witnessing Unsat: Propositional resolution</a></li><li class="chapter-item affix "><li class="part-title">Beyond SAT</li><li class="chapter-item "><a href="../../chapters/solvers/smt.html">Satisfiability Modulo Theories (SMT)</a></li><li class="chapter-item "><a href="../../chapters/solvers/cegis.html">Learning with Solvers: CEGIS</a></li><li class="chapter-item affix "><li class="part-title">Case Studies and Further Reading</li><li class="chapter-item "><div>Modeling Raft in Anger</div></li><li class="chapter-item "><div>Forge: Comparing Prim's and Dijkstra's Algorithms</div></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Logic for Systems: Lightweight Formal Methods for Everybody</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h1 id="satisfiability-solving"><a class="header" href="#satisfiability-solving">Satisfiability Solving</a></h1>
+<p>Suppose I asked you to solve a boolean constraint problem. Maybe it comes from Forge, and maybe it doesn't. Here's an example, in &quot;Java syntax&quot;:</p>
+<pre><code>x1 and (x1 implies x2)
+</code></pre>
+<p>Is there a satisfying instance for this constraint? </p>
+<ul>
+<li>If yes, what is it, and how did you obtain it?</li>
+<li>If no, how did you reach that conclusion?</li>
+</ul>
+<p>Here's another:</p>
+<pre><code>(x1 or !x2) and (x1 or x2) and (x2 or !x1) and (!x2 or !x1)
+</code></pre>
+<p>Same question. Is there a satisfying instance for this constraint? </p>
+<ul>
+<li>If yes, what is it, and how did you obtain it?</li>
+<li>If no, how did you reach that conclusion?</li>
+</ul>
+<h2 id="truth-tables"><a class="header" href="#truth-tables">Truth Tables</a></h2>
+<p>We could build the table of all possibilities, and use it to search like so:</p>
+<div class="table-wrapper"><table><thead><tr><th><code>x1</code></th><th><code>x2</code></th><th><code>(x1 implies x2)</code></th><th><code>x1 and (x1 implies x2)</code></th></tr></thead><tbody>
+<tr><td>T</td><td>T</td><td>T</td><td><strong>T</strong></td></tr>
+<tr><td>T</td><td>F</td><td>F</td><td>F</td></tr>
+<tr><td>F</td><td>T</td><td>T</td><td>F</td></tr>
+<tr><td>F</td><td>F</td><td>T</td><td>F</td></tr>
+</tbody></table>
+</div>
+<p>We've found a solution! But we needed to build the entire set of possibilities to do so.</p>
+<h2 id="can-we-do-better"><a class="header" href="#can-we-do-better">Can We Do Better?</a></h2>
+<p>We <strong>don't actually know</strong> (at time of writing) whether it's possible to solve boolean satisfiability for arbitrary inputs without worst-case time exponential in the size of the input. This is one of the biggest unsolved questions, and certainly one of the most famous, in computer science. But we shouldn't let that discourage us. Plenty of problems are <em>worst</em> case exponential (or even more difficult) and we still solve them all the time.</p>
+<div id="admonition-why-so-famous" class="admonition admonish-note">
+<div class="admonition-title">
+<p>Why so famous?</p>
+<p><a class="admonition-anchor-link" href="#admonition-why-so-famous"></a></p>
+</div>
+<div>
+<p>It turns out that if you can solve boolean SAT in polynomial worst-case time, you can also solve many other important problems in worst-case polynomial time. There are many such problems (e.g., graph coloring, longest simple path, bin packing, ...) but SAT is the most well-known. </p>
+<p>If you take 1010, you'll learn more about the specifics.</p>
+</div>
+</div>
+<h2 id="lets-try-anyway"><a class="header" href="#lets-try-anyway">Let's Try Anyway</a></h2>
+<p>Maybe we can do better <em>sometimes</em>. Let's just start, and see where we get to. </p>
+<div id="admonition-pseudocode" class="admonition admonish-warning">
+<div class="admonition-title">
+<p>Pseudocode</p>
+<p><a class="admonition-anchor-link" href="#admonition-pseudocode"></a></p>
+</div>
+<div>
+<p>The &quot;code&quot; in today's notes is <em>pseudocode</em>. The goal is to motivate the core ideas coming up, although you could certainly add a bit of extra detail to get runnable code.</p>
+</div>
+</div>
+<h3 id="a-first-try"><a class="header" href="#a-first-try">A First Try</a></h3>
+<p>Here's a solution that recursively tries all combinations. It's kind of like building the truth table, except that instead of creating the table (which always uses exponential <em>space</em>) it just explores all possibilities (always using exponential <em>time</em> but not exponential space). </p>
+<pre><code class="language-python">def solve(formula: BooleanFormula) -&gt; bool:
+    remaining = variables_in(formula) # get list of variables used in the formula
+    if remaining.isEmpty(): 
+        return simplify(formula)      # no variables left; simplify to true or false
+    else:
+        branch = remaining[0]                                     # guess based on first variable v
+        true_result = solve(substitute(formula, branch, True))    # try v = true
+        false_result = solve(substitute(formula, branch, False))  # try v = false
+        return true_result || false_result                        # true if and only if _some_ guess worked
+</code></pre>
+<p>The function relies on three helpers, which we've left out for brevity:</p>
+<ul>
+<li><code>simplify</code>, which evaluates a formula with no variables. E.g., it turns <code>True and False</code> to just <code>True</code>.</li>
+<li><code>substitute</code>, which replaces a variable with a concrete boolean value. E.g., calling <code>substitute(x1 and x2, x1, True)</code> would produce <code>True and x2</code>.</li>
+<li><code>variables_in</code>, which returns the set of variables used in a formula.</li>
+</ul>
+<p>Again, this program doesn't actually build the <em>entire</em> table at any one time. It explores the entire set of possible instances, and so takes time worst-case exponential in the number of variables. But it doesn't need that much <em>space</em>, which is already an improvement. </p>
+<p>However, its <em>best</em> case time is also exponential, which is rather disappointing. Surely we can do a lot better.</p>
+<h3 id="maybe-luck-is-with-us"><a class="header" href="#maybe-luck-is-with-us">Maybe Luck Is With Us</a></h3>
+<p>The issue with the last solution is that it <em>always</em> explores, even if it doesn't need to. Instead, how about we only check one value at a time. If we find a <code>True</code> result for one specific substitution, we're done!</p>
+<pre><code class="language-python">def solve(formula: BooleanFormula) -&gt; bool:
+    remaining = variables_in(formula)
+    if remaining.isEmpty(): 
+        return simplify(formula)
+    else:
+        branch = remaining[0]
+        true_result = solve(substitute(formula, branch, True))
+        if true_result:    # same as last version
+            return True    # but allow early termination
+        else: 
+            false_result = solve(substitute(formula, branch, False))
+            return false_result    
+</code></pre>
+<p>Now, suddenly, the best-case and the worst-case aren't the same. The solver could be <em>lucky</em>: consider a formula like <code>x1 and x2 and x3 and x4 and x5</code>. The above algorithm only needs 5 recursive calls to return <code>True</code>; the previous one would need <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">5</span></span></span></span></span></span></span></span></span></span></span>.</p>
+<p>Of course, luck won't always be with us. Right? What's an example formula that would still need an exponential number of calls with the above code?</p>
+<details>
+<summary>Think, then click!</summary>
+<p>How about: <code>!x1 and !x2 and !x3 and ...</code>? The first guess of <code>True</code> is always wrong for a formula like this.</p>
+</details>
+<h3 id="imposing-structure"><a class="header" href="#imposing-structure">Imposing Structure</a></h3>
+<p>Let's look back at our first example: <code>x1 and (x1 implies x2)</code>. You may have taken advantage of some <em>structure</em> to figure out a satisfying instance for this formula. Namely, if we know that <code>x1</code> holds, then we can propagate that knowledge into <code>x1 implies x2</code> to <em>deduce</em> that <code>x2</code> must hold---without needing to guess and try a value. There's nothing like this deduction in either of our programs so far.</p>
+<p>The trouble is: if we're given an arbitrary formula, it's hard to pick out that (say) <code>x1</code> is <em>definitely</em> true. But if we impose a little bit of structure on the input, it becomes easy in many cases. Let's do that now.</p>
+<h2 id="conjunctive-normal-form"><a class="header" href="#conjunctive-normal-form">Conjunctive Normal Form</a></h2>
+<p>First, three definitions:</p>
+<p>A <em>literal</em> is a variable or its negation. E.g., <code>x1</code> and <code>!x1</code> are both literals, but <code>!!x1</code> and <code>x1 or x2</code> are not.</p>
+<p>A <em>clause</em> is a set of literals combined with &quot;or&quot;; you may sometimes hear this called a <em>disjunction</em> of literals. Because we can always rewrite an &quot;or&quot; as implication (and vice versa) in classical boolean logic, a clause can be viewed as a number of different potential implications. </p>
+<p>A formula is said to be in <em>conjunctive normal form</em> (CNF) if it comprises a set of clauses that are implicitly combined with &quot;and&quot;. We call it this because &quot;conjunction&quot; is just another name for &quot;and&quot;; a &quot;normal form&quot; is just a way of saying that a formula's shape follows a certain (often useful) structure.</p>
+<p>If the input to our solver is in CNF, as the example formula <code>x1 and (x1 implies x2)</code> is (or rather, it would be if we'd wrote it equivalently as <code>x1 and (!x1 or x2)</code>), we can spot these opportunities to propagate knowledge quite quickly, just by searching for clauses of only one element. </p>
+<p>A <em>unit clause</em> is a 1-element clause: a variable or its negation.</p>
+<p>The <em>empty clause</em> is a 0-element clause, and is equivalent to <code>False</code>. Why is the empty clause equivalent to <code>False</code>?</p>
+<details>
+<summary>Think, then click!</summary>
+<p>A clause is a big &quot;or&quot;, and an &quot;or&quot; gives a set of ways the formula could evaluate to <code>True</code>. But an empty clause gives <em>no</em> such options!</p>
+</details>
+</br>
+<p><strong>From now on, we'll assume that we always have input in CNF.</strong> There's a trick to accomplish this, so let's keep focused on the solving, not on the conversion for now. </p>
+<h3 id="a-powerful-idea-unit-propagation"><a class="header" href="#a-powerful-idea-unit-propagation">A Powerful Idea: Unit Propagation</a></h3>
+<p>If our input was <code>x1 and (!x1 or x2)</code>, and we'd stored it as a set, that would be <code>{x1, (!x1 or x2)}</code>. We can check for unit clauses in time linear in the number of clauses. And if there is a unit clause, we can see whether there are opportunities to propagate that knowledge. This idea is called <em>unit propagation</em>.</p>
+<p>But how does that actually <em>work</em>? Suppose we've identified a unit clause, in this case <code>x1</code>. Then, for every other clause <code>C</code> in the set, we can check whether:</p>
+<ul>
+<li>the clause <code>C</code> contains the same literal as the unit clause; </li>
+<li>the clause contains the opposite literal as in the unit clause; or </li>
+<li>neither of the above.</li>
+</ul>
+<p>In the third case, we probably can't do any propagation, because there's no connection between the clauses. But what do you think we can do in either of the first two cases?</p>
+<details>
+<summary>Think, then click!</summary>
+<ul>
+<li>Does the clause <code>C</code> contain the same literal as the unit clause?
+<ul>
+<li>If so, then <code>C</code> is <em>subsumed</em> by the unit clause: <code>C</code> must be satisfied given <code>x1</code> holds! Delete the entire clause <code>C</code>.</li>
+</ul>
+</li>
+<li>Does the clause contain the opposite literal as in the unit clause?
+<ul>
+<li>If so, then the clause <code>C</code> cannot possibly be made true by that opposite literal. Delete that literal from <code>C</code>.</li>
+</ul>
+</li>
+</ul>
+</details>
+</br>
+<p><strong>Exercise</strong>: Here's a CNF formula. Solve it using unit propagation. </p>
+<p><code>x1 and (x1 or x2 or x3) and (!x3 or x2 or !x4) and (!x2 or !x1) and x3</code></p>
+<details>
+<summary>Think, then click!</summary>
+<p>First, we notice 2 unit clauses: <code>x1</code> and <code>x3</code>. Then:</p>
+<ul>
+<li>Propagate <code>x1</code>, which lets us remove a clause entirely, and simplify another: <code>x1 and (!x3 or x2 or !x4) and !x2 and x3</code>. But now we have a new unit clause, as a result of simplifying! </li>
+<li>Propagating <code>x3</code> gives us: <code>x1 and (x2 or !x4) and !x2 and x3</code>. </li>
+<li>Propagating <code>!x2</code> gives us <code>x1 and !x4 and !x2 and x3</code>. </li>
+</ul>
+<p>This is starting to look suspiciously like a boolean instance. <em>The unit clauses are assignments to boolean variables, and part of this process deduces new ones.</em></p>
+</details>
+</br>
+<p><strong>Exercise</strong>: Here's a CNF formula. Solve it using unit propagation. </p>
+<p><code>x1 and (x1 or x2 or x3) and (!x3 or x2 or !x4)</code></p>
+<p>Notice this formula is a strict subset of the earlier one. Because the earlier one is satisfiable, so is this one! But does unit propagation alone suffice to discover the satisfiability?</p>
+<details>
+<summary>Think, then click!</summary>
+<p>No. Unit propagating <code>x1</code> will produce <code>x1 and (!x3 or x2 or !x4)</code>, but we need some other way---besides <em>just</em> unit propagation---of breaking down the larger clause that remains.</p>
+</details>
+</br>
+<p>Fortunately, if we mix unit propagation with our prior &quot;guessing&quot; algorithm, we make significant progress.</p>
+<h3 id="adding-unit-propagation"><a class="header" href="#adding-unit-propagation">Adding Unit Propagation</a></h3>
+<pre><code class="language-python">def solve(formula: Set[Clause]) -&gt; bool:
+    
+    # are there any unit clauses? if so, propagate them
+    # keep doing so until there are no more changes
+    # Beware: mutation can be a source of bugs here...
+    old_formula, formula = propagate_unit_clauses(formula)
+    while formula &lt;&gt; old_formula:
+        old_formula, formula = propagate_unit_clauses(formula)
+    
+    # Did we produce the empty clause? (We might represent the e.c. as {} or [] etc.)
+    if EmptyClause in formula:
+        return False
+    # Do we otherwise have only unit clauses remaining? (What could go wrong in this check?) 
+    elif formula == units_in(formula):    
+        return True
+    else:
+        branch = remaining[0]
+        # no longer substitute; instead, _add_ a unit clause to represent the &quot;True&quot; guess
+        true_result = solve(formula + {branch})
+        if true_result: 
+            return True
+        else: 
+            # no longer substitute; instead, _add_ a unit clause to represent the &quot;False&quot; guess
+            false_result = solve(formula + {!branch})
+            return false_result    
+</code></pre>
+<p>Again, the amount of information we get from unit propagation is subject to luck (or, rather, the dependencies between variables and clauses in the formula we're given). </p>
+<div id="admonition-think-why-did-we-stop-substituting" class="admonition admonish-note">
+<div class="admonition-title">
+<p>Think: Why did we stop substituting?</p>
+<p><a class="admonition-anchor-link" href="#admonition-think-why-did-we-stop-substituting"></a></p>
+</div>
+<div>
+<p>In prior versions, we substituted <code>True</code> or <code>False</code> into the formula. Now, we're adding a unit clause to represent the guess instead. Why did we make this change? One reason is that it's easier to explicitly represent the flow of this algorithm via the addition of unit clauses, since half of it is about unit propagation. More reasons may appear as we continue.</p>
+</div>
+</div>
+<p>This idea---a recursive, backtracking search paired with unit propagation---is the foundation of one of the most famous boolean solver algorithms: <strong>DPLL</strong> (named after the authors: Davis, Putnam, Logemann, and Loveland). DPLL still forms the core of how most modern SAT-solvers work (although there are more ideas and optimizations not yet incorporated, such as learning from failure and deciding which variable to branch on).</p>
+<div id="admonition-pure-literal-elimination" class="admonition admonish-note">
+<div class="admonition-title">
+<p>Pure-literal elimination</p>
+<p><a class="admonition-anchor-link" href="#admonition-pure-literal-elimination"></a></p>
+</div>
+<div>
+<p>DPLL technically has one more feature: pure-literal elimination. I'm glossing over that here. It's technically interesting, but not central to where we are right now. The idea is: if a variable appears in only one &quot;polarity&quot; (that is, only positive or negative throughout all clauses) then if the clause set is satisfiable at all, it must be satisfiable by some instance that agrees with the polarity of that variable. So if we just want to find <em>a</em> satisfying instance, why not just set that variable's value right away?</p>
+</div>
+</div>
+<h3 id="returning-more-than-a-boolean"><a class="header" href="#returning-more-than-a-boolean">Returning more than a boolean</a></h3>
+<p>Returning just a boolean seems bad for the caller. After all, if Forge were using this solver, it would want the instance itself, not just that the instance exists. But there's another problem with returning a boolean: something related to testing. What is it?</p>
+<details>
+<summary>Think, then click!</summary>
+<p>If we wanted to do property-based testing on the solver, returning <code>True</code> would force the testing predicate to <em>solve the problem again</em>. But if we returned an instance, the predicate would be much easier: just evaluate the formula in the instance, and see if it indeed satisfies the formula.</p>
+</details>
+</br>
+<p>But how should we go about returning an instance, rather than <code>True</code>? To find out, let's actually look at the tree of recursive calls, and see what information we have, or could recover. Let's solve:</p>
+<p><code>(!x1 or !x2) and (!x1 or !x3) and (x2 or x3)</code></p>
+<p><img src="https://i.imgur.com/odianeQ.jpg" alt="" /></p>
+<p>In that bottom left call, how do we conclude &quot;conflict?&quot; In the other bottom call, how do we conclude &quot;success&quot;?</p>
+<details>
+<summary>Think, then click!</summary>
+<p>Because there's one more unit-propagation step in each case that I haven't drawn! Unit propagating <code>x3</code> when <code>!x3</code> is present will produce the empty clause: <code>False</code>. And similarly in the other case: unit propagating <code>x2</code> will eliminate the entire <code>x2 or x3</code> clause.</p>
+</details>
+</br>
+<p>Notice that every time we make a recursive call, there's an implicit set of <em>assumptions</em> involved. That is, there's always a <em>partial instance</em> of previously-selected guesses in effect at any point. We can make this explicit by adding a parameter to the function, and returning the guesses that produce a success:</p>
+<pre><code class="language-python"># Note new input and output types
+def solve(formula: Set[Clause], assumptions: Set[Literal]) -&gt; Set[Literal]:    
+    old_formula, formula = propagate_unit_clauses(formula)
+    while formula &lt;&gt; old_formula:
+        old_formula, formula = propagate_unit_clauses(formula)
+        
+    remaining = variables_in(formula)
+    if remaining.isEmpty():
+        if simplify(formula): 
+            return assumptions
+        else: 
+            return False        
+    else:
+        branch = remaining[0]
+        true_result = solve(formula + {branch}, assumptions + {branch : true})
+        if true_result &lt;&gt; False: 
+            return assumptions
+        else: 
+            false_result = solve(formula + {!branch}, assumptions + {branch : False})
+            return false_result    
+</code></pre>
+<div id="admonition-hold-on" class="admonition admonish-warning">
+<div class="admonition-title">
+<p>Hold on...</p>
+<p><a class="admonition-anchor-link" href="#admonition-hold-on"></a></p>
+</div>
+<div>
+<p>Does this actually work? Let's think about testing. We can use PBT to test our solver! What do we need?</p>
+<ul>
+<li>A <em>generator</em> for clause sets;</li>
+<li>A <em>predicate</em> that tests whether an instance satisfies a clause set.</li>
+</ul>
+<p>If we try this out, we may find a potential issue. Here's an example we might be concerned about (but notice how many contingencies are involved in generating it!):</p>
+<pre><code>(x1 or x2)
+(!x1 or x3) 
+</code></pre>
+<p>If our solver uses lexical order to decide what to branch on first, it's going to pick <code>x1</code> before the others. And if it tries <code>True</code> first, we'll end up unit-propagating to:</p>
+<pre><code>x1 
+x3 
+</code></pre>
+<p>because the first original clause is subsumed by <code>x1</code>, and the second can be unit-propagated into. Yet, if we only return the assumptions, rather than <em>all</em> derived unit clauses, we'll return <code>{x1: True}</code>, not <code>{x1: True, x3: True}</code>. Beware!</p>
+</div>
+</div>
+<h3 id="total-or-partial-instances"><a class="header" href="#total-or-partial-instances">Total or Partial Instances?</a></h3>
+<p>So far, our algorithm will avoid making assumptions if it doesn't need to. This is good from a performance perspective but bad if the caller expects a <em>total</em> instance that maps every variable to a boolean. But unit propagation can <em>delete</em> clauses, resulting in variables just disappearing from the problem. E.g., solving <code>x1 and (x1 or x5)</code>.</p>
+<p>If our goal is to produce a <em>total</em> solver (and it usually is---Forge, for example, needs values for every possible tuple in every relation, even if they aren't constrained at all), we'll need to post-process the result and pick arbitrary values for variables that have no value in the assumption set. Traditionally, we'll make this easier on ourselves by passing a 3rd argument to the solver: the number of variables.</p>
+<h2 id="heuristics-which-variables-which-values"><a class="header" href="#heuristics-which-variables-which-values">Heuristics: Which Variables? Which Values?</a></h2>
+<p>There are a bunch of heuristics for picking variables to branch on, picking boolean values, etc. that are beyond the scope of this class. There is also a second brilliant idea that powers model solvers: <em>learning</em> from failure. In these solvers, reaching a conflict results in learning a &quot;conflict clause&quot; which is added to know the knowledge base, and the solver leverages this to backtrack further than one level of recursion if it's able.</p>
+<p>If you're curious about how solvers are built, check out <a href="http://cs.brown.edu/courses/csci2951-o/">CSCI 2951-O</a>. </p>
+<h2 id="converting-to-cnf"><a class="header" href="#converting-to-cnf">Converting to CNF</a></h2>
+<p>How should we convert an arbitrary boolean formula to CNF? </p>
+<h3 id="naive-approach-distributivity"><a class="header" href="#naive-approach-distributivity">Naive Approach: Distributivity</a></h3>
+<p>We could start by using the distributive law: <code>x1 and (x2 or x3)</code> is equivalent to <code>(x1 or x2) and (x1 or x3)</code>.</p>
+<p>So if we have:</p>
+<p><code>(x1 and x2) or (x3 and x4)</code></p>
+<p>We could convert it to CNF by applying the distributive law twice to get:</p>
+<p><code>(x1 or x3) and (x1 or x4) and (x2 or x3) and (x2 and x4)</code></p>
+<p>There's a fundamental problem here, though. What do you see?</p>
+<details>
+<summary>Think, then click!</summary>
+<p>This process will increase formula size <em>exponentially</em> in the worst case. That's unacceptable. (Consider what happens if we keep adding terms to the above shape: making the inner <code>and</code> formulas bigger and adding more of them.)</p>
+<p>This is again pretty disappointing: if there <em>is no</em> equivalent CNF available for some formulas that isn't exponentially bigger, how can we practically use the algorithm we just invented?</p>
+</details>
+<h3 id="the-tseitin-transformation"><a class="header" href="#the-tseitin-transformation">The Tseitin Transformation</a></h3>
+<p>There's something else we could do. If we can't find an <em>equivalent</em> CNF, maybe we could make a trade-off. To help us on the way, here are a couple of definitions:</p>
+<p>Two formulas A and B over some set of boolean variables V are said to be <em>logically equivalent</em> if they are satisfied by the exact same instances.</p>
+<p>Two formulas A and B are said to be <em>equisatisfiable</em> when A is satisfiable if and only if B is satisfiable. Note that equisatisfiability doesn't require A and B to use the same variable sets; the instances can be over different variables. </p>
+<div id="admonition-the-idea" class="admonition admonish-tip">
+<div class="admonition-title">
+<p>The Idea</p>
+<p><a class="admonition-anchor-link" href="#admonition-the-idea"></a></p>
+</div>
+<div>
+<p>Of course, mere equisatisfiability doesn't immediately guarantee any structural connection between the two formulas. For this to work, we need to be able to map a solution to problem <code>B</code> back to the original problem <code>A</code>. So maybe there's a way we could productively <em>add variables</em> to the original, retaining the meaning of the original variables, and still somehow avoid the exponential blowup in CNF conversion?</p>
+</div>
+</div>
+<p>Let's look at that formula again: <code>(x1 and x2) or (x3 and x4)</code>. View it as a boolean circuit. </p>
+<p><img src="https://i.imgur.com/fDHDyEe.png" alt="" /></p>
+<p>What if we assigned a new variable for every internal node of the tree? We'd have <code>a1</code> and <code>a2</code> for the <code>and</code> nodes, and <code>o1</code> for the <code>or</code> node. The formula is true if and only if the <code>or</code> node is, so we'd have a unit clause: <code>o1</code> in the new formula. </p>
+<p>But what makes <code>o1</code> true? Here's a definition in 3 constraints:</p>
+<ul>
+<li><code>a1 implies o1</code>,</li>
+<li><code>a2 implies o1</code>, and</li>
+<li><code>o1 implies (a1 or a2)</code>.</li>
+</ul>
+<p>We can rewrite these in CNF:</p>
+<ul>
+<li><code>!a1 or o1</code>,</li>
+<li><code>!a2 or o1</code>, and</li>
+<li><code>!o1 or a1 or a2</code>.</li>
+</ul>
+<p>The <code>and</code> nodes have similar definitions:</p>
+<ul>
+<li><code>(x1 and x2) implies a1</code></li>
+<li><code>a1 implies (x1 and x2)</code></li>
+<li><code>(x3 and x4) implies a2</code></li>
+<li><code>a2 implies (x3 and x4)</code>
+which can be rewritten:</li>
+<li><code>!x1 or !x2 or a1</code></li>
+<li><code>!a1 or x1</code></li>
+<li><code>!a1 or x2</code></li>
+<li><code>!x3 or !x4 or a2</code></li>
+<li><code>!a2 or x3</code></li>
+<li><code>!a2 or x4</code></li>
+</ul>
+<p>Together, these constraints are <em>equisatisfiable</em> with the original formula. </p>
+<p>Moreover, they're something more than equisatisfiable. Just like we wanted, there's a useful relationship between the original variables and the new variables. We can always read off the values of <code>x1</code>, <code>x2</code>, <code>x3</code>, and <code>x4</code> in a solution to the new constraints and get a solution to the original constraints. The values of the newly added variables express values for the intermediate nodes of the boolean circuit.</p>
+<p>And that's how Forge's translation layer works.</p>
+<h2 id="example-of-a-real-solver"><a class="header" href="#example-of-a-real-solver">Example of a &quot;real&quot; solver</a></h2>
+<p>You can see example code solving the N-queens problem via SAT <a href="./sat_demo/nqueens-glucose.py">here</a>. I'm using the <a href="https://github.com/audemard/glucose/releases/tag/4.2.1">parallel Glucose solver</a>, but you can plug in any solver you want; this Python script just builds a <a href="https://www21.in.tum.de/~lammich/2015_SS_Seminar_SAT/resources/dimacs-cnf.pdf">DIMACS standard</a> CNF file.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../chapters/temporal/testing_temporal.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../chapters/solvers/resolution.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../chapters/temporal/testing_temporal.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../chapters/solvers/resolution.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../../ace.js"></script>
+        <script src="../../editor.js"></script>
+        <script src="../../mode-rust.js"></script>
+        <script src="../../theme-dawn.js"></script>
+        <script src="../../theme-tomorrow_night.js"></script>
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

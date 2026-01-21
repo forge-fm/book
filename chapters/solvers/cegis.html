@@ -1,0 +1,340 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Learning with Solvers: CEGIS - Logic for Systems: Lightweight Formal Methods for Everybody</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../././mdbook-admonish.css">
+        <link rel="stylesheet" href="../.././mdbook-admonish.css">
+        <link rel="stylesheet" href="../.././custom.css">
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><a href="../../welcome.html">How to Read this book</a></li><li class="chapter-item affix "><li class="part-title">Preamble: Beyond Testing</li><li class="chapter-item "><a href="../../chapters/manifesto/job.html">What good is this book?</a></li><li class="chapter-item "><a href="../../chapters/manifesto/manifesto.html">Logic for Systems</a></li><li class="chapter-item "><a href="../../chapters/properties/pbt.html">From Tests to Properties</a></li><li class="chapter-item affix "><li class="part-title">Modeling Static Scenarios</li><li class="chapter-item "><a href="../../chapters/ttt/ttt.html">Tic-Tac-Toe</a></li><li class="chapter-item "><a href="../../chapters/bst/bst.html">Binary Search Trees</a></li><li class="chapter-item "><a href="../../chapters/adder/rca.html">Ripple-Carry Adder</a></li><li class="chapter-item "><a href="../../chapters/qna/static.html">Q&A: Static Modeling</a></li><li class="chapter-item affix "><li class="part-title">Discrete Event Systems</li><li class="chapter-item "><a href="../../chapters/ttt/ttt_games.html">Transitions, Traces, and Verification</a></li><li class="chapter-item "><a href="../../chapters/inductive/bsearch.html">Counterexamples to Induction</a></li><li class="chapter-item "><a href="../../chapters/bst/descent.html">BSTs: Recursive Descent</a></li><li class="chapter-item "><a href="../../chapters/validation/validating_events.html">Validating Models</a></li><li class="chapter-item "><a href="../../chapters/qna/events.html">Q&A: Event Systems</a></li><li class="chapter-item affix "><li class="part-title">Modeling Relationships</li><li class="chapter-item "><a href="../../chapters/relations/modeling-booleans-1.html">Relational Forge, Modeling Logic</a></li><li class="chapter-item "><a href="../../chapters/relations/reachability.html">Transitive Closure</a></li><li class="chapter-item "><a href="../../chapters/relations/sets-induction-mutex.html">Modeling Mutual Exclusion</a></li><li class="chapter-item "><a href="../../chapters/relations/sets-beyond-assertions.html">Going Beyond Assertions</a></li><li class="chapter-item "><a href="../../chapters/solvers/bounds_booleans_how_forge_works.html">How does Forge Work?</a></li><li class="chapter-item "><a href="../../chapters/qna/relations.html">Q&A: Relations</a></li><li class="chapter-item affix "><li class="part-title">Temporal Specification</li><li class="chapter-item "><a href="../../chapters/temporal/liveness_and_lassos.html">Liveness and Lassos</a></li><li class="chapter-item "><a href="../../chapters/temporal/temporal_operators.html">Temporal Forge</a></li><li class="chapter-item "><a href="../../chapters/temporal/temporal_operators_2.html">Linear Temporal Logic</a></li><li class="chapter-item "><a href="../../chapters/temporal/obligations_past.html">Obligations and the Past</a></li><li class="chapter-item "><a href="../../chapters/temporal/fixing_lock_temporal.html">Mutual Exclusion, Revisited</a></li><li class="chapter-item "><a href="../../chapters/temporal/testing_temporal.html">Testing Temporally</a></li><li class="chapter-item affix "><li class="part-title">Boolean Solver Algorithms</li><li class="chapter-item "><a href="../../chapters/solvers/dpll.html">Boolean SAT (DPLL)</a></li><li class="chapter-item "><a href="../../chapters/solvers/resolution.html">Witnessing Unsat: Propositional resolution</a></li><li class="chapter-item affix "><li class="part-title">Beyond SAT</li><li class="chapter-item "><a href="../../chapters/solvers/smt.html">Satisfiability Modulo Theories (SMT)</a></li><li class="chapter-item expanded "><a href="../../chapters/solvers/cegis.html" class="active">Learning with Solvers: CEGIS</a></li><li class="chapter-item affix "><li class="part-title">Case Studies and Further Reading</li><li class="chapter-item "><div>Modeling Raft in Anger</div></li><li class="chapter-item "><div>Forge: Comparing Prim's and Dijkstra's Algorithms</div></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Logic for Systems: Lightweight Formal Methods for Everybody</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h1 id="cegis-and-synthesis"><a class="header" href="#cegis-and-synthesis">CEGIS and Synthesis</a></h1>
+<!-- Note for next year: see board layout in lecture capture. 
+     This was likely more effective than trying to do this in Forge as the notes suggest.
+ -->
+<h2 id="counterexample-guided-inductive-synthesis-cegis"><a class="header" href="#counterexample-guided-inductive-synthesis-cegis">CounterExample Guided Inductive Synthesis (CEGIS)</a></h2>
+<div id="admonition-pseudocode" class="admonition admonish-warning">
+<div class="admonition-title">
+<p>Pseudocode</p>
+<p><a class="admonition-anchor-link" href="#admonition-pseudocode"></a></p>
+</div>
+<div>
+<p>Many of the Forge expressions shown in this section will be demonstrative only, and won't actually run. You'll see why as we progress, but be warned!</p>
+</div>
+</div>
+<p>Consider modeling <a href="https://en.wikipedia.org/wiki/Kruskal%27s_algorithm">Kruskal's</a> or <a href="https://en.wikipedia.org/wiki/Prim%27s_algorithm">Prim–Jarník's</a> approach to finding a minimum spanning tree on a weighted graph. In principle, we should be able to use Forge to reason about these algorithms, right? </p>
+<p>Well, it's complicated.</p>
+<h2 id="sketching-a-model"><a class="header" href="#sketching-a-model">Sketching a Model</a></h2>
+<p>How might we start? We'd probably have the usual <code>sig Node</code> with a field <code>edges: pfunc Node -&gt; Int</code> to model the weighted edges. Then we would write some predicates like:</p>
+<ul>
+<li><code>wellformedgraph</code> (a well-formedness predicate to force the graphs to be weighted, directed, etc.); </li>
+<li><code>isSpanningTree[t]</code> (a domain predicate describing the conditions for <code>t</code> to be a spanning tree); and</li>
+<li><code>runPrimComplete</code> (a predicate that produces a complete execution of Prim's algorithm on the underlying graph).
+along with some helper predicates, and so on. </li>
+</ul>
+<p>There are a few questions we might want to ask about MSTs in general, and not all of them involve the algorithm. For example, we could tell Forge to:</p>
+<ul>
+<li>Find a counter-example to correctness for Prim's algorithm (i.e., falsify &quot;Prim's always produces a minimal spanning tree). </li>
+<li>Find a minimal spanning tree for a graph, independent of any algorithm model. 
+These questions have a different character, even though they may seem similar. </li>
+</ul>
+<!-- * Find a valid MST that Prim's algorithm cannot produce.  -->
+<h2 id="question-1-verify-or-falsify-prims-algorithm"><a class="header" href="#question-1-verify-or-falsify-prims-algorithm">Question 1: Verify or Falsify Prim's Algorithm</a></h2>
+<p>We've set up this kind of analysis before. We'll just say:</p>
+<pre><code class="language-alloy">one sig Helper { t2: set Node -&gt; Node -&gt; Int }
+run {
+  runPrimComplete    
+  isSpanningTree[t2] // `isSpanningTree` doesn't need any quantifiers.
+  weight[t2] &lt; weight[lastState.t] // lastState representing the Prim's model trace
+}
+</code></pre>
+<p>Notice that we didn't need any universal quantification to talk about the counterexample. Instead, we could just say &quot;Prim's found some MST. Try to find a cheaper MST&quot;. </p>
+<h2 id="question-2-finding-an-arbitrary-mst"><a class="header" href="#question-2-finding-an-arbitrary-mst">Question 2: Finding an arbitrary MST</a></h2>
+<p>What does it mean to find a <em>minimum spanning tree</em> for an undirected, weighted graph <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">G</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span><span class="mclose">)</span></span></span></span>? It must be a set of edges <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span></span></span></span>, such that:</p>
+<ul>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8193em;vertical-align:-0.136em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">⊆</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">E</span></span></span></span>;</li>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span></span></span></span> forms a tree;</li>
+<li><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span></span></span></span> spans <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span></span></span></span> (i.e., <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span></span></span></span> contains at least one edge connected to every vertex in <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span></span></span></span>); and</li>
+<li>for all other sets of edges <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>, if <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> satisfies the previous 3 criteria, then the total weight of <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.1389em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> must be no less than the total weight of <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span></span></span></span> (i.e., <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span></span></span></span> is a <em>minimal</em> weight spanning tree).</li>
+</ul>
+<p>Checking the final criterion requires higher-order universal quantification. We'd need to write something like this (don't try it!):</p>
+<pre><code class="language-alloy">some t: set Node-&gt;Node |
+  isSpanningTree[t]
+  all t2: set Node-&gt;Node | 
+    isSpanningTree[t2] implies weight[t2] &gt;= weight[t]
+</code></pre>
+<p>Forge can eliminate the outer <code>some</code> quantifier via Skolemization: turn it into a new relation to solve for. But it can't do that for the inner <code>all</code> quantifier. How many possible edge sets are there? If there are 5 possible <code>Node</code> objects, then there are 25 possible edges between those objects, and thus <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">25</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">33554432</span></span></span></span> possible edge sets. </p>
+<p>The exponent will vary depending on the modeling goals. If you can exclude all self-loops, for example, it will be <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">20</span></span></span></span>. Technically, Forge probably could produce a big <code>and</code> formula with 33 million children, this approach doesn't scale. So the solver engine won't even try: it will stop running if given such a constraint.</p>
+<p>We need a different way to attack this problem.</p>
+<h3 id="an-alternative-formula"><a class="header" href="#an-alternative-formula">An Alternative Formula</a></h3>
+<p>Suppose that, instead of the above shape, we had a specific edge set <code>t</code> handed to us, with the claim that <code>t</code> was a minimal spanning tree. Well, we could try to falsify <code>t</code>'s minimality:</p>
+<pre><code class="language-alloy">  // ... definition of t is given to us ...
+
+  // Search for a counter-example to `t` being a MST
+  one sig Helper { t2: set Node -&gt; Node -&gt; Int }    
+  run { 
+    isSpanningTree[t2]
+    weight[t2] &lt; weight[t]
+  }
+</code></pre>
+<p>That is, suppose we had a <em>candidate</em> solution <code>t</code>, and we want to search for <em>better</em> solution. This is fine: Forge can handle higher-order <code>some</code>. So we can use Forge to check a candidate solution.</p>
+<h3 id="an-idea"><a class="header" href="#an-idea">An Idea</a></h3>
+<p>The fact that Forge can verify a candidate MST suggests an iterative approach. We'll start by finding a candidate spanning tree. It can be any spanning tree. Call its weight <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span>. Then try to find something better, a spanning tree with length less than <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span>. </p>
+<ul>
+<li>If we find something better, we can add a constraint that says to only find candidates of weight <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7778em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">1</span></span></span></span> or less, and then continue. (We could use the counterexample itself as the new candidate. But in general, this won't always work, so we'll ignore the option.)</li>
+<li>If we don't find something better, the candidate is actually a MST. </li>
+</ul>
+<p>Since Forge is a Racket library, you can use this technique via loop in Racket. This works for any solver that lets you make iterated queries. Since Z3py is a Python library, you can use this technique in Z3 as well. If you need to backtrack (usually you don't, with this technique), use the <code>pop</code> and <code>push</code> functions in Z3py.</p>
+<h3 id="more-complicated-learning"><a class="header" href="#more-complicated-learning">More Complicated Learning</a></h3>
+<p>This technique is pretty specialized, though. It relies on:</p>
+<ul>
+<li>having a metric for <em>goodness</em> (here, total edge weight); and</li>
+<li>a well-defined and easily checkable precondition for candidacy (here, the notion of being a spanning tree). </li>
+</ul>
+<p>Not all higher-order universal constraints exhibit these nice properties, and others which aren't higher-order can still benefit from this idea. </p>
+<p>Here's a classical example from formal methods: program synthesis. Suppose we were trying to <a href="http://www.csl.sri.com/users/tiwari/papers/pldi2011-bitvector.pdf">synthesize a program (see this link for the full work)</a> that takes a machine integer as input, and outputs the number of <code>1</code> bits in that number. We might express the goal roughly as:</p>
+<pre><code class="language-alloy">some p: program |  
+  all i: Int | 
+    p[i] = countBitsInInteger[i] // assume we have this helper
+</code></pre>
+<p>We might proceed as follows:</p>
+<ul>
+<li>Generate a candidate program, any candidate program. Call it <code>p</code>. </li>
+<li>Check it by seeing if <code>some i: Int | p[i] != countBitsInInteger[i]</code> is satisfiable. 
+<ul>
+<li>If no, we've found a good program.</li>
+<li>If yes, there's an integer <code>i</code> that the current program doesn't work for. instantiate the formula <code>p[i] = countBitsInInteger[i]</code> with the concrete value, add it to our constraints, and repeat. This doesn't rule out a <em>lot</em> of the search space, but it does prevent the exact same problem from arising again in future candidates. </li>
+</ul>
+</li>
+</ul>
+<p>This broad technique is called CounterExample Guided Inductive Synthesis (or CEGIS). It and related ideas are used heavily in synthesis tools. Similar ideas are also used inside SMT solvers to help eliminate universal quantifiers.</p>
+<p>Sophisticated versions of CEGIS will try to infer root causes for failure rather than just learning, essentially, &quot;...yes, but make it work for <code>i</code>, too.&quot; This tends to be what makes the technique scale well: the more focused a cause you can learn, the more of the search space you can rule out with each iteration. </p>
+<div id="admonition-inductive" class="admonition admonish-note">
+<div class="admonition-title">
+<p>Inductive</p>
+<p><a class="admonition-anchor-link" href="#admonition-inductive"></a></p>
+</div>
+<div>
+<p>If you've used proof by induction before, note that the use of &quot;inductive&quot; here is different! Inductive synthesis learns by example; in essence, automating <a href="https://en.wikipedia.org/wiki/Inductive_reasoning">inductive reasoning</a>, which is not the same thing as the inductive principle in mathematics.</p>
+</div>
+</div>
+<p>For more information, I suggest skimming the paper linked above about synthesizing bit-vector manipulation programs, or <a href="https://people.csail.mit.edu/asolar/papers/thesis.pdf">Armando Solar-Lezama's PhD thesis</a>, where the idea was introduced.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../chapters/solvers/smt.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../chapters/solvers/smt.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../../ace.js"></script>
+        <script src="../../editor.js"></script>
+        <script src="../../mode-rust.js"></script>
+        <script src="../../theme-dawn.js"></script>
+        <script src="../../theme-tomorrow_night.js"></script>
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

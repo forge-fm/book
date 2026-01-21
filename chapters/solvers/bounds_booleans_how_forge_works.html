@@ -1,0 +1,518 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>How does Forge Work? - Logic for Systems: Lightweight Formal Methods for Everybody</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../././mdbook-admonish.css">
+        <link rel="stylesheet" href="../.././mdbook-admonish.css">
+        <link rel="stylesheet" href="../.././custom.css">
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><a href="../../welcome.html">How to Read this book</a></li><li class="chapter-item affix "><li class="part-title">Preamble: Beyond Testing</li><li class="chapter-item "><a href="../../chapters/manifesto/job.html">What good is this book?</a></li><li class="chapter-item "><a href="../../chapters/manifesto/manifesto.html">Logic for Systems</a></li><li class="chapter-item "><a href="../../chapters/properties/pbt.html">From Tests to Properties</a></li><li class="chapter-item affix "><li class="part-title">Modeling Static Scenarios</li><li class="chapter-item "><a href="../../chapters/ttt/ttt.html">Tic-Tac-Toe</a></li><li class="chapter-item "><a href="../../chapters/bst/bst.html">Binary Search Trees</a></li><li class="chapter-item "><a href="../../chapters/adder/rca.html">Ripple-Carry Adder</a></li><li class="chapter-item "><a href="../../chapters/qna/static.html">Q&A: Static Modeling</a></li><li class="chapter-item affix "><li class="part-title">Discrete Event Systems</li><li class="chapter-item "><a href="../../chapters/ttt/ttt_games.html">Transitions, Traces, and Verification</a></li><li class="chapter-item "><a href="../../chapters/inductive/bsearch.html">Counterexamples to Induction</a></li><li class="chapter-item "><a href="../../chapters/bst/descent.html">BSTs: Recursive Descent</a></li><li class="chapter-item "><a href="../../chapters/validation/validating_events.html">Validating Models</a></li><li class="chapter-item "><a href="../../chapters/qna/events.html">Q&A: Event Systems</a></li><li class="chapter-item affix "><li class="part-title">Modeling Relationships</li><li class="chapter-item "><a href="../../chapters/relations/modeling-booleans-1.html">Relational Forge, Modeling Logic</a></li><li class="chapter-item "><a href="../../chapters/relations/reachability.html">Transitive Closure</a></li><li class="chapter-item "><a href="../../chapters/relations/sets-induction-mutex.html">Modeling Mutual Exclusion</a></li><li class="chapter-item "><a href="../../chapters/relations/sets-beyond-assertions.html">Going Beyond Assertions</a></li><li class="chapter-item expanded "><a href="../../chapters/solvers/bounds_booleans_how_forge_works.html" class="active">How does Forge Work?</a></li><li class="chapter-item "><a href="../../chapters/qna/relations.html">Q&A: Relations</a></li><li class="chapter-item affix "><li class="part-title">Temporal Specification</li><li class="chapter-item "><a href="../../chapters/temporal/liveness_and_lassos.html">Liveness and Lassos</a></li><li class="chapter-item "><a href="../../chapters/temporal/temporal_operators.html">Temporal Forge</a></li><li class="chapter-item "><a href="../../chapters/temporal/temporal_operators_2.html">Linear Temporal Logic</a></li><li class="chapter-item "><a href="../../chapters/temporal/obligations_past.html">Obligations and the Past</a></li><li class="chapter-item "><a href="../../chapters/temporal/fixing_lock_temporal.html">Mutual Exclusion, Revisited</a></li><li class="chapter-item "><a href="../../chapters/temporal/testing_temporal.html">Testing Temporally</a></li><li class="chapter-item affix "><li class="part-title">Boolean Solver Algorithms</li><li class="chapter-item "><a href="../../chapters/solvers/dpll.html">Boolean SAT (DPLL)</a></li><li class="chapter-item "><a href="../../chapters/solvers/resolution.html">Witnessing Unsat: Propositional resolution</a></li><li class="chapter-item affix "><li class="part-title">Beyond SAT</li><li class="chapter-item "><a href="../../chapters/solvers/smt.html">Satisfiability Modulo Theories (SMT)</a></li><li class="chapter-item "><a href="../../chapters/solvers/cegis.html">Learning with Solvers: CEGIS</a></li><li class="chapter-item affix "><li class="part-title">Case Studies and Further Reading</li><li class="chapter-item "><div>Modeling Raft in Anger</div></li><li class="chapter-item "><div>Forge: Comparing Prim's and Dijkstra's Algorithms</div></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Logic for Systems: Lightweight Formal Methods for Everybody</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h1 id="bounds-and-booleans-how-forge-works"><a class="header" href="#bounds-and-booleans-how-forge-works">Bounds and Booleans: How Forge Works</a></h1>
+<blockquote>
+<p>&quot;The world is everything that is the case. The world is the totality of facts, not of things. The world is determined by the facts, and by these being all the facts.&quot;</p>
+<p>Ludwig Wittgenstein (Tractatus Logico-philosophicus)</p>
+</blockquote>
+<h2 id="how-does-forge-work"><a class="header" href="#how-does-forge-work">How Does Forge Work?</a></h2>
+<p>We've hinted about this a bit in the <a href="../qna/static.html">past</a>, but now we'll go a bit deeper into how Forge works.</p>
+<p>Recall that every <code>run</code> (or <code>test</code>, or <code>example</code>) command defines a <em>search problem</em>: find some instance that satisfies the given constraints and is within the given bounds. When you click &quot;Run&quot;, Forge compiles this search problem into a <em>boolean satisfiability problem</em>, which it then gives to an external boolean solver package.</p>
+<p>There are complications, though. The search problem Forge needs to solve is in terms of <em>atomic objects</em>: objects of particular types, which can go into sets and relations and so on. In contrast, a boolean problem is in terms of just boolean variables: <em>atomic truths</em> that can be combined with <code>and</code>, <code>or</code>, etc. Somehow, we need to bridge that gap from object to boolean.</p>
+<h2 id="what-boolean-solvers-understand"><a class="header" href="#what-boolean-solvers-understand">What Boolean Solvers Understand</a></h2>
+<p>As an example of where Forge needs to end up, here's an example of a real problem to pass to a boolean solver. It's in a standard format called DIMACS, and it describes a way to find a solution to the <a href="https://en.wikipedia.org/wiki/Eight_queens_puzzle">4-queens puzzle</a>. There are many other ways to express this problem, but we'll focus on this one. What do you think it's saying, exactly?</p>
+<details>
+<summary>Click to expand the DIMACS problem definition</summary>
+<pre><code>c DIMACS for 4 queens
+c 
+p cnf 16 84
+1 2 3 4 0
+-1 -2 0
+-1 -3 0
+-1 -4 0
+-2 -3 0
+-2 -4 0
+-3 -4 0
+5 6 7 8 0
+-5 -6 0
+-5 -7 0
+-5 -8 0
+-6 -7 0
+-6 -8 0
+-7 -8 0
+9 10 11 12 0
+-9 -10 0
+-9 -11 0
+-9 -12 0
+-10 -11 0
+-10 -12 0
+-11 -12 0
+13 14 15 16 0
+-13 -14 0
+-13 -15 0
+-13 -16 0
+-14 -15 0
+-14 -16 0
+-15 -16 0
+1 5 9 13 0
+-1 -5 0
+-1 -9 0
+-1 -13 0
+-5 -9 0
+-5 -13 0
+-9 -13 0
+2 6 10 14 0
+-2 -6 0
+-2 -10 0
+-2 -14 0
+-6 -10 0
+-6 -14 0
+-10 -14 0
+3 7 11 15 0
+-3 -7 0
+-3 -11 0
+-3 -15 0
+-7 -11 0
+-7 -15 0
+-11 -15 0
+4 8 12 16 0
+-4 -8 0
+-4 -12 0
+-4 -16 0
+-8 -12 0
+-8 -16 0
+-12 -16 0
+-1 -6 0
+-1 -11 0
+-1 -16 0
+-2 -7 0
+-2 -12 0
+-2 -5 0
+-3 -8 0
+-3 -6 0
+-3 -9 0
+-4 -7 0
+-4 -10 0
+-4 -13 0
+-5 -10 0
+-5 -15 0
+-6 -11 0
+-6 -16 0
+-6 -9 0
+-7 -12 0
+-7 -10 0
+-7 -13 0
+-8 -11 0
+-8 -14 0
+-9 -14 0
+-10 -15 0
+-10 -13 0
+-11 -16 0
+-11 -14 0
+-12 -15 0
+</code></pre>
+<details>
+<hr />
+<p>Even without parsing it with a computer, the format tells us a lot about what a purely boolean solver understands. Here are a few facts about DIMACS:</p>
+<ul>
+<li>Boolean variables in DIMACS are represented by integers greater than zero. </li>
+<li>If <code>p</code> is a variable, then <code>not p</code> is represented as the integer <code>-p</code>. </li>
+<li>Lines starting with a <code>c</code> are comments.</li>
+<li>The line <code>p cnf 16 84</code> says there are 16 variables and 84 <em>clauses</em>. A clause is a set of variables (or negated variables) all combined with <code>or</code>. E.g., <code>4 8 12 -16 0</code> means <code>4 or 8 or 12 or (not 16)</code>. (The <code>0</code> is a line-terminator.)</li>
+<li>To satisfy the input, every clause must be satisfied.</li>
+</ul>
+<p>A set of constraints expressed as a set of clauses, each of which must hold true, is said to be in <em>Conjunctive Normal Form</em> (CNF). Boolean solvers often expect input in CNF, for algorithmic reasons we'll soon see.</p>
+<p>Now that you know how to read the input format, you might be able to see how the boolean constraints work to solve the 4-queens problem. Any ideas?</p>
+<details>
+<summary>Think, then click!</summary>
+<p>There's one variable for every square on the <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">4</span></span></span></span> squares. <code>1 2 3 4</code> says that there must be a queen somewhere on the first row. <code>-1 -2</code> says that if there is a queen at <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8389em;vertical-align:-0.1944em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">1</span></span></span></span> there cannot also be a queen at <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8389em;vertical-align:-0.1944em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">2</span></span></span></span>. And so on.</p>
+</details>
+<h2 id="the-world-is-that-which-is-the-case"><a class="header" href="#the-world-is-that-which-is-the-case">&quot;The world is that which is the case&quot;</a></h2>
+<p>Consider this Forge model and corresponding <code>run</code> command:</p>
+<pre><code class="language-alloy">abstract sig Person {
+  followers: set Person
+}
+one sig Alice, Bob, Charlie extends Person {}
+run {some followers} for exactly 3 Person 
+</code></pre>
+<p>How many potential instances are there? Note that there can only ever be exactly 3 people, since <code>Person</code> is <code>abstract</code>.</p>
+<details>
+<summary>Think, then click!</summary>
+<p>There are always exactly 3 people, and the only relation that can vary is <code>followers</code>, which has 2 columns. That means <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">3</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">9</span></span></span></span> potential pairs of people, and the field contains a set of those. The set either contains or does not contain each pair. So there are <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">9</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">512</span></span></span></span> potential instances.</p>
+</details>
+<hr />
+<p>Notice how we reached that number. There are 9 potential pairs of people. 9 potential follower relationships. 9 essential things that may, or may not, be the case in the world. Nothing else.</p>
+<p>If you run Forge on this model, you'll see statistics like these:</p>
+<pre><code>#vars: (size-variables 10); #primary: (size-primary 9); #clauses: (size-clauses 2)
+Transl (ms): (time-translation 122); Solving (ms): (time-solving 1)
+</code></pre>
+<p>The timing may vary, but the other stats will be the same. The thing to focus on is: 9 <code>primary variables</code>. Primary variables correspond to these atomic truths, which in this case is just who follows who in our fixed 3-person world: the number of rows that are potentially in the <code>followers</code> relation.</p>
+<p>Let's try increasing the size of the world:</p>
+<pre><code class="language-alloy">run {some followers} for 4 Person
+</code></pre>
+<p>Now we have a 4th person---or rather, we <em>might</em> have a 4th person. When we run, Forge shows:</p>
+<pre><code>#vars: (size-variables 27); #primary: (size-primary 17); #clauses: (size-clauses 18)
+</code></pre>
+<p>We've gone from 9 to 17 primary variables. Why? </p>
+<details>
+<summary>Think, then click!</summary>
+<p>There is another <em>potential</em> <code>Person</code> in the world; the world may be either size 3 or 4. Whether or not this fourth person exists is 1 new Boolean variable. And since there are <em>4</em> potential people in the world, there are now <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">4</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">16</span></span></span></span> potential follower relationships. </p>
+<p>This equals 17 variables.</p>
+</details>
+</br>
+<p>This is how Forge translates statements about atoms into statements about booleans. </p>
+<h2 id="intermediate-representation-lower-bounds-upper-bounds"><a class="header" href="#intermediate-representation-lower-bounds-upper-bounds">Intermediate Representation: Lower Bounds, Upper Bounds</a></h2>
+<p>Not every potential boolean needs to actually be considered, however. You might <a href="../qna/events.html">remember</a> that annotations like <code>{next is linear}</code> or partial instances defined by <code>example</code> or <code>inst</code> further limit the set of variables before the boolean solver encounters them. To understand this better, let's increase the verbosity setting in Forge. This will let us look at what Forge produces as an intermediate problem description before converting to boolean logic.</p>
+<pre><code class="language-alloy">option verbose 5
+</code></pre>
+<p>Let's focus on a few lines. First, you should see this somewhere:</p>
+<pre><code>(univ 20)
+</code></pre>
+<p>This tells the compiler that there are 20 potential objects in the world. (Why 20? Because the default bitwidth is 4: that's 16 integers, plus 4 potential people.) These objects get assigned integer identifiers by the compiler. </p>
+<div id="admonition-3-different-meanings" class="admonition admonish-warning">
+<div class="admonition-title">
+<p>3 different meanings</p>
+<p><a class="admonition-anchor-link" href="#admonition-3-different-meanings"></a></p>
+</div>
+<div>
+<p>This is an unfortunate overlap in the backend solver engine's language: all <em>atoms</em>, including atoms of type <code>Int</code>, get assigned integers by the engine. Moreover, the boolean solver itself uses integer indexes for boolean variables. <strong>These are not the same thing!</strong></p>
+</div>
+</div>
+<p>Next, the compiler gets provided a <em>lower</em> and <em>upper</em> bound for every relation in the model.</p>
+<ul>
+<li>The <em>lower</em> bound is a set of tuples that must always be in the relation.</li>
+<li>The <em>upper</em> bound is a set of tuples that may be in the relation.</li>
+</ul>
+<p>For example, here are the bounds on <code>Int</code>:</p>
+<pre><code>(r:Int [{(0) (1) (2) (3) (4) (5) (6) (7) (8) (9) (10) (11) (12) (13) (14) (15)} :: {(0) (1) (2) (3) (4) (5) (6) (7) (8) (9) (10) (11) (12) (13) (14) (15)}])
+</code></pre>
+<p>The lower bound comes first, then a <code>::</code>, then the upper bound. These singleton tuples containing <code>0</code> through <code>15</code> are actually the representatives of integers <code>-8</code> through <code>7</code>. This is an artifact of how the solver process works.</p>
+<p>Here's the bound on <code>Person</code> and its three sub-<code>sig</code>s:</p>
+<pre><code>(r:Person [{(16) (17) (18)} :: {(16) (17) (18) (19)}])
+(r:Alice [{(16)} :: {(16)}])
+(r:Bob [{(17)} :: {(17)}])
+(r:Charlie [{(18)} :: {(18)}])
+</code></pre>
+<p>The lower bound on <code>Person</code> contains 3 object identifiers, because there must always be 3 distinct objects (representing our three <code>one</code> sigs). There's an object in the upper, but not the lower, bound, because that fourth person may or may not exist. <code>Alice</code>, <code>Bob</code>, and <code>Charlie</code> are exactly set to be those 3 different always-present objects.</p>
+<p>Finally, let's look at a field's bounds:</p>
+<pre><code>(r:followers [(-&gt; none none) :: {(16 16) (16 17) (16 18) (16 19) (17 16) (17 17) (17 18) (17 19) (18 16) (18 17) (18 18) (18 19) (19 16) (19 17) (19 18) (19 19)}])
+</code></pre>
+<p>The <code>followers</code> relation may be empty, and it may contain any of the 16 ordered pairs of potential <code>Person</code> objects.</p>
+<p><em>Any tuple in the upper bound of a relation, that isn't also in the lower bound, gets assigned a boolean variable.</em></p>
+<ul>
+<li>If a tuple isn't in the upper bound, it can never exist in an instance---it would always be assigned false---and so we needn't assign a variable.</li>
+<li>If a tuple is in the lower bound, it must always exist in an instance---it would always be assigned true---and so we can again omit a variable.</li>
+</ul>
+<h2 id="from-forge-constraints-to-boolean-constraints"><a class="header" href="#from-forge-constraints-to-boolean-constraints">From Forge Constraints to Boolean Constraints</a></h2>
+<p>Once we know the set of Boolean variables we'll use, we can translate Forge constraints to purely Boolean ones via substitution. Here's an example of how a basic compiler, without optimizations, might work.  Suppose we have the constraint:</p>
+<pre><code class="language-alloy">all p: Person | Alice in p.followers
+</code></pre>
+<p>There are no <code>all</code> quantifiers in Boolean logic. How can we get rid of it?</p>
+<details>
+<summary>Think, then click!</summary>
+<p>An <code>all</code> is just a big <code>and</code> over the upper bound on <code>Person</code>. So we substitute (note here we're using <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mord mathnormal">erso</span><span class="mord mathnormal">n</span><span class="mord">3</span></span></span></span> as if it were defined in our model, because it's a <em>potential</em> part of every instance):</p>
+<pre><code class="language-alloy">Alice in Alice.followers
+Alice in Bob.followers
+Alice in Charlie.followers
+(Person3 in Person) implies Alice in Person3.followers
+</code></pre>
+</details>
+</br>
+<p>There are similar rules for other operators: a <code>some</code> becomes a big <code>or</code>, a relational join becomes a <code>some</code>-quantified statement about the existence of a value to join on, which then becomes a big <code>or</code>, etc.</p>
+<h2 id="example-optimization-skolemization"><a class="header" href="#example-optimization-skolemization">Example optimization: Skolemization</a></h2>
+<p>Forge performs a process called <em>Skolemization</em>, named after the logician <a href="https://en.wikipedia.org/wiki/Thoralf_Skolem">Thoralf Skolem</a>, to convert specific <code>some</code> quantifiers into supplemental relations. </p>
+<p>The idea is: to satisfy a <code>some</code> quantifier, some atom exists that can be plugged into the quantifier's variable <code>x</code> to make the child formula true. Skolemization reifies that object witness into the model as a new relational constant <code>$x</code>. This:</p>
+<ul>
+<li>makes debugging easier sometimes, since you can immediately <em>see</em> what might satisfy the quantifier constraint; and</li>
+<li>sometimes aids in efficiency, especially in a &quot;target poor&quot; environment like an unsatisfiable problem. </li>
+</ul>
+<p>By convention, these variables are prefixed with a <code>$</code>. So if you see a relation labeled <code>$x</code>, it's a Skolem relation that points to a value for a <code>some</code> quantified variable <code>x</code>. The relation will grow wider for every <code>all</code> quantifier that wraps the <code>some</code> quantifier being Skolemized. To see why that happens, suppose that we have a constraint: <code>all p: Person | all b: Bank | hasAccount[p,b] implies some i: Int | bankBalance[p,b,i]</code>. This constraint says that if a person has a bank account at a certain bank, there's a balance entered for that account. That balance isn't constant! It's potentially different for every <code>Person</code>-<code>Bank</code> pairing. Thus, <code>$i</code> would have arity 3: 2 for the &quot;input&quot; and 1 for the &quot;output&quot;. </p>
+<div id="admonition-skolem-depth" class="admonition admonish-tip">
+<div class="admonition-title">
+<p>Skolem Depth</p>
+<p><a class="admonition-anchor-link" href="#admonition-skolem-depth"></a></p>
+</div>
+<div>
+<p>You can change how deeply <code>some</code> quantifiers will get Skolemized by using the <code>skolem_depth</code> <a href="../../docs/running-models/options.html">option</a> in Forge.</p>
+</div>
+</div>
+<!-- (Forge adds the numeric suffix to help disambiguate variables with the same name.)
+`$x_some32783` -->
+<h2 id="symmetry-breaking"><a class="header" href="#symmetry-breaking">Symmetry Breaking</a></h2>
+<p>Let's return to the original Followers model:</p>
+<pre><code class="language-alloy">abstract sig Person {
+  followers: set Person
+}
+one sig Alice, Bob, Charlie extends Person {}
+run {some followers} for exactly 3 Person 
+</code></pre>
+<p>We decided it probably had <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">512</span></span></span></span> instances. But does it <em>really</em>? Let's hit <code>Next</code> a few times, and count! Actually, that sounds like a lot of work. Let's simplify things a bit more, instead:</p>
+<pre><code class="language-alloy">abstract sig Person {
+  follower: one Person -- changed: replace `set` with `one` 
+}
+one sig Alice, Bob, Charlie extends Person {}
+run {} for exactly 3 Person  -- changed: don't run any predicates
+</code></pre>
+<p>Now everybody has exactly one follower. There are still 9 potential tuples, but we're no longer storing <em>sets</em> of them for each <code>Person</code>. Put another way, every instance corresponds to an ordered triplet of <code>Person</code> objects (Alice's follower, Bob's follower, and Charlie's follower). There will be <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">3</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">3</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">27</span></span></span></span> instances. And indeed, if we click &quot;Next&quot; 26 times, this is what we see. (Whew.) </p>
+<p>Now suppose we didn't name the 3 people, but just had 3 anonymous <code>Person</code> objects:</p>
+<pre><code class="language-alloy">sig Person {
+  follower: one Person
+}
+run {} for exactly 3 Person  -- changed: no named people
+</code></pre>
+<p>The math is still the same: <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">27</span></span></span></span> instances. But now we only get <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">9</span></span></span></span> before hitting the unsat indicator of &quot;no more instances&quot; in the visualizer.</p>
+<p>What's going on?</p>
+<p>Forge tries to avoid showing you the same instance multiple times. And, if objects are un-named and the constraints can never distinguish them, instances will be considered &quot;the same&quot; if you can arrive at one by renaming elements of the other. E.g., </p>
+<pre><code>Person1 follows Person2
+Person2 follows Person3
+Person3 follows Person1
+</code></pre>
+<p>would be considered equivalent to:</p>
+<pre><code>Person2 follows Person1
+Person3 follows Person2
+Person1 follows Person3
+</code></pre>
+<p>since the individual <code>Person</code> atoms are <em>anonymous</em> to the constraints, which cannot refer to atoms by name. We call these instances <em>isomorphic</em> to each other, and say that there is a <em>symmetry</em> between them.  Formally, Forge finds every instance &quot;up to isomorphism&quot;. This is useful for:</p>
+<ul>
+<li>increasing the quality of information you get from paging through instances; and</li>
+<li>(sometimes) improving the runtime on problems, especally if solutions are very rare.</li>
+</ul>
+<p>This process isn't always perfect: some equivalent instances can sneak in. Removing <em>all</em> equivalent instances turns out to sometimes be even more expensive than solving the problem. So Forge provides a best-effort, low cost attempt based on a <em>budget</em> for adding additional constraints to the problem, specifically to eliminate symmetries.</p>
+<p>You can adjust the budget for symmetry breaking via an option:</p>
+<ul>
+<li><code>option sb 0</code> turns off symmetry breaking; and</li>
+<li><code>option sb 20</code> is the default.</li>
+</ul>
+<p>If we turn off symmetry-breaking, we'll get the expected number of instances in the above run: <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">27</span></span></span></span>.</p>
+<div id="admonition-symmetry-breaking--filtering" class="admonition admonish-note">
+<div class="admonition-title">
+<p>Symmetry Breaking != Filtering</p>
+<p><a class="admonition-anchor-link" href="#admonition-symmetry-breaking--filtering"></a></p>
+</div>
+<div>
+<p>Forge doesn't just filter instances after they're generated; it <em>adds</em> extra constraints that try to rule out symmetric instances. These constraints are guaranteed to be satisfied by at least one element of every equivalence class of instances. There's a lot of research work on this area, e.g., <a href="https://kaiyuanw.github.io/papers/paper22-tacas20.pdf">this paper</a> from 2020.</p>
+</div>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../chapters/relations/sets-beyond-assertions.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../chapters/qna/relations.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../chapters/relations/sets-beyond-assertions.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../chapters/qna/relations.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../../ace.js"></script>
+        <script src="../../editor.js"></script>
+        <script src="../../mode-rust.js"></script>
+        <script src="../../theme-dawn.js"></script>
+        <script src="../../theme-tomorrow_night.js"></script>
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

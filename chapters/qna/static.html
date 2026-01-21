@@ -1,0 +1,385 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Q&amp;A: Static Modeling - Logic for Systems: Lightweight Formal Methods for Everybody</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../././mdbook-admonish.css">
+        <link rel="stylesheet" href="../.././mdbook-admonish.css">
+        <link rel="stylesheet" href="../.././custom.css">
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><a href="../../welcome.html">How to Read this book</a></li><li class="chapter-item affix "><li class="part-title">Preamble: Beyond Testing</li><li class="chapter-item "><a href="../../chapters/manifesto/job.html">What good is this book?</a></li><li class="chapter-item "><a href="../../chapters/manifesto/manifesto.html">Logic for Systems</a></li><li class="chapter-item "><a href="../../chapters/properties/pbt.html">From Tests to Properties</a></li><li class="chapter-item affix "><li class="part-title">Modeling Static Scenarios</li><li class="chapter-item "><a href="../../chapters/ttt/ttt.html">Tic-Tac-Toe</a></li><li class="chapter-item "><a href="../../chapters/bst/bst.html">Binary Search Trees</a></li><li class="chapter-item "><a href="../../chapters/adder/rca.html">Ripple-Carry Adder</a></li><li class="chapter-item expanded "><a href="../../chapters/qna/static.html" class="active">Q&A: Static Modeling</a></li><li class="chapter-item affix "><li class="part-title">Discrete Event Systems</li><li class="chapter-item "><a href="../../chapters/ttt/ttt_games.html">Transitions, Traces, and Verification</a></li><li class="chapter-item "><a href="../../chapters/inductive/bsearch.html">Counterexamples to Induction</a></li><li class="chapter-item "><a href="../../chapters/bst/descent.html">BSTs: Recursive Descent</a></li><li class="chapter-item "><a href="../../chapters/validation/validating_events.html">Validating Models</a></li><li class="chapter-item "><a href="../../chapters/qna/events.html">Q&A: Event Systems</a></li><li class="chapter-item affix "><li class="part-title">Modeling Relationships</li><li class="chapter-item "><a href="../../chapters/relations/modeling-booleans-1.html">Relational Forge, Modeling Logic</a></li><li class="chapter-item "><a href="../../chapters/relations/reachability.html">Transitive Closure</a></li><li class="chapter-item "><a href="../../chapters/relations/sets-induction-mutex.html">Modeling Mutual Exclusion</a></li><li class="chapter-item "><a href="../../chapters/relations/sets-beyond-assertions.html">Going Beyond Assertions</a></li><li class="chapter-item "><a href="../../chapters/solvers/bounds_booleans_how_forge_works.html">How does Forge Work?</a></li><li class="chapter-item "><a href="../../chapters/qna/relations.html">Q&A: Relations</a></li><li class="chapter-item affix "><li class="part-title">Temporal Specification</li><li class="chapter-item "><a href="../../chapters/temporal/liveness_and_lassos.html">Liveness and Lassos</a></li><li class="chapter-item "><a href="../../chapters/temporal/temporal_operators.html">Temporal Forge</a></li><li class="chapter-item "><a href="../../chapters/temporal/temporal_operators_2.html">Linear Temporal Logic</a></li><li class="chapter-item "><a href="../../chapters/temporal/obligations_past.html">Obligations and the Past</a></li><li class="chapter-item "><a href="../../chapters/temporal/fixing_lock_temporal.html">Mutual Exclusion, Revisited</a></li><li class="chapter-item "><a href="../../chapters/temporal/testing_temporal.html">Testing Temporally</a></li><li class="chapter-item affix "><li class="part-title">Boolean Solver Algorithms</li><li class="chapter-item "><a href="../../chapters/solvers/dpll.html">Boolean SAT (DPLL)</a></li><li class="chapter-item "><a href="../../chapters/solvers/resolution.html">Witnessing Unsat: Propositional resolution</a></li><li class="chapter-item affix "><li class="part-title">Beyond SAT</li><li class="chapter-item "><a href="../../chapters/solvers/smt.html">Satisfiability Modulo Theories (SMT)</a></li><li class="chapter-item "><a href="../../chapters/solvers/cegis.html">Learning with Solvers: CEGIS</a></li><li class="chapter-item affix "><li class="part-title">Case Studies and Further Reading</li><li class="chapter-item "><div>Modeling Raft in Anger</div></li><li class="chapter-item "><div>Forge: Comparing Prim's and Dijkstra's Algorithms</div></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Logic for Systems: Lightweight Formal Methods for Everybody</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h1 id="anticipated-questions-static-models"><a class="header" href="#anticipated-questions-static-models">Anticipated Questions: Static Models</a></h1>
+<h3 id="what-happens-when-forge-searches"><a class="header" href="#what-happens-when-forge-searches">What Happens When Forge Searches?</a></h3>
+<p>Our first <code>run</code> command in Forge was from <a href="../ttt/ttt.html">tic-tac-toe</a>: <code>run { some b: Board | wellformed[b]}</code>.</p>
+<p>How did Forge actually run the search? Surely it isn't checking all possible boards <em>one at a time</em>; that wouldn't scale at all, and we need to scale in order to model and reason about real systems. No; Forge can efficiently search much larger problem spaces than this.</p>
+<p>Let's step through <em>how</em> Forge solves a problem. First, there's a space of potential solutions that it considers. Using the default engine, this space is finite—although possibly enormous. There are <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">3</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">9</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">19683</span></span></span></span> 3-by-3 tic-tac-toe boards, which isn't too bad. But a 4-by-4 board would have <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141em;"></span><span class="mord"><span class="mord">3</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">16</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8389em;vertical-align:-0.1944em;"></span><span class="mord">430</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">467</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">213</span></span></span></span> possibilities, and real systems might have more possible states than electrons in the observable universe. So we'd better be doing something smarter than checking one instance at a time.</p>
+<p>The bounds of the space to search is set by the <code>run</code> command. In this case, no bounds were given, so defaults were used: instances may contain <em>up to 4 atoms of each top-level <code>sig</code> type</em>, and the integers <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7278em;vertical-align:-0.0833em;"></span><span class="mord">−</span><span class="mord">8</span></span></span></span> through <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">7</span></span></span></span> (inclusive) but no more. We can adjust that bound by adding instructions, e.g., <code>run { some b: Board | wellformed[b]} for exactly 2 Board</code> will only seek instances where there are 2 <code>Board</code> atoms. </p>
+<p>The bounds describe the search space. This space is populated with instances, some of which satisfy the constraints being run and some of which don't. In principle, there exist other instances too—entirely outside the space being searched! E.g., if we said to search up to 4 <code>Board</code> atoms, an instance with 100 such atoms might (or might not) satisfy our constraints, but wouldn't be considered in the search:</p>
+<center><img width="70%" src="./solving.svg" style="background-color:white"/></center>
+<p>Once this space is defined, <strong>and only then</strong>, a sophisticated constraint-solving engine—a boolean &quot;SAT&quot; or &quot;SMT&quot; solver—takes charge. The engine uses techniques like backtracking and heuristics to try to avoid unnecessary work in solving the problem. This divides the search space into &quot;satisfying&quot; and &quot;not satisfying&quot; areas. The solver returns the satisfying instances in some order:</p>
+<center><img width="70%" src="./partitioned.svg" style="background-color:white"/></center>
+<div id="admonition-csci-1710" class="admonition admonish-note">
+<div class="admonition-title">
+<p>CSCI 1710</p>
+<p><a class="admonition-anchor-link" href="#admonition-csci-1710"></a></p>
+</div>
+<div>
+<p>If you're in CSCI 1710, one of your assignments will be to <em>build</em> such a constraint solver, and even to see how it performs &quot;plugged in&quot; to Forge and solving real <code>run</code> commands you write.</p>
+</div>
+</div>
+<!-- ![](https://i.imgur.com/eQ76Hv8.png) -->
+<h4 id="performance-implications"><a class="header" href="#performance-implications">Performance Implications</a></h4>
+<p>As you may have seen in the ripple-carry adder section, these two phases of solving work very differently, and  letting the solver infer constraints is often less efficient than giving it tighter bounds, because the latter restricts the overall space to be searched beforehand. Some optimization techniques in Forge need to be explicitly applied in the first phase, because the solver engine itself splits the two phases apart. For more on this, read <a href="../qna/events.html">the upcoming Q&amp;A section for traces and events</a>.</p>
+<!-- ### How does `reachable` work? 
+
+We prototyped some confidence tests about the `reachable` predicate ([livecode file](./testing_reachable.frg)). -->
+<h3 id="nulls-in-forge"><a class="header" href="#nulls-in-forge">&quot;Nulls&quot; in Forge</a></h3>
+<p>In Forge, there is a special value called <code>none</code>. It's analogous (but not exactly the same!) to a <code>None</code> in languages like Python.</p>
+<p>Suppose I add this predicate to our <code>run</code> command in the tic-tac-toe model:</p>
+<pre><code class="language-alloy">pred myIdea {
+    -- no 2 locations can share the same mark
+    all rowA, colA, rowB, colB: Int | 
+        (rowA != rowB or colA != colB) implies
+            Board.board[rowA][colA] != 
+            Board.board[rowB][colB]
+}
+</code></pre>
+<p>I'm trying to express that every entry in the board is different. This should easily be true about, e.g., the initial board, as there are no pieces there at all. But <strong>do you think the empty board satisfies this predicate?</strong></p>
+<details>
+<summary>Think (or try it in Forge) then click!</summary>
+<p>It's very likely this predicate would <em>not</em> be satisfied by the empty board. Why?</p>
+<p><em>Because <code>none</code> equals itself</em>, and it's the value in each location of the board before <code>X</code> or <code>O</code> move there. </p>
+<p>Thus, when you're writing constraints like the above, you need to watch out for <code>none</code>: the value for <em>every</em> cell in the initial board is equal to the value for <em>every</em> other cell!</p>
+</details>
+<div id="admonition-reachability-and-none" class="admonition admonish-tip">
+<div class="admonition-title">
+<p>Reachability and none</p>
+<p><a class="admonition-anchor-link" href="#admonition-reachability-and-none"></a></p>
+</div>
+<div>
+<p>The <code>none</code> value in Forge has at least one more subtlety: <code>none</code> is &quot;reachable&quot; from everything if you're using the built-in <code>reachable</code> helper predicate. That has an impact even if we don't use <code>none</code> explicitly. If I write something like: <code>reachable[p.spouse, Nim, parent1, parent2]</code> I'm asking whether, for some person <code>p</code>, their spouse is an ancestor of <code>Nim</code>. If <code>p</code> doesn't have a spouse, then <code>p.spouse</code> is <code>none</code>, and so this predicate would yield true for <code>p</code>.</p>
+<p>This is why it's often advisible to qualify your use of <code>reachable</code>. E.g., I could write <code>some p.spouse and reachable[p.spouse, Nim, parent1, parent2]</code>.</p>
+</div>
+</div>
+<h3 id="some-as-a-quantifier-versus-some-as-a-multiplicity"><a class="header" href="#some-as-a-quantifier-versus-some-as-a-multiplicity">Some as a Quantifier Versus Some as a Multiplicity</a></h3>
+<p>The keyword <code>some</code> is used in 2 different ways in Forge:</p>
+<ul>
+<li>it's a <em>quantifier</em>, as in <code>some b: Board, p: Player | winner[s, p]</code>, which says that somebody has won in some board (and gives us a name for that board, and also for the winner); and</li>
+<li>it's a <em>multiplicity operator</em>, as in <code>some Board.board[1][1]</code>, which says only that the middle cell of the board is populated (recall that the board indexes are <code>0</code>, <code>1</code>, and <code>2</code>).</li>
+</ul>
+<p>Don't be afraid to use both; they're both quite useful! But remember the difference. </p>
+<h3 id="guarding-quantifiers-implies-vs-such-that"><a class="header" href="#guarding-quantifiers-implies-vs-such-that">Guarding Quantifiers; Implies vs. &quot;Such That&quot;</a></h3>
+<p>You can read <code>some row : Int | ...</code> as &quot;There exists some integer <code>row</code> such that ...&quot;. The transliteration isn't quite as nice for <code>all</code>; it's better to read <code>all row : Int | ...</code> as &quot;In all integer <code>row</code>s, it holds that ...&quot;. </p>
+<p>If you want to <em>further restrict</em> the values used in an <code>all</code>, you'd use <code>implies</code>. But if you want to <em>add additional requirements</em> for a <code>some</code>, you'd use <code>and</code>.  Here are 2 examples:</p>
+<ul>
+<li><strong>All</strong>: &quot;Everybody who has a <code>parent1</code> doesn't also have that person as their <code>parent2</code>&quot;: <code>all p: Person | some p.parent1 implies p.parent1 != p.parent2</code>.</li>
+<li><strong>Some</strong>: &quot;There exists someone who has a <code>parent1</code> and a <code>spouse</code>&quot;: <code>some p: Person | some p.parent1 and some p.spouse</code>.</li>
+</ul>
+<p><strong>Technical aside:</strong> The type designation on the variable can be interpreted as having a character similar to these add-ons: <code>and</code> (for <code>some</code>) and <code>implies</code> (for <code>all</code>). E.g., &quot;there exists some <code>row</code> such that <code>row</code> is an integer and ...&quot;, or &quot;In all <code>row</code>s, if <code>row</code> is an integer, it holds that...&quot;.</p>
+<h3 id="there-exists-some-atom-vs-some-instance"><a class="header" href="#there-exists-some-atom-vs-some-instance">There Exists <code>some</code> <em>Atom</em> vs. Some <em>Instance</em></a></h3>
+<p>Forge searches for instances that satisfy the constraints you give it. Every <code>run</code> in Forge is about <em>satisfiability</em>; answering the question &quot;Does there exist an instance, such that...&quot;. </p>
+<p>Crucially, <strong>you cannot write a Forge constraint that quantifies over <em>instances</em> themselves</strong>. You can ask Forge &quot;does there exist an instance such that...&quot;, which is pretty flexible on its own. E.g., if you want to check that something holds of <em>all</em> instances, you can ask Forge to find counterexamples. This exactly what <code>assert ... is necessary for ...</code> does; it searches for counterexample instances.</p>
+<h3 id="tip-testing-predicate-equivalence"><a class="header" href="#tip-testing-predicate-equivalence">Tip: Testing Predicate Equivalence</a></h3>
+<p>Checking whether or not two predicates are <em>equivalent</em> is the core of quite a few Forge applications---and a great debugging technique sometimes. (We saw this very briefly for binary trees, but it's worth repeating.)</p>
+<p>How do you check for predicate equivalence? Well, suppose we tried to write a predicate in two different ways, like this:</p>
+<pre><code class="language-alloy">pred myPred1 {
+    some i1, i2: Int | i1 = i2
+}
+pred myPred2 {
+    not all ii, i2: Int | i1 != i2
+}
+assert myPred1 is necessary for myPred2
+assert myPred2 is necessary for myPred1
+</code></pre>
+<p>These <code>assert</code> statements will pass, because the two predicates <em>are</em> logically equivalent. But if we had written (forgetting the <code>not</code>):</p>
+<pre><code class="language-alloy">pred myPred2 {
+    all ii, i2: Int | i1 != i2
+}
+</code></pre>
+<p>One of the assertions would fail, yielding an instance in Sterling you could use the evaluator with. If you get an instance where the two predicates aren't equivalent, you can use the Sterling evaluator to find out <strong>why</strong>. Try different subexpressions, discover which is producing an unexpected result! </p>
+<h3 id="one-versus-some"><a class="header" href="#one-versus-some">One Versus Some</a></h3>
+<p>Classical logic provides the <code>some</code> and <code>all</code> quantifiers, but Forge also gives you <code>no</code>, <code>one</code> and <code>lone</code>. The <code>no</code> quantifier is fairly straightforward: if I write <code>no row, col: Int | Board.board[row][col] = X</code>, it's equivalent to <code>all row, col: Int | Board.board[row][col] != X</code>. That is, <code>X</code> hasn't yet put a mark on the board. </p>
+<p>The <code>one</code> quantifier is for saying &quot;there exists a UNIQUE ...&quot;. As a result, there are hidden constraints embedded into its use. <code>one row: Int | Board.board[row][0] = X</code> really means, roughly, <code>some row: Int | { Board.board[row][0] = X and all row2: Int | { row2 != row implies Board.board[row][0] != X}}</code>: there is <em>some</em> row where <code>X</code> has moved in the first column, but <em>only one such row</em>. The <code>lone</code> quantifier is similar, except that instead of saying &quot;exactly one&quot;, it says &quot;either one or none&quot;. </p>
+<p>This means that interleaving <code>one</code> or <code>lone</code> with other quantifiers can be subtle. Consider what happens if I write <code>one row, col: Int | Board.board[row][col] = X</code>. This means that there is exactly one square on the board where <code>X</code> has moved. But what about <code>one row: Int | one col: Int | Board.board[row][col] = X</code>? </p>
+<p><strong>Exercise:</strong> Test this out using Forge! Try running: </p>
+<pre><code>run { not { 
+      (one row, col: Int | Board.board[row][col] = X) iff
+      (one row: Int | one col: Int | Board.board[row][col] = X)
+}}
+</code></pre>
+<p>You'll get an instance showing you that the two aren't equivalent. What's the problem?</p>
+<details>
+<summary>Think, then click!</summary>
+<p>The problem is that <code>one row, col: Int | ...</code> says that there exists one unique <em>pair</em> of indexes, but <code>one row: Int | one col: Int | ...</code> says that there exists one unique <em>index</em> such that there exists one unique <em>index</em>... These are not the same.</p>
+</details>
+<p>Because thinking through <code>one</code> and <code>lone</code> quantifiers can be subtle, we strongly suggest <em>not</em> using them except for very simple constraints. (Using them as a multiplicity, like saying <code>one Tim.office</code> is fine.) </p>
+<h4 id="satisfiability-testing-and-a-pitfall"><a class="header" href="#satisfiability-testing-and-a-pitfall">Satisfiability Testing and a Pitfall</a></h4>
+<p>The <code>test expect</code> syntax lets you check for satisfiability directly. This is quite powerful, and lets us illustrate a fairly common mistake. Here is a test block with 2 tests in it. Both of them may look like they are comparing <code>myPred1</code> and <code>myPred2</code> for equivalence:</p>
+<pre><code class="language-alloy">test expect {
+    -- correct: &quot;no counterexample exists&quot;
+    -- Forge tries to find an instance where myPred1 and myPred2 disagree
+    p1eqp2_A: {
+        not (myPred1 iff myPred2)        
+    } is unsat
+
+    -- incorrect: &quot;it's possible to satisfy what i think always holds&quot;
+    -- Forge tries to find an instance where myPred1 and myPred2 happen to agree
+    p1eqp2_B: {
+        myPred1 iff myPred2
+    } is sat
+}
+</code></pre>
+<p>These two tests do not express the same thing! One asks Forge to find an instance where the predicates are not equivalent. If it can find such an instance, we know the predicates are not equivalent, and can see why by viewing the intance. The other test asks Forge to find an arbitrary instance where they <em>are</em> equivalent. But that needn't be true in <em>all</em> instances, just the one that Forge finds. </p>
+<h3 id="quantifiers-and-performance"><a class="header" href="#quantifiers-and-performance">Quantifiers and Performance</a></h3>
+<p>Forge works by converting your model into a boolean satisfiability problem. That is, it builds a boolean circuit where inputs making the circuit true satisfy your model. But boolean circuits don't have a notion of quantifiers, so they need to be compiled out.</p>
+<p>The compiler has a lot of clever tricks to make this fast, but if it can't apply those tricks, it uses a basic idea: an <code>all</code> is just a big <code>and</code>, and a <code>some</code> is just a big <code>or</code>. This very simple conversion process increases the size of the circuit exponentially in the depth of quantification. </p>
+<p>Let's look at an example of why this matters. Here is a reasonable way to approach writing a predicate for a model solving the 8-queens problem, where Forge is searching for how to place 8 queens on a chessboard such that none of them can attack the other:</p>
+<pre><code class="language-forge">pred notAttacking {
+  -- For every pair of queens
+  all disj q1, q2 : Queen | {
+    -- There's somewhere to put them: (r1,c1) and (r2,c2)
+    some r1, c1, r2, c2: Int | {
+      // ... such that (r1,c1) and (r2,c2) aren't on a shared line of attack
+    } } }
+</code></pre>
+<p>The problem is: there are 8 queens, and 16 integers. It turns out this is a pathological case for the compiler, and it runs for a really long time. In fact, it runs for a long time even if we reduce the scope to 4 queens! The default <code>verbosity</code> option shows the blowup here, in `time-ranslation, which gives the number of milliseconds used to convert the model to a boolean circuit:</p>
+<pre><code>:stats ((size-variables 410425) (size-clauses 617523) (size-primary 1028) (time-translation 18770) (time-solving 184) (time-building 40)) :metadata ())
+#vars: (size-variables 410425); #primary: (size-primary 1028); #clauses: (size-clauses 617523)        
+Transl (ms): (time-translation 18770); Solving (ms): (time-solving 184)
+</code></pre>
+<p>Ouch! To avoid this blowup, we might try a different approach that uses fewer quantifiers. In fact, *we can write the constraint without referring to specific queens at all, just 4 integers representing the positions. </p>
+<div id="admonition-how" class="admonition admonish-tip">
+<div class="admonition-title">
+<p>How?</p>
+<p><a class="admonition-anchor-link" href="#admonition-how"></a></p>
+</div>
+<div>
+<p>Does the identity of the queens matter at all, beyond their location?</p>
+</div>
+</div>
+<p>If you encounter bad performance from Forge, check for this sort of unnecessary nested quantifier use. It can often be fixed by reducing quantifier nesting, or by narrowing the scope of what's being quantified over.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../chapters/adder/rca.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../chapters/ttt/ttt_games.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../chapters/adder/rca.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../chapters/ttt/ttt_games.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../../ace.js"></script>
+        <script src="../../editor.js"></script>
+        <script src="../../mode-rust.js"></script>
+        <script src="../../theme-dawn.js"></script>
+        <script src="../../theme-tomorrow_night.js"></script>
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

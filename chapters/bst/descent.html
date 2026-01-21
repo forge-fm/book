@@ -1,0 +1,422 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>BSTs: Recursive Descent - Logic for Systems: Lightweight Formal Methods for Everybody</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../././mdbook-admonish.css">
+        <link rel="stylesheet" href="../.././mdbook-admonish.css">
+        <link rel="stylesheet" href="../.././custom.css">
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><a href="../../welcome.html">How to Read this book</a></li><li class="chapter-item affix "><li class="part-title">Preamble: Beyond Testing</li><li class="chapter-item "><a href="../../chapters/manifesto/job.html">What good is this book?</a></li><li class="chapter-item "><a href="../../chapters/manifesto/manifesto.html">Logic for Systems</a></li><li class="chapter-item "><a href="../../chapters/properties/pbt.html">From Tests to Properties</a></li><li class="chapter-item affix "><li class="part-title">Modeling Static Scenarios</li><li class="chapter-item "><a href="../../chapters/ttt/ttt.html">Tic-Tac-Toe</a></li><li class="chapter-item "><a href="../../chapters/bst/bst.html">Binary Search Trees</a></li><li class="chapter-item "><a href="../../chapters/adder/rca.html">Ripple-Carry Adder</a></li><li class="chapter-item "><a href="../../chapters/qna/static.html">Q&A: Static Modeling</a></li><li class="chapter-item affix "><li class="part-title">Discrete Event Systems</li><li class="chapter-item "><a href="../../chapters/ttt/ttt_games.html">Transitions, Traces, and Verification</a></li><li class="chapter-item "><a href="../../chapters/inductive/bsearch.html">Counterexamples to Induction</a></li><li class="chapter-item expanded "><a href="../../chapters/bst/descent.html" class="active">BSTs: Recursive Descent</a></li><li class="chapter-item "><a href="../../chapters/validation/validating_events.html">Validating Models</a></li><li class="chapter-item "><a href="../../chapters/qna/events.html">Q&A: Event Systems</a></li><li class="chapter-item affix "><li class="part-title">Modeling Relationships</li><li class="chapter-item "><a href="../../chapters/relations/modeling-booleans-1.html">Relational Forge, Modeling Logic</a></li><li class="chapter-item "><a href="../../chapters/relations/reachability.html">Transitive Closure</a></li><li class="chapter-item "><a href="../../chapters/relations/sets-induction-mutex.html">Modeling Mutual Exclusion</a></li><li class="chapter-item "><a href="../../chapters/relations/sets-beyond-assertions.html">Going Beyond Assertions</a></li><li class="chapter-item "><a href="../../chapters/solvers/bounds_booleans_how_forge_works.html">How does Forge Work?</a></li><li class="chapter-item "><a href="../../chapters/qna/relations.html">Q&A: Relations</a></li><li class="chapter-item affix "><li class="part-title">Temporal Specification</li><li class="chapter-item "><a href="../../chapters/temporal/liveness_and_lassos.html">Liveness and Lassos</a></li><li class="chapter-item "><a href="../../chapters/temporal/temporal_operators.html">Temporal Forge</a></li><li class="chapter-item "><a href="../../chapters/temporal/temporal_operators_2.html">Linear Temporal Logic</a></li><li class="chapter-item "><a href="../../chapters/temporal/obligations_past.html">Obligations and the Past</a></li><li class="chapter-item "><a href="../../chapters/temporal/fixing_lock_temporal.html">Mutual Exclusion, Revisited</a></li><li class="chapter-item "><a href="../../chapters/temporal/testing_temporal.html">Testing Temporally</a></li><li class="chapter-item affix "><li class="part-title">Boolean Solver Algorithms</li><li class="chapter-item "><a href="../../chapters/solvers/dpll.html">Boolean SAT (DPLL)</a></li><li class="chapter-item "><a href="../../chapters/solvers/resolution.html">Witnessing Unsat: Propositional resolution</a></li><li class="chapter-item affix "><li class="part-title">Beyond SAT</li><li class="chapter-item "><a href="../../chapters/solvers/smt.html">Satisfiability Modulo Theories (SMT)</a></li><li class="chapter-item "><a href="../../chapters/solvers/cegis.html">Learning with Solvers: CEGIS</a></li><li class="chapter-item affix "><li class="part-title">Case Studies and Further Reading</li><li class="chapter-item "><div>Modeling Raft in Anger</div></li><li class="chapter-item "><div>Forge: Comparing Prim's and Dijkstra's Algorithms</div></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Logic for Systems: Lightweight Formal Methods for Everybody</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h1 id="bsts-recursive-descent"><a class="header" href="#bsts-recursive-descent">BSTs: Recursive Descent</a></h1>
+<p>When we last modeled <a href="../bst/bst.html">binary search trees</a>, we defined what it meant to be a binary tree, and had two different candidates for the BST invariant. Now we'll return to BSTs and model the classic recursive <em>BST search</em> algorithm. Just like games of tic-tac-toe, a BST search can be represented as a sequence of states that evolve as the algorithm advances. </p>
+<p>As a reminder, we had defined binary-tree nodes like this:</p>
+<pre><code class="language-forge">sig Node {
+  key: one Int,     -- every node has some key 
+  left: lone Node,  -- every node has at most one left-child
+  right: lone Node  -- every node has at most one right-child
+}
+</code></pre>
+<p>Just like in the last example, we'll start by adding a sig for the state of the system. The &quot;system&quot; here is the recursive search, so it should have fields that are used in that context. Really, the only thing that changes during the recursive descent is the node currently being visited:</p>
+<pre><code class="language-forge">-- Since a BST descent doesn't need to backtrack, the state can be fairly simple.
+sig SearchState {
+    current: lone Node -- the node currently being visited
+}
+</code></pre>
+<p>Then we'll define a <code>one</code> sig for the overall search. As with tic-tac-toe, Forge will find instances that represent a single search, embodied by the <code>Search</code> atom and its fields:</p>
+<pre><code class="language-forge">one sig Search {
+    target: one Int, -- the target of the search (never changes)
+    -- The first state and successor-state function for this trace
+    initialState: one SearchState,
+    nextState: pfunc SearchState -&gt; SearchState
+}
+</code></pre>
+<p>What does an initial state of the search look like? We'd better be at the root of the tree! </p>
+<pre><code class="language-forge">pred init[s: SearchState] {    
+    isRoot[s.current]
+}
+</code></pre>
+<p>Now for the more complicated part. How does a step of the recursive descent work? At any given node:</p>
+<ul>
+<li>First, it checks whether <code>current.key = target</code>. If yes, it's done.</li>
+<li>It checks whether <code>current.key &lt; target</code>. If yes, it moves to the left child if it exists, and returns failure otherwise.</li>
+<li>It checks whether <code>current.key &gt; target</code>. If yes, it moves to the right child if it exists, and returns failure otherwise.</li>
+</ul>
+<p>That's not so bad, but it feels like there are two different kinds of transition that our system might take. Let's give each of them their own predicates, just to avoid them getting tangled with each other: </p>
+<ul>
+<li><code>descendLeft</code> will apply if the target is to the left.</li>
+<li><code>descendRight</code> will apply if the target is to the right.
+If neither can apply, the algorithm is done: either the target has been found, or the search has &quot;hit bottom&quot; without finding the target.</li>
+</ul>
+<p>Let's start writing them, beginning with <code>descendLeft</code>. We'll follow the discipline of separating the <em>guard</em> and <em>action</em> of each transition <code>pred</code>:</p>
+<pre><code class="language-forge">pred descendLeft[pre, post: SearchState] {
+  -- GUARD 
+  Search.target &lt; pre.current.key
+  some pre.current.left
+  -- ACTION
+  post.current = pre.current.left
+}
+</code></pre>
+<p>Because only the current node is a component of the search state, we only need to define the new current node in the action.</p>
+<p><strong>Exercise:</strong> Write <code>descendRight</code> yourself. The structure should be very similar to <code>descendLeft</code>. </p>
+<details>
+<summary>Think, then click!</summary>
+<p>You might write something like this:</p>
+<pre><code class="language-forge">pred descendRight[pre, post: SearchState] {
+  -- GUARD 
+  Search.target &gt; pre.current.key
+  some pre.current.right
+  -- ACTION
+  post.current = pre.current.right
+}
+</code></pre>
+</details>
+<hr />
+<p>Let's do some basic validation:</p>
+<pre><code class="language-forge">test expect {
+    -- let's check that these two transitions are mutually-exclusive
+    r_l_together: {some s: SearchState | {descendLeft[s] and descendRight[s]}} for 7 Node is unsat
+    -- let's check that transitions are all possible to execute
+    r_sat: {some s: SearchState | descendRight[s]} for 7 Node is sat
+    l_sat: {some s: SearchState | descendLeft[s]} for 7 Node is sat
+    -- initial state is satisfiable
+    init_sat: {some s: SearchState | init[s]} for 7 Node is sat
+}
+</code></pre>
+<hr />
+<p>Now we'll combine these predicates into one that defines the entire recursive descent. The shape of this predicate is somewhat boilerplate; soon we'll see how to get rid of it entirely. For now, we'll just copy from the tic-tac-toe example and make small, local changes. Namely:</p>
+<ul>
+<li>we called the trace sig <code>Search</code>, not <code>Game</code>;</li>
+<li>we called the state sig <code>SearchState</code>, not <code>Board</code>; and </li>
+<li>we have two different transition predicates to include.</li>
+</ul>
+<pre><code class="language-forge">pred traces {
+    -- the graph is well-formed to begin with
+    binary_tree
+    -- The trace starts with an initial state
+    init[Search.initialState]
+    no sprev: SearchState | Search.nextState[sprev] = Search.initialState
+    -- Every transition is a valid move
+    all s: SearchState | some Search.nextState[s] implies {
+        descendLeft [s, Search.nextState[s]] or 
+        descendRight[s, Search.nextState[s]]
+    }
+}
+</code></pre>
+<p>Let's run it!</p>
+<pre><code class="language-forge">run {traces} for exactly 7 Node, 5 SearchState for {nextState is plinear}
+</code></pre>
+<p>The output may initially be overwhelming: by default, it will show <em>all</em> the atoms in the world and their relationships, including each <code>SearchState</code>. You could stay in the default visualizer and mitigate the problem a <em>little</em> by clicking on &quot;Theme&quot; and then &quot;Add Projection&quot; for <code>SearchState</code>. The problem is that this hides the <code>current</code> node indicator for the current state, since the current state becomes implicit. </p>
+<p>Instead, let's use a custom visualization. There are multiple options included with this book:</p>
+<ul>
+<li><a href="./bst.js"><code>bst.js</code></a>, which visualizes the tree itself, without any regard to the descent. This is useful for debugging the basic tree model and the invariants themselves.</li>
+<li><a href="./bst_descent.js"><code>bst_descent.js</code></a>, which visualizes the <em>descent</em> in one picture. </li>
+<li>(Don't run this yet!) <code>bst_temporal.js</code>, which visualizes a Temporal Forge version of the model, which we'll get to soon.</li>
+</ul>
+<p>If we run <code>bst_descent.js</code> for this instance, it will draw the tree and highlight the path taken in the recursive descent. A node with the target key will have a thick border. A node that's visited in the descent will have a red border. So a correct descent should never show a node with a thick border that isn't red. </p>
+<p><strong>TODO fill: how to run? Did we describe this already?</strong></p>
+<p>This is easier to read, but also a little worrying: we see two nodes visited, and they aren't directly connected! </p>
+<p><strong>Exercise:</strong> What's going on? (Hint: examine the table view. How many search states are there? Are they all in the trace?)</p>
+<details>
+<summary>Think, then click!</summary>
+<p>The problem is that we allowed <code>SearchState</code> atoms to exist without being used in the trace. The visualizer script is highlighting a node that <em>any</em> <code>SearchState</code> uses. So we have two options: </p>
+<ul>
+<li>change the visualizer script to only look at states reachable from the first one; or</li>
+<li>add a constraint that forces all <code>SearchState</code> atoms to be used. </li>
+</ul>
+<p>We'll go for the second fix, adding this line to the <code>traces</code> predicate:</p>
+<pre><code class="language-forge">-- All SearchStates are used
+all s: SearchState | { 
+  s = Search.initialState or 
+  reachable[s, Search.initialState, Search.nextState]
+}
+</code></pre>
+</details>
+<p>Ok, that's better, but we still aren't seeing a <em>complete</em> descent. To fix that, we'll say that, eventually, the descent either reaches bottom or a node with the target value:</p>
+<pre><code class="language-alloy">run {
+  binary_tree 
+  traces
+  some s: SearchState | s.current.key = Search.target or (no s.current.left and no s.current.right)
+} for exactly 7 Node, 5 SearchState for {nextState is plinear}
+</code></pre>
+<p>That's more like it. But what about the invariants? We only said <code>binary_tree</code> had to hold, which means that the tree being searched isn't necessarily a binary <em>search</em> tree yet.</p>
+<h3 id="trying-different-invariants"><a class="header" href="#trying-different-invariants">Trying Different Invariants</a></h3>
+<p>In our <a href="./bst.html">original BST model</a>, we'd sketched two different invariants:</p>
+<p><strong>Version 1</strong> (<code>invariant_v1</code>): For all nodes <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span>:</p>
+<ul>
+<li>all left-descendants of <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> have a key less than <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span>'s key; and </li>
+<li>all right-descendants of <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> have a key greater than or equal to <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span>'s key.</li>
+</ul>
+<p><strong>Version 2</strong> (<code>invariant_v2</code>): For all nodes <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span>:</p>
+<ul>
+<li>the left child of <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> (if any) has a key less than <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span>'s key; and </li>
+<li>the right child of <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> (if any) has a key greater than or equal to <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span>'s key.</li>
+</ul>
+<p>We were able to look at trees that met one invariant but not another, but now we can do something much more powerful: we can ask Forge to show us how the differing invariants affect the recursive descent on the tree! If an invariant is &quot;wrong&quot;, surely it will cause the descent to fail in some way. Since we've already modeled the descent, this should be easy. Let's try it for <code>invariant_v2</code>:</p>
+<pre><code class="language-forge">run {
+  binary_tree     -- it must be a binary tree
+  all n: Node | invariant_v2[n]    -- additionally, the tree satisfies invariant version 1
+  some n: Node | n.key = Search.target -- the target is present
+  traces          -- do a search descent
+  -- Finally, the trace finishes the search
+  some s: SearchState | s.current.key = Search.target or no (s.current.left + s.current.right)
+} for exactly 7 Node, 5 SearchState for {nextState is plinear}
+</code></pre>
+<p>This will show us instances of a descent for a tree following <code>invariant_v2</code>. To see descents for trees following the other invariant, just change <code>invariant_v2</code> to <code>invariant_v1</code>. If you look at a few instances for <code>invariant_v2</code>, you should notice that one of the invariants can make the descent fail: the tree contains the target, but it's never found. You'll see something like this: </p>
+<img alt="a binary tree following invariant 2, where the recursive descent fails to find the target" src="./bst_invar2_buggy.png" width=60%/>
+<h3 id="verifying-bsts"><a class="header" href="#verifying-bsts">Verifying BSTs</a></h3>
+<p>Notice what just happened. We built up our structural model to contain a collection of related features, such as:</p>
+<ul>
+<li>binary trees with numeric node values; </li>
+<li>multiple possible invariants for these trees to follow; and </li>
+<li>a recursive-descent algorithm on those binary trees.</li>
+</ul>
+<p>Before, we could only ask Forge to show us that the invariants were different, which wasn't very useful—at least not immediately. Then, in this section, we added a discrete event model of BST search atop the original, which gave us something more powerful: representations of how the different invariants might <em>impact</em> the search algorithm. We can even verify that <code>invariant_v1</code> is correct (for reasonably-sized example trees). </p>
+<p><strong>Exercise:</strong> Do this now! Write either a <code>run</code> or <code>test expect</code> confirming that if <code>invariant_v1</code> holds for all nodes, then the recursive descent will be successful at finding a present target value. </p>
+<details>
+<summary>Think, then click!</summary>
+<p>I'll write my version as a <code>run</code>, so we can better match the one above. </p>
+<pre><code class="language-forge">run {
+  binary_tree    
+  all n: Node | invariant_v1[n]   
+  some n: Node | n.key = Search.target -- the target is present
+  traces     
+  -- The trace finishes the search without finding the target
+  some s: SearchState | no (s.current.left + s.current.right)
+  no s: SearchState   | s.current.key = Search.target
+} for exactly 7 Node, 5 SearchState for {nextState is plinear}
+</code></pre>
+</details>
+<p><strong>Bonus Exercise:</strong> Do the numeric bounds in the commands above seem OK to you? Is there any situation you might be worried about, beyond example trees that are bigger than 7 nodes?</p>
+<details>
+<summary>Think, then click!</summary>
+<p>Trees aren't always balanced. It's possible that there could be <code>7</code> nodes arranged like a linear list, with the target value at the bottom-most node. In this case, <code>5</code> states wouldn't be enough; Forge wouldn't ever even look for such a situation, because we said that the descent ended when it reached the bottom of the tree, and we lack the states to get there.</p>
+<p>This is a great example of how carefully considering bounds and exploring the structural model before doing more complex verification is vital. To really be complete for 7-node trees, we would need up to 7 <code>SearchState</code> atoms as well.</p>
+</details>
+<h3 id="looking-ahead"><a class="header" href="#looking-ahead">Looking Ahead</a></h3>
+<p>Of course, this is still a very simple model. Binary Search Trees are much less complicated than many other data structures, and even complex data structures are only part of a larger system. </p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../chapters/inductive/bsearch.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../chapters/validation/validating_events.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../chapters/inductive/bsearch.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../chapters/validation/validating_events.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../../ace.js"></script>
+        <script src="../../editor.js"></script>
+        <script src="../../mode-rust.js"></script>
+        <script src="../../theme-dawn.js"></script>
+        <script src="../../theme-tomorrow_night.js"></script>
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

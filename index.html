@@ -1,0 +1,341 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>How to Read this book - Logic for Systems: Lightweight Formal Methods for Everybody</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="././mdbook-admonish.css">
+        <link rel="stylesheet" href="./mdbook-admonish.css">
+        <link rel="stylesheet" href="./custom.css">
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><a href="welcome.html" class="active">How to Read this book</a></li><li class="chapter-item affix "><li class="part-title">Preamble: Beyond Testing</li><li class="chapter-item "><a href="chapters/manifesto/job.html">What good is this book?</a></li><li class="chapter-item "><a href="chapters/manifesto/manifesto.html">Logic for Systems</a></li><li class="chapter-item "><a href="chapters/properties/pbt.html">From Tests to Properties</a></li><li class="chapter-item affix "><li class="part-title">Modeling Static Scenarios</li><li class="chapter-item "><a href="chapters/ttt/ttt.html">Tic-Tac-Toe</a></li><li class="chapter-item "><a href="chapters/bst/bst.html">Binary Search Trees</a></li><li class="chapter-item "><a href="chapters/adder/rca.html">Ripple-Carry Adder</a></li><li class="chapter-item "><a href="chapters/qna/static.html">Q&A: Static Modeling</a></li><li class="chapter-item affix "><li class="part-title">Discrete Event Systems</li><li class="chapter-item "><a href="chapters/ttt/ttt_games.html">Transitions, Traces, and Verification</a></li><li class="chapter-item "><a href="chapters/inductive/bsearch.html">Counterexamples to Induction</a></li><li class="chapter-item "><a href="chapters/bst/descent.html">BSTs: Recursive Descent</a></li><li class="chapter-item "><a href="chapters/validation/validating_events.html">Validating Models</a></li><li class="chapter-item "><a href="chapters/qna/events.html">Q&A: Event Systems</a></li><li class="chapter-item affix "><li class="part-title">Modeling Relationships</li><li class="chapter-item "><a href="chapters/relations/modeling-booleans-1.html">Relational Forge, Modeling Logic</a></li><li class="chapter-item "><a href="chapters/relations/reachability.html">Transitive Closure</a></li><li class="chapter-item "><a href="chapters/relations/sets-induction-mutex.html">Modeling Mutual Exclusion</a></li><li class="chapter-item "><a href="chapters/relations/sets-beyond-assertions.html">Going Beyond Assertions</a></li><li class="chapter-item "><a href="chapters/solvers/bounds_booleans_how_forge_works.html">How does Forge Work?</a></li><li class="chapter-item "><a href="chapters/qna/relations.html">Q&A: Relations</a></li><li class="chapter-item affix "><li class="part-title">Temporal Specification</li><li class="chapter-item "><a href="chapters/temporal/liveness_and_lassos.html">Liveness and Lassos</a></li><li class="chapter-item "><a href="chapters/temporal/temporal_operators.html">Temporal Forge</a></li><li class="chapter-item "><a href="chapters/temporal/temporal_operators_2.html">Linear Temporal Logic</a></li><li class="chapter-item "><a href="chapters/temporal/obligations_past.html">Obligations and the Past</a></li><li class="chapter-item "><a href="chapters/temporal/fixing_lock_temporal.html">Mutual Exclusion, Revisited</a></li><li class="chapter-item "><a href="chapters/temporal/testing_temporal.html">Testing Temporally</a></li><li class="chapter-item affix "><li class="part-title">Boolean Solver Algorithms</li><li class="chapter-item "><a href="chapters/solvers/dpll.html">Boolean SAT (DPLL)</a></li><li class="chapter-item "><a href="chapters/solvers/resolution.html">Witnessing Unsat: Propositional resolution</a></li><li class="chapter-item affix "><li class="part-title">Beyond SAT</li><li class="chapter-item "><a href="chapters/solvers/smt.html">Satisfiability Modulo Theories (SMT)</a></li><li class="chapter-item "><a href="chapters/solvers/cegis.html">Learning with Solvers: CEGIS</a></li><li class="chapter-item affix "><li class="part-title">Case Studies and Further Reading</li><li class="chapter-item "><div>Modeling Raft in Anger</div></li><li class="chapter-item "><div>Forge: Comparing Prim's and Dijkstra's Algorithms</div></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Logic for Systems: Lightweight Formal Methods for Everybody</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h2 id="how-to-read-this-book"><a class="header" href="#how-to-read-this-book">How To Read This Book</a></h2>
+<p>Welcome to Logic for Systems! Here are some quick hints that will help you use this book effectively.</p>
+<div id="admonition-this-book-is-a-draft" class="admonition admonish-note">
+<div class="admonition-title">
+<p>This book is a draft!</p>
+<p><a class="admonition-anchor-link" href="#admonition-this-book-is-a-draft"></a></p>
+</div>
+<div>
+<p>This book is a draft, and there are some sections that are currently being filled in. If you want to use these materials and need support (e.g., you want to use the Forge homeworks that go with it, or a specific section you need is incomplete), please contact <code>Tim_Nelson@brown.edu</code>. </p>
+<p>Especially during the Spring semester at Brown University, the deployed content of this book may be expanded and improved. </p>
+<ul>
+<li>If you are a Brown University student taking CSCI 1710, expect the book to be edited as the semester proceeds.</li>
+<li>If you are using the book in your own course or for your own studies, and want a &quot;frozen&quot; version to ensure consistency, we'd be happy to assist you. Please reach out to <code>Tim_Nelson@brown.edu</code>.</li>
+</ul>
+</div>
+</div>
+<hr />
+<h3 id="organization"><a class="header" href="#organization">Organization</a></h3>
+<p>The book is organized into a series of short sections, each of which are grouped into chapters: </p>
+<ul>
+<li><strong>Chapter 1 (Beyond Testing)</strong> briefly motivates the content in this book and sets the stage with a new technique for testing your software. </li>
+<li><strong>Chapter 2 (Modeling Static Scenarios)</strong> provides an introduction to modeling systems in Forge by focusing on systems that don't change over time. </li>
+<li><strong>Chapter 3 (Discrete Event Systems)</strong> shows a common way to model the state of a system changing over time. </li>
+<li><strong>Chapter 4 (Modeling Relationships)</strong> enriches the modeling language to support arbitrary relations between objects in the world.</li>
+<li><strong>Chapter 5 (Temporal Specification)</strong> covers temporal operators, which are commonly used in industrial modeling and specification, and how to use them. </li>
+<li><strong>Chapter 6 (Case Studies)</strong> touches on some larger applications of lightweight formal methods. Some of these will involve large models written in Forge, and others will lean more heavily on industrial systems.</li>
+<li>The <strong>Forge Documentation</strong>, which covers the syntax of the language more concisely and isn't focused on teaching. At the moment, this is in a <a href="https://forge-fm.github.io/forge-documentation/">separate document</a> in order to make searching easier.</li>
+</ul>
+<p>Each chapter contains a variety of examples: data structures, puzzles, algorithms, hardware concepts, etc. We hope that the diversity of domains covered means that everyone will see an example that resonates with them. Full language and tool documentation come <em>after</em> the main body of the book. </p>
+<h4 id="what-does-this-book-assume-what-is-its-goal"><a class="header" href="#what-does-this-book-assume-what-is-its-goal">What does this book assume? What is its goal?</a></h4>
+<p>This book does not assume <em>any</em> prior background with formal methods or even discrete math. It does assume the reader has written programs before at the level of an introductory college course. </p>
+<p>The goal of this chapter progression is to prepare the reader to formally model and reason about a domain <em>of their own choosing</em> in Forge (or perhaps in a related tool, such as an SMT solver). </p>
+<p>With that in mind...</p>
+<h4 id="do-more-than-read"><a class="header" href="#do-more-than-read">Do More Than Read</a></h4>
+<p>This book is example driven, and the examples are almost always built up from the beginning. The flow of the examples is deliberate, and might even take a &quot;wrong turn&quot; that is meant to teach a specific lesson before changing direction. If you try to read the book passively, you're likely to be very disappointed. Worse, you may not actually be able to <em>do</em> much with the material after reading.</p>
+<p>Instead, <strong>follow along</strong>, pasting each snippet of code or Forge model into the appropriate tool, and try it! Better yet, try modifying it and see what happens. You'll get much more out of each section as a result. Forge especially is designed to aid experimentation. Let your motto be:</p>
+<center><strong>Let's find out!</strong></center>
+<br/>
+<hr />
+<h3 id="navigating-the-book-site"><a class="header" href="#navigating-the-book-site">Navigating the Book Site</a></h3>
+<p>With JavaScript enabled, the table of contents (to the left, by default) will allow you to select a specific section of this book. Likewise, the search bar (enabled via the &quot;Toggle Searchbar&quot; icon) should allow you to search for arbitrary alphanumeric phrases in the full text; unfortunately, non alphanumeric operators are not supported by search at present.</p>
+<div id="admonition-table-of-contents-theme-and-search" class="admonition admonish-tip">
+<div class="admonition-title">
+<p>Table of Contents, Theme, and Search</p>
+<p><a class="admonition-anchor-link" href="#admonition-table-of-contents-theme-and-search"></a></p>
+</div>
+<div>
+<p>The three buttons for popping out the table of contents, changing the color theme, and searching are in the upper-left corner of this page, by default. If you do not see them, please ensure that JavaScript is enabled.</p>
+<center>
+If the table of contents isn't open, click this button:
+<label id="sidebar-toggle-alternate" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents (Alternate Button)" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+<p>The table of contents for the Forge documentation is expandable. Once it is open, click the ❱ icons to expand individual sections and subsections to browse more easily! </p>
+<p>To change the color theme of the page, click this button:
+<button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme (Alternate Button)" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+<i class="fa fa-paint-brush"></i>
+</button></p>
+<p>To search, click this button:
+<button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar (Alternate Button)" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+<i class="fa fa-search"></i>
+</button></p>
+</center>
+</div>
+</div>
+<hr />
+<h3 id="callout-boxes"><a class="header" href="#callout-boxes">Callout Boxes</a></h3>
+<p>Callout boxes can give valuable warnings, helpful hints, and other supplemental information. They are color- and symbol-coded depending on the type of information. For example:</p>
+<div id="admonition-this-is-a-helpful-tip" class="admonition admonish-tip">
+<div class="admonition-title">
+<p>This is a helpful tip.</p>
+<p><a class="admonition-anchor-link" href="#admonition-this-is-a-helpful-tip"></a></p>
+</div>
+<div>
+<p>Make sure to stay hydrated; it will help you learn.</p>
+</div>
+</div>
+<div id="admonition-this-is-a-warning" class="admonition admonish-warning">
+<div class="admonition-title">
+<p>This is a warning!</p>
+<p><a class="admonition-anchor-link" href="#admonition-this-is-a-warning"></a></p>
+</div>
+<div>
+<p>Look both ways before you cross the street!</p>
+</div>
+</div>
+<div id="admonition-this-is-a-side-note" class="admonition admonish-note">
+<div class="admonition-title">
+<p>This is a side note.</p>
+<p><a class="admonition-anchor-link" href="#admonition-this-is-a-side-note"></a></p>
+</div>
+<div>
+<p>This book is written using the <code>mdbook</code> package.</p>
+</div>
+</div>
+<p>If you see a callout labeled &quot;CSCI 1710&quot;, it means that it's specifically for students in Brown University's CSCI 1710 course, Logic for Systems.</p>
+<hr />
+<h3 id="exercises"><a class="header" href="#exercises">Exercises</a></h3>
+<p>Every now and then, you'll find question prompts, followed by a clickable header that looks like this: </p>
+<details>
+<summary>Think, then click!</summary>
+<p><strong>SPOILER TEXT</strong></p>
+</details> 
+<p>If you click the arrow, it will expand to show hidden text, often revealing an answer or some other piece of information that is meant to be read <em>after</em> you've thought about the question. When you see these exercises, <strong>don't skip past them</strong>, and <strong>don't just read the hidden text</strong>. </p>
+<h2 id="thanks-to"><a class="header" href="#thanks-to">Thanks To</a></h2>
+<p>The current draft has benefitted from the feedback of many people, including: 
+Shriram Krishnamurthi, 
+Emily Nelson, 
+Hillel Wayne, 
+Siddhartha Prasad,
+...
+and the many CSCI 1710 students and TAs at Brown who have kindly given their thoughts.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+                            <a rel="next prefetch" href="chapters/manifesto/job.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+                    <a rel="next prefetch" href="chapters/manifesto/job.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="ace.js"></script>
+        <script src="editor.js"></script>
+        <script src="mode-rust.js"></script>
+        <script src="theme-dawn.js"></script>
+        <script src="theme-tomorrow_night.js"></script>
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

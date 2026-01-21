@@ -1,0 +1,414 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Linear Temporal Logic - Logic for Systems: Lightweight Formal Methods for Everybody</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../../././mdbook-admonish.css">
+        <link rel="stylesheet" href="../.././mdbook-admonish.css">
+        <link rel="stylesheet" href="../.././custom.css">
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><a href="../../welcome.html">How to Read this book</a></li><li class="chapter-item affix "><li class="part-title">Preamble: Beyond Testing</li><li class="chapter-item "><a href="../../chapters/manifesto/job.html">What good is this book?</a></li><li class="chapter-item "><a href="../../chapters/manifesto/manifesto.html">Logic for Systems</a></li><li class="chapter-item "><a href="../../chapters/properties/pbt.html">From Tests to Properties</a></li><li class="chapter-item affix "><li class="part-title">Modeling Static Scenarios</li><li class="chapter-item "><a href="../../chapters/ttt/ttt.html">Tic-Tac-Toe</a></li><li class="chapter-item "><a href="../../chapters/bst/bst.html">Binary Search Trees</a></li><li class="chapter-item "><a href="../../chapters/adder/rca.html">Ripple-Carry Adder</a></li><li class="chapter-item "><a href="../../chapters/qna/static.html">Q&A: Static Modeling</a></li><li class="chapter-item affix "><li class="part-title">Discrete Event Systems</li><li class="chapter-item "><a href="../../chapters/ttt/ttt_games.html">Transitions, Traces, and Verification</a></li><li class="chapter-item "><a href="../../chapters/inductive/bsearch.html">Counterexamples to Induction</a></li><li class="chapter-item "><a href="../../chapters/bst/descent.html">BSTs: Recursive Descent</a></li><li class="chapter-item "><a href="../../chapters/validation/validating_events.html">Validating Models</a></li><li class="chapter-item "><a href="../../chapters/qna/events.html">Q&A: Event Systems</a></li><li class="chapter-item affix "><li class="part-title">Modeling Relationships</li><li class="chapter-item "><a href="../../chapters/relations/modeling-booleans-1.html">Relational Forge, Modeling Logic</a></li><li class="chapter-item "><a href="../../chapters/relations/reachability.html">Transitive Closure</a></li><li class="chapter-item "><a href="../../chapters/relations/sets-induction-mutex.html">Modeling Mutual Exclusion</a></li><li class="chapter-item "><a href="../../chapters/relations/sets-beyond-assertions.html">Going Beyond Assertions</a></li><li class="chapter-item "><a href="../../chapters/solvers/bounds_booleans_how_forge_works.html">How does Forge Work?</a></li><li class="chapter-item "><a href="../../chapters/qna/relations.html">Q&A: Relations</a></li><li class="chapter-item affix "><li class="part-title">Temporal Specification</li><li class="chapter-item "><a href="../../chapters/temporal/liveness_and_lassos.html">Liveness and Lassos</a></li><li class="chapter-item "><a href="../../chapters/temporal/temporal_operators.html">Temporal Forge</a></li><li class="chapter-item expanded "><a href="../../chapters/temporal/temporal_operators_2.html" class="active">Linear Temporal Logic</a></li><li class="chapter-item "><a href="../../chapters/temporal/obligations_past.html">Obligations and the Past</a></li><li class="chapter-item "><a href="../../chapters/temporal/fixing_lock_temporal.html">Mutual Exclusion, Revisited</a></li><li class="chapter-item "><a href="../../chapters/temporal/testing_temporal.html">Testing Temporally</a></li><li class="chapter-item affix "><li class="part-title">Boolean Solver Algorithms</li><li class="chapter-item "><a href="../../chapters/solvers/dpll.html">Boolean SAT (DPLL)</a></li><li class="chapter-item "><a href="../../chapters/solvers/resolution.html">Witnessing Unsat: Propositional resolution</a></li><li class="chapter-item affix "><li class="part-title">Beyond SAT</li><li class="chapter-item "><a href="../../chapters/solvers/smt.html">Satisfiability Modulo Theories (SMT)</a></li><li class="chapter-item "><a href="../../chapters/solvers/cegis.html">Learning with Solvers: CEGIS</a></li><li class="chapter-item affix "><li class="part-title">Case Studies and Further Reading</li><li class="chapter-item "><div>Modeling Raft in Anger</div></li><li class="chapter-item "><div>Forge: Comparing Prim's and Dijkstra's Algorithms</div></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Logic for Systems: Lightweight Formal Methods for Everybody</h1>
+
+                    <div class="right-buttons">
+                        <a href="../../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h1 id="linear-temporal-logic"><a class="header" href="#linear-temporal-logic">Linear Temporal Logic</a></h1>
+<p>Formally, the temporal operators Forge provides come from a language called Linear Temporal Logic (or LTL). It's <em>temporal</em> because it has time-aware operators like <code>always</code> and <code>eventually</code>, and it's <em>linear</em> because it's interpreted over (infinite) linear traces. </p>
+<div id="admonition-industrial-practice" class="admonition admonish-note">
+<div class="admonition-title">
+<p>Industrial Practice</p>
+<p><a class="admonition-anchor-link" href="#admonition-industrial-practice"></a></p>
+</div>
+<div>
+<p>LTL is commonly used in industry. And even where it isn't used directly, many other temporal specification languages are either related to LTL (e.g., branching-time logics like CTL) or inspired by it (e.g., Lamport's <a href="https://lamport.azurewebsites.net/tla/tla.html"><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7713em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord mathnormal">L</span><span class="mord"><span class="mord mathnormal">A</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7713em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">+</span></span></span></span></span></span></span></span></span></span></span></span></a> and other more recent languages). There are a <em>lot</em> of industrial model-checking tools out there, using a lot of different languages, but learning LTL will help you build intuition for nearly all of them.</p>
+<p>And, on the research side of things, there's a lot of temporal logic use as well. For example, <a href="https://nakulgopalan.github.io/docs/sequence-sequence-language.pdf">this paper</a> on using temporal logics in AI to specify robot behaviors.</p>
+</div>
+</div>
+<h2 id="how-to-read-a-temporal-formula"><a class="header" href="#how-to-read-a-temporal-formula">How To Read A Temporal Formula</a></h2>
+<p>Recall that:</p>
+<ul>
+<li>time is <em>implicit</em> in temporal mode, and </li>
+<li>temporal mode only ever finds lasso traces. </li>
+</ul>
+<p>When you write a constraint in temporal mode, it's true with respect to an instance (which is always a lasso trace) <em>and a time index</em> into that trace. Thus the <code>init</code> predicate may be true, or not true, depending on which state you're looking at.</p>
+<p>Evaluation always <em>starts</em> at the first state. This corresponds to the top-level <code>run</code> command or <code>test</code>. I didn't say &quot;the initial state&quot;, because if we've got a predicate that encodes &quot;initial state&quot;, it  won't be enforced unless we've told Forge to do so. This is why, usually, you'll start by putting: <code>init</code> (or whatever your initial-state predicate is named) in your top-level <code>run</code>. </p>
+<p>As soon as temporal operators become involved, however, the &quot;evaluate in the first state&quot; rule starts to change because the current time index may change.</p>
+<h2 id="moving-forward-in-time"><a class="header" href="#moving-forward-in-time">Moving Forward In Time</a></h2>
+<p>You can refer to the <em>next</em> state (relative to the current one, whatever it is) by using the <code>next_state</code> operator. If I wanted to say that the <em>second</em> and <em>third</em> states would also need to be initial states, I'd write more in the top-level <code>run</code> block:</p>
+<pre><code>init
+next_state init
+next_state next_state init
+</code></pre>
+<p>It's rare you'd do something like this in practice, but it's a good first demonstration of the operator.</p>
+<div id="admonition-why-next_state" class="admonition admonish-note">
+<div class="admonition-title">
+<p>Why <code>next_state</code>?</p>
+<p><a class="admonition-anchor-link" href="#admonition-why-next_state"></a></p>
+</div>
+<div>
+<p>The keyword is, admittedly, a little verbose. But it was the best of the various candidates at hand:</p>
+<ul>
+<li>In many settings, this LTL operator is usually called <code>X</code>, which is not very descriptive. (When I read <code>X</code>, I think &quot;variable&quot;!)</li>
+<li>In Forge's parent language, Alloy 6, the operator is called <code>after</code>, but this can lead to some misconceptions since <code>A after B</code> might be misinterpreted as a binary operator, and Forge and Alloy both have implicit <code>and</code> via newlines, so <code>A after B</code> would actually mean <code>A and (after B)</code>. </li>
+<li>I've heard <code>afterward</code> suggested, but that risks confusion with <code>always</code> or <code>eventually</code>.</li>
+</ul>
+</div>
+</div>
+<h2 id="quantifying-over-time"><a class="header" href="#quantifying-over-time">Quantifying Over Time</a></h2>
+<p>What does it mean for something to <code>always</code> be true, or to <code>eventually</code> hold? These terms quantify over time: if something is <code>always</code> true, it's true at all time indexes (starting now). If something is <code>eventually</code> true, it's true at <em>some</em> time index (possibly now). </p>
+<p>So if we wanted to say that every state in the trace transitions to its successor in accordance with our <code>move</code> predicate, we'd say: <code>always move</code>. In the last section, because we had multiple predicates, and each took an argument, we wrote:</p>
+<pre><code class="language-forge">always {some t: Thread | raise[t] or enter[t] or leave[t]}
+</code></pre>
+<h3 id="nesting-operators"><a class="header" href="#nesting-operators">Nesting Operators</a></h3>
+<p>Just like you can nest <code>all</code> and <code>some</code>, you can nest <code>always</code> and <code>eventually</code>. We'll need to do this to express properties like non-starvation. In fact, let's think about how to express non-starvation now! </p>
+<p>We had informally written non-starvation in our mutex model as something like &quot;once a process becomes interested, it eventually gets access&quot;. How would you write this using temporal operators, assuming that <code>interested</code> and <code>access</code> were predicates describing the process becoming interested and getting access respectively?</p>
+<p><strong>Exercise:</strong> Try this!</p>
+<details>
+<summary>Think, then click for a possible solution.</summary>
+<p>We might start with: <code>interested =&gt; eventually access</code>. That would be a reasonable start: if the process is interested, it eventually gets access. The problem is that the interest is measured <em>now</em>---that is, at whatever time index Forge is currently looking. </p>
+</details>
+<hr />
+<p>Clearly we need to add some sort of temporal operator that prevents the above issue. Here's a possible candidate: <code>(eventually interested) =&gt; (eventually access)</code>. </p>
+<p><strong>Exercise:</strong> What's wrong with this one?</p>
+<details>
+<summary>Think, then click!</summary>
+<p>The problem here is that there's no connection between the time at which the left-hand side holds, and the time at which the right-hand side holds. To force that relationship (access <em>after</em> interest) we need to nest the two temporal quantifiers.</p>
+</details>
+<hr />
+<p>How about <code>eventually (interested =&gt; (eventually access))</code>? </p>
+<details>
+<summary>Think, then click!</summary>
+<p>This constraint isn't strong enough. Imagine a trace where the process never gets access, but is interested only (say) half the time. Then any of those disinterested states will satisfy the subformula <code>interested =&gt; (eventually access)</code>. </p>
+<p>Why? Think about how an implication is satisfied. It can be satisfied if the right-hand side is true, but also if the left-hand side is false—in the case where no obligation needs to be incurred! So the implication above evaluates to <em>true</em> in any state where the process isn't interested. And using <code>eventually</code> means <em>any</em> single such state works...</p>
+</details>
+<hr />
+<p>It seems like we need a different temporal operator! What if we combine <code>always</code> and <code>eventually</code>? </p>
+<p><strong>Exercise:</strong> Give it a try.</p>
+<details>
+<summary>Think, then click!</summary>
+<p>We'll say: <code>always {interested =&gt; eventually access}</code>. Now, no matter what time it is, if the process is interested, it has to eventually get access. </p>
+<p>This sort of <code>always</code>-<code>eventually</code> pattern is good for (contingent) &quot;infinitely often&quot; properties, which is exactly what non-starvation is.</p>
+</details>
+<h2 id="lets-try-it-out"><a class="header" href="#lets-try-it-out">Let's Try It Out!</a></h2>
+<p>I'm going to ask you to play the role of Forge. I've listed some temporal constraints below, and would like you to come up with some instances (lasso traces) that satisfy them. Don't use Forge unless you've already tried, and are stumped. </p>
+<p>For all examples, you may come up with your own shape of the world. That is, you might pick a University (where a state is a semester, with courses offered and taken) or your experience waiting for an elevator in the CIT, or anything else from your life! I'll use <code>A</code>, <code>B</code> and <code>C</code> to denote arbitrary facts that might be true, or not true---your job is to plug in specifics, and then find a satisfying trace!</p>
+<p>I'll use a lot of parentheses, to avoid confusion about operator precedence...</p>
+<p><strong>Exercise:</strong> <code>eventually (always (A or B))</code></p>
+<details>
+<summary>Think, then click!</summary>
+<p>Suppose <code>A</code> stands for weekday, and <code>B</code> for weekend. Then the normal progression of time satisfies the constraint: after some point (perhaps right now) it will always be either a weekday or a weekend.</p>
+<p>I am probably abstracting out some important details here, like the heat-death of the universe. But that's not really the point. The point is that alternation between <code>A</code> and <code>B</code> is allowed---it's always <em>either</em> one or the other, or possibly even both.</p>
+</details>
+<hr />
+<p><strong>Exercise:</strong> <code>always (eventually (X and (next_state Y)))</code></p>
+<details>
+<summary>Think, then click!</summary>
+<p>Suppose <code>A</code> stands for &quot;Saturday&quot;, and <code>B</code> for &quot;Sunday&quot;. Then it's always true that, at <em>any point</em> in time, there is a Saturday-Sunday pair of days in the future. </p>
+</details>
+<hr />
+<p><strong>Exercise:</strong> <code>always ((eventually X) or (always Y)))</code></p>
+<details>
+<summary>Think, then click!</summary>
+<p>Suppose <code>A</code> stands for &quot;final exam or demo&quot;, and <code>B</code> for &quot;graduated&quot;. Then, at <em>any point</em> in time, either there's a final in your future <em>or</em> you've graduated (and stay graduated forever). </p>
+<p>Note that this doesn't mean you can't take a final exam after graduating if you want to. Both sides of the <code>or</code> can be true. It just means that, at any point, if you haven't graduated permanently, you must eventually take an exam.</p>
+</details>
+<hr />
+<h2 id="non-starvation-in-our-lock-model"><a class="header" href="#non-starvation-in-our-lock-model">Non-Starvation in our Lock Model</a></h2>
+<p>A deadlock state is one where <em>no</em> outgoing transitions are possible. How can we write a test in Temporal Forge that tries to find a reachable deadlock state? There are two challenges:</p>
+<ul>
+<li>How do we phrase the constraint, in terms of the transition predicates we have to work with? </li>
+<li>How do we even allow Forge to find a deadlock, given that temporal mode <em>only</em> ever finds lasso traces? (A deadlock in a lasso trace is impossible, since a deadlock prevents progress!)</li>
+</ul>
+<p>Let's solve the second challenge first, since it's more foundational.</p>
+<h3 id="finding-deadlocks-via-lassos"><a class="header" href="#finding-deadlocks-via-lassos">Finding Deadlocks Via Lassos</a></h3>
+<p>We could prevent this issue by allowing a <code>doNothing</code> transition from every state. Then from Forge's perspective there's no &quot;deadlock&quot;, and a lasso trace can be found. We can add such a transition easily enough: </p>
+<pre><code class="language-alloy">pred doNothing {
+    flags' = flags
+    loc' = loc
+}
+run {
+    init
+    always { 
+        (some p: Process | {raise[p] or enter[p] or leave[p]})
+        or doNothing 
+    }
+}
+</code></pre>
+<p>But we have to do so carefully, or the fix will cause new problems. If we allow a <code>doNothing</code> transition to happen <em>anywhere</em>, then Forge can find traces when nothing ever happens. In that case, our liveness property is definitely going to fail, even if we were modeling a smarter algorithm. So we need to reduce the power of <code>doNothing</code> somehow. </p>
+<p>Put another way: we started with an <em>overconstraint</em> bug: if only lassos can be found, then we can't find a trace exhibiting deadlock. Adding a powerful <code>doNothing</code> fixes the overconstraint but adds a new <em>underconstraint</em>, because we'll get a lot of garbage traces where the system can just pause arbitrarily (while the trace continues).</p>
+<p>We saw this phenomenon earlier when we were modeling <a href="../ttt/ttt_games.html">tic-tac-toe games</a>, and wanted to work around the fact that the <code>is linear</code> annotation forces exact bounds. We can use the same ideas in the fix here.</p>
+<h2 id="finding-deadlock"><a class="header" href="#finding-deadlock">Finding Deadlock</a></h2>
+<p>Let's look at one of our transitions:</p>
+<pre><code class="language-alloy">pred raise[p: Process] {
+    // GUARD
+    World.loc[p] = Disinterested
+    // ACTION
+    World.loc'[p] = Waiting
+    World.flags' = World.flags + p
+    all p2: Process - p | World.loc'[p2] = World.loc[p2]
+}
+</code></pre>
+<p>Notice it's split into a &quot;guard&quot; and an &quot;action&quot;. If all the constraints in the guard are true, the transition <em>can</em> occur. Formally, we say that if all the guard constraints hold, then the transition is <em>enabled</em>. When should <code>doNothing</code> be enabled? When no other transition is. What if we made an &quot;enabled&quot; predicate for each of our other transitions? Then we could write: </p>
+<pre><code class="language-alloy">pred doNothing {
+    -- GUARD (nothing else can happen)
+    not (some p: Process | enabledRaise[p]) 
+    not (some p: Process | enabledEnter[p]) 
+    not (some p: Process | enabledLeave[p]) 
+    -- ACTION (no effect)
+    flags' = flags
+    loc' = loc
+}
+</code></pre>
+<p>We won't create a separate <code>enabledDoNothing</code> predicate. But we will add <code>doNothing</code> to the set of possible moves:</p>
+<pre><code class="language-alloy">always { 
+    (some p: Process | {raise[p] or enter[p] or leave[p]})
+    or doNothing 
+}
+</code></pre>
+<p>And we'd also better create those 3 <code>enabled</code> predicates, too. E.g., we might write:</p>
+<pre><code>pred raiseEnabled[t: Thread] {
+    World.loc[t] = Uninterested 
+}
+</code></pre>
+<p>which we would then use in the <code>raise</code> transition predicate.</p>
+<p>Finally, we can write a check looking for deadlocks:</p>
+<pre><code class="language-alloy">test expect {
+    noDeadlocks_counterexample: {
+        -- setup conditions
+        init
+        always { 
+            (some p: Process | {raise[p] or enter[p] or leave[p]})
+            or doNothing 
+        }
+        -- violation of the property
+        not always {
+            some p: Process |
+                enabledRaise[p] or
+                enabledEnter[p] or
+                enabledLeave[p] 
+        }
+    } is sat
+}
+</code></pre>
+<p>which fails. Why? The counterexample (at least, the one I got) is 3 states long. And in the final state, both processes are <code>Waiting</code>. Success! Or, at least, success in <strong>finding the deadlock</strong>. But how should we fix the algorithm? And how can we avoid confusion like this in the future?</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../chapters/temporal/temporal_operators.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../chapters/temporal/obligations_past.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../chapters/temporal/temporal_operators.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../../chapters/temporal/obligations_past.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="../../ace.js"></script>
+        <script src="../../editor.js"></script>
+        <script src="../../mode-rust.js"></script>
+        <script src="../../theme-dawn.js"></script>
+        <script src="../../theme-tomorrow_night.js"></script>
+
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
