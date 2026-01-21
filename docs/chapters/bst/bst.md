@@ -285,8 +285,9 @@ example n_forest is {not wellformed} for {
 ### Run the examples 
 
 Click the run button, and Forge will check that all of the examples satisfy (or dissatisfy) the `wellformed` predicate. One fails, but why? Notice two things:
-  * The failing example is a _negative_ one. We expected this instance to be ruled out by `wellformed`, but it was not. This points to a potential _under_-constraint bug in `wellformed`. 
-  * We intended the example to fail because it contains separate, disconnected trees. This gives us a hint about the nature of the missing constraint. Except...
+
+* The failing example is a _negative_ one. We expected this instance to be ruled out by `wellformed`, but it was not. This points to a potential _under_-constraint bug in `wellformed`.
+* We intended the example to fail because it contains separate, disconnected trees. This gives us a hint about the nature of the missing constraint. Except...
 
 We already added a constraint that forces connectivity. Didn't we? 
 
@@ -355,8 +356,10 @@ With that constraint added to `wellformed`, we don't see any more wrong-looking 
 ## Validation
 
 So far we've tested our model in two ways:
-* checking that specific instances satisfy, or don't satisfy, a Forge predicate; and 
-* manually viewing generated instances. 
+
+* checking that specific instances satisfy, or don't satisfy, a Forge predicate; and
+* manually viewing generated instances.
+
 In Forge, we have recourse to more powerful techniques. 
 
 Notice that, when we were writing `binary_tree`, we never said explicitly that there must be a single unique root in the instance. It should be true, of course, that such a root exists and is unique. But that is (or should be!) a _consequence_ of what we wrote. In Forge, this is easy to test:
@@ -388,11 +391,13 @@ Now our model is looking pretty good, although we haven't yet added the "search"
 Let's express our two alternative BST invariants. As a reminder, they were: 
 
 **Version 1** For all nodes $N$:
-* all left-descendants of $N$ have a key less than $N$'s key; and 
+
+* all left-descendants of $N$ have a key less than $N$'s key; and
 * all right-descendants of $N$ have a key greater than or equal to $N$'s key.
 
 **Version 2** For all nodes $N$:
-* the left child of $N$ (if any) has a key less than $N$'s key; and 
+
+* the left child of $N$ (if any) has a key less than $N$'s key; and
 * the right child of $N$ (if any) has a key greater than or equal to $N$'s key.
 
 Notice that both are phrased in terms of single nodes, and should apply to all nodes. For convenience, we'll split these up into 2 predicates each: one to represent the per-node requirement, and another to represent the global requirement. 

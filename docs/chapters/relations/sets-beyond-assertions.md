@@ -28,6 +28,7 @@ Our mutual exclusion property, which says that at most one process can be runnin
 That property wasn't "inductive": Forge could find transitions with a good prestate that end in one of those 4 bad states. So we enriched the invariant to _also_ say that any thread in the waiting or critical-section locations must also have a raised flag. This prevented Forge from using many prestates it could use before: $(InCS, Waiting, 0, 0)$, for example. 
 
 Now we're going to do two things:
+
 * build intuition for how the above actually worked; and
 * talk about how we could approch verifying other, richer, kinds of property.
 

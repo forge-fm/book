@@ -245,6 +245,7 @@ But we always have to stop writing somewhere. We could write the union out to 20
 Forge's `reachable` built-in does this, but it's just a facade over a new relational operator: transitive closure (`^R`).
 
 The _transitive closure_ `^R` of a binary relation `R` is the _smallest_ binary relation such that:
+
 * if `x->y` is in `R`, then `x->y` is in `^R`; and
 * if `x->z` is in `R` and `z->y` is in `^R` then `x->y` is in `R`.
 

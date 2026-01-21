@@ -5,14 +5,16 @@
 If you're reading this book, you've probably had to complete some programming assignments&mdash;or at least written some small program for a course or an online tutorial. Take a moment to list a handful of such assignments: what did you have to build? 
 
 Now ask yourself:
+
 * How did you know what behavior to implement?
 * How did you know which data structures or algorithms were the right ones to use?
 * How did you know your program "worked", in the end?
 
 In the context of assignments, there are expected answers to these questions. For instance, you might say you know your code worked because you tested it (*very* thoroughly, I'm sure)! But is that really the truth? In terms of consequences, the true bar for excellence in a programming class is the grade you got. That is:
-  - You knew what to do because _you were told what to do_.  
-  - You probably knew which algorithms to use because they'd _just been taught to you_.
-  - You were confident that your programs worked because _you were told by an authority figure_.
+
+- You knew what to do because _you were told what to do_.
+- You probably knew which algorithms to use because they'd _just been taught to you_.
+- You were confident that your programs worked because _you were told by an authority figure_.
 
 But outside that context, as (say) a professional engineer, you lose the safety net. You might be working on a program that controls the fate of billions of dollars, tempers geopolitical strife, or controls a patient's insulin pump. Even if you had a TA, would you trust them to tell you that those programs worked? Would you trust your boss to understand _exactly_ what needed to happen, and tell you _exactly_ how to do it? Probably not! Instead, you need to think carefully about what you want, how to build it, and how to evaluate what you and others have built. 
 
@@ -103,6 +105,7 @@ You don't need to understand the specifics of the visualization; the point is th
 The human species has been so successful, in part, because of our ability to use assistive devices&mdash;tools! Eyeglasses, bicycles, hammers, bridges: all devices that assist us in navigating the world in our fragile meat-bodies. One of our oldest inventions, writing, is an assistive device that increases our long-term memory space and makes that memory _persistent_. Computers are only one in a long line of such inventions.
 
 So, naturally, we've found ways to:
+
 * use computers to help us test our ideas;
 * use computers to exhaustively check program correctness;
 * use computers to help us find gaps in our intuition about a program;
@@ -155,6 +158,7 @@ More concretely, we'll focus on a class of techniques called _lightweight_ forma
 For better or worse, The shape of engineering is changing. Lots of people are excited, scared, or both about large language models like ChatGPT. This book won't teach you how to use generative AI, so it's reasonable to wonder: _why learn from this book, instead of reading yet another book on another (deservedly) hot topic, like machine learning?_
 
 There are two questions that will never go out of style, and won't be answered by AI (at least, not in our lifetimes):
+
 * **What do you want to build?** What does your customer really need? Answering this requires talking to them and other stakeholders, watching their processes, seeking their feedback, and adjusting your design based on it. And no matter who (or what) is writing the actual code, you need to be able to express all this precisely enough that they (or it) can succeed at the implementation.  
 * **How will you evaluate what you get?** No matter who (or what) is building the system, verification is needed before the system can be trusted.
 
@@ -165,6 +169,7 @@ Even setting aside the customer-facing aspects, we'll still need to think critic
 _Formal methods_ (FM) are ways to help you think carefully about a domain, process, or system. They use math-based techniques (which are usually implemented in tools) to help. They aren't an academic exercise; they are used widely in industry and have likely saved billions of dollars and thousands of lives.
 
 Some industrial examples I'm fond of include:
+
 * [Amazon Web Services' Zelkova](https://aws.amazon.com/blogs/security/protect-sensitive-data-in-the-cloud-with-automated-reasoning-zelkova/), which helps administrators author better security policies for their services. This book will give you the tools to build a policy-analysis system like Zelkova yourself. 
 * [Microsoft's static driver verifier](https://www.microsoft.com/en-us/research/publication/thorough-static-analysis-of-device-drivers/), which helps increase the reliability of low-level device drivers in Windows. While this book doesn't cover the techniques they used, I love to showcase this work (which helped Microsoft ship more stable drivers and, at this point, is now decades old).
 * [MongoDB's work on modeling replication](https://github.com/visualzhou/mongo-repl-tla), which found a real bug in their code. Quoting the linked page: "We've never encountered this issue in testing or in the field and only found it by reasoning about the edge cases. This shows writing and model checking ... specs is an excellent alternative way to find and verify edge cases." (Ellipsis mine.) We won't use this exact _tool_, but we'll cover other model checkers in this book.
@@ -183,11 +188,13 @@ Remember that we construe the word _system_ broadly. A cryptographic protocol is
 ## Looking Ahead: Tools 
 
 The main tool we'll use in this book is [Forge](http://forge-fm.org), a tool for modeling systems. In the course of the book, we'll be progressing through three _language levels_ in Forge:
+
 * **Froglet**, which restricts the set of operations so that we can jump right in more easily. If you have intuitions about object-oriented programming, those intuitions will be useful in Froglet, although there are a few important differences that we'll talk about.
 * **Relational Forge**, which expands the set of operations available to include sets, relations, and relational operators. These are useful for reasoning about complex relationships between objects and for representing certain domains, like databases or graphs.
 * **Temporal Forge**, which helps us cleanly model how a system's state evolves over time. Temporal Forge is based on the industry-standard specification language LTL&mdash;Linear Temporal Logic.
 
 We'll also use some other tools, like:
+
 * [Hypothesis](https://hypothesis.readthedocs.io/en/latest/), a testing library for Python; and
 * [Z3](https://github.com/Z3Prover/z3), an SMT solver library. 
 

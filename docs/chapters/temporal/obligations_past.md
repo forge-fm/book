@@ -14,6 +14,7 @@ The in-class exercise is [here](https://docs.google.com/forms/d/e/1FAIpQLSemtfAG
 
 
 Suppose we've written a model where `stopped` and `green_light` are predicates that express our car is stopped, and the light is green. Now, maybe we want to write a constraint like, at the current moment in time, it's true that:
+
 * the light must eventually turn green; and 
 * the `stopped` predicate must hold true until the light turns green. 
 

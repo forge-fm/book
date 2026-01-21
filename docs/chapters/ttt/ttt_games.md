@@ -26,14 +26,17 @@ pred move[pre: Board, row: Int, col: Int, p: Player, post: Board] {
 ```
 
 What constraints should we add? It's useful to divide a transition predicate into:
-* a _guard_, which allows the move only if the pre-state is suitable; and 
+
+* a _guard_, which allows the move only if the pre-state is suitable; and
 * an _action_, which defines what is in the post-state based on the pre-state and the move parameters.
  
 For the guard, in order for the move to be valid, it must hold that in the pre-state:
+
 * nobody has already moved at the target location; and
 * it's the moving player's turn.
 
 For the action:
+
 * the new board is the same as the old, except for the addition of the player's mark at the target location.
 
 Now we can fill in the predicate. Let's try something like this:
@@ -215,6 +218,7 @@ all p: Player | not winner[pre, p]
 Now we've got problems, because once we add this constraint, Forge will omit games that end before all square of the board are filled.
 
 This behavior, which may initially seem strange, exists for two reasons:
+
 * History: Forge's ancestor language, Alloy, has something very similar to `is linear`, with the same semantics.
 * Performance: since the `is linear` annotation is almost always used for trace-generation, and trace-generation solving time grows (in the worst case) exponentially in the length of the trace, we will almost always want to reduce unnecessary uncertainty. Forcing the trace length to always be the same reduces the load on the solver, and makes trace-generation somewhat more efficient.
 
@@ -431,6 +435,7 @@ Given this instance, the question is: **why didn't Forge accept it?** There must
   }`? This evaluates to `#f` (false). So this is a problem.
   
 Now we proceed by breaking down the constraint. The outer shell is an `all`, so let's plug in a concrete value:
+
 *  `all e: Element {
     State0.top = e or reachable[e, State0.top, next]
   }`? This evaluates to `#f`. So the constraint fails for `State0`. 
@@ -438,6 +443,7 @@ Now we proceed by breaking down the constraint. The outer shell is an `all`, so 
 **Important**: Don't try to name specific states in your model. They _don't exist_ at that point. 
 
 Which element does the constraint fail on? Again, we'll substitute concrete values and experiment:
+
 *  `State0.top = Element0 or reachable[Element0, State0.top, next]`? This evaluates to `#t`. What about `State0.top = Element1 or reachable[Element1, State0.top, next]`?
 
 Following this process very often leads to discovering an over-constraint bug, or a misconception the author had about the goals of the model or the meaning of the constraints. 
@@ -455,6 +461,7 @@ Following this process very often leads to discovering an over-constraint bug, o
 Where an `assert` or `run` is about checking satisfiability or unsatisfiability of some set of constraints, an `example` is about whether a _specific_ instance satisfies a given predicate. This style of test can be extremely useful for checking that (e.g.) small helper predicates do what you expect.
 
 Why use `example` at all? A couple of reasons:
+
 * It is often much more convenient (once you get past the odd syntax) than adding `one sig`s or `some` quantification for every object in the instance, provided you're trying to describe an _instance_ rather than a property that defines a set of them---which becomes a better option as models become more complex.
 * Because of how it's compiled, an `example` can sometimes run faster than a constraint-based equivalent. 
 
@@ -523,6 +530,7 @@ This works great for tic-tac-toe, and also in many other real verification setti
 That's potentially a lot of states in a trace. Hundreds, thousands, billions, ... So is this entire approach doomed from the start? 
 
 No, for at least two reasons:
+
 * Often there _are_ "shallow" bugs that can be encountered in only a few steps. In something like a protocol or algorithm, scaling to traces of length 10 or 20 can still find real bugs and increase confidence in correctness. 
 * There's more than one way to verify. Generating _full traces_ wasn't the only technique we used to check properties of tic-tac-toe; let's look deeper at something we saw awhile back.
 
@@ -545,6 +553,7 @@ This might not be immediately obvious. After all, it's not as simple as asking F
 This illustrates a **central challenge in software and hardware verification**. Given a discrete-event model of a system, how can we check whether all reachable states satisfy some property? You might have heard properties like this called _invariants_ of the system.
 
 One way to solve the problem _without_ the limitation of bounded-length traces goes something like this:
+
 * Step 1: Ask whether any starting states are bad states. If not, then at least we know that executions with no moves obey our invariant. (It's not much, but it's a start. It's also easy for Forge to check.)
 * Step 2: Ask whether it's possible, in any good state, to transition to a bad state. 
  

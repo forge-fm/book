@@ -11,6 +11,7 @@ Formally, the temporal operators Forge provides come from a language called Line
 ## How To Read A Temporal Formula
 
 Recall that:
+
 * time is _implicit_ in temporal mode, and 
 * temporal mode only ever finds lasso traces. 
 

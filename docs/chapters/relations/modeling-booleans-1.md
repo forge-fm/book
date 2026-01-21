@@ -1,8 +1,9 @@
 # Modeling Boolean Logic (Syntax, Semantics, and Sets)
 
 In this chapter, we'll start writing a new model from scratch to meet 3 broad goals:
+
 * expanding Forge's expressive power to support _sets_ and _relations_;
-* modeling more recursive concepts in a language without recursion; and 
+* modeling more recursive concepts in a language without recursion; and
 * modeling a _syntax_ for a language, along with its _semantics_.
 
 You can find the completed models [here](./booleanLogic.frg).
@@ -308,7 +309,8 @@ pred wellformed {
 ## Some Validation
 
 Here are some examples of things you might check in the model. Notice that some are:
-* validation of the _model_ (e.g., that it's possible to have instances that disagree on which formulas they satisfy); and others are 
+
+* validation of the _model_ (e.g., that it's possible to have instances that disagree on which formulas they satisfy); and others are
 * results about boolean logic that we might prove in a math course, like [De Morgan's Laws](https://en.wikipedia.org/wiki/De_Morgan%27s_laws).
 
 ### Consistency Checks

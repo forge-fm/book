@@ -17,14 +17,18 @@ Well, it's complicated.
 ## Sketching a Model
 
 How might we start? We'd probably have the usual `sig Node` with a field `edges: pfunc Node -> Int` to model the weighted edges. Then we would write some predicates like:
-* `wellformedgraph` (a well-formedness predicate to force the graphs to be weighted, directed, etc.); 
+
+* `wellformedgraph` (a well-formedness predicate to force the graphs to be weighted, directed, etc.);
 * `isSpanningTree[t]` (a domain predicate describing the conditions for `t` to be a spanning tree); and
 * `runPrimComplete` (a predicate that produces a complete execution of Prim's algorithm on the underlying graph).
-along with some helper predicates, and so on. 
+
+Along with some helper predicates, and so on. 
 
 There are a few questions we might want to ask about MSTs in general, and not all of them involve the algorithm. For example, we could tell Forge to:
-  * Find a counter-example to correctness for Prim's algorithm (i.e., falsify "Prim's always produces a minimal spanning tree). 
-  * Find a minimal spanning tree for a graph, independent of any algorithm model. 
+
+* Find a counter-example to correctness for Prim's algorithm (i.e., falsify "Prim's always produces a minimal spanning tree).
+* Find a minimal spanning tree for a graph, independent of any algorithm model.
+
 These questions have a different character, even though they may seem similar. 
 
   <!-- * Find a valid MST that Prim's algorithm cannot produce.  -->
@@ -96,6 +100,7 @@ Since Forge is a Racket library, you can use this technique via loop in Racket. 
 ### More Complicated Learning
 
 This technique is pretty specialized, though. It relies on:
+
 * having a metric for _goodness_ (here, total edge weight); and
 * a well-defined and easily checkable precondition for candidacy (here, the notion of being a spanning tree). 
 
@@ -110,6 +115,7 @@ some p: program |
 ```
 
 We might proceed as follows:
+
 * Generate a candidate program, any candidate program. Call it `p`. 
 * Check it by seeing if `some i: Int | p[i] != countBitsInInteger[i]` is satisfiable. 
     * If no, we've found a good program.

@@ -118,6 +118,7 @@ a table of (`Int`, `Int`, `Player`) tuples for each `Board`. We'll see how to wo
 ### Well-formedness
 
 These definitions sketch the overall shape of a board: players, marks on the board, and so on. But not all boards that fit the definition will be valid. For example:
+
 * Forge integers aren't true mathematical integers, but are bounded by a bitwidth we give whenever we run the tool. So we need to be careful here. We want a classical 3-by-3 board with indexes of (say) `0`, `1`, and `2`, not a board where (e.g.) row `-5`, column `-1` is a valid location. 
 
 We'll call these _well-formedness_ constraints. They aren't innately enforced by our `sig` declarations, but we'll almost always want Forge to enforce them, so that it doesn't find "garbage instances". Let's write a _wellformedness predicate_:
@@ -153,7 +154,8 @@ This predicate is true of any `Board` if and only if the above 2 constraints are
 Since a predicate is just a function that returns true or false, depending on its arguments and whichever instance Forge is looking at, we can write tests for it the same way we would for any other boolean-valued function. But even if we're not testing, it can be useful to write a small number of examples, so we can build intuition for what the predicate means.
 
 In Forge, `example`s are automatically run whenever your model executes. They describe basic intent about a given predicate; in this case, let's write two examples in Forge:
-* A board where `X` has moved 3 times in valid locations, and so ought to be considered well formed. 
+
+* A board where `X` has moved 3 times in valid locations, and so ought to be considered well formed.
 * A board where a player has moved in an invalid location, and shouldn't be considered well formed. 
 
 Notice that we're not making judgements about the rules being obeyed yet&mdash;just about whether our `wellformed` predicate is behaving the way we expect. And the `wellformed` predicate isn't aware of things like "taking turns" or "stop after someone has won", etc. It just knows about the valid indexes being `0`, `1`, and `2`.
@@ -237,6 +239,7 @@ We'll talk more about visualization scripts later. For now, let's proceed. **TOD
 ---
 
 This instance contains a single board, and it has 9 entries. Player `O` has moved in all of them (the `0` suffix of `O0` in the display is an artifact of how Forge's engine works; ignore it for now). It's worth noticing two things:
+
 * This board doesn't look quite right: player `O` occupies all the squares. We might ask: has player `O` been cheating? But the fact is that this board _satisfies the constraints we have written so far_. Forge produces it simply because our model isn't yet restrictive enough, and for no other reason. "Cheating" doesn't exist yet. 
 * We didn't say _how_ to find that instance. We just said what we wanted, and the tool performed some kind of search to find it. So far the objects are simple, and the constraints basic, but hopefully the power of the idea is coming into focus. 
 
@@ -312,7 +315,8 @@ Here, we're measuring the size of 2 sets. The `{row, col: Int | ...}` syntax is 
 ### Winning the Game
 
 What does it mean to _win_? A player has won on a given board if:
-* they have placed their mark in all 3 columns of a row; 
+
+* they have placed their mark in all 3 columns of a row;
 * they have placed their mark in all 3 rows of a column; or
 * they have placed their mark in all 3 squares of a diagonal.
 
@@ -356,6 +360,7 @@ pred winner[s: Board, p: Player] {
 After writing these domain predicates, we're reaching a fairly complete model for a single tic-tac-toe board. Let's decide how to fix the issue we saw above (the reason why `OTurn` couldn't be the negation of `XTurn`): perhaps a player has moved too often.
 
 Should we add something like `OTurn[s] or XTurn[s]` to our wellformedness predicate? **No!** If we then later enforced wellformedness for all boards, that would exclude "cheating" instances where a player has more moves on the board than are allowed. But this has some risk, depending on how we intend to use the `wellformed` predicate:
+
 * If we were only ever generating _valid boards_, a cheating state might well be spurious, or at least undesirable. In that case, we might prevent such states in `wellformed` and rule it out. 
 * If we were generating arbitrary (not necessarily valid) boards, being able to see a cheating state might be useful. In that case, we'd leave it out of `wellformed`.
 * If we're interested in _verification_, e.g., we are asking whether the game of Tic-Tac-Toe enables ever reaching a cheating board, we shouldn't add `not cheating` to `wellformed`; because `wellformed` also excludes garbage boards, we'd probably use it in our verification&mdash;in which case, Forge will never find us a counterexample! 

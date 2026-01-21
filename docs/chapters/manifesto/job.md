@@ -4,10 +4,12 @@
 Everybody has endless demands on their time. If you're a student, you might be deciding which classes to take. There's never enough time to take them all, so you need to prioritize based on expected value. If you're a professional, you're deciding how to best use your limited "free" time to learn new skills and stay current. Either way, you're probably wondering: **What good is this book?** (And if you aren't asking that, you ought to be.)
 
 You need many different skills for a successful career. This book won't teach you how to work with other people, or manage your tasks, or give and receive feedback. It won't teach you to program either; there are plenty of other books for that. Instead, this book will teach you:
-* how to think more richly about what matters about a system; 
+
+* how to think more richly about what matters about a system;
 * how to better express what you want from it;
 * how to more thoroughly evaluate what a system actually does give you; and
 * how to use constraints and constraint solvers in your work (because we'll use them as tools to help us out).
+
 It will also give you a set of baseline skills that will aid you in using any further formal-methods techniques you might encounter in your work, such as [advanced type systems](https://rust-book.cs.brown.edu), [program verification](https://dafny.org), [theorem proving](https://lean-lang.org), and more. 
 
 ### Modeling: What really matters?
@@ -61,9 +63,10 @@ Either way, being able to think carefully about your specification can separate 
 ### Validation and Verification: Did you get what you wanted?
 
 Whether you're working out an algorithm on paper or checking a finished implementation, you need some means of judging correctness. Here, too, precision (and a little bit of adversarial thinking) matters in industry:
-  * When ordinary testing isn't good enough, techniques like fuzzing, [property-based testing](../properties/pbt.md), and others give you new evaluative power. 
-  * When you're updating, refactoring, or optimizing a system, a model of its ideal behavior can be leveraged for validation. [Here's an example from 2014](https://news.ycombinator.com/item?id=34726919)&mdash;click through the header of the linked article to read the original blog post.)
-  * A model of the system's behavior is also useful for test-case generation, and [enable tools to generate test suites](https://hypothesis.readthedocs.io/en/latest/stateful.html) that have a higher coverage of the potential state space. 
+
+* When ordinary testing isn't good enough, techniques like fuzzing, [property-based testing](../properties/pbt.md), and others give you new evaluative power.
+* When you're updating, refactoring, or optimizing a system, a model of its ideal behavior can be leveraged for validation. [Here's an example from 2014](https://news.ycombinator.com/item?id=34726919)&mdash;click through the header of the linked article to read the original blog post.)
+* A model of the system's behavior is also useful for test-case generation, and [enable tools to generate test suites](https://hypothesis.readthedocs.io/en/latest/stateful.html) that have a higher coverage of the potential state space. 
 
 And all that's even before we consider more heavyweight methods, like model checking and program verification.
 

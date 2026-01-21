@@ -7,6 +7,7 @@ If you have two independent threads of execution running concurrently, many subt
 ```
 
 is not atomic by itself. Thus, the following sequence of operations would be problematic:
+
 * Thread 1: read the current value of `counter`
 * Thread 2: read the current value of `counter`
 * Thread 1: add `1` to that value

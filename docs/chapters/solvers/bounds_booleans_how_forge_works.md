@@ -111,6 +111,7 @@ As an example of where Forge needs to end up, here's an example of a real proble
 ---
 
 Even without parsing it with a computer, the format tells us a lot about what a purely boolean solver understands. Here are a few facts about DIMACS:
+
 * Boolean variables in DIMACS are represented by integers greater than zero. 
 * If `p` is a variable, then `not p` is represented as the integer `-p`. 
 * Lines starting with a `c` are comments.
@@ -264,6 +265,7 @@ There are similar rules for other operators: a `some` becomes a big `or`, a rela
 Forge performs a process called _Skolemization_, named after the logician [Thoralf Skolem](https://en.wikipedia.org/wiki/Thoralf_Skolem), to convert specific `some` quantifiers into supplemental relations. 
 
 The idea is: to satisfy a `some` quantifier, some atom exists that can be plugged into the quantifier's variable `x` to make the child formula true. Skolemization reifies that object witness into the model as a new relational constant `$x`. This:
+
 * makes debugging easier sometimes, since you can immediately _see_ what might satisfy the quantifier constraint; and
 * sometimes aids in efficiency, especially in a "target poor" environment like an unsatisfiable problem. 
 
@@ -330,12 +332,14 @@ Person1 follows Person3
 ```
 
 since the individual `Person` atoms are _anonymous_ to the constraints, which cannot refer to atoms by name. We call these instances _isomorphic_ to each other, and say that there is a _symmetry_ between them.  Formally, Forge finds every instance "up to isomorphism". This is useful for:
+
 * increasing the quality of information you get from paging through instances; and
 * (sometimes) improving the runtime on problems, especally if solutions are very rare.
 
 This process isn't always perfect: some equivalent instances can sneak in. Removing _all_ equivalent instances turns out to sometimes be even more expensive than solving the problem. So Forge provides a best-effort, low cost attempt based on a _budget_ for adding additional constraints to the problem, specifically to eliminate symmetries.
 
 You can adjust the budget for symmetry breaking via an option:
+
 *  `option sb 0` turns off symmetry breaking; and
 *  `option sb 20` is the default.
 

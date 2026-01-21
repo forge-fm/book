@@ -17,6 +17,7 @@ SMT solvers can be either "eager" or "lazy". An eager solver translates all the 
 
 
 Here are some common domains that SMT solvers tend to support:
+
 * uninterpreted functions with equality;
 * integer arithmetic (linear nearly always, non-linear sometimes);
 * real arithmetic;
@@ -93,6 +94,7 @@ True
 ### Uninterpreted Functions And Integer Inequalities
 
 If a symbol (function, relation, constant, ...) is _interpreted_, then its meaning is encoded via constraints built into the solver. In Forge, we'd say that:
+
 * `add` is an interpreted function, since Forge assigns it a meaning innately; but
 * relations you add as sig fields are uninterpreted, since without constraints you add yourself, Forge treats their values as arbitrary.
 
@@ -316,8 +318,9 @@ Notice that each of these solutions to the boolean skeleton provide a system of 
 
 
 This idea lets us implement a very basic SMT solver by following these 3 steps:
+
 * (1) get another instance that satisfies the boolean skeleton; and then
-* (2) solve the resulting system with algebra. 
+* (2) solve the resulting system with algebra.
 * (3) If the result of (2) is unsat, or another solution is desired, restart from (1).
 
 Modern SMT solvers have more integration between the boolean and theory solvers, but that's outside the scope of this course.
@@ -487,11 +490,13 @@ It's the early 1900's. Hilbert and others: *IS MATHEMATICS MECHANIZABLE*?
 In 30's: Church, Turing, Godel: "No. At least not completely." 
   
 Why? A few reasons. Here's a challenge. Write for me a program `h(f, v)` that accepts two arguments:
+
 * another program; and
 * an input to that program.
 
 It must:
-* always terminate; 
+
+* always terminate;
 * return true IFF f(v) terminates in finite time;
 * return false IFF f(v) does not terminate in finite time
 

@@ -11,6 +11,7 @@ We'll start simple, from CNF and unit propagation, and move on from there.
 ## A Chain Rule For CNF
 
 Suppose I know two things:
+
 * it's raining today; and
 * if it's raining today, we can't hold class outside.
  
@@ -53,6 +54,7 @@ In any world where both $A$ and $A \implies B$ are true, $B$ must be true.
 ### Beyond Modus Ponens
 
 Suppose we don't have something as straightforward as $\{r, r \implies \neg c\}$ to work with. Maybe we only have:
+
 * if it's raining today, we can't hold class outside; and
 * if Tim is carrying an umbrella, then it's raining today.
 
@@ -88,11 +90,13 @@ Like before, we can check it with a truth table. This time, there are 8 rows bec
 The _resolution rule_ is a further generalization of what we just discovered. Here's the idea: because we can view an "or" as an implication, we should be able to apply this idea of chaining implications to _clauses_.
 
 First, let's agree on how to phrase clauses of more than 2 elements as implications. Suppose we have a clause $(l_1 \vee l_2 \vee l_3)$. Recall that:
+
 * a clause is a big "or" of literals;
-* a literal is either a variable or its negation; and 
+* a literal is either a variable or its negation; and
 * $\vee$ is just another way of writing "or".
 
 We might write $(l_1 \vee l_2 \vee l_3)$ as an implication in a number of ways, e.g.:
+
 * $(l_1 \vee l_2 \vee l_3) \equiv (\neg l_1 \implies (l_2 \vee l_3))$
 * $(l_1 \vee l_2 \vee l_3) \equiv (\neg l_2 \implies (l_1 \vee l_3))$
 * $(l_1 \vee l_2 \vee l_3) \equiv (\neg l_3 \implies (l_1 \vee l_2))$
@@ -102,15 +106,22 @@ We might write $(l_1 \vee l_2 \vee l_3)$ as an implication in a number of ways, 
 
 So if we have a large clause, there may be more ways of phrasing it as an implication than we'd want to write down. Instead, let's make this new rule something that works on clauses directly. 
 
-How would we recognize that two clauses can be combined like the above? Well, if we see something like these two clauses: 
-* $(l_1 \vee l_2)$; and 
+How would we recognize that two clauses can be combined like the above? Well, if we see something like these two clauses:
+
+* $(l_1 \vee l_2)$; and
 * $(\neg l_1 \vee l_3)$
+
 then, if we wanted to, we could rewrite them as:
-* $(\neg l_2 \implies l_1)$; and 
+
+* $(\neg l_2 \implies l_1)$; and
 * $(l_1 \implies l_3)$
+
 and then apply the rule above to get:
+
 * $(\neg l_2 \implies l_3)$.
+
 We could then rewrite the implication back into a clause:
+
 * $(l_2 \vee l_3)$.
 
 Notice what just happened. The two opposite literals have cancelled out, leaving us with a new clause containing _everything else_ that was in the two original clauses.
@@ -134,7 +145,8 @@ $\frac{(l^1_1 \vee l^1_2 \vee ... \vee l^1_n), (\neg l_1 \vee l^2_1 \vee ... \ve
 ### Resolution Proofs
 
 What is a proof? For our purposes today, it's a tree where:
-* each leaf is a clause in some input CNF; and 
+
+* each leaf is a clause in some input CNF; and
 * each internal node is an application of the resolution rule to two other nodes.
 
 Here's an example resolution proof that shows the combination of a specific 4 clauses is contradictory:
@@ -288,6 +300,7 @@ Let's rewrite the proof we generated before. We'll *remove* assumptions from the
 ![](https://i.imgur.com/oAjYL8V.png)
 
 Notice that we need to re-run resolution _after processing each node's children_ to produce the new result for that node. This suggests some of the structure we'll need:
+
 * If one child is an assiumption, then "promote" the other child and use that value, without re-running resolution. (**Think: Why is this safe to this? It has to do with the way DPLL makes guesses.**) 
 * Otherwise, recur on children first, then re-run resolution on the new child nodes, then return a new node with the new value. 
 

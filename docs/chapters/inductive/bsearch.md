@@ -11,6 +11,7 @@ When we're talking about whether or not a reachable state violates a desirable p
 ![](https://i.imgur.com/n3F16P4.png)
 
 If this space is large, we probably can't use trace-finding to get a real _proof_: we'd have to either:
+
 * reduce the trace length (in which case, maybe there's a bad state _just barely_ out of reach of that length but we'd never know); or 
 * possibly be waiting for the solver until the sun expands and engulfs the earth.
 

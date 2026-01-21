@@ -5,7 +5,8 @@ Welcome to Logic for Systems! Here are some quick hints that will help you use t
 !!! note "This book is a draft!"
     This book is a draft, and there are some sections that are currently being filled in. If you want to use these materials and need support (e.g., you want to use the Forge homeworks that go with it, or a specific section you need is incomplete), please contact `Tim_Nelson@brown.edu`. 
 
-    Especially during the Spring semester at Brown University, the deployed content of this book may be expanded and improved. 
+    Especially during the Spring semester at Brown University, the deployed content of this book may be expanded and improved.
+
     * If you are a Brown University student taking CSCI 1710, expect the book to be edited as the semester proceeds.
     * If you are using the book in your own course or for your own studies, and want a "frozen" version to ensure consistency, we'd be happy to assist you. Please reach out to `Tim_Nelson@brown.edu`.
 
@@ -15,6 +16,7 @@ Welcome to Logic for Systems! Here are some quick hints that will help you use t
 ### Organization 
 
 The book is organized into a series of short sections, each of which are grouped into chapters: 
+
 * **Chapter 1 (Beyond Testing)** briefly motivates the content in this book and sets the stage with a new technique for testing your software. 
 * **Chapter 2 (Modeling Static Scenarios)** provides an introduction to modeling systems in Forge by focusing on systems that don't change over time. 
 * **Chapter 3 (Discrete Event Systems)** shows a common way to model the state of a system changing over time. 

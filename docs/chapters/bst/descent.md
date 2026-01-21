@@ -41,6 +41,7 @@ pred init[s: SearchState] {
 ```
 
 Now for the more complicated part. How does a step of the recursive descent work? At any given node:
+
 * First, it checks whether `current.key = target`. If yes, it's done.
 * It checks whether `current.key < target`. If yes, it moves to the left child if it exists, and returns failure otherwise.
 * It checks whether `current.key > target`. If yes, it moves to the right child if it exists, and returns failure otherwise.
@@ -99,6 +100,7 @@ test expect {
 ---
 
 Now we'll combine these predicates into one that defines the entire recursive descent. The shape of this predicate is somewhat boilerplate; soon we'll see how to get rid of it entirely. For now, we'll just copy from the tic-tac-toe example and make small, local changes. Namely:
+
 * we called the trace sig `Search`, not `Game`;
 * we called the state sig `SearchState`, not `Board`; and 
 * we have two different transition predicates to include.
@@ -127,6 +129,7 @@ run {traces} for exactly 7 Node, 5 SearchState for {nextState is plinear}
 The output may initially be overwhelming: by default, it will show _all_ the atoms in the world and their relationships, including each `SearchState`. You could stay in the default visualizer and mitigate the problem a _little_ by clicking on "Theme" and then "Add Projection" for `SearchState`. The problem is that this hides the `current` node indicator for the current state, since the current state becomes implicit. 
 
 Instead, let's use a custom visualization. There are multiple options included with this book:
+
 * [`bst.js`](./bst.js), which visualizes the tree itself, without any regard to the descent. This is useful for debugging the basic tree model and the invariants themselves.
 * [`bst_descent.js`](./bst_descent.js), which visualizes the _descent_ in one picture. 
 * (Don't run this yet!) `bst_temporal.js`, which visualizes a Temporal Forge version of the model, which we'll get to soon.
@@ -172,11 +175,13 @@ That's more like it. But what about the invariants? We only said `binary_tree` h
 In our [original BST model](./bst.md), we'd sketched two different invariants:
 
 **Version 1** (`invariant_v1`): For all nodes $N$:
-* all left-descendants of $N$ have a key less than $N$'s key; and 
+
+* all left-descendants of $N$ have a key less than $N$'s key; and
 * all right-descendants of $N$ have a key greater than or equal to $N$'s key.
 
 **Version 2** (`invariant_v2`): For all nodes $N$:
-* the left child of $N$ (if any) has a key less than $N$'s key; and 
+
+* the left child of $N$ (if any) has a key less than $N$'s key; and
 * the right child of $N$ (if any) has a key greater than or equal to $N$'s key.
 
 We were able to look at trees that met one invariant but not another, but now we can do something much more powerful: we can ask Forge to show us how the differing invariants affect the recursive descent on the tree! If an invariant is "wrong", surely it will cause the descent to fail in some way. Since we've already modeled the descent, this should be easy. Let's try it for `invariant_v2`:
@@ -199,6 +204,7 @@ This will show us instances of a descent for a tree following `invariant_v2`. To
 ### Verifying BSTs
 
 Notice what just happened. We built up our structural model to contain a collection of related features, such as:
+
 * binary trees with numeric node values; 
 * multiple possible invariants for these trees to follow; and 
 * a recursive-descent algorithm on those binary trees.

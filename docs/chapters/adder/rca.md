@@ -146,12 +146,14 @@ fun adder_S_RCA[f: one FullAdder]: one Digit  {
 ```
 
 Looking at the table above, the adder's output value is true if and only if an odd number of its 3 inputs is true. That gives us 4 combinations:
+
 * `A`, `B`, and `CIN` (all 3 are true);
 * `A` only (1 is true); 
 * `B` only (1 is true); or
 * `CIN` only (1 is true). 
 
 This is where we need to remember that the sig `T` is not a Forge formula yet; to make it into one, we need to explicitly test whether each value is equal to `T`. We'll use two new Forge constructs to write the function body:
+
 * The `let` construct makes it easier to write the value for each of these wires. A `let` looks similar to a quantifier, but it only introduces some local helper syntax. If I write `let A = (f.a_in = T) | ...`, I can then use `A` in place of the tedious `(f.a_in = T)`. 
 * Expression if-then-else lets us produce a value based on a condition, sort of like the `C ? X : Y` operator in languages like JavaScript. If I write something like `(A and B and C) => T else F` this evaluates to `T` whenever `A`, `B`, and `C` are all true, and `F` otherwise.
 
@@ -189,10 +191,12 @@ fun adder_S_RCA[f: one FullAdder]: one Digit  {
 ### When is an adder's carry bit set to true? 
 
 This one is quite similar. The carry bit is set to true if and only if 2 or 3 of the adder's inputs are true:
+
 * `B` and `CIN` (2 are true);
-* `A` and `CIN` (2 are true); 
+* `A` and `CIN` (2 are true);
 * `C` and `CIN` (2 are true); or
-* `A`, `B`, and `CIN` (all 3 are true). 
+* `A`, `B`, and `CIN` (all 3 are true).
+
 As before, we'll use `let` and expression if-then-else, and add (decorative) blank space to make the function more readable.
 
 ```forge

@@ -76,6 +76,7 @@ It's very easy to fool ourselves when modeling. When we're writing tests for a p
 * It's also possible that _our tests_ are wrong [or overfit](../properties/pbt.md).
 
 But in the modeling context, there are even more ways that our intuition could be off. E.g.:
+
 * It's possible that _the system_ we're modeling has bugs in it. We hope to discover this via modeling, even if we're not working directly with an implementation.
 * It's possible that _our model_ has bugs in it, and thus can't be relied upon to help us understand the system. 
 * It's also possible that _our tests_ are wrong... 

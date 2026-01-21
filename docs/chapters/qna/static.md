@@ -71,6 +71,7 @@ I'm trying to express that every entry in the board is different. This should ea
 ### Some as a Quantifier Versus Some as a Multiplicity
 
 The keyword `some` is used in 2 different ways in Forge:
+
 * it's a _quantifier_, as in `some b: Board, p: Player | winner[s, p]`, which says that somebody has won in some board (and gives us a name for that board, and also for the winner); and
 * it's a _multiplicity operator_, as in `some Board.board[1][1]`, which says only that the middle cell of the board is populated (recall that the board indexes are `0`, `1`, and `2`).
 
@@ -81,6 +82,7 @@ Don't be afraid to use both; they're both quite useful! But remember the differe
 You can read `some row : Int | ...` as "There exists some integer `row` such that ...". The transliteration isn't quite as nice for `all`; it's better to read `all row : Int | ...` as "In all integer `row`s, it holds that ...". 
 
 If you want to _further restrict_ the values used in an `all`, you'd use `implies`. But if you want to _add additional requirements_ for a `some`, you'd use `and`.  Here are 2 examples:
+
 * **All**: "Everybody who has a `parent1` doesn't also have that person as their `parent2`": `all p: Person | some p.parent1 implies p.parent1 != p.parent2`.
 * **Some**: "There exists someone who has a `parent1` and a `spouse`": `some p: Person | some p.parent1 and some p.spouse`.
 

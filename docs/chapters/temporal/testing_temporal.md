@@ -4,7 +4,8 @@
 We had previously discussed some [methodology for testing](../validation/validating_events.md). Now that we've started using Temporal Forge and begun modeling more robust systems, we should revisit the topic of validation. 
 
 We had two principles to follow before:
-* Principle 1: Are you testing the _model_, or the _system_? 
+
+* Principle 1: Are you testing the _model_, or the _system_?
 * Principle 2: Test both Inclusion and Exclusion.
 
 Now we'll add 2 more considerations. 
@@ -12,7 +13,8 @@ Now we'll add 2 more considerations.
 ## Principle 3: What's the Domain? What's the System? 
 
 Systems don't run in isolation: there's usually an external environment that the system influences and is influenced by. Sometimes (but not always) this division is straightforward. In a model of networks, one might see:
-* connectivity, packets, queues, etc. as the _domain model_; and 
+
+* connectivity, packets, queues, etc. as the _domain model_; and
 * forwarding policies, router behavior, etc. as the _system_.
 
 When we're writing a model, it's useful to know when we're talking about the _system_, and when we're talking about the _domain_ that the system is operating on. Let's look at the [Peterson lock](../temporal/fixing_lock_temporal.md) in this light.
@@ -33,8 +35,9 @@ When we're writing a model, it's useful to know when we're talking about the _sy
 ## Principle 2: What Can Happen?
 
 Ask what behaviors might be important in the domain, but not necessarily always happen. These are sometimes referred to as _optional predicates_, because they may or may not hold. In real life, here are some optional predicates:
+
 * we have class today;
-* it's raining today; 
+* it's raining today;
 * homework is due today; etc. 
 
 **Exercise:** What are some optional predicates about the domain in our locking algorithm model? 

@@ -68,6 +68,7 @@ def solve(formula: BooleanFormula) -> bool:
 ```
 
 The function relies on three helpers, which we've left out for brevity:
+
 * `simplify`, which evaluates a formula with no variables. E.g., it turns `True and False` to just `True`.
 * `substitute`, which replaces a variable with a concrete boolean value. E.g., calling `substitute(x1 and x2, x1, True)` would produce `True and x2`.
 * `variables_in`, which returns the set of variables used in a formula.
@@ -137,8 +138,9 @@ The _empty clause_ is a 0-element clause, and is equivalent to `False`. Why is t
 If our input was `x1 and (!x1 or x2)`, and we'd stored it as a set, that would be `{x1, (!x1 or x2)}`. We can check for unit clauses in time linear in the number of clauses. And if there is a unit clause, we can see whether there are opportunities to propagate that knowledge. This idea is called _unit propagation_.
 
 But how does that actually _work_? Suppose we've identified a unit clause, in this case `x1`. Then, for every other clause `C` in the set, we can check whether:
-* the clause `C` contains the same literal as the unit clause; 
-* the clause contains the opposite literal as in the unit clause; or 
+
+* the clause `C` contains the same literal as the unit clause;
+* the clause contains the opposite literal as in the unit clause; or
 * neither of the above.
 
 In the third case, we probably can't do any propagation, because there's no connection between the clauses. But what do you think we can do in either of the first two cases?
@@ -352,16 +354,20 @@ But what makes `o1` true? Here's a definition in 3 constraints:
 * `o1 implies (a1 or a2)`.
 
 We can rewrite these in CNF:
+
 * `!a1 or o1`,
 * `!a2 or o1`, and
 * `!o1 or a1 or a2`.
 
 The `and` nodes have similar definitions:
+
 * `(x1 and x2) implies a1`
 * `a1 implies (x1 and x2)`
 * `(x3 and x4) implies a2`
 * `a2 implies (x3 and x4)`
+
 which can be rewritten:
+
 * `!x1 or !x2 or a1`
 * `!a1 or x1`
 * `!a1 or x2`
