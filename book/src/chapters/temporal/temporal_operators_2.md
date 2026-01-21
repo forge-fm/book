@@ -32,12 +32,12 @@ next_state next_state init
 
 It's rare you'd do something like this in practice, but it's a good first demonstration of the operator.
 
-```admonish note title="Why `next_state`?"
+~~~admonish note title="Why `next_state`?"
 The keyword is, admittedly, a little verbose. But it was the best of the various candidates at hand:
 * In many settings, this LTL operator is usually called `X`, which is not very descriptive. (When I read `X`, I think "variable"!)
 * In Forge's parent language, Alloy 6, the operator is called `after`, but this can lead to some misconceptions since `A after B` might be misinterpreted as a binary operator, and Forge and Alloy both have implicit `and` via newlines, so `A after B` would actually mean `A and (after B)`. 
 * I've heard `afterward` suggested, but that risks confusion with `always` or `eventually`.
-```
+~~~
 
 ## Quantifying Over Time
 
