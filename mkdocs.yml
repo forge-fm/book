@@ -1,8 +1,8 @@
 site_name: "Logic for Systems"
 site_description: "Lightweight Formal Methods for Everybody"
-site_url: https://csci1710.github.io/book/
-repo_url: https://github.com/csci1710/book
-repo_name: csci1710/book
+site_url: https://forge-fm.github.io/book/
+repo_url: https://github.com/forge-fm/book
+repo_name: forge-fm/book
 
 # Use file-based URLs (bst.html) instead of directory URLs (bst/)
 # This preserves relative path behavior from mdbook
