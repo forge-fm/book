@@ -1,0 +1,5 @@
+Metadata-Version: 2.4
+Name: forge-pygments-lexer
+Version: 1.0.0
+Requires-Dist: pygments
+Dynamic: requires-dist

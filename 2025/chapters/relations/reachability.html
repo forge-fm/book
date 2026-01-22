@@ -1,0 +1,2430 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Lightweight Formal Methods for Everybody">
+      
+      
+      
+        <link rel="canonical" href="https://forge-fm.github.io/book/2025/chapters/relations/reachability.html">
+      
+      
+        <link rel="prev" href="modeling-booleans-1.html">
+      
+      
+        <link rel="next" href="sets-induction-mutex.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Transitive Closure - Logic for Systems</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#relations-and-reachability" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="Logic for Systems" class="md-header__button md-logo" aria-label="Logic for Systems" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Logic for Systems
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Transitive Closure
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/forge-fm/book" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    forge-fm/book
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="Logic for Systems" class="md-nav__button md-logo" aria-label="Logic for Systems" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Logic for Systems
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/forge-fm/book" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    forge-fm/book
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Preamble: Beyond Testing
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Preamble: Beyond Testing
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../manifesto/job.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    What good is this book?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../manifesto/manifesto.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logic for Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../properties/pbt.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    From Tests to Properties
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modeling Static Scenarios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modeling Static Scenarios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ttt/ttt.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tic-Tac-Toe
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bst/bst.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Binary Search Trees
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adder/rca.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ripple-Carry Adder
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qna/static.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q&A: Static Modeling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Discrete Event Systems
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Discrete Event Systems
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ttt/ttt_games.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transitions, Traces, and Verification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../inductive/bsearch.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Counterexamples to Induction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bst/descent.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BSTs: Recursive Descent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../validation/validating_events.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Validating Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qna/events.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q&A: Event Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modeling Relationships
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modeling Relationships
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="modeling-booleans-1.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Relational Forge, Modeling Logic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transitive Closure
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="reachability.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transitive Closure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#expression-nims-followers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Expression: Nim's followers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#formula-nim-is-reachable-from-tim-via-followers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Formula: Nim is reachable from Tim via "followers"
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#expression-nims-followers-followers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Expression: Nim's followers' followers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#formula-nim-is-reachable-from-tim-via-the-inverse-of-followers-what-we-might-call-following" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Formula: Nim is reachable from Tim via the inverse of "followers" (what we might call "following")?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#formula-nim-is-reachable-from-tim-via-followers-but-not-including-tims-friends" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Formula: Nim is reachable from Tim via followers, but not including Tim's friends?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attempt-2-formula-nim-is-reachable-from-tim-via-the-inverse-of-followers-what-we-might-call-following" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (Attempt 2) Formula: Nim is reachable from Tim via the inverse of "followers" (what we might call "following")?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attempt-2-formula-nim-is-reachable-from-tim-via-followers-but-not-including-tims-friends" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (Attempt 2) Formula: Nim is reachable from Tim via followers, but not including Tim's friends?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-dot-really" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is Dot, Really?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What is Dot, Really?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#friendtim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        friend.Tim
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#friendfriend" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        friend.friend
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-reachability-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Reachability Works
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How Reachability Works">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#transitive-closure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transitive Closure (^)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sets-induction-mutex.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modeling Mutual Exclusion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sets-beyond-assertions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Going Beyond Assertions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../solvers/bounds_booleans_how_forge_works.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How does Forge Work?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qna/relations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q&A: Relations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Temporal Specification
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Temporal Specification
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../temporal/liveness_and_lassos.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Liveness and Lassos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../temporal/temporal_operators.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Temporal Forge
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../temporal/temporal_operators_2.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linear Temporal Logic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../temporal/obligations_past.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Obligations and the Past
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../temporal/fixing_lock_temporal.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mutual Exclusion, Revisited
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../temporal/testing_temporal.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing Temporally
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Boolean Solver Algorithms
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Boolean Solver Algorithms
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../solvers/dpll.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Boolean SAT (DPLL)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../solvers/resolution.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Witnessing Unsat: Propositional Resolution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Beyond SAT
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Beyond SAT
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../solvers/smt.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Satisfiability Modulo Theories (SMT)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../solvers/cegis.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Learning with Solvers: CEGIS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Appendix
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendix/glossary.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendix/errors.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Error Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#expression-nims-followers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Expression: Nim's followers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#formula-nim-is-reachable-from-tim-via-followers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Formula: Nim is reachable from Tim via "followers"
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#expression-nims-followers-followers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Expression: Nim's followers' followers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#formula-nim-is-reachable-from-tim-via-the-inverse-of-followers-what-we-might-call-following" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Formula: Nim is reachable from Tim via the inverse of "followers" (what we might call "following")?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#formula-nim-is-reachable-from-tim-via-followers-but-not-including-tims-friends" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Formula: Nim is reachable from Tim via followers, but not including Tim's friends?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attempt-2-formula-nim-is-reachable-from-tim-via-the-inverse-of-followers-what-we-might-call-following" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (Attempt 2) Formula: Nim is reachable from Tim via the inverse of "followers" (what we might call "following")?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attempt-2-formula-nim-is-reachable-from-tim-via-followers-but-not-including-tims-friends" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (Attempt 2) Formula: Nim is reachable from Tim via followers, but not including Tim's friends?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-dot-really" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is Dot, Really?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What is Dot, Really?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#friendtim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        friend.Tim
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#friendfriend" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        friend.friend
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-reachability-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Reachability Works
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How Reachability Works">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#transitive-closure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transitive Closure (^)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="relations-and-reachability">Relations and Reachability<a class="headerlink" href="#relations-and-reachability" title="Permanent link">&para;</a></h1>
+<!-- !!! note "Brown CSCI 1710"
+
+    * Hopefully everyone has been making good progress with Curiosity Modeling! I'm seeing a lot of awesome questions on Ed and at hours. 
+    * Some of you are curious about how far you need to go to earn a check on the project. This is hard to give a precise answer to, because everyone's models will be different. However, I can say that we're looking for:
+        * evidence that you explored your topic of choice;
+        * evidence that you validated your model;
+        * something you _got_ from the model (generating or solving puzzles, checking a property, or even just understanding a domain better).
+    * **There's a lab this week** that focuses on _sets_ and other _relational_ concepts. You'll be exploring automated memory management in Forge. This lab leads directly into the next homework, and is meant to give you useful insight into how these systems work.
+ -->
+
+<p>Consider this <a href="reach.frg">small Relational Forge model</a>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">#lang</span><span class="w"> </span><span class="nn">forge</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kd">sig</span><span class="w"> </span><span class="nc">Person</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="n">friends</span><span class="p">:</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="n">Person</span><span class="p">,</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="n">followers</span><span class="p">:</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="n">Person</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="o">}</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="k">one</span><span class="w"> </span><span class="kd">sig</span><span class="w"> </span><span class="nc">Nim</span><span class="p">,</span><span class="w"> </span><span class="nc">Tim</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="n">Person</span><span class="w"> </span><span class="o">{}</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="kd">pred</span><span class="w"> </span><span class="nf">wellformed</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="c1">-- friends is symmetric (followers might not be)</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="k">all</span><span class="w"> </span><span class="k">disj</span><span class="w"> </span><span class="n">p1</span><span class="p">,</span><span class="w"> </span><span class="n">p2</span><span class="p">:</span><span class="w"> </span><span class="n">Person</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">p1</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">p2</span><span class="o">.</span><span class="n">friends</span><span class="w"> </span><span class="ow">implies</span><span class="w"> </span><span class="n">p2</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">p1</span><span class="o">.</span><span class="n">friends</span><span class="w"> </span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="c1">-- you cannot follow or friend yourself</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">    </span><span class="k">all</span><span class="w"> </span><span class="n">p</span><span class="p">:</span><span class="w"> </span><span class="n">Person</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">p</span><span class="o">.</span><span class="n">friends</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">p</span><span class="o">.</span><span class="n">followers</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="o">}</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="k">run</span><span class="w"> </span><span class="o">{</span><span class="n">wellformed</span><span class="o">}</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">exactly</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="n">Person</span>
+</code></pre></div>
+<p>Let's run it, get a reasonably large instance, and try to figure out how to express some goals in the evaluator. </p>
+<p><strong>EXERCISE</strong>: You'll be following along with each of these questions. Use the evaluator heavily---it's great for figuring out what different expressions evaluate to.</p>
+<h4 id="expression-nims-followers">Expression: Nim's followers<a class="headerlink" href="#expression-nims-followers" title="Permanent link">&para;</a></h4>
+<details class="note">
+<summary>Think, then click!</summary>
+<p>This is just <code>Nim.followers</code>.</p>
+</details>
+<h4 id="formula-nim-is-reachable-from-tim-via-followers">Formula: Nim is reachable from Tim via "followers"<a class="headerlink" href="#formula-nim-is-reachable-from-tim-via-followers" title="Permanent link">&para;</a></h4>
+<details class="note">
+<summary>Think, then click!</summary>
+<p>We can use the <code>reachable</code> built-in: <code>reachable[Nim, Tim, followers]</code>.</p>
+</details>
+<h4 id="expression-nims-followers-followers">Expression: Nim's followers' followers<a class="headerlink" href="#expression-nims-followers-followers" title="Permanent link">&para;</a></h4>
+<details class="note">
+<summary>Think, then click!</summary>
+<p>Another application of the field! <code>Nim.followers.followers</code>.</p>
+<p>But wait, what does this really mean? Since <code>Nim.followers</code> is a set, rather than a <code>Person</code>, should I be able to apply <code>.followers</code> to it? If we try this in the evaluator, it works, but we're no longer just doing a "field access"; something more must be going on.</p>
+</details>
+<h4 id="formula-nim-is-reachable-from-tim-via-the-inverse-of-followers-what-we-might-call-following">Formula: Nim is reachable from Tim via the inverse of "followers" (what we might call "following")?<a class="headerlink" href="#formula-nim-is-reachable-from-tim-via-the-inverse-of-followers-what-we-might-call-following" title="Permanent link">&para;</a></h4>
+<details class="note">
+<summary>Think, then click!</summary>
+<p>Hmm. This seems harder. We don't have a field called <code>following</code>, and the <code>reachable</code> built-in takes fields! </p>
+<p>...it does take fields, right? Or might it take something more flexible? Can we use <em>set operations</em> to adjust the potential edges that <code>reachable</code> looks at?</p>
+</details>
+<p>To figure that out, let's try something else.</p>
+<h4 id="formula-nim-is-reachable-from-tim-via-followers-but-not-including-tims-friends">Formula: Nim is reachable from Tim via followers, but not including Tim's friends?<a class="headerlink" href="#formula-nim-is-reachable-from-tim-via-followers-but-not-including-tims-friends" title="Permanent link">&para;</a></h4>
+<details class="note">
+<summary>Think, then click!</summary>
+<p>We might try <code>reachable[Nim, Tim, (followers-Tim.friends)]</code> but this will produce an error. Why? Well, one reason we might give is:</p>
+<blockquote>
+<p>...because <code>followers</code> is a field but <code>Tim.friends</code> is a set.</p>
+</blockquote>
+<p>But is that the real answer? The error complains about "arity": 2 vs 1. Let's type those two expressions into the evaluator and see what we get. For <code>followers</code>, we get a set of <em>pairs</em> of people. But <code>Tim.friends</code> is a set of <em>singletons</em>.</p>
+</details>
+<!-- !!! warning "Evaluator Output"
+    The evaluator prints expression values as parenthesized lists of lists. But don't be fooled! It's really printing a _set_ of _lists_. The order in which the inner lists print shouldn't matter.
+ -->
+
+<div class="admonition tip">
+<p class="admonition-title">Arity, Relations, and Tuples</p>
+<p><em>Arity</em> is another word for how wide the elements of a set are. Here, we'd say that <code>followers</code> has arity 2 since elements of <code>followers</code> are pairs of atoms. Similarly, <code>Tim.friends</code> has arity 1 since its elements are singletons. So Forge is pointing out that taking the set difference of these two makes no sense; their elements are shaped differently.</p>
+<p>When we're talking about sets in this way, we sometimes call them <em>relations</em>. E.g., the <code>followers</code> field is a <em>binary relation</em> because it has arity 2. We'll call elements of relations <em>tuples</em>. E.g., if <code>Nim</code> follows <code>Tim</code>, the tuple <code>(Tim, Nim)</code> would be present in <code>followers</code>.</p>
+</div>
+<p>In Relational Forge, <code>reachable</code> doesn't take "fields"; it takes relations. Specifically, binary relations, which define the steps it can use to connect the two objects. That's the fact we'll use to solve the 2 problems above. </p>
+<h4 id="attempt-2-formula-nim-is-reachable-from-tim-via-the-inverse-of-followers-what-we-might-call-following">(Attempt 2) Formula: Nim is reachable from Tim via the inverse of "followers" (what we might call "following")?<a class="headerlink" href="#attempt-2-formula-nim-is-reachable-from-tim-via-the-inverse-of-followers-what-we-might-call-following" title="Permanent link">&para;</a></h4>
+<p>Now that we know <code>followers</code> is a binary relation, we can imagine flipping it to get its inverse. How can we do that? Well, there are multiple ways! We could write a set-comprehension:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>{p1, p2: Person | p1 in p2.followers}
+</code></pre></div>
+<p>The order matters here! If <code>p1</code> is in <code>p2.followers</code>, then there is an entry in the relation that looks like <code>(p2, p1)</code>. We could make this more explicit by writing:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>{p1, p2: Person | p2-&gt;p1 in followers}
+</code></pre></div>
+<p>Now that we know <code>followers</code> is a set, this makes sense! The <em>product</em> (<code>-&gt;</code>) operator combines <code>p2</code> and <code>p1</code> into a binary tuple, which may (or may not) be in <code>followers</code>.</p>
+<p>Forge provides an operator that does this directly for binary relations: transpose (<code>~</code>). So we could write instead:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>
+</code></pre></div>
+<p>Which should you use? It's up to you! Regardless, we could now answer this question with:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">reachable</span><span class="o">[</span><span class="n">Nim</span><span class="p">,</span><span class="w"> </span><span class="n">Tim</span><span class="p">,</span><span class="w"> </span><span class="o">~</span><span class="n">followers</span><span class="o">]</span>
+</code></pre></div>
+<h4 id="attempt-2-formula-nim-is-reachable-from-tim-via-followers-but-not-including-tims-friends">(Attempt 2) Formula: Nim is reachable from Tim via followers, but not including Tim's friends?<a class="headerlink" href="#attempt-2-formula-nim-is-reachable-from-tim-via-followers-but-not-including-tims-friends" title="Permanent link">&para;</a></h4>
+<p>Everything is a set, so let's build the subset of <code>followers</code> that doesn't involve anyone in <code>Tim.friends</code>. We can't write <code>followers-(Tim.friends)</code>, since that's an arity mismatch. Somehow, we need to remove entries in <code>followers</code> involving one of Tim's friends <em>and anybody else</em>. </p>
+<p>One way is to use the product operator to build the binary relation we want <code>reachable</code> to use. E.g.:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>reachable[Nim, Tim, followers-(Tim.friends-&gt;Person)]
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You may notice that we've now used <code>-&gt;</code> in what seems like 2 different ways. We used it to combine specific people, <code>p1</code> and <code>p2</code> above into a single tuple. But now we're using it to combine two <em>sets</em> into a <em>set</em> of tuples. This flexibility is a side effect of sets being the fundamental concept in Relational Forge:
+* the product of <code>((Tim))</code> and <code>((Nim))</code> is <code>((Tim, Nim))</code>; 
+* the product of <code>((Person1), (Person2))</code> and <code>((Person3), (Person4))</code> is <code>((Person1, Person3), (Person1, Person4), (Person2, Person3), (Person2, Person4))</code>. </p>
+<p>Formally, <code>-&gt;</code> is the cross-product operation on sets. </p>
+<p>You'll see this apparently double-meaning when using <code>in</code> and <code>=</code>, too: singletons are single-element sets, where the element is a one-column tuple.</p>
+</div>
+<h2 id="what-is-dot-really">What is Dot, Really?<a class="headerlink" href="#what-is-dot-really" title="Permanent link">&para;</a></h2>
+<p>In Relational Forge, the dot operator is called <em>relational join</em>. The expression <code>A.B</code> combines two arbitrary relations <code>A</code> and <code>B</code> by seeking out rows with common values in their rightmost (in <code>A</code>) and leftmost (in <code>B</code>) columns. Concretely, if <code>A</code> is an <span class="arithmatex">\(n\)</span>-ary relation, and <code>B</code> is <span class="arithmatex">\(m\)</span>-ary, then <code>A.B</code> equals the <span class="arithmatex">\(n+m-2\)</span>-ary relation:</p>
+<div class="arithmatex">\[\{a_1, ..., a_{n-1}, b_2, ..., b_m \;| \;\exists x \;|\; (a_1, ..., a_{n-1}, x) \in A \text{ and } (x, b_2, ..., b_m) \in B\}\]</div>
+<p>That's a lot, so let's work through some examples. Suppose that we have the following relation for the <code>friend</code> field of <code>Person</code>:</p>
+<table>
+<thead>
+<tr>
+<th>column 1</th>
+<th>column 2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Tim</code></td>
+<td><code>Person0</code></td>
+</tr>
+<tr>
+<td><code>Tim</code></td>
+<td><code>Person1</code></td>
+</tr>
+<tr>
+<td><code>Person0</code></td>
+<td><code>Person1</code></td>
+</tr>
+<tr>
+<td><code>Person0</code></td>
+<td><code>Tim</code></td>
+</tr>
+<tr>
+<td><code>Person1</code></td>
+<td><code>Person0</code></td>
+</tr>
+<tr>
+<td><code>Person1</code></td>
+<td><code>Person2</code></td>
+</tr>
+<tr>
+<td><code>Person1</code></td>
+<td><code>Tim</code></td>
+</tr>
+<tr>
+<td><code>Person2</code></td>
+<td><code>Person1</code></td>
+</tr>
+<tr>
+<td><code>Person2</code></td>
+<td><code>Nim</code></td>
+</tr>
+<tr>
+<td><code>Nim</code></td>
+<td><code>Person2</code></td>
+</tr>
+</tbody>
+</table>
+<p>We know that join can often work like field access. So we'd expect <code>Tim.friend</code> to produce a set containing <code>Person0</code> and <code>Person1</code>. Why? Because we see <code>Tim</code> in the <em>left</em> column of 2 rows, and the <em>right</em> columns of those rows contain <code>Person0</code> and <code>Person1</code>. </p>
+<p>But what about each of the following?</p>
+<div class="admonition tip">
+<p class="admonition-title">Try the evaluator!</p>
+<p>To build intuition for <code>.</code>, try expressions like this in the evaluator after reading the following examples.</p>
+</div>
+<h4 id="friendtim"><code>friend.Tim</code><a class="headerlink" href="#friendtim" title="Permanent link">&para;</a></h4>
+<p>Here we run the same process that gave us a value for <code>Tim.friend</code>, but in reverse. Which rows do we see <code>Tim</code> in the <em>right</em> column? </p>
+<center><img width="40%" src="./Join2.png" style="background-color:white"/></center>
+
+<p>Because <code>friend</code> is symmetric, it's the same: <code>friend.Tim</code> is the same as <code>Tim.friend</code>, a set containing <code>Person0</code> and <code>Person1</code>. </p>
+<hr />
+<h4 id="friendfriend"><code>friend.friend</code><a class="headerlink" href="#friendfriend" title="Permanent link">&para;</a></h4>
+<p>Before trying to compute the value, first answer: </p>
+<p><strong>Exercise:</strong> What is the arity of <code>friend.friend</code>?</p>
+<details class="note">
+<summary>Think, then click!</summary>
+<p>Well, <code>friend</code> has arity <code>2</code>, and a join subtracts one column from each side. So we expect <code>friend.friend</code> to have arity <code>1+1=2</code>.</p>
+</details>
+<p>Now, what's the value? Start by looking for matches. Here are some of them (the ones on <code>Person0</code>): </p>
+<center><img width="40%" src="./Join3.png" style="background-color:white"/></center>
+
+<p>Continuing, we'll find matches on <code>Person1</code>, <code>Tim</code>, and others. Because some people have a lot of friends, the graph is getting difficult to read, but notice what's happening: we're identifying <em>matching pairs of rows</em> in each relation.</p>
+<center><img width="40%" src="./Join4.png" style="background-color:white"/></center>
+
+<p>Finally, we generate a new row in the result for every pair of matching rows, deleting the inner columns we matched on: <code>Tim-&gt;Person1</code> is in the result because <code>Tim-&gt;Person0</code> is in <code>friends</code> (the left-hand side of the join) and <code>Person0-&gt;Person1</code> is in <code>friends</code> (the right-hand side of the join). We'll get one row for every match (but we won't keep duplicates):</p>
+<table>
+<thead>
+<tr>
+<th>column 1</th>
+<th>column 2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Tim</code></td>
+<td><code>Person1</code></td>
+</tr>
+<tr>
+<td><code>Tim</code></td>
+<td><code>Person2</code></td>
+</tr>
+<tr>
+<td><code>Tim</code></td>
+<td><code>Tim</code></td>
+</tr>
+<tr>
+<td><code>Person0</code></td>
+<td><code>Person0</code></td>
+</tr>
+<tr>
+<td><code>Person0</code></td>
+<td><code>Person1</code></td>
+</tr>
+<tr>
+<td><code>Person0</code></td>
+<td><code>Person2</code></td>
+</tr>
+<tr>
+<td><code>Person0</code></td>
+<td><code>Tim</code></td>
+</tr>
+<tr>
+<td><code>Person1</code></td>
+<td><code>Person0</code></td>
+</tr>
+<tr>
+<td><code>Person1</code></td>
+<td><code>Person1</code></td>
+</tr>
+<tr>
+<td><code>Person1</code></td>
+<td><code>Tim</code></td>
+</tr>
+<tr>
+<td><code>Person1</code></td>
+<td><code>Nim</code></td>
+</tr>
+<tr>
+<td><code>Person2</code></td>
+<td><code>Person0</code></td>
+</tr>
+<tr>
+<td><code>Person2</code></td>
+<td><code>Person2</code></td>
+</tr>
+<tr>
+<td><code>Person2</code></td>
+<td><code>Tim</code></td>
+</tr>
+<tr>
+<td><code>Nim</code></td>
+<td><code>Nim</code></td>
+</tr>
+<tr>
+<td><code>Nim</code></td>
+<td><code>Person2</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>This is the set of <em>friend-of-friend</em> relationships.</strong> If we computed <code>friend.friend.friend</code>, we'd get the <em>friend-of-friend-of-friend</em> relationships, and so on.</p>
+<p><strong>TODO: double-check this</strong></p>
+<hr />
+<p><strong>Exercise:</strong> What about <code>Tim.Tim</code>?</p>
+<details class="note">
+<summary>Think, then click!</summary>
+<p>This will give an error because the result has arity <code>0</code>.</p>
+</details>
+<h2 id="how-reachability-works">How Reachability Works<a class="headerlink" href="#how-reachability-works" title="Permanent link">&para;</a></h2>
+<p>If we wanted to encode reachability without using the built-in <code>reachable</code> predicate, we could start by writing a helper predicate:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kd">pred</span><span class="w"> </span><span class="nf">reachable2</span><span class="o">[</span><span class="n">to</span><span class="p">:</span><span class="w"> </span><span class="n">Person</span><span class="p">,</span><span class="w"> </span><span class="n">from</span><span class="p">:</span><span class="w"> </span><span class="n">Person</span><span class="p">,</span><span class="w"> </span><span class="n">via</span><span class="p">:</span><span class="w"> </span><span class="n">Person</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Person</span><span class="o">]</span><span class="p">:</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="n">Person</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="n">to</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="n">from</span><span class="o">.</span><span class="n">via</span><span class="w"> </span><span class="o">+</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="n">from</span><span class="o">.</span><span class="n">via</span><span class="o">.</span><span class="n">via</span><span class="w"> </span><span class="o">+</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="n">from</span><span class="o">.</span><span class="n">via</span><span class="o">.</span><span class="n">via</span><span class="o">.</span><span class="n">via</span><span class="w"> </span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">    </span><span class="c1">-- ...and so on...</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="o">}</span>
+</code></pre></div>
+<p>But we always have to stop writing somewhere. We could write the union out to 20 steps, and still we wouldn't catch some very long (length 21 or higher) paths. So we need some way to talk about <em>unbounded reachability</em>, or at least reachability up to a path length that's influenced by the problem bounds.</p>
+<p>Forge's <code>reachable</code> built-in does this, but it's just a facade over a new relational operator: transitive closure (<code>^R</code>).</p>
+<h3 id="transitive-closure">Transitive Closure (<code>^</code>)<a class="headerlink" href="#transitive-closure" title="Permanent link">&para;</a></h3>
+<p>The <em>transitive closure</em> <code>^R</code> of a binary relation <code>R</code> is the <em>smallest</em> binary relation such that:</p>
+<ul>
+<li>if <code>x-&gt;y</code> is in <code>R</code>, then <code>x-&gt;y</code> is in <code>^R</code>; and</li>
+<li>if <code>x-&gt;z</code> is in <code>R</code> and <code>z-&gt;y</code> is in <code>^R</code> then <code>x-&gt;y</code> is in <code>R</code>.</li>
+</ul>
+<p>That is, <code>^R</code> encodes exactly what we were trying to achieve above. The <code>reachable[to, from, f1, ...]</code> built-in is just syntactic sugar for:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="w">    </span><span class="n">to</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">from</span><span class="o">.^(</span><span class="n">f1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="o">...)</span>
+</code></pre></div>
+<p>You might remember that <code>reachable</code> always evaluates to true if we give <code>none</code> as its first argument. This is because of the translation above: if <code>to</code> is the empty set, then it is a subset of anything. </p>
+<!-- !!! tip "Design Discussion"
+    You might wonder why we don't translate `reachable[to, from, f1, ...]` to something like `to in from.^(f1 + ...) and some to`. This would, after all, fix the problem of `none` being reachable from everything! The answer is that this fix might cause other confusion, and either way the ...
+    ...
+ -->
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

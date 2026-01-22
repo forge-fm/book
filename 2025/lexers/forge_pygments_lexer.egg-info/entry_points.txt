@@ -1,0 +1,2 @@
+[pygments.lexers]
+forge = forge_lexer:ForgeLexer
