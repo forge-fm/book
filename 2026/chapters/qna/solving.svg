@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="200mm"
+   height="150mm"
+   viewBox="0 0 200 150"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="solving.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="0.84096521"
+     inkscape:cx="363.27306"
+     inkscape:cy="290.73736"
+     inkscape:window-width="1312"
+     inkscape:window-height="830"
+     inkscape:window-x="0"
+     inkscape:window-y="38"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#e6e6e6;stroke:#000000;stroke-width:0.278852;stroke-opacity:1"
+       id="rect1"
+       width="153.51962"
+       height="66.055649"
+       x="24.862005"
+       y="26.435099" />
+    <g
+       id="g5">
+      <rect
+         style="fill:#ffffff;stroke:#ff6600;stroke-width:0.338103;stroke-opacity:1"
+         id="rect2-9-2"
+         width="80.154228"
+         height="9.3650379"
+         x="35.723286"
+         y="43.618343" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:'Courier New';-inkscape-font-specification:'Courier New, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
+         x="39.177216"
+         y="49.584568"
+         id="text3-1"><tspan
+           sodipodi:role="line"
+           id="tspan3-9"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:'Courier New';-inkscape-font-specification:'Courier New, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;stroke:#000000;stroke-width:0.264583"
+           x="39.177216"
+           y="49.584568">An instance with 2 Boards</tspan></text>
+    </g>
+    <g
+       id="g5-9"
+       transform="translate(5.7996139,7.9867593)">
+      <rect
+         style="fill:#ffffff;stroke:#ff6600;stroke-width:0.338103;stroke-opacity:1"
+         id="rect2-9-2-5"
+         width="80.154228"
+         height="9.3650379"
+         x="35.723286"
+         y="43.618343" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:'Courier New';-inkscape-font-specification:'Courier New, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
+         x="39.177216"
+         y="49.584568"
+         id="text3-1-9"><tspan
+           sodipodi:role="line"
+           id="tspan3-9-0"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:'Courier New';-inkscape-font-specification:'Courier New, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;stroke:#000000;stroke-width:0.264583"
+           x="39.177216"
+           y="49.584568">An instance with 3 Boards</tspan></text>
+    </g>
+    <g
+       id="g5-9-0"
+       transform="translate(11.648485,15.273802)">
+      <rect
+         style="fill:#ffffff;stroke:#ff6600;stroke-width:0.338103;stroke-opacity:1"
+         id="rect2-9-2-5-7"
+         width="80.154228"
+         height="9.3650379"
+         x="35.723286"
+         y="43.618343" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:'Courier New';-inkscape-font-specification:'Courier New, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
+         x="39.177216"
+         y="49.584568"
+         id="text3-1-9-5"><tspan
+           sodipodi:role="line"
+           id="tspan3-9-0-7"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:'Courier New';-inkscape-font-specification:'Courier New, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;stroke:#000000;stroke-width:0.264583"
+           x="39.177216"
+           y="49.584568">An instance with 4 Boards</tspan></text>
+    </g>
+    <g
+       id="g5-9-4"
+       transform="translate(16.997002,23.418259)">
+      <rect
+         style="fill:#ffffff;stroke:#ff6600;stroke-width:0.338103;stroke-opacity:1"
+         id="rect2-9-2-5-78"
+         width="80.154228"
+         height="9.3650379"
+         x="35.723286"
+         y="43.618343" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:'Courier New';-inkscape-font-specification:'Courier New, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
+         x="39.177216"
+         y="49.584568"
+         id="text3-1-9-4"><tspan
+           sodipodi:role="line"
+           id="tspan3-9-0-0"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:'Courier New';-inkscape-font-specification:'Courier New, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;stroke:#000000;stroke-width:0.264583"
+           x="39.177216"
+           y="49.584568">An instance with 4 Boards</tspan></text>
+    </g>
+    <g
+       id="g6"
+       transform="translate(28.315678,-26.742585)">
+      <rect
+         style="fill:#ffffff;stroke:#ff6600;stroke-width:0.153288;stroke-opacity:1"
+         id="rect2-9-2-5-78-8"
+         width="16.156839"
+         height="9.5498533"
+         x="56.975689"
+         y="104.96379" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:'Courier New';-inkscape-font-specification:'Courier New, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
+         x="60.522026"
+         y="111.02242"
+         id="text3-1-9-4-4"><tspan
+           sodipodi:role="line"
+           id="tspan3-9-0-0-9"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:'Courier New';-inkscape-font-specification:'Courier New, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;stroke:#000000;stroke-width:0.264583"
+           x="60.522026"
+           y="111.02242">...</tspan></text>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:3.175px;fill:#e6e6e6;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
+       x="40.900417"
+       y="11.640887"
+       id="text1"><tspan
+         sodipodi:role="line"
+         id="tspan1"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:'Courier New';-inkscape-font-specification:'Courier New, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
+         x="40.900417"
+         y="11.640887">run { some b: Board | wellformed[b]}</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:'Courier New';-inkscape-font-specification:'Courier New, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#e6e6e6;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
+       x="38.383472"
+       y="18.5625"
+       id="text2"><tspan
+         sodipodi:role="line"
+         id="tspan2"
+         style="stroke-width:0.264583"
+         x="38.383472"
+         y="18.5625">(Default search space: up to 4 Boards)</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444px;font-family:'Courier New';-inkscape-font-specification:'Courier New, Bold Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
+       x="83.095909"
+       y="32.99477"
+       id="text2-3"><tspan
+         sodipodi:role="line"
+         id="tspan2-3"
+         style="stroke-width:0.264583;fill:#000000;-inkscape-font-specification:'Courier New, Bold Italic';font-family:'Courier New';font-weight:bold;font-style:italic;font-stretch:normal;font-variant:normal;font-size:5.64444007px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+         x="83.095909"
+         y="32.99477">CONSIDERED</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444px;font-family:'Courier New';-inkscape-font-specification:'Courier New, Bold Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
+       x="141.17354"
+       y="110.8839"
+       id="text2-3-0"><tspan
+         sodipodi:role="line"
+         id="tspan2-3-0"
+         style="font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.64444px;font-family:'Courier New';-inkscape-font-specification:'Courier New, Bold Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;stroke-width:0.264583"
+         x="141.17354"
+         y="110.8839">NOT CONSIDERED</tspan></text>
+    <g
+       id="g7"
+       transform="translate(-43.102754,-21.394067)">
+      <rect
+         style="fill:#ffffff;stroke:#ff6600;stroke-width:0.351547;stroke-opacity:1"
+         id="rect2"
+         width="93.040154"
+         height="8.7223577"
+         x="83.102806"
+         y="133.44177" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:'Courier New';-inkscape-font-specification:'Courier New, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
+         x="90.924789"
+         y="139.27599"
+         id="text4"><tspan
+           sodipodi:role="line"
+           id="tspan4"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:'Courier New';-inkscape-font-specification:'Courier New, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
+           x="90.924789"
+           y="139.27599">An instance with 100 Boards</tspan></text>
+    </g>
+    <g
+       id="g8">
+      <rect
+         style="fill:#ffffff;stroke:#ff6600;stroke-width:0.351547;stroke-opacity:1"
+         id="rect2-3"
+         width="93.040154"
+         height="8.7223577"
+         x="72.510025"
+         y="127.34632" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:'Courier New';-inkscape-font-specification:'Courier New, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
+         x="77.500443"
+         y="133.49516"
+         id="text4-04"><tspan
+           sodipodi:role="line"
+           id="tspan4-8"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:'Courier New';-inkscape-font-specification:'Courier New, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
+           x="77.500443"
+           y="133.49516">An instance with 2^100 Boards</tspan></text>
+    </g>
+    <g
+       id="g7-7"
+       transform="translate(-61.225162,-35.112397)">
+      <rect
+         style="fill:#ffffff;stroke:#ff6600;stroke-width:0.351547;stroke-opacity:1"
+         id="rect2-8"
+         width="93.040154"
+         height="8.7223577"
+         x="83.102806"
+         y="133.44177" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444px;font-family:'Courier New';-inkscape-font-specification:'Courier New, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;stroke:#000000;stroke-width:0.264583;stroke-opacity:1"
+         x="90.924789"
+         y="139.27599"
+         id="text4-0"><tspan
+           sodipodi:role="line"
+           id="tspan4-6"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;font-family:'Courier New';-inkscape-font-specification:'Courier New, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
+           x="90.924789"
+           y="139.27599">An instance with 5 Boards</tspan></text>
+    </g>
+  </g>
+</svg>

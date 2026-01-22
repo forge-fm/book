@@ -1,0 +1,2621 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Lightweight Formal Methods for Everybody">
+      
+      
+      
+        <link rel="canonical" href="https://forge-fm.github.io/book/2026/chapters/ttt/ttt.html">
+      
+      
+        <link rel="prev" href="../properties/pbt.html">
+      
+      
+        <link rel="next" href="../bst/bst.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Tic-Tac-Toe - Logic for Systems</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#intro-to-modeling-systems-part-1-tic-tac-toe" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="Logic for Systems" class="md-header__button md-logo" aria-label="Logic for Systems" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Logic for Systems
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Tic-Tac-Toe
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/forge-fm/book" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    forge-fm/book
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="Logic for Systems" class="md-nav__button md-logo" aria-label="Logic for Systems" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Logic for Systems
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/forge-fm/book" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    forge-fm/book
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Preamble: Beyond Testing
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Preamble: Beyond Testing
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../manifesto/job.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    What good is this book?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../manifesto/manifesto.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logic for Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../properties/pbt.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    From Tests to Properties
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modeling Static Scenarios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modeling Static Scenarios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tic-Tac-Toe
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="ttt.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tic-Tac-Toe
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#whats-a-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What's a Model?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What&#39;s a Model?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dont-be-afraid-of-imperfect-representations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Don't Be Afraid of Imperfect Representations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-a-system-models-vs-implementations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is a "System"? (Models vs. Implementations)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modeling-tic-tac-toe-boards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modeling Tic-Tac-Toe Boards
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Modeling Tic-Tac-Toe Boards">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#datatypes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Datatypes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#well-formedness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Well-formedness
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-few-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A Few Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#running-forge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running Forge
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reflection-implementation-vs-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reflection: Implementation vs. Model
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#domain-predicates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Domain Predicates
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Domain Predicates">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#starting-boards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Starting Boards
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#turns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Turns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#winning-the-game" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Winning the Game
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practice-with-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Practice with run
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practice with run">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#no-boards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        No Boards
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adding-more" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adding More
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-with-assertions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing with assertions
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bst/bst.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Binary Search Trees
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adder/rca.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ripple-Carry Adder
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qna/static.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q&A: Static Modeling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Discrete Event Systems
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Discrete Event Systems
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ttt_games.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transitions, Traces, and Verification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../inductive/bsearch.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Counterexamples to Induction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bst/descent.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BSTs: Recursive Descent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../validation/validating_events.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Validating Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qna/events.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q&A: Event Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modeling Relationships
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modeling Relationships
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../relations/modeling-booleans-1.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Relational Forge, Modeling Logic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../relations/reachability.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transitive Closure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../relations/sets-induction-mutex.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modeling Mutual Exclusion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../relations/sets-beyond-assertions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Going Beyond Assertions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../solvers/bounds_booleans_how_forge_works.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How does Forge Work?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qna/relations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q&A: Relations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Temporal Specification
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Temporal Specification
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../temporal/liveness_and_lassos.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Liveness and Lassos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../temporal/temporal_operators.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Temporal Forge
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../temporal/temporal_operators_2.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linear Temporal Logic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../temporal/obligations_past.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Obligations and the Past
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../temporal/fixing_lock_temporal.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mutual Exclusion, Revisited
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../temporal/testing_temporal.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing Temporally
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Boolean Solver Algorithms
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Boolean Solver Algorithms
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../solvers/dpll.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Boolean SAT (DPLL)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../solvers/resolution.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Witnessing Unsat: Propositional Resolution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Beyond SAT
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Beyond SAT
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../solvers/smt.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Satisfiability Modulo Theories (SMT)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../solvers/cegis.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Learning with Solvers: CEGIS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Appendix
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendix/glossary.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendix/errors.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Error Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#whats-a-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What's a Model?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What&#39;s a Model?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dont-be-afraid-of-imperfect-representations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Don't Be Afraid of Imperfect Representations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-a-system-models-vs-implementations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is a "System"? (Models vs. Implementations)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modeling-tic-tac-toe-boards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modeling Tic-Tac-Toe Boards
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Modeling Tic-Tac-Toe Boards">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#datatypes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Datatypes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#well-formedness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Well-formedness
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-few-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A Few Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#running-forge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running Forge
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reflection-implementation-vs-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reflection: Implementation vs. Model
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#domain-predicates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Domain Predicates
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Domain Predicates">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#starting-boards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Starting Boards
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#turns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Turns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#winning-the-game" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Winning the Game
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practice-with-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Practice with run
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practice with run">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#no-boards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        No Boards
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adding-more" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adding More
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-with-assertions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing with assertions
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="intro-to-modeling-systems-part-1-tic-tac-toe">Intro to Modeling Systems (Part 1: Tic-Tac-Toe)<a class="headerlink" href="#intro-to-modeling-systems-part-1-tic-tac-toe" title="Permanent link">&para;</a></h1>
+<h2 id="whats-a-model">What's a Model?<a class="headerlink" href="#whats-a-model" title="Permanent link">&para;</a></h2>
+<p>A <strong>model</strong> is a <em>representation</em> of a system that faithfully includes some but not all of the system's complexity. There are many different ways to model a system, all of which have different advantages and disadvantages. Think about what a car company does before it produces a new car design. Among other things, it creates multiple models. E.g.,
+* it models the car in some computer-aided design tool; and then
+* creates a physical model of the car, perhaps with clay, for testing in wind tunnels etc.</p>
+<p>There may be many different models of a system, all of them focused on something different. As the statisticians say, "all models are wrong, but some models are useful". Learning how to model a system is a key skill for engineers, not just within "formal methods". Abstraction is one of the key tools in Computer Science, and modeling lies at the heart of abstraction.</p>
+<p>In this course, <strong>the models we build aren't inert</strong>; we have tools that we can use the explore and analyze them!</p>
+<h3 id="dont-be-afraid-of-imperfect-representations">Don't Be Afraid of Imperfect Representations<a class="headerlink" href="#dont-be-afraid-of-imperfect-representations" title="Permanent link">&para;</a></h3>
+<p><em>We don't need to fully model a system to be able to make useful inferences</em>. We can simplify, omit, and abstract concepts/attributes to make models that approximate the system while preserving the fundamentals that we're interested in. </p>
+<p><strong>Exercise:</strong> If you've studied physics, there's a great example of this in statics and dynamics. Suppose I drop a coin from the top of the science library, and ask you what its velocity will be when it hits the ground. Using the methods you learn in beginning physics, what's something you usefully <em>disregard</em>?</p>
+<details class="note">
+<summary>Think, then click!</summary>
+<p>Air resistance! Friction! We can still get a reasonable approximation for many problems without needing to include that. (And advanced physics adds even more factors that aren't worth considering at this scale.) The model without friction is often enough.</p>
+</details>
+<h2 id="what-is-a-system-models-vs-implementations">What is a "System"? (Models vs. Implementations)<a class="headerlink" href="#what-is-a-system-models-vs-implementations" title="Permanent link">&para;</a></h2>
+<p>When we say "systems" in this book, we mean the term broadly. A distributed system (like <a href="https://github.com/visualzhou/mongo-repl-tla">replication in MongoDB</a>) is a system, but so are user interfaces and hardware devices like CPUs and insulin pumps. Git is a system for version control. The web stack, cryptographic protocols, chemical reactions, the rules of sports and games&mdash;these are all systems too!</p>
+<p>To help build intuition, let's work with a simple system: the game of <a href="https://en.wikipedia.org/wiki/Tic-tac-toe">tic-tac-toe</a> (also called noughts and crosses). There are <em>many</em> implementations of this game, including <a href="https://csci1710.github.io/2023/examples/ttt.py">this one</a> that I wrote in Python. And, of course, these implementations often have corresponding test suites, like <a href="https://csci1710.github.io/2023/examples/test_ttt.py">this (incomplete) example</a>.</p>
+<p><strong>Exercise</strong>: Play a quick game of tic-tac-toe by hand. If you can, find a partner, but if not, then play by yourself.</p>
+<p>Notice what just happened. You played the game. In doing so, you ran your own mental implementation of the rules. The result you got was one of many possible games, each with its own specific sequence of legal moves, leading to a particular ending state. Maybe someone won, or maybe the game was a tie. Either way, many different games could have ended with that same board. </p>
+<p>Modeling is different from programming. When you're programming traditionally, you give the computer a set of instructions and it follows them. This is true whether you're programming functionally or imperatively, with or without objects, etc. Declarative modeling languages like Forge work differently. The goal of a model isn't to <em>run instructions</em>, but rather to <em>describe the rules</em> that govern systems. </p>
+<p>Here's a useful comparison to help reinforce the difference (with thanks to Daniel Jackson):
+- An empty program <strong>does nothing</strong>.
+- An empty model <strong>allows every behavior</strong>.</p>
+<h2 id="modeling-tic-tac-toe-boards">Modeling Tic-Tac-Toe Boards<a class="headerlink" href="#modeling-tic-tac-toe-boards" title="Permanent link">&para;</a></h2>
+<p>What are the essential concepts in a game of tic-tac-toe?</p>
+<div class="admonition tip">
+<p class="admonition-title">Modeling Methodology</p>
+<p>When we're first writing a model, we'll start with <strong>5 steps</strong>. For each step, I'll give examples from tic-tac-toe and also for binary search trees (which we'll start modeling soon) for contrast.</p>
+<ul>
+<li>What are the <strong>datatypes</strong> involved, and their <strong>fields</strong>? </li>
+<li>For tic-tac-toe: they might be the 3-by-3 board and the <code>X</code> and <code>O</code> marks that go in board locations. </li>
+<li>For a binary search tree: they might be the tree nodes and their left and right children. </li>
+<li>What makes an instance of these datatypes <strong>well formed</strong>? That is, what conditions are needed for them to not be garbage? </li>
+<li>For tic-tac-toe, we might require that the indexes used are between <code>0</code> and <code>2</code>, since the board is 3-by-3. (We could just as easily use <code>1</code>, <code>2</code>, and <code>3</code>. I picked <code>0</code> as the starting point out of habit, because list indexes start from <code>0</code> in the programming languages I tend to use.)</li>
+<li>For a binary search tree, we might require that every node has at most one left child, at most one right child, a unique parent, and so on.</li>
+<li>What's a small <strong>example</strong> of how these datatypes can be instantiated?</li>
+<li>For tic-tac-toe, the empty board would be an example. So would the board where <code>X</code> moves first into the middle square.</li>
+<li>For a binary search tree, this might be a tree with only one node, or a 3-node tree where the root's left and right children are leaves. </li>
+<li>What does the model look like when <strong>run</strong>?</li>
+<li>For tic-tac-toe, we should see a board with some number of <code>X</code> and <code>O</code> marks.</li>
+<li>For a binary search tree, we should see some set of nodes that forms a single tree via left- and right-children.</li>
+<li>What <strong>domain predicates</strong> are there? Well-formedness defines conditions that are needed for an instantiation to not be "garbage". But whatever we're modeling surely has domain-specific concepts of its own, which may or may not hold. </li>
+<li>For tic-tac-toe, we care a great deal if the board is a winning board or not. Similarly, we might care if it looks like someone has cheated.</li>
+<li>For a binary search tree, we care if the tree is balanced, or if it satisfies the BST invariant. </li>
+</ul>
+<p>These steps will get us to a point we can begin to iterate: working to <strong>validate and/or refine</strong> the model as we go. It's rare that a model will do everything you need (and do so correctly) on the first try.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Well-formedness vs. domain predicates</p>
+<p>Why make this distinction between well-formedness and domain predicates? Because one should always hold in any instance Forge considers, but the other may or may not hold. In fact, we might want to use Forge to <em>verify</em> that a domain predicate always holds! And if we've told Forge that any instance that doesn't satisfy it is garbage, Forge won't find us such an instance.</p>
+</div>
+<h3 id="datatypes">Datatypes<a class="headerlink" href="#datatypes" title="Permanent link">&para;</a></h3>
+<p>We might list:
+- the players <code>X</code> and <code>O</code>;
+- the 3-by-3 game board, where players can put their marks;
+- the idea of whose turn it is at any given time; and
+- the idea of who has won the game at any given time.    </p>
+<p>Now let's add those ideas to a model in Forge! </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">#lang</span><span class="w"> </span><span class="nn">forge/froglet</span>
+</code></pre></div>
+<p>The first line of any Forge model will be a <code>#lang</code> line, which says which Forge language the file uses. We'll start with the Froglet language for now. Everything you learn in this language will apply in other Forge languages, so I'll use "Forge" interchangeably.</p>
+<p>Now we need a way to talk about the noughts and crosses themselves. So let's add a <code>sig</code> that represents them:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">#lang</span><span class="w"> </span><span class="nn">forge/froglet</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="k">abstract</span><span class="w"> </span><span class="kd">sig</span><span class="w"> </span><span class="nc">Player</span><span class="w"> </span><span class="o">{}</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="k">one</span><span class="w"> </span><span class="kd">sig</span><span class="w"> </span><span class="nc">X</span><span class="p">,</span><span class="w"> </span><span class="nc">O</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="n">Player</span><span class="w"> </span><span class="o">{}</span>
+</code></pre></div>
+<p>You can think of <code>sig</code> in Forge as declaring a kind of object. A <code>sig</code> can extend another, in which case we say that it is a <em>child</em> of its parent, and child <code>sig</code>s cannot overlap. When a sig is <code>abstract</code>, any member must also be a member of one of that <code>sig</code>'s children; in this case, any <code>Player</code> must either be <code>X</code> or <code>O</code>. Finally, a <code>one</code> sig has exactly one member&mdash;there's only a single <code>X</code> and <code>O</code> in our model.</p>
+<p>We also need a way to represent the game board. We have a few options here: we could create an <code>Index</code> sig, and encode an ordering on those (something like "column A, then column B, then column C"). Another is to use Forge's integer support. Both solutions have their pros and cons. Let's use integers, in part to get some practice with them.</p>
+<!-- this shows the play button if we say it is Rust. We have control over what to *do* 
+with the highlighting and play button via theme/book.js, so mislead mdbook a bit...
+-->
+<!-- ```rust,editable -->
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">#lang</span><span class="w"> </span><span class="nn">forge/froglet</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">abstract</span><span class="w"> </span><span class="kd">sig</span><span class="w"> </span><span class="nc">Player</span><span class="w"> </span><span class="o">{}</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="k">one</span><span class="w"> </span><span class="kd">sig</span><span class="w"> </span><span class="nc">X</span><span class="p">,</span><span class="w"> </span><span class="nc">O</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="n">Player</span><span class="w"> </span><span class="o">{}</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="kd">sig</span><span class="w"> </span><span class="nc">Board</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">  </span><span class="n">board</span><span class="p">:</span><span class="w"> </span><span class="k">pfunc</span><span class="w"> </span><span class="kt">Int</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kt">Int</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Player</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="o">}</span>
+</code></pre></div>
+<p>Every <code>Board</code> object contains a <code>board</code> field describing the moves made so far. This field is a <em>partial function</em>, or dictionary, for every <code>Board</code> that maps each (<code>Int</code>, <code>Int</code>) pair to at most one <code>Player</code>. </p>
+<!--
+a table of (`Int`, `Int`, `Player`) tuples for each `Board`. We'll see how to work with this field shortly.
+-->
+
+<h3 id="well-formedness">Well-formedness<a class="headerlink" href="#well-formedness" title="Permanent link">&para;</a></h3>
+<p>These definitions sketch the overall shape of a board: players, marks on the board, and so on. But not all boards that fit the definition will be valid. For example:</p>
+<ul>
+<li>Forge integers aren't true mathematical integers, but are bounded by a bitwidth we give whenever we run the tool. So we need to be careful here. We want a classical 3-by-3 board with indexes of (say) <code>0</code>, <code>1</code>, and <code>2</code>, not a board where (e.g.) row <code>-5</code>, column <code>-1</code> is a valid location. </li>
+</ul>
+<p>We'll call these <em>well-formedness</em> constraints. They aren't innately enforced by our <code>sig</code> declarations, but we'll almost always want Forge to enforce them, so that it doesn't find "garbage instances". Let's write a <em>wellformedness predicate</em>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">-- a Board is well-formed if and only if:</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kd">pred</span><span class="w"> </span><span class="nf">wellformed</span><span class="o">[</span><span class="n">b</span><span class="p">:</span><span class="w"> </span><span class="n">Board</span><span class="o">]</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="c1">-- row and column numbers used are between 0 and 2, inclusive  </span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="k">all</span><span class="w"> </span><span class="n">row</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="o">(</span><span class="n">row</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">row</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">2</span><span class="o">)</span><span class="w"> </span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">      </span><span class="ow">implies</span><span class="w"> </span><span class="k">no</span><span class="w"> </span><span class="n">b</span><span class="o">.</span><span class="n">board</span><span class="o">[</span><span class="n">row</span><span class="o">][</span><span class="n">col</span><span class="o">]</span><span class="w">      </span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">  </span><span class="o">}</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="o">}</span>
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Comments in Forge</p>
+<p>Forge treats either <code>--</code> or <code>//</code> as beginning a line-level comment, and <code>/* ... */</code> as denoting a block comment. This is different from the Python code we saw in the last section! In Forge, <code>#</code> has a different meaning.</p>
+</div>
+<p>This predicate is true of any <code>Board</code> if and only if the above 2 constraints are satisfied. Let's break down the syntax: 
+* Constraints can quantify over a domain. E.g.,<code>all row, col: Int | ...</code> says that for any pair of integers (up to the given bitwidth), the following condition (<code>...</code>) must hold. Forge also supports, e.g., existential quantification (<code>some</code>), but we don't need that yet. We also have access to standard boolean operators like <code>or</code>, <code>implies</code>, etc. 
+* <em>Formulas</em> in Forge always evaluate to a boolean; <em>expressions</em> evaluate to sets. For example,
+    * the <em>expression</em> <code>b.board[row][col]</code> evaluates to the <code>Player</code> (if any) with a mark at location (<code>row</code>, <code>col</code>) in board <code>b</code>; but
+    * the <em>formula</em> <code>no b.board[row][col]</code> is true if and only if there is no such <code>Player``.
+* A</code>pred` (predicate) in Forge is a helper function that evaluates to a boolean. Thus, its body should always be a formula. </p>
+<div class="admonition tip">
+<p class="admonition-title">Predicates are declarative</p>
+<p>Notice that, rather than describing a process that produces a well-formed board, or even instructions to check well-formedness, we've just given a declarative description of what's necessary and sufficient for a board to be well-formed. If we'd left the predicate body empty, <em>any</em> board would be considered well-formed&mdash;there'd be no formulas to enforce!</p>
+</div>
+<h3 id="a-few-examples">A Few Examples<a class="headerlink" href="#a-few-examples" title="Permanent link">&para;</a></h3>
+<p>Since a predicate is just a function that returns true or false, depending on its arguments and whichever instance Forge is looking at, we can write tests for it the same way we would for any other boolean-valued function. But even if we're not testing, it can be useful to write a small number of examples, so we can build intuition for what the predicate means.</p>
+<p>In Forge, <code>example</code>s are automatically run whenever your model executes. They describe basic intent about a given predicate; in this case, let's write two examples in Forge:</p>
+<ul>
+<li>A board where <code>X</code> has moved 3 times in valid locations, and so ought to be considered well formed.</li>
+<li>A board where a player has moved in an invalid location, and shouldn't be considered well formed. </li>
+</ul>
+<p>Notice that we're not making judgements about the rules being obeyed yet&mdash;just about whether our <code>wellformed</code> predicate is behaving the way we expect. And the <code>wellformed</code> predicate isn't aware of things like "taking turns" or "stop after someone has won", etc. It just knows about the valid indexes being <code>0</code>, <code>1</code>, and <code>2</code>.</p>
+<p>We'll write those two examples in Forge:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">-- Helper to make these examples easier to write</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kd">pred</span><span class="w"> </span><span class="nf">all_wellformed</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="k">all</span><span class="w"> </span><span class="n">b</span><span class="p">:</span><span class="w"> </span><span class="n">Board</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">wellformed</span><span class="o">[</span><span class="n">b</span><span class="o">]}</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1">-- all_wellformed should be _true_ for the following instance</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="kd">example</span><span class="w"> </span><span class="nf">firstRowX_wellformed</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="o">{</span><span class="n">all_wellformed</span><span class="o">}</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">  </span><span class="n">Board</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">`</span><span class="n">Board0</span><span class="w">                 </span><span class="c1">-- backquote labels specific atoms</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">  </span><span class="n">X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">`</span><span class="n">X</span><span class="w">      </span><span class="n">O</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">`</span><span class="n">O</span><span class="w">              </span><span class="c1">-- examples must define all sigs</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">  </span><span class="n">Player</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">O</span><span class="w">                  </span><span class="c1">-- only two kinds of player</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">  </span><span class="err">`</span><span class="n">Board0</span><span class="o">.</span><span class="n">board</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="o">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="err">`</span><span class="n">X</span><span class="w"> </span><span class="o">+</span><span class="w">  </span><span class="c1">-- the partial function for the board&#39;s</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">                  </span><span class="o">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="err">`</span><span class="n">X</span><span class="w"> </span><span class="o">+</span><span class="w">  </span><span class="c1">-- contents (unmentioned squares must </span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">                  </span><span class="o">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="o">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="err">`</span><span class="n">X</span><span class="w">    </span><span class="c1">-- remain empty, because we used &quot;=&quot; to say</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">                                  </span><span class="c1">-- &quot;here&#39;s the function for `board0&quot;)</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="o">}</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="c1">-- all_wellformed should be _false_ for the following instance</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="kd">example</span><span class="w"> </span><span class="nf">off_board_not_wellformed</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="o">{</span><span class="ow">not</span><span class="w"> </span><span class="n">all_wellformed</span><span class="o">}</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="w">  </span><span class="n">Board</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">`</span><span class="n">Board0</span><span class="w"> </span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="w">  </span><span class="n">X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">`</span><span class="n">X</span><span class="w">      </span><span class="n">O</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">`</span><span class="n">O</span><span class="w"> </span>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="w">  </span><span class="n">Player</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">O</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="w">  </span><span class="err">`</span><span class="n">Board0</span><span class="o">.</span><span class="n">board</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="o">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="err">`</span><span class="n">X</span><span class="w"> </span><span class="o">+</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="w">                  </span><span class="o">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="err">`</span><span class="n">X</span><span class="w"> </span><span class="o">+</span><span class="w"> </span>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="w">                  </span><span class="o">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="o">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="err">`</span><span class="n">X</span><span class="w"> </span>
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="o">}</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Test in both directions</p>
+<p>Notice that we've got a test thats a <em>positive</em> example and another test that's a <em>negative</em> example. We want to make sure to exercise both cases, or else "always true" or "always" false could pass our suite.</p>
+</div>
+<h3 id="running-forge">Running Forge<a class="headerlink" href="#running-forge" title="Permanent link">&para;</a></h3>
+<p>The <code>run</code> command tells Forge to search for an <em>instance</em> satisfying the given constraints:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">run</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="k">some</span><span class="w"> </span><span class="n">b</span><span class="p">:</span><span class="w"> </span><span class="n">Board</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">wellformed</span><span class="o">[</span><span class="n">b</span><span class="o">]}</span><span class="w"> </span>
+</code></pre></div>
+<p>(If you're curious about <em>how</em> Forge finds solutions, you can find a brief sketch in <a href="../qna/static.html">the Q&amp;A for this chapter</a>.)</p>
+<p>When we click the play button in the VSCode extension, the engine solves the constraints and produces a satisfying instance,  (Because of differences across solver versions, hardware, etc., it's possible you'll see a different instance than the one shown here.) A browser window should pop up with a visualization. You can also run <code>racket &lt;filename.frg&gt;</code> in the terminal, although we recommend the VSCode extension. </p>
+<!-- Alloy -->
+<!-- <img style="float: right;"  src="https://i.imgur.com/jTwED1K.png"/> -->
+
+<!-- 
+<img style="float: right;" src="./ttt_example.png"/>
+ -->
+
+<div class="admonition warning">
+<p class="admonition-title">Running Forge on Windows</p>
+<p>If you're running on Windows, the Windows-native <code>cmd</code> and PowerShell terminals will not properly load Forge's visualizer. Instead, we suggest using one of many other options on Windows that we've tested and know to work: the VSCode extension (available on the VSCode Marketplace), DrRacket, Git for Windows (e.g., <code>git bash</code>), Windows Subsystem for Linux, or Cygwin.</p>
+</div>
+<hr />
+<p>There are many options for visualization. The default which loads initially is a directed-graph based one:</p>
+<center><img width="70%" src="./ttt-viz.png"/></center>
+
+<p><strong>(TODO: make this clickable to show it bigger? Want to see the whole window, but then the graph is small.)</strong></p>
+<p>This isn't very useful; it looks nothing like a tic-tac-toe board! We can make more progress by using the "Table" visualization&mdash;which isn't ideal either:</p>
+<center><img width="40%" src="./ttt-viz-table.png"/></center>
+
+<p>Forge also allows users to make <em>custom</em> visualizations via short JavaScript programs; <a href="ttt.js">here's</a> an example basic visualizer for this specific tic-tac-toe model that produces images like this one:</p>
+<center><img width="20%" src="./ttt-custom.png"/></center>
+
+<p>We'll talk more about visualization scripts later. For now, let's proceed. <strong>TODO: replace img with one matching the table view</strong>
+<strong>TODO: add side-by-side CSS</strong></p>
+<hr />
+<p>This instance contains a single board, and it has 9 entries. Player <code>O</code> has moved in all of them (the <code>0</code> suffix of <code>O0</code> in the display is an artifact of how Forge's engine works; ignore it for now). It's worth noticing two things:</p>
+<ul>
+<li>This board doesn't look quite right: player <code>O</code> occupies all the squares. We might ask: has player <code>O</code> been cheating? But the fact is that this board <em>satisfies the constraints we have written so far</em>. Forge produces it simply because our model isn't yet restrictive enough, and for no other reason. "Cheating" doesn't exist yet. </li>
+<li>We didn't say <em>how</em> to find that instance. We just said what we wanted, and the tool performed some kind of search to find it. So far the objects are simple, and the constraints basic, but hopefully the power of the idea is coming into focus. </li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Why <code>Board3</code> when there's only one board?</p>
+<p>Here, we see <code>Board3</code> because the solver had a few options to pick from: we never said there should only ever be one <code>Board</code>, after all. So, under the hood, it was considering the potential existence of multiple boards. And then it happened to pick this one to exist in this instance.</p>
+</div>
+<h3 id="reflection-implementation-vs-model">Reflection: Implementation vs. Model<a class="headerlink" href="#reflection-implementation-vs-model" title="Permanent link">&para;</a></h3>
+<p>So far we've just modeled boards, not full games. But we can still contrast our work here against the Python <em>implementation</em> of tic-tac-toe shared above. </p>
+<p><strong>Exercise:</strong> How do the data-structure choices, and type declarations, in the implementation compare with the essence of the game as reflected in the model? What is shared, and what is different? </p>
+<p>Spend a minute identifying at least one commonality and at least one difference, then move on.</p>
+<h2 id="domain-predicates">Domain Predicates<a class="headerlink" href="#domain-predicates" title="Permanent link">&para;</a></h2>
+<p>Now let's write predicates that describe important ideas in the domain. What's important in the game of tic-tac-toe? Here are a few things.</p>
+<h3 id="starting-boards">Starting Boards<a class="headerlink" href="#starting-boards" title="Permanent link">&para;</a></h3>
+<p>What would it mean to be a <em>starting state</em> in a game? The board is empty:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kd">pred</span><span class="w"> </span><span class="nf">starting</span><span class="o">[</span><span class="n">s</span><span class="p">:</span><span class="w"> </span><span class="n">Board</span><span class="o">]</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="k">all</span><span class="w"> </span><span class="n">row</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="w"> </span><span class="o">|</span><span class="w"> </span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="k">no</span><span class="w"> </span><span class="n">s</span><span class="o">.</span><span class="n">board</span><span class="o">[</span><span class="n">row</span><span class="o">][</span><span class="n">col</span><span class="o">]</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="o">}</span>
+</code></pre></div>
+<h3 id="turns">Turns<a class="headerlink" href="#turns" title="Permanent link">&para;</a></h3>
+<p>How do we tell when it's a given player's turn? It's <code>X</code>'s turn when there are the same number of each mark on the board:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kd">pred</span><span class="w"> </span><span class="nf">XTurn</span><span class="o">[</span><span class="n">s</span><span class="p">:</span><span class="w"> </span><span class="n">Board</span><span class="o">]</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="o">#{</span><span class="n">row</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">s</span><span class="o">.</span><span class="n">board</span><span class="o">[</span><span class="n">row</span><span class="o">][</span><span class="n">col</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X</span><span class="o">}</span><span class="w"> </span><span class="o">=</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="o">#{</span><span class="n">row</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">s</span><span class="o">.</span><span class="n">board</span><span class="o">[</span><span class="n">row</span><span class="o">][</span><span class="n">col</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">O</span><span class="o">}</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="o">}</span>
+</code></pre></div>
+<p>Here, we're measuring the size of 2 sets. The <code>{row, col: Int | ...}</code> syntax is called a <em>set comprehension</em>. A set comprehension defines a set. We're defining the set of row-column pairs where the board contains one of the player marks. The <code>#</code> operator gives the size of these sets, which we then compare.</p>
+<p><strong>Exercise:</strong> Is it enough to say that <code>OTurn</code> is the negation of <code>XTurn</code>? That is, we could write: <code>pred OTurn[s: Board] { not XTurn[s: Board]}</code>. This seems reasonable enough; why might we <em>not</em> want to write this?</p>
+<details class="note">
+<summary>Think, then click!</summary>
+<p>Because we defined X's turn to be when the number of X's and O's on the board are in balance. So any <em>other</em> board would be O's turn, including ones that ought to be illegal, once we start defining moves of the game. Instead, let's say something like this:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kd">pred</span><span class="w"> </span><span class="nf">OTurn</span><span class="o">[</span><span class="n">s</span><span class="p">:</span><span class="w"> </span><span class="n">Board</span><span class="o">]</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="c1">-- It&#39;s O&#39;s turn if X has moved once more often than O has</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="o">#{</span><span class="n">row</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">s</span><span class="o">.</span><span class="n">board</span><span class="o">[</span><span class="n">row</span><span class="o">][</span><span class="n">col</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X</span><span class="o">}</span><span class="w"> </span><span class="o">=</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">  </span><span class="n">add</span><span class="o">[#{</span><span class="n">row</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">s</span><span class="o">.</span><span class="n">board</span><span class="o">[</span><span class="n">row</span><span class="o">][</span><span class="n">col</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">O</span><span class="o">}</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="o">]</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="o">}</span>
+</code></pre></div>
+</details>
+<hr />
+<div class="admonition note">
+<p class="admonition-title">Integer addition</p>
+<p>Forge supports arithmetic operations on integers like <code>add</code>. Forge integers are signed (i.e., can be positive or negative) and are bounded by a <em>bit width</em>, which defaults to <code>4</code> bits. The number of available integers is always <span class="arithmatex">\(2^k\)</span>, where <span class="arithmatex">\(k\)</span> is the bit width.</p>
+<p>Forge follows the <a href="https://en.wikipedia.org/wiki/Two%27s_complement">2's complement arithmetic</a> convention, which means that the available integers are split evenly between positive and negative numbers, but counting <code>0</code> as "positive". So with 4 bits, we can represent numbers between <code>-8</code> and <code>7</code> (inclusive).</p>
+<p>This means that (while it doesn't matter for this model yet), arithmetic operations can overflow&mdash;just like primitive integers in languages like Java! For example, if we're working with 4-bit integers, then <code>add[7,1]</code> will be <code>-8</code>. You can experiment with this in the visualizer's <em>evaluator</em>, which we'll be using a lot after the initial modeling tour is done.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Use <code>add</code> for addition, not <code>+</code></p>
+<p>Don't try to use <code>+</code> for addition in any Forge language. Use <code>add</code> instead; this is because <code>+</code> is reserved for something else (which we'll explain later).</p>
+</div>
+<h3 id="winning-the-game">Winning the Game<a class="headerlink" href="#winning-the-game" title="Permanent link">&para;</a></h3>
+<p>What does it mean to <em>win</em>? A player has won on a given board if:</p>
+<ul>
+<li>they have placed their mark in all 3 columns of a row;</li>
+<li>they have placed their mark in all 3 rows of a column; or</li>
+<li>they have placed their mark in all 3 squares of a diagonal.</li>
+</ul>
+<p>We'll express this in a <code>winner</code> predicate that takes the current board and a player name. Let's also define a couple helper predicates along the way:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kd">pred</span><span class="w"> </span><span class="nf">winRow</span><span class="o">[</span><span class="n">s</span><span class="p">:</span><span class="w"> </span><span class="n">Board</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">:</span><span class="w"> </span><span class="n">Player</span><span class="o">]</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="c1">-- note we cannot use `all` here because there are more Ints  </span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="k">some</span><span class="w"> </span><span class="n">row</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span><span class="n">s</span><span class="o">.</span><span class="n">board</span><span class="o">[</span><span class="n">row</span><span class="o">][</span><span class="mi">0</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">    </span><span class="n">s</span><span class="o">.</span><span class="n">board</span><span class="o">[</span><span class="n">row</span><span class="o">][</span><span class="mi">1</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">    </span><span class="n">s</span><span class="o">.</span><span class="n">board</span><span class="o">[</span><span class="n">row</span><span class="o">][</span><span class="mi">2</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">  </span><span class="o">}</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="o">}</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="kd">pred</span><span class="w"> </span><span class="nf">winCol</span><span class="o">[</span><span class="n">s</span><span class="p">:</span><span class="w"> </span><span class="n">Board</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">:</span><span class="w"> </span><span class="n">Player</span><span class="o">]</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">  </span><span class="k">some</span><span class="w"> </span><span class="n">column</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">    </span><span class="n">s</span><span class="o">.</span><span class="n">board</span><span class="o">[</span><span class="mi">0</span><span class="o">][</span><span class="n">column</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="w">    </span><span class="n">s</span><span class="o">.</span><span class="n">board</span><span class="o">[</span><span class="mi">1</span><span class="o">][</span><span class="n">column</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="w">    </span><span class="n">s</span><span class="o">.</span><span class="n">board</span><span class="o">[</span><span class="mi">2</span><span class="o">][</span><span class="n">column</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="w">  </span><span class="o">}</span><span class="w">      </span>
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="o">}</span>
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="kd">pred</span><span class="w"> </span><span class="nf">winner</span><span class="o">[</span><span class="n">s</span><span class="p">:</span><span class="w"> </span><span class="n">Board</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">:</span><span class="w"> </span><span class="n">Player</span><span class="o">]</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a><span class="w">  </span><span class="n">winRow</span><span class="o">[</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="o">]</span>
+<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a><span class="w">  </span><span class="ow">or</span>
+<a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a><span class="w">  </span><span class="n">winCol</span><span class="o">[</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="o">]</span>
+<a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a><span class="w">  </span><span class="ow">or</span><span class="w"> </span>
+<a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a><span class="w">  </span><span class="o">{</span>
+<a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a><span class="w">    </span><span class="n">s</span><span class="o">.</span><span class="n">board</span><span class="o">[</span><span class="mi">0</span><span class="o">][</span><span class="mi">0</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span>
+<a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a><span class="w">    </span><span class="n">s</span><span class="o">.</span><span class="n">board</span><span class="o">[</span><span class="mi">1</span><span class="o">][</span><span class="mi">1</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span>
+<a id="__codelineno-9-26" name="__codelineno-9-26" href="#__codelineno-9-26"></a><span class="w">    </span><span class="n">s</span><span class="o">.</span><span class="n">board</span><span class="o">[</span><span class="mi">2</span><span class="o">][</span><span class="mi">2</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span>
+<a id="__codelineno-9-27" name="__codelineno-9-27" href="#__codelineno-9-27"></a><span class="w">  </span><span class="o">}</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-9-28" name="__codelineno-9-28" href="#__codelineno-9-28"></a><span class="w">    </span><span class="n">s</span><span class="o">.</span><span class="n">board</span><span class="o">[</span><span class="mi">0</span><span class="o">][</span><span class="mi">2</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span>
+<a id="__codelineno-9-29" name="__codelineno-9-29" href="#__codelineno-9-29"></a><span class="w">    </span><span class="n">s</span><span class="o">.</span><span class="n">board</span><span class="o">[</span><span class="mi">1</span><span class="o">][</span><span class="mi">1</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span>
+<a id="__codelineno-9-30" name="__codelineno-9-30" href="#__codelineno-9-30"></a><span class="w">    </span><span class="n">s</span><span class="o">.</span><span class="n">board</span><span class="o">[</span><span class="mi">2</span><span class="o">][</span><span class="mi">0</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span>
+<a id="__codelineno-9-31" name="__codelineno-9-31" href="#__codelineno-9-31"></a><span class="w">  </span><span class="o">}</span><span class="w">  </span>
+<a id="__codelineno-9-32" name="__codelineno-9-32" href="#__codelineno-9-32"></a><span class="o">}</span>
+</code></pre></div>
+<p>After writing these domain predicates, we're reaching a fairly complete model for a single tic-tac-toe board. Let's decide how to fix the issue we saw above (the reason why <code>OTurn</code> couldn't be the negation of <code>XTurn</code>): perhaps a player has moved too often.</p>
+<p>Should we add something like <code>OTurn[s] or XTurn[s]</code> to our wellformedness predicate? <strong>No!</strong> If we then later enforced wellformedness for all boards, that would exclude "cheating" instances where a player has more moves on the board than are allowed. But this has some risk, depending on how we intend to use the <code>wellformed</code> predicate:</p>
+<ul>
+<li>If we were only ever generating <em>valid boards</em>, a cheating state might well be spurious, or at least undesirable. In that case, we might prevent such states in <code>wellformed</code> and rule it out. </li>
+<li>If we were generating arbitrary (not necessarily valid) boards, being able to see a cheating state might be useful. In that case, we'd leave it out of <code>wellformed</code>.</li>
+<li>If we're interested in <em>verification</em>, e.g., we are asking whether the game of Tic-Tac-Toe enables ever reaching a cheating board, we shouldn't add <code>not cheating</code> to <code>wellformed</code>; because <code>wellformed</code> also excludes garbage boards, we'd probably use it in our verification&mdash;in which case, Forge will never find us a counterexample! </li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Modeling vs. PBT</p>
+<p>Notice the similarity between this issue and what we do in property-based testing. Here, we're forced to distinguish between what a reasonable <em>board</em> is (analogous to the generator's output in PBT) and what a reasonable <em>behavior</em> is (analogous to the validity predicate in PBT). One narrows the scope of possible worlds to avoid true "garbage"; the other checks whether the system behaves as expected in one of those worlds.</p>
+</div>
+<p>We'll come back to this later, when we've had a bit more modeling experience. For now, let's separate our goal into a new predicate called <code>balanced</code>, and add it to our <code>run</code> command above so that Forge will find us an instance where some board is both <code>balanced</code> and <code>wellformed</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kd">pred</span><span class="w"> </span><span class="nf">balanced</span><span class="o">[</span><span class="n">s</span><span class="p">:</span><span class="w"> </span><span class="n">Board</span><span class="o">]</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="n">XTurn</span><span class="o">[</span><span class="n">s</span><span class="o">]</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">OTurn</span><span class="o">[</span><span class="n">s</span><span class="o">]</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="o">}</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="k">run</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="k">some</span><span class="w"> </span><span class="n">b</span><span class="p">:</span><span class="w"> </span><span class="n">Board</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">wellformed</span><span class="o">[</span><span class="n">b</span><span class="o">]</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">balanced</span><span class="o">[</span><span class="n">b</span><span class="o">]}</span><span class="w"> </span>
+</code></pre></div>
+<p>If we click the "Next" button a few times, we see that not all is well: we're getting boards where <code>wellformed</code> is violated (e.g., entries at negative rows, or multiple moves in one square). Why is this happening?</p>
+<p>We're getting this because of how the <code>run</code> was phrased. We said to find an instance where <em>some board</em> was well-formed and valid, not one where <em>all boards</em> were. Our <code>run</code> is satisfied by any instance where <em>at least one</em> <code>Board</code> is <code>wellformed</code>; the others won't affect the truth of the constraint. By default, Forge will find instances with up to 4 <code>Boards</code>. So we can fix the problem either by telling Forge to find instances with only 1 Board:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">run</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="k">some</span><span class="w"> </span><span class="n">b</span><span class="p">:</span><span class="w"> </span><span class="n">Board</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">wellformed</span><span class="o">[</span><span class="n">b</span><span class="o">]</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">balanced</span><span class="o">[</span><span class="n">b</span><span class="o">]}</span><span class="w"> </span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="k">for</span><span class="w"> </span><span class="k">exactly</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">Board</span>
+</code></pre></div>
+<p>or by saying that all boards must be well-formed and balanced:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">run</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="k">all</span><span class="w"> </span><span class="n">b</span><span class="p">:</span><span class="w"> </span><span class="n">Board</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">wellformed</span><span class="o">[</span><span class="n">b</span><span class="o">]</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">balanced</span><span class="o">[</span><span class="n">b</span><span class="o">]}</span><span class="w"> </span>
+</code></pre></div>
+<h2 id="practice-with-run">Practice with <code>run</code><a class="headerlink" href="#practice-with-run" title="Permanent link">&para;</a></h2>
+<p>The <code>run</code> command can be used to give Forge more detailed instructions for its search. </p>
+<h3 id="no-boards">No Boards<a class="headerlink" href="#no-boards" title="Permanent link">&para;</a></h3>
+<p><strong>Exercise:</strong> Is it possible for an instance with <em>no</em> boards to still satisfy constraints like these?</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">run</span><span class="w"> </span><span class="o">{</span><span class="w">    </span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">     </span><span class="k">all</span><span class="w"> </span><span class="n">b</span><span class="p">:</span><span class="w"> </span><span class="n">Board</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">         </span><span class="c1">-- X has won, and the board looks OK</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">         </span><span class="n">wellformed</span><span class="o">[</span><span class="n">b</span><span class="o">]</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">         </span><span class="n">winner</span><span class="o">[</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">X</span><span class="o">]</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w">         </span><span class="n">balanced</span><span class="o">[</span><span class="n">b</span><span class="o">]</span><span class="w">    </span>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="w">     </span><span class="o">}</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="w"> </span><span class="o">}</span>
+</code></pre></div>
+<details class="note">
+<summary>Think, then click!</summary>
+<p>Yes! There aren't any boards, so there's no obligation for anything to satisfy the constraints inside the quantifier. You can think of the <code>all</code> as something like a <code>for</code> loop in Java or the <code>all()</code> function in Python: it checks every <code>Board</code> in the instance. If there aren't any, there's nothing to check&mdash;return true.</p>
+</details>
+<h3 id="adding-more">Adding More<a class="headerlink" href="#adding-more" title="Permanent link">&para;</a></h3>
+<p>This addition also requires that <code>X</code> moved in the middle of the board:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="k">run</span><span class="w"> </span><span class="o">{</span><span class="w">    </span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">     </span><span class="k">all</span><span class="w"> </span><span class="n">b</span><span class="p">:</span><span class="w"> </span><span class="n">Board</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">         </span><span class="c1">-- X has won, and the board looks OK</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">         </span><span class="n">wellformed</span><span class="o">[</span><span class="n">b</span><span class="o">]</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">         </span><span class="n">winner</span><span class="o">[</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">X</span><span class="o">]</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">         </span><span class="n">balanced</span><span class="o">[</span><span class="n">b</span><span class="o">]</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">         </span><span class="c1">-- X started in the middle</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="w">         </span><span class="n">b</span><span class="o">.</span><span class="n">board</span><span class="o">[</span><span class="mi">1</span><span class="o">][</span><span class="mi">1</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">X</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="w">     </span><span class="o">}</span>
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="w"> </span><span class="o">}</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">exactly</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="n">Board</span>
+</code></pre></div>
+<p>Notice that, because we said <code>exactly 2 Board</code> here, Forge <em>must</em> find instances containing 2 tic-tac-toe boards, and both of them must satisfy the constraints: wellformedness, <code>X</code> moving in the middle, etc. You could ask for a board where <code>X</code> <em>hasn't</em> won by adding <code>not winner[b, X]</code>. </p>
+<!-- You also have `implies` and `iff` (if and only if), although you can still do something like comparing two predicates without `iff` (try, e.g., asking for instances where `A and not B` holds).  -->
+
+<p>We'll come back to tic-tac-toe <a href="ttt_games.html">soon</a>. The <a href="../bst/bst.html">next section</a> will cover a second static example let's cover another static example.</p>
+<h2 id="testing-with-assertions">Testing with assertions<a class="headerlink" href="#testing-with-assertions" title="Permanent link">&para;</a></h2>
+<p>Before we move on, I want to quickly note that <code>example</code> isn't the only way you can write tests in Forge. The <code>example</code> construct is powerful if you want to write "pointwise" tests in terms of single instances, but can quickly become verbose. If you know what properties you're interested in testing for, you can encode that into an <code>assert</code> in Forge. For example:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1">// I want to check that this predicate is satisfiable for some set of arguments, </span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="c1">// but I don&#39;t care about the specific instance(s) that satisfy it.</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="kd">assert</span><span class="w"> </span><span class="o">{</span><span class="k">some</span><span class="w"> </span><span class="n">b</span><span class="p">:</span><span class="w"> </span><span class="n">Board</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">XTurn</span><span class="o">[</span><span class="n">b</span><span class="o">]}</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="k">sat</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="c1">// I want to confirm that OTurn and XTurn are mutually exclusive</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="c1">// assert {} TODO ADD</span>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

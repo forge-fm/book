@@ -1,0 +1,2275 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Lightweight Formal Methods for Everybody">
+      
+      
+      
+        <link rel="canonical" href="https://forge-fm.github.io/book/2026/chapters/solvers/bounds_booleans_how_forge_works.html">
+      
+      
+        <link rel="prev" href="../relations/sets-beyond-assertions.html">
+      
+      
+        <link rel="next" href="../qna/relations.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>How does Forge Work? - Logic for Systems</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#bounds-and-booleans-how-forge-works" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="Logic for Systems" class="md-header__button md-logo" aria-label="Logic for Systems" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Logic for Systems
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              How does Forge Work?
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/forge-fm/book" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    forge-fm/book
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="Logic for Systems" class="md-nav__button md-logo" aria-label="Logic for Systems" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Logic for Systems
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/forge-fm/book" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    forge-fm/book
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Preamble: Beyond Testing
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Preamble: Beyond Testing
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../manifesto/job.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    What good is this book?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../manifesto/manifesto.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logic for Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../properties/pbt.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    From Tests to Properties
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modeling Static Scenarios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modeling Static Scenarios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ttt/ttt.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tic-Tac-Toe
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bst/bst.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Binary Search Trees
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adder/rca.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ripple-Carry Adder
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qna/static.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q&A: Static Modeling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Discrete Event Systems
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Discrete Event Systems
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ttt/ttt_games.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transitions, Traces, and Verification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../inductive/bsearch.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Counterexamples to Induction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bst/descent.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BSTs: Recursive Descent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../validation/validating_events.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Validating Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qna/events.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q&A: Event Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modeling Relationships
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modeling Relationships
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../relations/modeling-booleans-1.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Relational Forge, Modeling Logic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../relations/reachability.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transitive Closure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../relations/sets-induction-mutex.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modeling Mutual Exclusion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../relations/sets-beyond-assertions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Going Beyond Assertions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How does Forge Work?
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="bounds_booleans_how_forge_works.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How does Forge Work?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-does-forge-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Does Forge Work?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-boolean-solvers-understand" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Boolean Solvers Understand
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-world-is-that-which-is-the-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "The world is that which is the case"
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#intermediate-representation-lower-bounds-upper-bounds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intermediate Representation: Lower Bounds, Upper Bounds
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#from-forge-constraints-to-boolean-constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From Forge Constraints to Boolean Constraints
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-optimization-skolemization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example optimization: Skolemization
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#symmetry-breaking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Symmetry Breaking
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qna/relations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q&A: Relations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Temporal Specification
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Temporal Specification
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../temporal/liveness_and_lassos.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Liveness and Lassos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../temporal/temporal_operators.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Temporal Forge
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../temporal/temporal_operators_2.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linear Temporal Logic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../temporal/obligations_past.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Obligations and the Past
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../temporal/fixing_lock_temporal.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mutual Exclusion, Revisited
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../temporal/testing_temporal.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing Temporally
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Boolean Solver Algorithms
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Boolean Solver Algorithms
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="dpll.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Boolean SAT (DPLL)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="resolution.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Witnessing Unsat: Propositional Resolution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Beyond SAT
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Beyond SAT
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="smt.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Satisfiability Modulo Theories (SMT)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="cegis.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Learning with Solvers: CEGIS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Appendix
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendix/glossary.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendix/errors.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Error Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-does-forge-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Does Forge Work?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-boolean-solvers-understand" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Boolean Solvers Understand
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-world-is-that-which-is-the-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "The world is that which is the case"
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#intermediate-representation-lower-bounds-upper-bounds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intermediate Representation: Lower Bounds, Upper Bounds
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#from-forge-constraints-to-boolean-constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From Forge Constraints to Boolean Constraints
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-optimization-skolemization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example optimization: Skolemization
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#symmetry-breaking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Symmetry Breaking
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="bounds-and-booleans-how-forge-works">Bounds and Booleans: How Forge Works<a class="headerlink" href="#bounds-and-booleans-how-forge-works" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>"The world is everything that is the case. The world is the totality of facts, not of things. The world is determined by the facts, and by these being all the facts."</p>
+<p>Ludwig Wittgenstein (Tractatus Logico-philosophicus)</p>
+</blockquote>
+<h2 id="how-does-forge-work">How Does Forge Work?<a class="headerlink" href="#how-does-forge-work" title="Permanent link">&para;</a></h2>
+<p>We've hinted about this a bit in the <a href="../qna/static.html">past</a>, but now we'll go a bit deeper into how Forge works.  </p>
+<p>Recall that every <code>run</code> (or <code>test</code>, or <code>example</code>) command defines a <em>search problem</em>: find some instance that satisfies the given constraints and is within the given bounds. When you click "Run", Forge compiles this search problem into a <em>boolean satisfiability problem</em>, which it then gives to an external boolean solver package.</p>
+<p>There are complications, though. The search problem Forge needs to solve is in terms of <em>atomic objects</em>: objects of particular types, which can go into sets and relations and so on. In contrast, a boolean problem is in terms of just boolean variables: <em>atomic truths</em> that can be combined with <code>and</code>, <code>or</code>, etc. Somehow, we need to bridge that gap from object to boolean.</p>
+<h2 id="what-boolean-solvers-understand">What Boolean Solvers Understand<a class="headerlink" href="#what-boolean-solvers-understand" title="Permanent link">&para;</a></h2>
+<p>As an example of where Forge needs to end up, here's an example of a real problem to pass to a boolean solver. It's in a standard format called DIMACS, and it describes a way to find a solution to the <a href="https://en.wikipedia.org/wiki/Eight_queens_puzzle">4-queens puzzle</a>. There are many other ways to express this problem, but we'll focus on this one. What do you think it's saying, exactly?</p>
+<details class="note">
+<summary>Click to expand the DIMACS problem definition</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>c DIMACS for 4 queens
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>c 
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>p cnf 16 84
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>1 2 3 4 0
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>-1 -2 0
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>-1 -3 0
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>-1 -4 0
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>-2 -3 0
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>-2 -4 0
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>-3 -4 0
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>5 6 7 8 0
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>-5 -6 0
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>-5 -7 0
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>-5 -8 0
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>-6 -7 0
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>-6 -8 0
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>-7 -8 0
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>9 10 11 12 0
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>-9 -10 0
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>-9 -11 0
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>-9 -12 0
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>-10 -11 0
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>-10 -12 0
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>-11 -12 0
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>13 14 15 16 0
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>-13 -14 0
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>-13 -15 0
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>-13 -16 0
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>-14 -15 0
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>-14 -16 0
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>-15 -16 0
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>1 5 9 13 0
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>-1 -5 0
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>-1 -9 0
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>-1 -13 0
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>-5 -9 0
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>-5 -13 0
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>-9 -13 0
+<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>2 6 10 14 0
+<a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>-2 -6 0
+<a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>-2 -10 0
+<a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>-2 -14 0
+<a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>-6 -10 0
+<a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>-6 -14 0
+<a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a>-10 -14 0
+<a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a>3 7 11 15 0
+<a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a>-3 -7 0
+<a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a>-3 -11 0
+<a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a>-3 -15 0
+<a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a>-7 -11 0
+<a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a>-7 -15 0
+<a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a>-11 -15 0
+<a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a>4 8 12 16 0
+<a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a>-4 -8 0
+<a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a>-4 -12 0
+<a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a>-4 -16 0
+<a id="__codelineno-0-57" name="__codelineno-0-57" href="#__codelineno-0-57"></a>-8 -12 0
+<a id="__codelineno-0-58" name="__codelineno-0-58" href="#__codelineno-0-58"></a>-8 -16 0
+<a id="__codelineno-0-59" name="__codelineno-0-59" href="#__codelineno-0-59"></a>-12 -16 0
+<a id="__codelineno-0-60" name="__codelineno-0-60" href="#__codelineno-0-60"></a>-1 -6 0
+<a id="__codelineno-0-61" name="__codelineno-0-61" href="#__codelineno-0-61"></a>-1 -11 0
+<a id="__codelineno-0-62" name="__codelineno-0-62" href="#__codelineno-0-62"></a>-1 -16 0
+<a id="__codelineno-0-63" name="__codelineno-0-63" href="#__codelineno-0-63"></a>-2 -7 0
+<a id="__codelineno-0-64" name="__codelineno-0-64" href="#__codelineno-0-64"></a>-2 -12 0
+<a id="__codelineno-0-65" name="__codelineno-0-65" href="#__codelineno-0-65"></a>-2 -5 0
+<a id="__codelineno-0-66" name="__codelineno-0-66" href="#__codelineno-0-66"></a>-3 -8 0
+<a id="__codelineno-0-67" name="__codelineno-0-67" href="#__codelineno-0-67"></a>-3 -6 0
+<a id="__codelineno-0-68" name="__codelineno-0-68" href="#__codelineno-0-68"></a>-3 -9 0
+<a id="__codelineno-0-69" name="__codelineno-0-69" href="#__codelineno-0-69"></a>-4 -7 0
+<a id="__codelineno-0-70" name="__codelineno-0-70" href="#__codelineno-0-70"></a>-4 -10 0
+<a id="__codelineno-0-71" name="__codelineno-0-71" href="#__codelineno-0-71"></a>-4 -13 0
+<a id="__codelineno-0-72" name="__codelineno-0-72" href="#__codelineno-0-72"></a>-5 -10 0
+<a id="__codelineno-0-73" name="__codelineno-0-73" href="#__codelineno-0-73"></a>-5 -15 0
+<a id="__codelineno-0-74" name="__codelineno-0-74" href="#__codelineno-0-74"></a>-6 -11 0
+<a id="__codelineno-0-75" name="__codelineno-0-75" href="#__codelineno-0-75"></a>-6 -16 0
+<a id="__codelineno-0-76" name="__codelineno-0-76" href="#__codelineno-0-76"></a>-6 -9 0
+<a id="__codelineno-0-77" name="__codelineno-0-77" href="#__codelineno-0-77"></a>-7 -12 0
+<a id="__codelineno-0-78" name="__codelineno-0-78" href="#__codelineno-0-78"></a>-7 -10 0
+<a id="__codelineno-0-79" name="__codelineno-0-79" href="#__codelineno-0-79"></a>-7 -13 0
+<a id="__codelineno-0-80" name="__codelineno-0-80" href="#__codelineno-0-80"></a>-8 -11 0
+<a id="__codelineno-0-81" name="__codelineno-0-81" href="#__codelineno-0-81"></a>-8 -14 0
+<a id="__codelineno-0-82" name="__codelineno-0-82" href="#__codelineno-0-82"></a>-9 -14 0
+<a id="__codelineno-0-83" name="__codelineno-0-83" href="#__codelineno-0-83"></a>-10 -15 0
+<a id="__codelineno-0-84" name="__codelineno-0-84" href="#__codelineno-0-84"></a>-10 -13 0
+<a id="__codelineno-0-85" name="__codelineno-0-85" href="#__codelineno-0-85"></a>-11 -16 0
+<a id="__codelineno-0-86" name="__codelineno-0-86" href="#__codelineno-0-86"></a>-11 -14 0
+<a id="__codelineno-0-87" name="__codelineno-0-87" href="#__codelineno-0-87"></a>-12 -15 0
+</code></pre></div>
+</details>
+<hr />
+<p>Even without parsing it with a computer, the format tells us a lot about what a purely boolean solver understands. Here are a few facts about DIMACS:</p>
+<ul>
+<li>Boolean variables in DIMACS are represented by integers greater than zero. </li>
+<li>If <code>p</code> is a variable, then <code>not p</code> is represented as the integer <code>-p</code>. </li>
+<li>Lines starting with a <code>c</code> are comments.</li>
+<li>The line <code>p cnf 16 84</code> says there are 16 variables and 84 <em>clauses</em>. A clause is a set of variables (or negated variables) all combined with <code>or</code>. E.g., <code>4 8 12 -16 0</code> means <code>4 or 8 or 12 or (not 16)</code>. (The <code>0</code> is a line-terminator.)</li>
+<li>To satisfy the input, every clause must be satisfied.</li>
+</ul>
+<p>A set of constraints expressed as a set of clauses, each of which must hold true, is said to be in <em>Conjunctive Normal Form</em> (CNF). Boolean solvers often expect input in CNF, for algorithmic reasons we'll soon see.</p>
+<p>Now that you know how to read the input format, you might be able to see how the boolean constraints work to solve the 4-queens problem. Any ideas?</p>
+<details class="note">
+<summary>Think, then click!</summary>
+<p>There's one variable for every square on the <span class="arithmatex">\(4 \times 4\)</span> squares. <code>1 2 3 4</code> says that there must be a queen somewhere on the first row. <code>-1 -2</code> says that if there is a queen at <span class="arithmatex">\(1,1\)</span> there cannot also be a queen at <span class="arithmatex">\(1,2\)</span>. And so on.</p>
+</details>
+<h2 id="the-world-is-that-which-is-the-case">"The world is that which is the case"<a class="headerlink" href="#the-world-is-that-which-is-the-case" title="Permanent link">&para;</a></h2>
+<p>Consider this Forge model and corresponding <code>run</code> command:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">abstract</span><span class="w"> </span><span class="kd">sig</span><span class="w"> </span><span class="nc">Person</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="n">followers</span><span class="p">:</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="n">Person</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="o">}</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="k">one</span><span class="w"> </span><span class="kd">sig</span><span class="w"> </span><span class="nc">Alice</span><span class="p">,</span><span class="w"> </span><span class="nc">Bob</span><span class="p">,</span><span class="w"> </span><span class="nc">Charlie</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="n">Person</span><span class="w"> </span><span class="o">{}</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="k">run</span><span class="w"> </span><span class="o">{</span><span class="k">some</span><span class="w"> </span><span class="n">followers</span><span class="o">}</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">exactly</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="n">Person</span><span class="w"> </span>
+</code></pre></div>
+<p>How many potential instances are there? Note that there can only ever be exactly 3 people, since <code>Person</code> is <code>abstract</code>.</p>
+<details class="note">
+<summary>Think, then click!</summary>
+<p>There are always exactly 3 people, and the only relation that can vary is <code>followers</code>, which has 2 columns. That means <span class="arithmatex">\(3^2 = 9\)</span> potential pairs of people, and the field contains a set of those. The set either contains or does not contain each pair. So there are <span class="arithmatex">\(2^9 = 512\)</span> potential instances.</p>
+</details>
+<hr />
+<p>Notice how we reached that number. There are 9 potential pairs of people. 9 potential follower relationships. 9 essential things that may, or may not, be the case in the world. Nothing else.</p>
+<p>If you run Forge on this model, you'll see statistics like these:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>#vars: (size-variables 10); #primary: (size-primary 9); #clauses: (size-clauses 2)
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>Transl (ms): (time-translation 122); Solving (ms): (time-solving 1)
+</code></pre></div>
+<p>The timing may vary, but the other stats will be the same. The thing to focus on is: 9 <code>primary variables</code>. Primary variables correspond to these atomic truths, which in this case is just who follows who in our fixed 3-person world: the number of rows that are potentially in the <code>followers</code> relation.</p>
+<p>Let's try increasing the size of the world:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">run</span><span class="w"> </span><span class="o">{</span><span class="k">some</span><span class="w"> </span><span class="n">followers</span><span class="o">}</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="n">Person</span>
+</code></pre></div>
+<p>Now we have a 4th person---or rather, we <em>might</em> have a 4th person. When we run, Forge shows:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>#vars: (size-variables 27); #primary: (size-primary 17); #clauses: (size-clauses 18)
+</code></pre></div>
+<p>We've gone from 9 to 17 primary variables. Why? </p>
+<details class="note">
+<summary>Think, then click!</summary>
+<p>There is another <em>potential</em> <code>Person</code> in the world; the world may be either size 3 or 4. Whether or not this fourth person exists is 1 new Boolean variable. And since there are <em>4</em> potential people in the world, there are now <span class="arithmatex">\(4^2 = 16\)</span> potential follower relationships. </p>
+<p>This equals 17 variables.</p>
+</details>
+<p></br></p>
+<p>This is how Forge translates statements about atoms into statements about booleans. </p>
+<h2 id="intermediate-representation-lower-bounds-upper-bounds">Intermediate Representation: Lower Bounds, Upper Bounds<a class="headerlink" href="#intermediate-representation-lower-bounds-upper-bounds" title="Permanent link">&para;</a></h2>
+<p>Not every potential boolean needs to actually be considered, however. You might <a href="../qna/events.html">remember</a> that annotations like <code>{next is linear}</code> or partial instances defined by <code>example</code> or <code>inst</code> further limit the set of variables before the boolean solver encounters them. To understand this better, let's increase the verbosity setting in Forge. This will let us look at what Forge produces as an intermediate problem description before converting to boolean logic.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">option</span><span class="w"> </span><span class="na">verbose</span><span class="w"> </span><span class="mi">5</span>
+</code></pre></div>
+<p>Let's focus on a few lines. First, you should see this somewhere:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>(univ 20)
+</code></pre></div>
+<p>This tells the compiler that there are 20 potential objects in the world. (Why 20? Because the default bitwidth is 4: that's 16 integers, plus 4 potential people.) These objects get assigned integer identifiers by the compiler. </p>
+<div class="admonition warning">
+<p class="admonition-title">3 different meanings</p>
+<p>This is an unfortunate overlap in the backend solver engine's language: all <em>atoms</em>, including atoms of type <code>Int</code>, get assigned integers by the engine. Moreover, the boolean solver itself uses integer indexes for boolean variables. <strong>These are not the same thing!</strong></p>
+</div>
+<p>Next, the compiler gets provided a <em>lower</em> and <em>upper</em> bound for every relation in the model.
+* The <em>lower</em> bound is a set of tuples that must always be in the relation.
+* The <em>upper</em> bound is a set of tuples that may be in the relation.</p>
+<p>For example, here are the bounds on <code>Int</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>(r:Int [{(0) (1) (2) (3) (4) (5) (6) (7) (8) (9) (10) (11) (12) (13) (14) (15)} :: {(0) (1) (2) (3) (4) (5) (6) (7) (8) (9) (10) (11) (12) (13) (14) (15)}])
+</code></pre></div>
+<p>The lower bound comes first, then a <code>::</code>, then the upper bound. These singleton tuples containing <code>0</code> through <code>15</code> are actually the representatives of integers <code>-8</code> through <code>7</code>. This is an artifact of how the solver process works.</p>
+<p>Here's the bound on <code>Person</code> and its three sub-<code>sig</code>s:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>(r:Person [{(16) (17) (18)} :: {(16) (17) (18) (19)}])
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>(r:Alice [{(16)} :: {(16)}])
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>(r:Bob [{(17)} :: {(17)}])
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>(r:Charlie [{(18)} :: {(18)}])
+</code></pre></div>
+<p>The lower bound on <code>Person</code> contains 3 object identifiers, because there must always be 3 distinct objects (representing our three <code>one</code> sigs). There's an object in the upper, but not the lower, bound, because that fourth person may or may not exist. <code>Alice</code>, <code>Bob</code>, and <code>Charlie</code> are exactly set to be those 3 different always-present objects.</p>
+<p>Finally, let's look at a field's bounds:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>(r:followers [(-&gt; none none) :: {(16 16) (16 17) (16 18) (16 19) (17 16) (17 17) (17 18) (17 19) (18 16) (18 17) (18 18) (18 19) (19 16) (19 17) (19 18) (19 19)}])
+</code></pre></div>
+<p>The <code>followers</code> relation may be empty, and it may contain any of the 16 ordered pairs of potential <code>Person</code> objects.</p>
+<p><em>Any tuple in the upper bound of a relation, that isn't also in the lower bound, gets assigned a boolean variable.</em>
+* If a tuple isn't in the upper bound, it can never exist in an instance---it would always be assigned false---and so we needn't assign a variable.
+* If a tuple is in the lower bound, it must always exist in an instance---it would always be assigned true---and so we can again omit a variable.</p>
+<h2 id="from-forge-constraints-to-boolean-constraints">From Forge Constraints to Boolean Constraints<a class="headerlink" href="#from-forge-constraints-to-boolean-constraints" title="Permanent link">&para;</a></h2>
+<p>Once we know the set of Boolean variables we'll use, we can translate Forge constraints to purely Boolean ones via substitution. Here's an example of how a basic compiler, without optimizations, might work.  Suppose we have the constraint:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">all</span><span class="w"> </span><span class="n">p</span><span class="p">:</span><span class="w"> </span><span class="n">Person</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Alice</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">p</span><span class="o">.</span><span class="n">followers</span>
+</code></pre></div>
+<p>There are no <code>all</code> quantifiers in Boolean logic. How can we get rid of it?</p>
+<details class="note">
+<summary>Think, then click!</summary>
+<p>An <code>all</code> is just a big <code>and</code> over the upper bound on <code>Person</code>. So we substitute (note here we're using <span class="arithmatex">\(Person3\)</span> as if it were defined in our model, because it's a <em>potential</em> part of every instance):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">Alice</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">Alice</span><span class="o">.</span><span class="n">followers</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="n">Alice</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">Bob</span><span class="o">.</span><span class="n">followers</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="n">Alice</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">Charlie</span><span class="o">.</span><span class="n">followers</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="o">(</span><span class="n">Person3</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">Person</span><span class="o">)</span><span class="w"> </span><span class="ow">implies</span><span class="w"> </span><span class="n">Alice</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">Person3</span><span class="o">.</span><span class="n">followers</span>
+</code></pre></div>
+</details>
+<p></br></p>
+<p>There are similar rules for other operators: a <code>some</code> becomes a big <code>or</code>, a relational join becomes a <code>some</code>-quantified statement about the existence of a value to join on, which then becomes a big <code>or</code>, etc.</p>
+<h2 id="example-optimization-skolemization">Example optimization: Skolemization<a class="headerlink" href="#example-optimization-skolemization" title="Permanent link">&para;</a></h2>
+<p>Forge performs a process called <em>Skolemization</em>, named after the logician <a href="https://en.wikipedia.org/wiki/Thoralf_Skolem">Thoralf Skolem</a>, to convert specific <code>some</code> quantifiers into supplemental relations. </p>
+<p>The idea is: to satisfy a <code>some</code> quantifier, some atom exists that can be plugged into the quantifier's variable <code>x</code> to make the child formula true. Skolemization reifies that object witness into the model as a new relational constant <code>$x</code>. This:</p>
+<ul>
+<li>makes debugging easier sometimes, since you can immediately <em>see</em> what might satisfy the quantifier constraint; and</li>
+<li>sometimes aids in efficiency, especially in a "target poor" environment like an unsatisfiable problem. </li>
+</ul>
+<p>By convention, these variables are prefixed with a <code>$</code>. So if you see a relation labeled <code>$x</code>, it's a Skolem relation that points to a value for a <code>some</code> quantified variable <code>x</code>. The relation will grow wider for every <code>all</code> quantifier that wraps the <code>some</code> quantifier being Skolemized. To see why that happens, suppose that we have a constraint: <code>all p: Person | all b: Bank | hasAccount[p,b] implies some i: Int | bankBalance[p,b,i]</code>. This constraint says that if a person has a bank account at a certain bank, there's a balance entered for that account. That balance isn't constant! It's potentially different for every <code>Person</code>-<code>Bank</code> pairing. Thus, <code>$i</code> would have arity 3: 2 for the "input" and 1 for the "output". </p>
+<div class="admonition tip">
+<p class="admonition-title">Skolem Depth</p>
+<p>You can change how deeply <code>some</code> quantifiers will get Skolemized by using the <code>skolem_depth</code> option in Forge.</p>
+</div>
+<!-- (Forge adds the numeric suffix to help disambiguate variables with the same name.)
+`$x_some32783` -->
+
+<h2 id="symmetry-breaking">Symmetry Breaking<a class="headerlink" href="#symmetry-breaking" title="Permanent link">&para;</a></h2>
+<p>Let's return to the original Followers model:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">abstract</span><span class="w"> </span><span class="kd">sig</span><span class="w"> </span><span class="nc">Person</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="n">followers</span><span class="p">:</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="n">Person</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="o">}</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="k">one</span><span class="w"> </span><span class="kd">sig</span><span class="w"> </span><span class="nc">Alice</span><span class="p">,</span><span class="w"> </span><span class="nc">Bob</span><span class="p">,</span><span class="w"> </span><span class="nc">Charlie</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="n">Person</span><span class="w"> </span><span class="o">{}</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="k">run</span><span class="w"> </span><span class="o">{</span><span class="k">some</span><span class="w"> </span><span class="n">followers</span><span class="o">}</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">exactly</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="n">Person</span><span class="w"> </span>
+</code></pre></div>
+<p>We decided it probably had <span class="arithmatex">\(512\)</span> instances. But does it <em>really</em>? Let's hit <code>Next</code> a few times, and count! Actually, that sounds like a lot of work. Let's simplify things a bit more, instead:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">abstract</span><span class="w"> </span><span class="kd">sig</span><span class="w"> </span><span class="nc">Person</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span><span class="n">follower</span><span class="p">:</span><span class="w"> </span><span class="k">one</span><span class="w"> </span><span class="n">Person</span><span class="w"> </span><span class="c1">-- changed: replace `set` with `one` </span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="o">}</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="k">one</span><span class="w"> </span><span class="kd">sig</span><span class="w"> </span><span class="nc">Alice</span><span class="p">,</span><span class="w"> </span><span class="nc">Bob</span><span class="p">,</span><span class="w"> </span><span class="nc">Charlie</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="n">Person</span><span class="w"> </span><span class="o">{}</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="k">run</span><span class="w"> </span><span class="o">{}</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">exactly</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="n">Person</span><span class="w">  </span><span class="c1">-- changed: don&#39;t run any predicates</span>
+</code></pre></div>
+<p>Now everybody has exactly one follower. There are still 9 potential tuples, but we're no longer storing <em>sets</em> of them for each <code>Person</code>. Put another way, every instance corresponds to an ordered triplet of <code>Person</code> objects (Alice's follower, Bob's follower, and Charlie's follower). There will be <span class="arithmatex">\(3 \times 3 \times 3 = 3^3 = 27\)</span> instances. And indeed, if we click "Next" 26 times, this is what we see. (Whew.) </p>
+<p>Now suppose we didn't name the 3 people, but just had 3 anonymous <code>Person</code> objects:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="kd">sig</span><span class="w"> </span><span class="nc">Person</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span><span class="n">follower</span><span class="p">:</span><span class="w"> </span><span class="k">one</span><span class="w"> </span><span class="n">Person</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="o">}</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="k">run</span><span class="w"> </span><span class="o">{}</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">exactly</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="n">Person</span><span class="w">  </span><span class="c1">-- changed: no named people</span>
+</code></pre></div>
+<p>The math is still the same: <span class="arithmatex">\(27\)</span> instances. But now we only get <span class="arithmatex">\(9\)</span> before hitting the unsat indicator of "no more instances" in the visualizer.</p>
+<p>What's going on?</p>
+<p>Forge tries to avoid showing you the same instance multiple times. And, if objects are un-named and the constraints can never distinguish them, instances will be considered "the same" if you can arrive at one by renaming elements of the other. E.g., </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>Person1 follows Person2
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>Person2 follows Person3
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>Person3 follows Person1
+</code></pre></div>
+<p>would be considered equivalent to:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>Person2 follows Person1
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>Person3 follows Person2
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>Person1 follows Person3
+</code></pre></div>
+<p>since the individual <code>Person</code> atoms are <em>anonymous</em> to the constraints, which cannot refer to atoms by name. We call these instances <em>isomorphic</em> to each other, and say that there is a <em>symmetry</em> between them.  Formally, Forge finds every instance "up to isomorphism". This is useful for:</p>
+<ul>
+<li>increasing the quality of information you get from paging through instances; and</li>
+<li>(sometimes) improving the runtime on problems, especally if solutions are very rare.</li>
+</ul>
+<p>This process isn't always perfect: some equivalent instances can sneak in. Removing <em>all</em> equivalent instances turns out to sometimes be even more expensive than solving the problem. So Forge provides a best-effort, low cost attempt based on a <em>budget</em> for adding additional constraints to the problem, specifically to eliminate symmetries.</p>
+<p>You can adjust the budget for symmetry breaking via an option:</p>
+<ul>
+<li><code>option sb 0</code> turns off symmetry breaking; and</li>
+<li><code>option sb 20</code> is the default.</li>
+</ul>
+<p>If we turn off symmetry-breaking, we'll get the expected number of instances in the above run: <span class="arithmatex">\(27\)</span>.</p>
+<div class="admonition note">
+<p class="admonition-title">Symmetry Breaking != Filtering</p>
+<p>Forge doesn't just filter instances after they're generated; it <em>adds</em> extra constraints that try to rule out symmetric instances. These constraints are guaranteed to be satisfied by at least one element of every equivalence class of instances. There's a lot of research work on this area, e.g., <a href="https://kaiyuanw.github.io/papers/paper22-tacas20.pdf">this paper</a> from 2020.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,2600 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Lightweight Formal Methods for Everybody">
+      
+      
+      
+        <link rel="canonical" href="https://forge-fm.github.io/book/2026/chapters/adder/rca.html">
+      
+      
+        <link rel="prev" href="../bst/bst.html">
+      
+      
+        <link rel="next" href="../qna/static.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Ripple-Carry Adder - Logic for Systems</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ripple-carry-adder" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="Logic for Systems" class="md-header__button md-logo" aria-label="Logic for Systems" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Logic for Systems
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Ripple-Carry Adder
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/forge-fm/book" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    forge-fm/book
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="Logic for Systems" class="md-nav__button md-logo" aria-label="Logic for Systems" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Logic for Systems
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/forge-fm/book" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    forge-fm/book
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Preamble: Beyond Testing
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Preamble: Beyond Testing
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../manifesto/job.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    What good is this book?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../manifesto/manifesto.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logic for Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../properties/pbt.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    From Tests to Properties
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modeling Static Scenarios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modeling Static Scenarios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ttt/ttt.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tic-Tac-Toe
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bst/bst.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Binary Search Trees
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ripple-Carry Adder
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="rca.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ripple-Carry Adder
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#datatypes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Datatypes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wellformedness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wellformedness
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#more-predicates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        More Predicates
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="More Predicates">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#when-is-an-adders-output-bit-set-to-true" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When is an adder's output bit set to true?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-is-an-adders-carry-bit-set-to-true" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When is an adder's carry bit set to true?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adder-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adder Behavior
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#positive-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Positive Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#negative-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Negative Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Verification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-requirement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Requirement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimizing-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optimizing Verification
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qna/static.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q&A: Static Modeling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Discrete Event Systems
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Discrete Event Systems
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ttt/ttt_games.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transitions, Traces, and Verification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../inductive/bsearch.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Counterexamples to Induction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bst/descent.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BSTs: Recursive Descent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../validation/validating_events.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Validating Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qna/events.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q&A: Event Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modeling Relationships
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modeling Relationships
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../relations/modeling-booleans-1.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Relational Forge, Modeling Logic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../relations/reachability.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transitive Closure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../relations/sets-induction-mutex.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modeling Mutual Exclusion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../relations/sets-beyond-assertions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Going Beyond Assertions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../solvers/bounds_booleans_how_forge_works.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How does Forge Work?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qna/relations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q&A: Relations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Temporal Specification
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Temporal Specification
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../temporal/liveness_and_lassos.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Liveness and Lassos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../temporal/temporal_operators.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Temporal Forge
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../temporal/temporal_operators_2.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linear Temporal Logic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../temporal/obligations_past.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Obligations and the Past
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../temporal/fixing_lock_temporal.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mutual Exclusion, Revisited
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../temporal/testing_temporal.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing Temporally
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Boolean Solver Algorithms
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Boolean Solver Algorithms
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../solvers/dpll.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Boolean SAT (DPLL)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../solvers/resolution.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Witnessing Unsat: Propositional Resolution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Beyond SAT
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Beyond SAT
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../solvers/smt.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Satisfiability Modulo Theories (SMT)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../solvers/cegis.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Learning with Solvers: CEGIS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Appendix
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendix/glossary.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendix/errors.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Error Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#datatypes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Datatypes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wellformedness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wellformedness
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#more-predicates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        More Predicates
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="More Predicates">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#when-is-an-adders-output-bit-set-to-true" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When is an adder's output bit set to true?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-is-an-adders-carry-bit-set-to-true" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When is an adder's carry bit set to true?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adder-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adder Behavior
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#positive-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Positive Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#negative-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Negative Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Verification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-requirement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Requirement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimizing-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optimizing Verification
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="ripple-carry-adder">Ripple-Carry Adder<a class="headerlink" href="#ripple-carry-adder" title="Permanent link">&para;</a></h1>
+<p>Let's model a third system in Froglet. We'll focus on something even more concrete, something that is implemented in <em>hardware</em>: a circuit for adding together two numbers called a <em>ripple-carry adder</em> (RCA). Along the way, even though the adder doesn't "change", we'll still learn a useful technique for modeling systems that change over time. </p>
+<p>To understand an RCA, let's first think about adding together a pair of one-bit numbers. We might draw a table with four rows to represent this:</p>
+<table>
+<thead>
+<tr>
+<th>Input Bit A</th>
+<th>Input Bit B</th>
+<th>Result Bit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p>But, wait a moment. If we're building this into a circuit, and these inputs and outputs are single bits, we can't return <code>2</code> as the result. Similarly to how we might manually add <code>12345</code> and <code>67890</code> on paper, carrying a <code>1</code> in a few places...</p>
+<center><img width="50%" src="./Addition.png" style="background-color:white"/></center>
+
+<p>Notice how, on paper, we sweep from right to left. That is, we handle the least-significant digits first. </p>
+<p><strong>Exercise:</strong> Why is that? (Your first answer may be: "Because that's how you do it." But hold yourself to a higher standard. Was there a good reason to start on the right, and move left, rather than the other way around?)</p>
+<details class="note">
+<summary>Think, then click!</summary>
+<p>Carrying! If we started to the left, we'd give answers for those digits prematurely. (To see this, try doing the above arithmetic by hand again, but starting on the left and moving right. You'll need to carry, as before, but it will be <em>too late!</em>)</p>
+</details>
+<hr />
+<p>We need to carry a bit with value <code>1</code> in the <code>2s</code> place.</p>
+<table>
+<thead>
+<tr>
+<th>Input Bit A</th>
+<th>Input Bit B</th>
+<th>Result Bit</th>
+<th>Carry Bit (double value!)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>Suppose we've built a circuit like the above; this is called a <em>full adder</em> (FullAdder).</p>
+<div class="admonition note">
+<p class="admonition-title">Building circuits</p>
+<p>Exactly how we build that circuit is outside the scope of this example. Generally, we build them with logic gates: tiny devices that implement boolean operators like "and", "not", etc.</p>
+</div>
+<p>Now the question is: how do we build an adder that can handle numbers of the sizes that real computers use: 8-bit, 32-bit, or even 64-bit values? The answer is that we'll chain together multiple adder circuits like the above, letting the carry bits "ripple" forward as an extra, 3rd input to all the adders except the first one. E.g., if we were adding together a pair of 4-bit numbers&mdash;4 and 5, say&mdash;we'd chain together 4 adders like so:</p>
+<center><img width="70%" src="./rca.svg" style="background-color:white"/></center>
+
+<p>Notice that each full adder accepts <em>3</em> input bits, just like in the above table: 
+- a bit from the first number;
+- a bit from the second number; and
+- a carry bit.</p>
+<p>Each full adder has <em>2</em> output bits:
+- the value at this bit (1s place, 2s place, etc.); and 
+- the carry bit, if applicable.</p>
+<p>Our task here is to model this circuit in Forge, and confirm that it actually works correctly. </p>
+<div class="admonition note">
+<p class="admonition-title">Circuits aren't easy</p>
+<p>This might look "obvious", but there are things that can go wrong even at this level. </p>
+<p>If you've studied physics or electrical engineering, you might also see that this model won't match reality: it takes <em>time</em> for the signals to propagate between adders, and this delay can cause serious problems if the chain of adders is too long. We'll address that with a new, more sophisticated model, later.</p>
+</div>
+<h2 id="datatypes">Datatypes<a class="headerlink" href="#datatypes" title="Permanent link">&para;</a></h2>
+<p>We'll start by defining a data type&mdash;<code>Digit</code>&mdash;for the wire values, which can be either <code>T</code> or <code>F</code> (short for "true" and "false"; you can also think of these as representing "1" and "0" or "high" and "low").</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">abstract</span><span class="w"> </span><span class="kd">sig</span><span class="w"> </span><span class="nc">Digit</span><span class="w"> </span><span class="o">{}</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">one</span><span class="w"> </span><span class="kd">sig</span><span class="w"> </span><span class="nc">T</span><span class="p">,</span><span class="w"> </span><span class="nc">F</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="n">Digit</span><span class="w"> </span><span class="o">{}</span>
+</code></pre></div>
+<p>Then we'll define a <code>sig</code> for full adders, which will be chained together to form the ripple-carry adder. We'll give each full adder fields representing its input bits and output bits:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kd">sig</span><span class="w"> </span><span class="nc">FullAdder</span><span class="w"> </span><span class="o">{</span><span class="w"> </span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="c1">-- input value bits </span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="n">a_in</span><span class="p">,</span><span class="w"> </span><span class="n">b_in</span><span class="p">:</span><span class="w"> </span><span class="k">one</span><span class="w"> </span><span class="n">Digit</span><span class="p">,</span><span class="w">  </span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="c1">-- input carry bit</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span><span class="n">carry_in</span><span class="p">:</span><span class="w"> </span><span class="k">one</span><span class="w"> </span><span class="n">Digit</span><span class="p">,</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span><span class="c1">-- output (sum) value</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span><span class="n">sum_out</span><span class="p">:</span><span class="w"> </span><span class="k">one</span><span class="w"> </span><span class="n">Digit</span><span class="p">,</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">  </span><span class="c1">-- output carry bit </span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">  </span><span class="n">carry_out</span><span class="p">:</span><span class="w"> </span><span class="k">one</span><span class="w"> </span><span class="n">Digit</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="o">}</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title"><code>Digit</code> is not the same as boolean!</p>
+<p>Beware confusing the <code>Digit</code> sig we created, and the <code>T</code> and <code>F</code> values in it, with the result of evaluating Forge constraints. Forge doesn't "know" anything special about <code>T</code> or <code>F</code>; <code>Digit</code> is just another datatype. <strong>If we write something like <code>(some FullAdder) = T</code>, Forge will give an error message.</strong> This is because, to Forge, <code>T</code> is just another value we defined in the model. Instead, we write just <code>(some FullAdder)</code> to say "there is some full adder in the instance". </p>
+<p>This will come up again as we continue to develop the model.</p>
+</div>
+<p>Finally, we'll define the ripple-carry adder chain:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">one</span><span class="w"> </span><span class="kd">sig</span><span class="w"> </span><span class="nc">RCA</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="c1">-- the first full adder in the chain</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="n">firstAdder</span><span class="p">:</span><span class="w"> </span><span class="k">one</span><span class="w"> </span><span class="n">FullAdder</span><span class="p">,</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span><span class="c1">-- the next full adder in the chain (if any)</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span><span class="n">nextAdder</span><span class="p">:</span><span class="w"> </span><span class="k">pfunc</span><span class="w"> </span><span class="n">FullAdder</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">FullAdder</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="o">}</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Reminder</p>
+<p>Recall that a <code>pfunc</code> field is a partial function, sort of like a dictionary: every input is mapped to at most one output.</p>
+</div>
+<p>Notice that there is only ever one ripple-carry adder in an instance, and that it has fields that define which full adder comes first (i.e., operates on the <code>1</code>s place), and what the succession is. We will probably need to enforce what these mean once we start defining wellformedness. </p>
+<h2 id="wellformedness">Wellformedness<a class="headerlink" href="#wellformedness" title="Permanent link">&para;</a></h2>
+<p>What do we need to encode in a <code>wellformed</code> predicate? Right now, it seems that nothing has told Forge that <code>firstAdder</code> should really <em>be</em> the first adder, nor that <code>nextAdder</code> defines a linear path through all the full adders. So we should probably start with those two facts. </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kd">pred</span><span class="w"> </span><span class="nf">wellformed</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="c1">-- The RCA&#39;s firstAdder is &quot;upstream&quot; from all other FullAdders</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="k">all</span><span class="w"> </span><span class="n">fa</span><span class="p">:</span><span class="w"> </span><span class="n">FullAdder</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">(</span><span class="n">fa</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">RCA</span><span class="o">.</span><span class="n">firstAdder</span><span class="o">)</span><span class="w"> </span><span class="ow">implies</span><span class="w"> </span><span class="n">reachable</span><span class="o">[</span><span class="n">fa</span><span class="p">,</span><span class="w"> </span><span class="n">RCA</span><span class="o">.</span><span class="n">firstAdder</span><span class="p">,</span><span class="w"> </span><span class="n">RCA</span><span class="o">.</span><span class="n">nextAdder</span><span class="o">]</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="c1">-- there are no cycles in the nextAdder function.</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span><span class="k">all</span><span class="w"> </span><span class="n">fa</span><span class="p">:</span><span class="w"> </span><span class="n">FullAdder</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="ow">not</span><span class="w"> </span><span class="n">reachable</span><span class="o">[</span><span class="n">fa</span><span class="p">,</span><span class="w"> </span><span class="n">fa</span><span class="p">,</span><span class="w"> </span><span class="n">RCA</span><span class="o">.</span><span class="n">nextAdder</span><span class="o">]</span><span class="w">  </span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="o">}</span>
+</code></pre></div>
+<p>Notice that we've used <code>implies</code> to limit the power of the <code>all</code> quantifier: it doesn't impose the reachability condition on <em>all</em> <code>FullAdder</code>s, but rather than all of them except for <code>RCA.firstAdder</code>. This is a common pattern when you want to assert something is true, but only contingently. </p>
+<div class="admonition tip">
+<p class="admonition-title">Case sensitivity and variable names</p>
+<p>In our model so far, <code>FullAdder</code> is the name of a datatype. When writing the constraints above, I said: "for every full adder..." and named this arbitrary adder <code>fa</code>. These two, <code>FullAdder</code> and <code>fa</code> are different. For a start, <code>FullAdder</code> is defined within the entire model, but <code>fa</code> is only defined within the scope of the <code>all</code> quantifier.</p>
+</div>
+<p>We've used the <code>reachable</code> helper before, but it's worth mentioning again: <code>A</code> is reachable from <code>B</code> via <em>one or more applications</em> of <code>f</code> if and only if <code>reachable[A, B, f]</code> is true. That "one or more applications" is important, and is why we needed to add the <code>(fa != RCA.firstAdder) implies</code> portion of the first constraint: <code>RCA.firstAdder</code> shouldn't be the successor of any full adder, and if it were its own successor, that would be a cycle in the line of adders. If we had left out the implication, and written just <code>all fa: FullAdder | reachable[fa, RCA.firstAdder, RCA.nextAdder]</code>, <code>RCA.firstAdder</code> would need to have a predecessor, which would contradict the second constraint.</p>
+<h2 id="more-predicates">More Predicates<a class="headerlink" href="#more-predicates" title="Permanent link">&para;</a></h2>
+<p>Before we write some examples for <code>wellformed</code>, let's also try to model how each adder should behave, given that it's wired up to other adders in this specific order. Let's write a couple of helpers first, and then combine them to describe the behavior of each adder, given its place in the sequence.</p>
+<h3 id="when-is-an-adders-output-bit-set-to-true">When is an adder's output bit set to true?<a class="headerlink" href="#when-is-an-adders-output-bit-set-to-true" title="Permanent link">&para;</a></h3>
+<p>Just like <code>pred</code>icates can be used as boolean-valued helpers, <code>fun</code>ctions can act as helpers for arbitrary return types. Let's try to write one that says what the <em>output</em> bit should be for a specific full adder, given its input bits. </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">// Helper function: what is the output sum bit for this full adder?</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">adder_S_RCA</span><span class="o">[</span><span class="n">f</span><span class="p">:</span><span class="w"> </span><span class="k">one</span><span class="w"> </span><span class="n">FullAdder</span><span class="o">]</span><span class="p">:</span><span class="w"> </span><span class="k">one</span><span class="w"> </span><span class="n">Digit</span><span class="w">  </span><span class="o">{</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="c1">// Our job is to fill this in with an expression for the output sum bit</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="o">}</span><span class="w"> </span>
+</code></pre></div>
+<p>Looking at the table above, the adder's output value is true if and only if an odd number of its 3 inputs is true. That gives us 4 combinations:</p>
+<ul>
+<li><code>A</code>, <code>B</code>, and <code>CIN</code> (all 3 are true);</li>
+<li><code>A</code> only (1 is true); </li>
+<li><code>B</code> only (1 is true); or</li>
+<li><code>CIN</code> only (1 is true). </li>
+</ul>
+<p>This is where we need to remember that the sig <code>T</code> is not a Forge formula yet; to make it into one, we need to explicitly test whether each value is equal to <code>T</code>. We'll use two new Forge constructs to write the function body:</p>
+<ul>
+<li>The <code>let</code> construct makes it easier to write the value for each of these wires. A <code>let</code> looks similar to a quantifier, but it only introduces some local helper syntax. If I write <code>let A = (f.a_in = T) | ...</code>, I can then use <code>A</code> in place of the tedious <code>(f.a_in = T)</code>. </li>
+<li>Expression if-then-else lets us produce a value based on a condition, sort of like the <code>C ? X : Y</code> operator in languages like JavaScript. If I write something like <code>(A and B and C) =&gt; T else F</code> this evaluates to <code>T</code> whenever <code>A</code>, <code>B</code>, and <code>C</code> are all true, and <code>F</code> otherwise.</li>
+</ul>
+<p>Now we can write:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">// Helper function: what is the output bit for this full adder?</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">adder_S_RCA</span><span class="o">[</span><span class="n">f</span><span class="p">:</span><span class="w"> </span><span class="k">one</span><span class="w"> </span><span class="n">FullAdder</span><span class="o">]</span><span class="p">:</span><span class="w"> </span><span class="k">one</span><span class="w"> </span><span class="n">Digit</span><span class="w">  </span><span class="o">{</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="c1">// &quot;T&quot; and &quot;F&quot; are values, we cannot use them as Forge formulas. </span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span><span class="k">let</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="n">f</span><span class="o">.</span><span class="n">a_in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">T</span><span class="o">)</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="n">f</span><span class="o">.</span><span class="n">b_in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">T</span><span class="o">)</span><span class="p">,</span><span class="w"> </span><span class="n">CIN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="n">f</span><span class="o">.</span><span class="n">carry_in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">T</span><span class="o">)</span><span class="w"> </span><span class="o">|</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">   </span><span class="c1">-- Expression if-then-else: if any of these conditions holds...</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">     </span><span class="o">((</span><span class="w">     </span><span class="n">A</span><span class="w">  </span><span class="ow">and</span><span class="w">      </span><span class="n">B</span><span class="w">  </span><span class="ow">and</span><span class="w">      </span><span class="n">CIN</span><span class="o">)</span><span class="w">  </span><span class="ow">or</span><span class="w"> </span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span><span class="o">(</span><span class="w">     </span><span class="n">A</span><span class="w">  </span><span class="ow">and</span><span class="w"> </span><span class="o">(</span><span class="ow">not</span><span class="w"> </span><span class="n">B</span><span class="o">)</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="o">(</span><span class="ow">not</span><span class="w"> </span><span class="n">CIN</span><span class="o">))</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span><span class="o">((</span><span class="ow">not</span><span class="w"> </span><span class="n">A</span><span class="o">)</span><span class="w"> </span><span class="ow">and</span><span class="w">      </span><span class="n">B</span><span class="w">  </span><span class="ow">and</span><span class="w"> </span><span class="o">(</span><span class="ow">not</span><span class="w"> </span><span class="n">CIN</span><span class="o">))</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">    </span><span class="o">((</span><span class="ow">not</span><span class="w"> </span><span class="n">A</span><span class="o">)</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="o">(</span><span class="ow">not</span><span class="w"> </span><span class="n">B</span><span class="o">)</span><span class="w"> </span><span class="ow">and</span><span class="w">      </span><span class="n">CIN</span><span class="o">))</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">      </span><span class="c1">-- ...then T...</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">          </span><span class="o">=&gt;</span><span class="w">   </span><span class="n">T</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">      </span><span class="c1">-- ...otherwise F.</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">      </span><span class="k">else</span><span class="w"> </span><span class="n">F</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="o">}</span><span class="w"> </span>
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Couldn't we have just used a <code>pred</code> here?</p>
+<p>It might be a bit strange to write a helper function that returns a <code>Digit</code>, rather than a predicate directly. We could make a <code>pred</code> work, but we'd still have to eventually use <code>T</code> and <code>F</code> somewhere, since they are the values that the output bits can take on.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Is the blank space in that example significant?</p>
+<p>Nope. I added it for clarity, because it's much harder to read without the extra space to make it apparent where the <code>not</code>s are applied. Likewise, you don't need to wrap a negation in parentheses; I just think <code>(not A)</code> is clearer than <code>not A</code> in this sort of big expression.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Implies and expression if-then-else</p>
+<p>You can also write <code>implies</code> as <code>=&gt;</code>. Indeed, the two keywords (<code>=&gt;</code> and <code>implies</code>) are interchangeable in Forge! To avoid confusion, always ask yourself whether you are trying to identify a <em>thing</em> in an instance, like a full-adder atom or an integer, or write a <em>constraint</em> which may or may not be true in an instance.</p>
+</div>
+<h3 id="when-is-an-adders-carry-bit-set-to-true">When is an adder's carry bit set to true?<a class="headerlink" href="#when-is-an-adders-carry-bit-set-to-true" title="Permanent link">&para;</a></h3>
+<p>This one is quite similar. The carry bit is set to true if and only if 2 or 3 of the adder's inputs are true:</p>
+<ul>
+<li><code>B</code> and <code>CIN</code> (2 are true);</li>
+<li><code>A</code> and <code>CIN</code> (2 are true);</li>
+<li><code>C</code> and <code>CIN</code> (2 are true); or</li>
+<li><code>A</code>, <code>B</code>, and <code>CIN</code> (all 3 are true).</li>
+</ul>
+<p>As before, we'll use <code>let</code> and expression if-then-else, and add (decorative) blank space to make the function more readable.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">// Helper function: what is the output carry bit for this full adder?</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">adder_cout_RCA</span><span class="o">[</span><span class="n">f</span><span class="p">:</span><span class="w"> </span><span class="k">one</span><span class="w"> </span><span class="n">FullAdder</span><span class="o">]</span><span class="p">:</span><span class="w"> </span><span class="k">one</span><span class="w"> </span><span class="n">Digit</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w"> </span><span class="k">let</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="n">f</span><span class="o">.</span><span class="n">a_in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">T</span><span class="o">)</span><span class="p">,</span><span class="w"> </span><span class="n">B</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="n">f</span><span class="o">.</span><span class="n">b_in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">T</span><span class="o">)</span><span class="p">,</span><span class="w"> </span><span class="n">CIN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">(</span><span class="n">f</span><span class="o">.</span><span class="n">carry_in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">T</span><span class="o">)</span><span class="w"> </span><span class="o">|</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">     </span><span class="o">(((</span><span class="ow">not</span><span class="w"> </span><span class="n">A</span><span class="o">)</span><span class="w"> </span><span class="ow">and</span><span class="w">      </span><span class="n">B</span><span class="w">  </span><span class="ow">and</span><span class="w">      </span><span class="n">CIN</span><span class="o">)</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">      </span><span class="o">(</span><span class="w">     </span><span class="n">A</span><span class="w">  </span><span class="ow">and</span><span class="w"> </span><span class="o">(</span><span class="ow">not</span><span class="w"> </span><span class="n">B</span><span class="o">)</span><span class="w"> </span><span class="ow">and</span><span class="w">      </span><span class="n">CIN</span><span class="o">)</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">      </span><span class="o">(</span><span class="w">     </span><span class="n">A</span><span class="w">  </span><span class="ow">and</span><span class="w">      </span><span class="n">B</span><span class="w">  </span><span class="ow">and</span><span class="w"> </span><span class="o">(</span><span class="ow">not</span><span class="w"> </span><span class="n">CIN</span><span class="o">))</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">      </span><span class="o">(</span><span class="w">     </span><span class="n">A</span><span class="w">  </span><span class="ow">and</span><span class="w">      </span><span class="n">B</span><span class="w">  </span><span class="ow">and</span><span class="w">      </span><span class="n">CIN</span><span class="o">))</span><span class="w"> </span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">          </span><span class="o">=&gt;</span><span class="w">   </span><span class="n">T</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">        </span><span class="k">else</span><span class="w"> </span><span class="n">F</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="o">}</span><span class="w"> </span>
+</code></pre></div>
+<h3 id="adder-behavior">Adder Behavior<a class="headerlink" href="#adder-behavior" title="Permanent link">&para;</a></h3>
+<p>Finally, what ought an adder's behavior to be? Well, we need to specify its output bits in terms of its input bits. We'll also add a constraint that says the full adders are connected in a line. More concretely, if there <em>is</em> a successor, its input carry bit is equal to the current adder's output carry bit. Here's a picture of what we want to say:</p>
+<p><strong>TODO: fill picture</strong></p>
+<p>And here's the Forge predicate:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kd">pred</span><span class="w"> </span><span class="nf">fullAdderBehavior</span><span class="o">[</span><span class="n">f</span><span class="p">:</span><span class="w"> </span><span class="n">FullAdder</span><span class="o">]</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="c1">-- Each full adder&#39;s outputs are as expected</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="n">f</span><span class="o">.</span><span class="n">sum_out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">adder_S_RCA</span><span class="o">[</span><span class="n">f</span><span class="o">]</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span><span class="n">f</span><span class="o">.</span><span class="n">carry_out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">adder_cout_RCA</span><span class="o">[</span><span class="n">f</span><span class="o">]</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">  </span><span class="c1">-- Full adders are chained appropriately</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">  </span><span class="o">(</span><span class="k">some</span><span class="w"> </span><span class="n">RCA</span><span class="o">.</span><span class="n">nextAdder</span><span class="o">[</span><span class="n">f</span><span class="o">])</span><span class="w"> </span><span class="ow">implies</span><span class="w"> </span><span class="o">(</span><span class="n">RCA</span><span class="o">.</span><span class="n">nextAdder</span><span class="o">[</span><span class="n">f</span><span class="o">]).</span><span class="n">carry_in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="o">.</span><span class="n">carry_out</span><span class="w"> </span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="o">}</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Wouldn't it be better to put the carry-bit connection in <code>wellformed</code>, or somewhere else?</p>
+<p>That's a good point. The values of <code>f.sum_out</code> and <code>f.carry_out</code> are part of the full adder's behavior, but the way the wires are connected in <code>RCA.nextAdder</code> is not. </p>
+<p>If I were going to re-write this model, I would probably move that line into somewhere that is responsible for <em>connecting</em> the adders: perhaps a predicate for the ripple-carry adder. But I haven't done that&mdash;hoping to provoke just this question!</p>
+<p>The general design principle here is to think about <em>compositionality and reuse</em>: we'd like to be able to use the same predicates to reason about full adders by themselves, or what would happen if we connected them differently. As written, the <code>fullAdderBehavior</code> predicate doesn't allow for that; we'd have to refactor it. But I'll leave that as an exercise for now.</p>
+</div>
+<p>Finally, we'll make a predicate that describes the behavior of the overall ripple-carry adder:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1">// Top-level system specification: compose preds above</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="kd">pred</span><span class="w"> </span><span class="nf">rca</span><span class="w"> </span><span class="o">{</span><span class="w">  </span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="n">wellformed</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">  </span><span class="k">all</span><span class="w"> </span><span class="n">f</span><span class="p">:</span><span class="w"> </span><span class="n">FullAdder</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">fullAdderBehavior</span><span class="o">[</span><span class="n">f</span><span class="o">]</span><span class="w"> </span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="o">}</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Notice what we've done.</p>
+<p>Here's something to keep in mind for when we start the next chapter. By wiring together full adders into a sequence via the <code>rca</code> predicate, we are now implicitly hinting at time in our model: signal flows through each adder, in order, over time. We'll re-use this same technique in the next chapter to combine different system states into a succession of them that represents a complete run of the system.</p>
+</div>
+<p>Now we're ready to write some examples. We'll make a pair of examples for <code>wellformed</code> and an overall example for the full system. In practice, we'd probably want to write a couple of examples for <code>fullAdderBehavior</code> as well, but we'll leave those out for brevity. </p>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<p>Always try to write at least some positive <em>and</em> negative examples.</p>
+<h3 id="positive-example">Positive Example<a class="headerlink" href="#positive-example" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kd">example</span><span class="w"> </span><span class="nf">twoAddersLinear</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="o">{</span><span class="n">wellformed</span><span class="o">}</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="n">RCA</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">`</span><span class="n">RCA0</span><span class="w"> </span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="n">FullAdder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">`</span><span class="n">FullAdder0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="err">`</span><span class="n">FullAdder1</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span><span class="c1">-- Remember the back-tick mark here! These lines say that, e.g., for the atom `RCA0, </span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">  </span><span class="c1">-- its firstAdder field contains `FullAdder0. And so on.</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">  </span><span class="err">`</span><span class="n">RCA0</span><span class="o">.</span><span class="n">firstAdder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">`</span><span class="n">FullAdder0</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">  </span><span class="err">`</span><span class="n">RCA0</span><span class="o">.</span><span class="n">nextAdder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">`</span><span class="n">FullAdder0</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="err">`</span><span class="n">FullAdder1</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="o">}</span>
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Notice that this example is limited.</p>
+<p>Because we are testing <code>wellformed</code>, we left out fields that didn't matter to that predicate. Forge will feel free to adjust them as needed. When a field is left unspecified, the example is said to be <em>partial</em>, and it becomes a check for consistency. E.g., in this case, the example passes because the partial instance given <em>can</em> satisfy <code>wellformed</code>&mdash;not that it must satisfy <code>wellformed</code>&mdash;although in this case the difference is immaterial because <code>wellformed</code> really doesn't care about any of the other fields.</p>
+</div>
+<h3 id="negative-example">Negative Example<a class="headerlink" href="#negative-example" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kd">example</span><span class="w"> </span><span class="nf">twoAddersLoop</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="o">{</span><span class="ow">not</span><span class="w"> </span><span class="n">wellformed</span><span class="o">}</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="n">RCA</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">`</span><span class="n">RCA0</span><span class="w"> </span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span><span class="n">FullAdder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">`</span><span class="n">FullAdder0</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="err">`</span><span class="n">FullAdder1</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">  </span><span class="err">`</span><span class="n">RCA0</span><span class="o">.</span><span class="n">firstAdder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">`</span><span class="n">FullAdder0</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">  </span><span class="err">`</span><span class="n">RCA0</span><span class="o">.</span><span class="n">nextAdder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">`</span><span class="n">FullAdder0</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="err">`</span><span class="n">FullAdder1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="err">`</span><span class="n">FullAdder1</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="err">`</span><span class="n">FullAdder0</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="o">}</span>
+</code></pre></div>
+<h2 id="run">Run<a class="headerlink" href="#run" title="Permanent link">&para;</a></h2>
+<p>Let's have a look at a ripple-carry adder in action. We'll pick a reasonably small number of bits: 4. </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">run</span><span class="w"> </span><span class="o">{</span><span class="n">rca</span><span class="o">}</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">exactly</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="n">FullAdder</span>
+</code></pre></div>
+<p><strong>(FILL: screenshot)</strong></p>
+<h2 id="verification">Verification<a class="headerlink" href="#verification" title="Permanent link">&para;</a></h2>
+<p>Ok, we've looked at some of the model's output, and it seems right. But how can we be really confident that the ripple-carry adder <em>works</em>? Can we use our model to <em>verify</em> the adder? Yes, but we'll need to do a bit more modeling. </p>
+<p><strong>Exercise:</strong> What does it mean for the adder to "work"? </p>
+<details class="note">
+<summary>Think, then click!</summary>
+<p>For one thing, it had better produce a series of boolean outputs that correspond to the output we'd get if we just did the addition. That is, if we add together the numbers <code>2</code> (<code>10</code>) and <code>3</code> (<code>11</code>) we should expect to get <code>5</code>&mdash;which should be <code>101</code> in binary, provided we always set the bit-width high enough to match the number of bits we're adding together. </p>
+<p>Let's augment our model to check this. We'll ask Forge for an instance where the ripple-carry adder produces a different result (taken as the sum of the outputs of each full adder) than the expected (produced via Forge's <code>add</code> function).</p>
+</details>
+<hr />
+<p>When I'm expanding a model in this way, I like to augment instances with extra fields that exist <em>just for verification</em>, and which aren't part of the system we're modeling. Here, we'll keep track of the place-values of each full adder, which we can then use to compute the "true" value of its input or output. E.g., the first full adder would have place-value 1, and its successors would have place-value 2, then 4, etc. </p>
+<div class="admonition note">
+<p class="admonition-title">Helper values</p>
+<p>Sometimes you'll hear this sort of new field or value referred to as a "ghost": it isn't real; it doesn't exist in the actual system.</p>
+</div>
+<p>We could store this field in the <code>FullAdder</code> sig, but let's keep the original unmodified, and instead add a <code>Helper</code> sig. This keeps the for-verification-only fields separate from the model of the system:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">one</span><span class="w"> </span><span class="kd">sig</span><span class="w"> </span><span class="nc">Helper</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="n">place</span><span class="p">:</span><span class="w"> </span><span class="k">func</span><span class="w"> </span><span class="n">FullAdder</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kt">Int</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="o">}</span>
+</code></pre></div>
+<p>The ripple-carry adder gives us the context we need to speak of the place value each full adder ought to have. We can write this for the first adder easily:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1">-- The &quot;places&quot; helper value should agree with the ordering that the RCA establishes.</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="kd">pred</span><span class="w"> </span><span class="nf">assignPlaces</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">  </span><span class="c1">-- The least-significant bit is 2^0</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">  </span><span class="n">Helper</span><span class="o">.</span><span class="n">place</span><span class="o">[</span><span class="n">RCA</span><span class="o">.</span><span class="n">firstAdder</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">  </span><span class="c1">-- ...</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="o">}</span>
+</code></pre></div>
+<p>Now we need to, in effect, write a for-loop or a recursive function that constrains <code>places</code> for all the other adders. But Forge has no recursion or loops! Fortunately, it does have the <code>all</code> quantifier, which lets us define every other adder's <code>place</code> value in terms of its predecessor:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1">-- The &quot;places&quot; helper value should agree with the ordering that the RCA establishes.</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="kd">pred</span><span class="w"> </span><span class="nf">assignPlaces</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">  </span><span class="c1">-- The least-significant bit is 2^0</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">  </span><span class="n">Helper</span><span class="o">.</span><span class="n">place</span><span class="o">[</span><span class="n">RCA</span><span class="o">.</span><span class="n">firstAdder</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">  </span><span class="c1">-- Other bits are worth 2^(i+1), where the predecessor is worth 2^i.</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">  </span><span class="k">all</span><span class="w"> </span><span class="n">fa</span><span class="p">:</span><span class="w"> </span><span class="n">FullAdder</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">some</span><span class="w"> </span><span class="n">RCA</span><span class="o">.</span><span class="n">nextAdder</span><span class="o">[</span><span class="n">fa</span><span class="o">]</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="o">{</span><span class="w">    </span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">    </span><span class="n">Helper</span><span class="o">.</span><span class="n">place</span><span class="o">[</span><span class="n">RCA</span><span class="o">.</span><span class="n">nextAdder</span><span class="o">[</span><span class="n">fa</span><span class="o">]]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">multiply</span><span class="o">[</span><span class="n">Helper</span><span class="o">.</span><span class="n">place</span><span class="o">[</span><span class="n">fa</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="o">]</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="w">  </span><span class="o">}</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="o">}</span>
+</code></pre></div>
+<p>When you have quantification and helper fields, you can often avoid needing real iteration or recursion.</p>
+<p>We'll add a helper function for convenience later:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kd">fun</span><span class="w"> </span><span class="nf">actualValue</span><span class="o">[</span><span class="n">b</span><span class="p">:</span><span class="w"> </span><span class="n">Digit</span><span class="p">,</span><span class="w"> </span><span class="n">placeValue</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="o">]</span><span class="p">:</span><span class="w"> </span><span class="k">one</span><span class="w"> </span><span class="kt">Int</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span><span class="o">(</span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">T</span><span class="o">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">placeValue</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="mi">0</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="o">}</span>
+</code></pre></div>
+<h3 id="the-requirement">The Requirement<a class="headerlink" href="#the-requirement" title="Permanent link">&para;</a></h3>
+<p>Let's try to express our requirement that the adder is correct. Again, we'll phrase this as: for every full adder, the true value of its output is the sum of the true values of its inputs (where "true value" means the value of the boolean, taking into account its position). We might produce something like this:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kd">pred</span><span class="w"> </span><span class="nf">req_adderCorrect_wrong</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span><span class="o">(</span><span class="n">rca</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">assignPlaces</span><span class="o">)</span><span class="w"> </span><span class="ow">implies</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">    </span><span class="k">all</span><span class="w"> </span><span class="n">fa</span><span class="p">:</span><span class="w"> </span><span class="n">FullAdder</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">{</span><span class="w"> </span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">        </span><span class="n">actualValue</span><span class="o">[</span><span class="n">fa</span><span class="o">.</span><span class="n">sum_out</span><span class="p">,</span><span class="w"> </span><span class="n">Helper</span><span class="o">.</span><span class="n">place</span><span class="o">[</span><span class="n">fa</span><span class="o">]]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">add</span><span class="o">[</span><span class="n">actualValue</span><span class="o">[</span><span class="n">fa</span><span class="o">.</span><span class="n">a_in</span><span class="p">,</span><span class="w"> </span><span class="n">Helper</span><span class="o">.</span><span class="n">place</span><span class="o">[</span><span class="n">fa</span><span class="o">]]</span><span class="p">,</span><span class="w"> </span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="w">                                                  </span><span class="n">actualValue</span><span class="o">[</span><span class="n">fa</span><span class="o">.</span><span class="n">b_in</span><span class="p">,</span><span class="w"> </span><span class="n">Helper</span><span class="o">.</span><span class="n">place</span><span class="o">[</span><span class="n">fa</span><span class="o">]]]</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="w">    </span><span class="o">}</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="w">  </span><span class="o">}</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="o">}</span>
+</code></pre></div>
+<p>And then we'll use it in a test. It's vital that we have a high-enough bitwidth, so that Forge can count up to the actual expected result, without overflowing. Forge <code>int</code>s are signed, so we actually need a bigger bit-width than the number of full adders. If we have, say, 6 full adders, we might end up producing a 7-bit output (with carrying). A 7-bit value can conservatively hold up to <span class="arithmatex">\(2^7 - 1 = 127\)</span>. To count up to that high, we need to use <em>8</em> bits in Forge, giving the solver all the numbers between <span class="arithmatex">\(-128\)</span> and <span class="arithmatex">\(127\)</span>, inclusive.</p>
+<div class="admonition tip">
+<p class="admonition-title">Directly testing satisfiability</p>
+<p>So far, we've only seen <code>example</code>s and <code>assert</code>ions. Both of these are built using Forge's basic satisfiability checking. We can access this directly using the <code>test expect</code> feature. You can write that a run:
+* should have instances (i.e., be satisfiable): <code>is sat</code>;
+* should not have instances (i.e., be unsatisfiable, within the bounds given): <code>is unsat</code>; or
+* should have no counterexample instances (within the bounds given): <code>is checked</code>.</p>
+</div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1">-- Ask Forge to check the satisfiability of something...</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="kd">test</span><span class="w"> </span><span class="nf">expect</span><span class="w"> </span><span class="o">{</span><span class="w">  </span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">  </span><span class="c1">-- Is it _always_ true, up to these bounds, that `req_adderCorrect` always holds?</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="w">  </span><span class="n">r_adderCorrect</span><span class="p">:</span><span class="w"> </span><span class="o">{</span><span class="n">req_adderCorrect</span><span class="o">}</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="n">FullAdder</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">RCA</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="kt">Int</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="k">checked</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="o">}</span>
+</code></pre></div>
+<p>However, this requirement fails&mdash;Forge finds a counterexample. </p>
+<p><strong>Exercise:</strong> What's wrong? Is the adder broken, or might our property be stated incorrectly?</p>
+<details class="note">
+<summary>Think, then click!</summary>
+<p>We forgot to take carrying into account! Any time a full adder carries a bit, it's dropped by the left-hand side of the above equation. </p>
+<p>Notice how even if the model (or system) is correct, sometimes the property itself is wrong. Always be skeptical about your properties, just like you're skeptical about your model.</p>
+</details>
+<hr />
+<p>Here's another attempt:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kd">pred</span><span class="w"> </span><span class="nf">req_adderCorrect</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">  </span><span class="o">(</span><span class="n">rca</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">assignPlaces</span><span class="o">)</span><span class="w"> </span><span class="ow">implies</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">    </span><span class="k">all</span><span class="w"> </span><span class="n">fa</span><span class="p">:</span><span class="w"> </span><span class="n">FullAdder</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">{</span><span class="w"> </span>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">        </span><span class="c1">-- Include carrying, both for input and output. The _total_ output&#39;s true value is equal to</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">        </span><span class="c1">-- the the sum of the total input&#39;s true value.</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="w">        </span><span class="c1">-- output value bit + output carry bits; note carry value is *2 (and there may not be a &quot;next adder&quot;)</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="w">        </span><span class="n">add</span><span class="o">[</span><span class="n">actualValue</span><span class="o">[</span><span class="n">fa</span><span class="o">.</span><span class="n">sum_out</span><span class="p">,</span><span class="w"> </span><span class="n">Helper</span><span class="o">.</span><span class="n">place</span><span class="o">[</span><span class="n">fa</span><span class="o">]]</span><span class="p">,</span><span class="w"> </span>
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="w">            </span><span class="n">multiply</span><span class="o">[</span><span class="n">actualValue</span><span class="o">[</span><span class="n">fa</span><span class="o">.</span><span class="n">carry_out</span><span class="p">,</span><span class="w"> </span><span class="n">Helper</span><span class="o">.</span><span class="n">place</span><span class="o">[</span><span class="n">fa</span><span class="o">]]</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="o">]]</span><span class="w"> </span>
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="w">        </span><span class="o">=</span><span class="w"> </span>
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="w">        </span><span class="c1">-- input a bit + input b bit + input carry bit</span>
+<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="w">        </span><span class="n">add</span><span class="o">[</span><span class="n">actualValue</span><span class="o">[</span><span class="n">fa</span><span class="o">.</span><span class="n">a_in</span><span class="p">,</span><span class="w"> </span><span class="n">Helper</span><span class="o">.</span><span class="n">place</span><span class="o">[</span><span class="n">fa</span><span class="o">]]</span><span class="p">,</span><span class="w">     </span>
+<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a><span class="w">            </span><span class="n">actualValue</span><span class="o">[</span><span class="n">fa</span><span class="o">.</span><span class="n">b_in</span><span class="p">,</span><span class="w"> </span><span class="n">Helper</span><span class="o">.</span><span class="n">place</span><span class="o">[</span><span class="n">fa</span><span class="o">]]</span><span class="p">,</span><span class="w">    </span>
+<a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a><span class="w">            </span><span class="n">actualValue</span><span class="o">[</span><span class="n">fa</span><span class="o">.</span><span class="n">carry_in</span><span class="p">,</span><span class="w"> </span><span class="n">Helper</span><span class="o">.</span><span class="n">place</span><span class="o">[</span><span class="n">fa</span><span class="o">]]]</span><span class="w">  </span>
+<a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a><span class="w">    </span><span class="o">}</span>
+<a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a><span class="w">  </span><span class="o">}</span>
+<a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a><span class="o">}</span>
+</code></pre></div>
+<p>Now when we run the check, it passes. There's just one problem&mdash;it only passes <em>eventually</em>. The verification step took over a minute on my laptop! That's rather slow for a model this size. </p>
+<h3 id="optimizing-verification">Optimizing Verification<a class="headerlink" href="#optimizing-verification" title="Permanent link">&para;</a></h3>
+<p>When this sort of unexpected slowdown happens, it's often because we've given the solver too much freedom, causing it to explore a much larger search space than it should have to. This is especially pronounced when we expect an "unsatisfiable" result&mdash;then, the solver really does need to explore <em>everything</em> before concluding that no, there are no solutions. We're in that situation here, since we're hoping there are no counter-examples to correctness. </p>
+<p><strong>Exercise:</strong> What did we leave the solver to figure out on its own, that we maybe could give it some help with?</p>
+<details class="note">
+<summary>Think, then click!</summary>
+<p>There are at least two things. 
+* First, the exact ordering of full adders isn't something we provided. We just said "create up to 6 of them, and wire them together in a line". Considering just the 6-adder case (and not the 5-adder case, 4-adder case, etc.), how many ways are there to arrange the adders? <span class="arithmatex">\(6! = 720\)</span>. Unless the solver can detect and eliminate these symmetries, it's doing a <em>lot</em> more work than it needs to. 
+* Second, we said that <code>Helper.place</code> mapped full adders to integers. But does the solver need to consider <em>all</em> integers? No! Just <code>1</code>, <code>2</code>, <code>4</code>, <code>8</code>, and so on. The vast majority of integers in the scope we provided cannot be used&mdash;and the solver will have to discover that on its own.</p>
+</details>
+<hr />
+<p>These both present opportunities for optimization! For now, let's just tackle the first one: we need to somehow give Forge a specific ordering on the adders, rather than letting the solver explore all possible orderings. E.g., maybe we want a series of atoms <code>FullAdder0</code>, <code>FullAdder1</code>, ..., <code>FullAdder5</code>, which ordering <code>RCA.nextAdder</code> respects. </p>
+<p>We could try to express this as a constraint: </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="kd">pred</span><span class="w"> </span><span class="nf">orderingOnAdders</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">  </span><span class="k">some</span><span class="w"> </span><span class="k">disj</span><span class="w"> </span><span class="n">fa0</span><span class="p">,</span><span class="w"> </span><span class="n">fa1</span><span class="p">,</span><span class="w"> </span><span class="n">fa2</span><span class="p">,</span><span class="w"> </span><span class="n">fa3</span><span class="p">,</span><span class="w"> </span><span class="n">fa4</span><span class="p">,</span><span class="w"> </span><span class="n">fa5</span><span class="p">:</span><span class="w"> </span><span class="n">FullAdder</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="w">    </span><span class="n">RCA</span><span class="o">.</span><span class="n">firstAdder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fa0</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="w">    </span><span class="n">RCA</span><span class="o">.</span><span class="n">nextAdder</span><span class="o">[</span><span class="n">fa0</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fa1</span><span class="w"> </span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="w">    </span><span class="n">RCA</span><span class="o">.</span><span class="n">nextAdder</span><span class="o">[</span><span class="n">fa1</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fa2</span>
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="w">    </span><span class="n">RCA</span><span class="o">.</span><span class="n">nextAdder</span><span class="o">[</span><span class="n">fa2</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fa3</span><span class="w"> </span>
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="w">    </span><span class="n">RCA</span><span class="o">.</span><span class="n">nextAdder</span><span class="o">[</span><span class="n">fa3</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fa4</span><span class="w"> </span>
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="w">    </span><span class="n">RCA</span><span class="o">.</span><span class="n">nextAdder</span><span class="o">[</span><span class="n">fa4</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fa5</span><span class="w"> </span>
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="w">  </span><span class="o">}</span>
+<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a><span class="o">}</span>
+</code></pre></div>
+<p>However, this won't be very effective. </p>
+<p><strong>Exercise:</strong> Why won't adding <code>orderingOnAdders</code> to our set of constraints actually help much, if at all? </p>
+<details class="note">
+<summary>Think, then click!</summary>
+<p>Because all of that is already implied by the other constraints we have. It's true that sometimes rephrasing a constraint like this can have a big impact on performance if the solver can figure out how to use it well, but in this case the problem is one of symmetries; the solver would <em>just keep checking all possibilities</em> for the <code>fa0</code>, <code>fa1</code>, etc. variables anyway. </p>
+<p>Fortunately, there's a much better option.</p>
+</details>
+<hr />
+<p>Recall that Forge works by searching for satisfying instances within some large possibility space, and that this space is restricted by the bounds given. The search process is run by a sophisticated solver, but the problem that the solver itself gets looks nothing like Forge. The process of solving a Forge problem thus has three separate stages: 
+* express the solution space in a form the solver understands, which is usually a large set of boolean variables; 
+* convert the constraints into a form the solver understands, which needs to be in terms of the converted solution-space variables; and only then
+* invoke the solver on the converted problem.</p>
+<p>Adding constraints will affect the later steps, but we'd love to give hints to the translator even earlier in the process. We'll talk more about exactly how this works later, but for now, we'll add a <em>bounds annotation</em> to our run: that the <code>nextAdder</code> field is <em>partial-linear</em>, or <code>nextAdder is plinear</code>. Linearity means that the atoms which <code>nextAdder</code> maps should be pre-arranged in a fixed order before they get to the solver at all. Partial linearity means that the ordering may not use all of the potential atoms. </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="kd">test</span><span class="w"> </span><span class="nf">expect</span><span class="w"> </span><span class="o">{</span><span class="w">  </span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">  </span><span class="n">r_adderCorrect</span><span class="p">:</span><span class="w"> </span><span class="o">{</span><span class="n">req_adderCorrect</span><span class="o">}</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="n">FullAdder</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">RCA</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="kt">Int</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="o">{</span><span class="n">nextAdder</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">plinear</span><span class="o">}</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="k">checked</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="o">}</span>
+</code></pre></div>
+<p>This wasn't hard to add: it's just another <code>{}</code>-delimited instruction that you can add to any <code>run</code>, <code>test</code>, etc. command. Now Forge finishes the check in under a second on my laptop. Eliminating symmetries can make a huge difference! </p>
+<div class="admonition warning">
+<p class="admonition-title">Bounds vs. Constraints</p>
+<p>Notice that the bounds annotation is grouped after the numeric bounds, <em>not</em> with the constraints. This is because the two are separate. If we had tried to put <code>nextAdder is plinear</code> in as a constraint in our predicate, we would have gotten an error, because Forge doesn't know how to interpret it as a constraint, only how to use it to shape the solution space passed to the solver.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,2564 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Lightweight Formal Methods for Everybody">
+      
+      
+      
+        <link rel="canonical" href="https://forge-fm.github.io/book/2026/chapters/solvers/dpll.html">
+      
+      
+        <link rel="prev" href="../temporal/testing_temporal.html">
+      
+      
+        <link rel="next" href="resolution.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Boolean SAT (DPLL) - Logic for Systems</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#satisfiability-solving" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="Logic for Systems" class="md-header__button md-logo" aria-label="Logic for Systems" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Logic for Systems
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Boolean SAT (DPLL)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/forge-fm/book" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    forge-fm/book
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="Logic for Systems" class="md-nav__button md-logo" aria-label="Logic for Systems" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Logic for Systems
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/forge-fm/book" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    forge-fm/book
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Preamble: Beyond Testing
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Preamble: Beyond Testing
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../manifesto/job.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    What good is this book?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../manifesto/manifesto.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logic for Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../properties/pbt.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    From Tests to Properties
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modeling Static Scenarios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modeling Static Scenarios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ttt/ttt.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tic-Tac-Toe
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bst/bst.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Binary Search Trees
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adder/rca.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ripple-Carry Adder
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qna/static.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q&A: Static Modeling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Discrete Event Systems
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Discrete Event Systems
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ttt/ttt_games.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transitions, Traces, and Verification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../inductive/bsearch.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Counterexamples to Induction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bst/descent.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BSTs: Recursive Descent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../validation/validating_events.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Validating Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qna/events.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q&A: Event Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modeling Relationships
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modeling Relationships
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../relations/modeling-booleans-1.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Relational Forge, Modeling Logic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../relations/reachability.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transitive Closure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../relations/sets-induction-mutex.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modeling Mutual Exclusion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../relations/sets-beyond-assertions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Going Beyond Assertions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="bounds_booleans_how_forge_works.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How does Forge Work?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qna/relations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q&A: Relations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Temporal Specification
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Temporal Specification
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../temporal/liveness_and_lassos.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Liveness and Lassos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../temporal/temporal_operators.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Temporal Forge
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../temporal/temporal_operators_2.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linear Temporal Logic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../temporal/obligations_past.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Obligations and the Past
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../temporal/fixing_lock_temporal.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mutual Exclusion, Revisited
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../temporal/testing_temporal.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing Temporally
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Boolean Solver Algorithms
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Boolean Solver Algorithms
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Boolean SAT (DPLL)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="dpll.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Boolean SAT (DPLL)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#truth-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Truth Tables
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#can-we-do-better" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Can We Do Better?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lets-try-anyway" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Let's Try Anyway
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Let&#39;s Try Anyway">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-first-try" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A First Try
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maybe-luck-is-with-us" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maybe Luck Is With Us
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#imposing-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Imposing Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conjunctive-normal-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conjunctive Normal Form
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Conjunctive Normal Form">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-powerful-idea-unit-propagation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A Powerful Idea: Unit Propagation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adding-unit-propagation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adding Unit Propagation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returning-more-than-a-boolean" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Returning more than a boolean
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#total-or-partial-instances" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Total or Partial Instances?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#heuristics-which-variables-which-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Heuristics: Which Variables? Which Values?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#converting-to-cnf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Converting to CNF
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Converting to CNF">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#naive-approach-distributivity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Naive Approach: Distributivity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-tseitin-transformation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Tseitin Transformation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-of-a-real-solver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example of a "real" solver
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="resolution.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Witnessing Unsat: Propositional Resolution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Beyond SAT
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Beyond SAT
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="smt.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Satisfiability Modulo Theories (SMT)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="cegis.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Learning with Solvers: CEGIS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Appendix
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendix/glossary.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../appendix/errors.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Error Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#truth-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Truth Tables
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#can-we-do-better" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Can We Do Better?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lets-try-anyway" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Let's Try Anyway
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Let&#39;s Try Anyway">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-first-try" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A First Try
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maybe-luck-is-with-us" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maybe Luck Is With Us
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#imposing-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Imposing Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conjunctive-normal-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conjunctive Normal Form
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Conjunctive Normal Form">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-powerful-idea-unit-propagation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A Powerful Idea: Unit Propagation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adding-unit-propagation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adding Unit Propagation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returning-more-than-a-boolean" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Returning more than a boolean
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#total-or-partial-instances" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Total or Partial Instances?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#heuristics-which-variables-which-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Heuristics: Which Variables? Which Values?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#converting-to-cnf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Converting to CNF
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Converting to CNF">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#naive-approach-distributivity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Naive Approach: Distributivity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-tseitin-transformation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Tseitin Transformation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-of-a-real-solver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example of a "real" solver
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="satisfiability-solving">Satisfiability Solving<a class="headerlink" href="#satisfiability-solving" title="Permanent link">&para;</a></h1>
+<p>Suppose I asked you to solve a boolean constraint problem. Maybe it comes from Forge, and maybe it doesn't. Here's an example, in "Java syntax":</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>x1 and (x1 implies x2)
+</code></pre></div>
+<p>Is there a satisfying instance for this constraint? 
+* If yes, what is it, and how did you obtain it?
+* If no, how did you reach that conclusion?</p>
+<p>Here's another:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>(x1 or !x2) and (x1 or x2) and (x2 or !x1) and (!x2 or !x1)
+</code></pre></div>
+<p>Same question. Is there a satisfying instance for this constraint? 
+* If yes, what is it, and how did you obtain it?
+* If no, how did you reach that conclusion?</p>
+<h2 id="truth-tables">Truth Tables<a class="headerlink" href="#truth-tables" title="Permanent link">&para;</a></h2>
+<p>We could build the table of all possibilities, and use it to search like so:</p>
+<table>
+<thead>
+<tr>
+<th><code>x1</code></th>
+<th><code>x2</code></th>
+<th><code>(x1 implies x2)</code></th>
+<th><code>x1 and (x1 implies x2)</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T</td>
+<td>T</td>
+<td>T</td>
+<td><strong>T</strong></td>
+</tr>
+<tr>
+<td>T</td>
+<td>F</td>
+<td>F</td>
+<td>F</td>
+</tr>
+<tr>
+<td>F</td>
+<td>T</td>
+<td>T</td>
+<td>F</td>
+</tr>
+<tr>
+<td>F</td>
+<td>F</td>
+<td>T</td>
+<td>F</td>
+</tr>
+</tbody>
+</table>
+<p>We've found a solution! But we needed to build the entire set of possibilities to do so.</p>
+<h2 id="can-we-do-better">Can We Do Better?<a class="headerlink" href="#can-we-do-better" title="Permanent link">&para;</a></h2>
+<p>We <strong>don't actually know</strong> (at time of writing) whether it's possible to solve boolean satisfiability for arbitrary inputs without worst-case time exponential in the size of the input. This is one of the biggest unsolved questions, and certainly one of the most famous, in computer science. But we shouldn't let that discourage us. Plenty of problems are <em>worst</em> case exponential (or even more difficult) and we still solve them all the time.</p>
+<div class="admonition note">
+<p class="admonition-title">Why so famous?</p>
+<p>It turns out that if you can solve boolean SAT in polynomial worst-case time, you can also solve many other important problems in worst-case polynomial time. There are many such problems (e.g., graph coloring, longest simple path, bin packing, ...) but SAT is the most well-known. </p>
+<p>If you take 1010, you'll learn more about the specifics.</p>
+</div>
+<h2 id="lets-try-anyway">Let's Try Anyway<a class="headerlink" href="#lets-try-anyway" title="Permanent link">&para;</a></h2>
+<p>Maybe we can do better <em>sometimes</em>. Let's just start, and see where we get to. </p>
+<div class="admonition warning">
+<p class="admonition-title">Pseudocode</p>
+<p>The "code" in today's notes is <em>pseudocode</em>. The goal is to motivate the core ideas coming up, although you could certainly add a bit of extra detail to get runnable code.</p>
+</div>
+<h3 id="a-first-try">A First Try<a class="headerlink" href="#a-first-try" title="Permanent link">&para;</a></h3>
+<p>Here's a solution that recursively tries all combinations. It's kind of like building the truth table, except that instead of creating the table (which always uses exponential <em>space</em>) it just explores all possibilities (always using exponential <em>time</em> but not exponential space). </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">solve</span><span class="p">(</span><span class="n">formula</span><span class="p">:</span> <span class="n">BooleanFormula</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="n">remaining</span> <span class="o">=</span> <span class="n">variables_in</span><span class="p">(</span><span class="n">formula</span><span class="p">)</span> <span class="c1"># get list of variables used in the formula</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="k">if</span> <span class="n">remaining</span><span class="o">.</span><span class="n">isEmpty</span><span class="p">():</span> 
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>        <span class="k">return</span> <span class="n">simplify</span><span class="p">(</span><span class="n">formula</span><span class="p">)</span>      <span class="c1"># no variables left; simplify to true or false</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>        <span class="n">branch</span> <span class="o">=</span> <span class="n">remaining</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>                                     <span class="c1"># guess based on first variable v</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>        <span class="n">true_result</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">substitute</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">branch</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span>    <span class="c1"># try v = true</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>        <span class="n">false_result</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">substitute</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">branch</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>  <span class="c1"># try v = false</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>        <span class="k">return</span> <span class="n">true_result</span> <span class="o">||</span> <span class="n">false_result</span>                        <span class="c1"># true if and only if _some_ guess worked</span>
+</code></pre></div>
+<p>The function relies on three helpers, which we've left out for brevity:</p>
+<ul>
+<li><code>simplify</code>, which evaluates a formula with no variables. E.g., it turns <code>True and False</code> to just <code>True</code>.</li>
+<li><code>substitute</code>, which replaces a variable with a concrete boolean value. E.g., calling <code>substitute(x1 and x2, x1, True)</code> would produce <code>True and x2</code>.</li>
+<li><code>variables_in</code>, which returns the set of variables used in a formula.</li>
+</ul>
+<p>Again, this program doesn't actually build the <em>entire</em> table at any one time. It explores the entire set of possible instances, and so takes time worst-case exponential in the number of variables. But it doesn't need that much <em>space</em>, which is already an improvement. </p>
+<p>However, its <em>best</em> case time is also exponential, which is rather disappointing. Surely we can do a lot better.</p>
+<h3 id="maybe-luck-is-with-us">Maybe Luck Is With Us<a class="headerlink" href="#maybe-luck-is-with-us" title="Permanent link">&para;</a></h3>
+<p>The issue with the last solution is that it <em>always</em> explores, even if it doesn't need to. Instead, how about we only check one value at a time. If we find a <code>True</code> result for one specific substitution, we're done!</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">solve</span><span class="p">(</span><span class="n">formula</span><span class="p">:</span> <span class="n">BooleanFormula</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    <span class="n">remaining</span> <span class="o">=</span> <span class="n">variables_in</span><span class="p">(</span><span class="n">formula</span><span class="p">)</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    <span class="k">if</span> <span class="n">remaining</span><span class="o">.</span><span class="n">isEmpty</span><span class="p">():</span> 
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>        <span class="k">return</span> <span class="n">simplify</span><span class="p">(</span><span class="n">formula</span><span class="p">)</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>        <span class="n">branch</span> <span class="o">=</span> <span class="n">remaining</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>        <span class="n">true_result</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">substitute</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">branch</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>        <span class="k">if</span> <span class="n">true_result</span><span class="p">:</span>    <span class="c1"># same as last version</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>            <span class="k">return</span> <span class="kc">True</span>    <span class="c1"># but allow early termination</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>        <span class="k">else</span><span class="p">:</span> 
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>            <span class="n">false_result</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">substitute</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">branch</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>            <span class="k">return</span> <span class="n">false_result</span>    
+</code></pre></div>
+<p>Now, suddenly, the best-case and the worst-case aren't the same. The solver could be <em>lucky</em>: consider a formula like <code>x1 and x2 and x3 and x4 and x5</code>. The above algorithm only needs 5 recursive calls to return <code>True</code>; the previous one would need <span class="arithmatex">\(2^5\)</span>.</p>
+<p>Of course, luck won't always be with us. Right? What's an example formula that would still need an exponential number of calls with the above code?</p>
+<details class="note">
+<summary>Think, then click!</summary>
+<p>How about: <code>!x1 and !x2 and !x3 and ...</code>? The first guess of <code>True</code> is always wrong for a formula like this.</p>
+</details>
+<h3 id="imposing-structure">Imposing Structure<a class="headerlink" href="#imposing-structure" title="Permanent link">&para;</a></h3>
+<p>Let's look back at our first example: <code>x1 and (x1 implies x2)</code>. You may have taken advantage of some <em>structure</em> to figure out a satisfying instance for this formula. Namely, if we know that <code>x1</code> holds, then we can propagate that knowledge into <code>x1 implies x2</code> to <em>deduce</em> that <code>x2</code> must hold---without needing to guess and try a value. There's nothing like this deduction in either of our programs so far.</p>
+<p>The trouble is: if we're given an arbitrary formula, it's hard to pick out that (say) <code>x1</code> is <em>definitely</em> true. But if we impose a little bit of structure on the input, it becomes easy in many cases. Let's do that now.</p>
+<h2 id="conjunctive-normal-form">Conjunctive Normal Form<a class="headerlink" href="#conjunctive-normal-form" title="Permanent link">&para;</a></h2>
+<p>First, three definitions:</p>
+<p>A <em>literal</em> is a variable or its negation. E.g., <code>x1</code> and <code>!x1</code> are both literals, but <code>!!x1</code> and <code>x1 or x2</code> are not.</p>
+<p>A <em>clause</em> is a set of literals combined with "or"; you may sometimes hear this called a <em>disjunction</em> of literals. Because we can always rewrite an "or" as implication (and vice versa) in classical boolean logic, a clause can be viewed as a number of different potential implications. </p>
+<p>A formula is said to be in <em>conjunctive normal form</em> (CNF) if it comprises a set of clauses that are implicitly combined with "and". We call it this because "conjunction" is just another name for "and"; a "normal form" is just a way of saying that a formula's shape follows a certain (often useful) structure.</p>
+<p>If the input to our solver is in CNF, as the example formula <code>x1 and (x1 implies x2)</code> is (or rather, it would be if we'd wrote it equivalently as <code>x1 and (!x1 or x2)</code>), we can spot these opportunities to propagate knowledge quite quickly, just by searching for clauses of only one element. </p>
+<p>A <em>unit clause</em> is a 1-element clause: a variable or its negation.</p>
+<p>The <em>empty clause</em> is a 0-element clause, and is equivalent to <code>False</code>. Why is the empty clause equivalent to <code>False</code>?</p>
+<details class="note">
+<summary>Think, then click!</summary>
+<p>A clause is a big "or", and an "or" gives a set of ways the formula could evaluate to <code>True</code>. But an empty clause gives <em>no</em> such options!</p>
+</details>
+<p></br></p>
+<p><strong>From now on, we'll assume that we always have input in CNF.</strong> There's a trick to accomplish this, so let's keep focused on the solving, not on the conversion for now. </p>
+<h3 id="a-powerful-idea-unit-propagation">A Powerful Idea: Unit Propagation<a class="headerlink" href="#a-powerful-idea-unit-propagation" title="Permanent link">&para;</a></h3>
+<p>If our input was <code>x1 and (!x1 or x2)</code>, and we'd stored it as a set, that would be <code>{x1, (!x1 or x2)}</code>. We can check for unit clauses in time linear in the number of clauses. And if there is a unit clause, we can see whether there are opportunities to propagate that knowledge. This idea is called <em>unit propagation</em>.</p>
+<p>But how does that actually <em>work</em>? Suppose we've identified a unit clause, in this case <code>x1</code>. Then, for every other clause <code>C</code> in the set, we can check whether:</p>
+<ul>
+<li>the clause <code>C</code> contains the same literal as the unit clause;</li>
+<li>the clause contains the opposite literal as in the unit clause; or</li>
+<li>neither of the above.</li>
+</ul>
+<p>In the third case, we probably can't do any propagation, because there's no connection between the clauses. But what do you think we can do in either of the first two cases?</p>
+<details class="note">
+<summary>Think, then click!</summary>
+<ul>
+<li>Does the clause <code>C</code> contain the same literal as the unit clause?<ul>
+<li>If so, then <code>C</code> is <em>subsumed</em> by the unit clause: <code>C</code> must be satisfied given <code>x1</code> holds! Delete the entire clause <code>C</code>.</li>
+</ul>
+</li>
+<li>Does the clause contain the opposite literal as in the unit clause?<ul>
+<li>If so, then the clause <code>C</code> cannot possibly be made true by that opposite literal. Delete that literal from <code>C</code>.</li>
+</ul>
+</li>
+</ul>
+</details>
+<p></br></p>
+<p><strong>Exercise</strong>: Here's a CNF formula. Solve it using unit propagation. </p>
+<p><code>x1 and (x1 or x2 or x3) and (!x3 or x2 or !x4) and (!x2 or !x1) and x3</code></p>
+<details class="note">
+<summary>Think, then click!</summary>
+<p>First, we notice 2 unit clauses: <code>x1</code> and <code>x3</code>. Then:  <br />
+* Propagate <code>x1</code>, which lets us remove a clause entirely, and simplify another: <code>x1 and (!x3 or x2 or !x4) and !x2 and x3</code>. But now we have a new unit clause, as a result of simplifying! 
+* Propagating <code>x3</code> gives us: <code>x1 and (x2 or !x4) and !x2 and x3</code>. 
+* Propagating <code>!x2</code> gives us <code>x1 and !x4 and !x2 and x3</code>. </p>
+<p>This is starting to look suspiciously like a boolean instance. <em>The unit clauses are assignments to boolean variables, and part of this process deduces new ones.</em></p>
+</details>
+<p></br></p>
+<p><strong>Exercise</strong>: Here's a CNF formula. Solve it using unit propagation. </p>
+<p><code>x1 and (x1 or x2 or x3) and (!x3 or x2 or !x4)</code></p>
+<p>Notice this formula is a strict subset of the earlier one. Because the earlier one is satisfiable, so is this one! But does unit propagation alone suffice to discover the satisfiability?</p>
+<details class="note">
+<summary>Think, then click!</summary>
+<p>No. Unit propagating <code>x1</code> will produce <code>x1 and (!x3 or x2 or !x4)</code>, but we need some other way---besides <em>just</em> unit propagation---of breaking down the larger clause that remains.</p>
+</details>
+<p></br></p>
+<p>Fortunately, if we mix unit propagation with our prior "guessing" algorithm, we make significant progress.</p>
+<h3 id="adding-unit-propagation">Adding Unit Propagation<a class="headerlink" href="#adding-unit-propagation" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">solve</span><span class="p">(</span><span class="n">formula</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="n">Clause</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    <span class="c1"># are there any unit clauses? if so, propagate them</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="c1"># keep doing so until there are no more changes</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    <span class="c1"># Beware: mutation can be a source of bugs here...</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="n">old_formula</span><span class="p">,</span> <span class="n">formula</span> <span class="o">=</span> <span class="n">propagate_unit_clauses</span><span class="p">(</span><span class="n">formula</span><span class="p">)</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    <span class="k">while</span> <span class="n">formula</span> <span class="o">&lt;&gt;</span> <span class="n">old_formula</span><span class="p">:</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>        <span class="n">old_formula</span><span class="p">,</span> <span class="n">formula</span> <span class="o">=</span> <span class="n">propagate_unit_clauses</span><span class="p">(</span><span class="n">formula</span><span class="p">)</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>    <span class="c1"># Did we produce the empty clause? (We might represent the e.c. as {} or [] etc.)</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>    <span class="k">if</span> <span class="n">EmptyClause</span> <span class="ow">in</span> <span class="n">formula</span><span class="p">:</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>        <span class="k">return</span> <span class="kc">False</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>    <span class="c1"># Do we otherwise have only unit clauses remaining? (What could go wrong in this check?) </span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>    <span class="k">elif</span> <span class="n">formula</span> <span class="o">==</span> <span class="n">units_in</span><span class="p">(</span><span class="n">formula</span><span class="p">):</span>    
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>        <span class="k">return</span> <span class="kc">True</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>    <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>        <span class="n">branch</span> <span class="o">=</span> <span class="n">remaining</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>        <span class="c1"># no longer substitute; instead, _add_ a unit clause to represent the &quot;True&quot; guess</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>        <span class="n">true_result</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">formula</span> <span class="o">+</span> <span class="p">{</span><span class="n">branch</span><span class="p">})</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>        <span class="k">if</span> <span class="n">true_result</span><span class="p">:</span> 
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>            <span class="k">return</span> <span class="kc">True</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>        <span class="k">else</span><span class="p">:</span> 
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>            <span class="c1"># no longer substitute; instead, _add_ a unit clause to represent the &quot;False&quot; guess</span>
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>            <span class="n">false_result</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">formula</span> <span class="o">+</span> <span class="p">{</span><span class="err">!</span><span class="n">branch</span><span class="p">})</span>
+<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>            <span class="k">return</span> <span class="n">false_result</span>    
+</code></pre></div>
+<p>Again, the amount of information we get from unit propagation is subject to luck (or, rather, the dependencies between variables and clauses in the formula we're given). </p>
+<div class="admonition note">
+<p class="admonition-title">Think: Why did we stop substituting?</p>
+<p>In prior versions, we substituted <code>True</code> or <code>False</code> into the formula. Now, we're adding a unit clause to represent the guess instead. Why did we make this change? One reason is that it's easier to explicitly represent the flow of this algorithm via the addition of unit clauses, since half of it is about unit propagation. More reasons may appear as we continue.</p>
+</div>
+<p>This idea---a recursive, backtracking search paired with unit propagation---is the foundation of one of the most famous boolean solver algorithms: <strong>DPLL</strong> (named after the authors: Davis, Putnam, Logemann, and Loveland). DPLL still forms the core of how most modern SAT-solvers work (although there are more ideas and optimizations not yet incorporated, such as learning from failure and deciding which variable to branch on).</p>
+<div class="admonition note">
+<p class="admonition-title">Pure-literal elimination</p>
+<p>DPLL technically has one more feature: pure-literal elimination. I'm glossing over that here. It's technically interesting, but not central to where we are right now. The idea is: if a variable appears in only one "polarity" (that is, only positive or negative throughout all clauses) then if the clause set is satisfiable at all, it must be satisfiable by some instance that agrees with the polarity of that variable. So if we just want to find <em>a</em> satisfying instance, why not just set that variable's value right away?</p>
+</div>
+<h3 id="returning-more-than-a-boolean">Returning more than a boolean<a class="headerlink" href="#returning-more-than-a-boolean" title="Permanent link">&para;</a></h3>
+<p>Returning just a boolean seems bad for the caller. After all, if Forge were using this solver, it would want the instance itself, not just that the instance exists. But there's another problem with returning a boolean: something related to testing. What is it?</p>
+<details class="note">
+<summary>Think, then click!</summary>
+<p>If we wanted to do property-based testing on the solver, returning <code>True</code> would force the testing predicate to <em>solve the problem again</em>. But if we returned an instance, the predicate would be much easier: just evaluate the formula in the instance, and see if it indeed satisfies the formula.</p>
+</details>
+<p></br></p>
+<p>But how should we go about returning an instance, rather than <code>True</code>? To find out, let's actually look at the tree of recursive calls, and see what information we have, or could recover. Let's solve:</p>
+<p><code>(!x1 or !x2) and (!x1 or !x3) and (x2 or x3)</code></p>
+<p><img alt="" src="dpll_diagram.jpg" /></p>
+<p>In that bottom left call, how do we conclude "conflict?" In the other bottom call, how do we conclude "success"?</p>
+<details class="note">
+<summary>Think, then click!</summary>
+<p>Because there's one more unit-propagation step in each case that I haven't drawn! Unit propagating <code>x3</code> when <code>!x3</code> is present will produce the empty clause: <code>False</code>. And similarly in the other case: unit propagating <code>x2</code> will eliminate the entire <code>x2 or x3</code> clause.</p>
+</details>
+<p></br></p>
+<p>Notice that every time we make a recursive call, there's an implicit set of <em>assumptions</em> involved. That is, there's always a <em>partial instance</em> of previously-selected guesses in effect at any point. We can make this explicit by adding a parameter to the function, and returning the guesses that produce a success:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Note new input and output types</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">solve</span><span class="p">(</span><span class="n">formula</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="n">Clause</span><span class="p">],</span> <span class="n">assumptions</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="n">Literal</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="n">Literal</span><span class="p">]:</span>    
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    <span class="n">old_formula</span><span class="p">,</span> <span class="n">formula</span> <span class="o">=</span> <span class="n">propagate_unit_clauses</span><span class="p">(</span><span class="n">formula</span><span class="p">)</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    <span class="k">while</span> <span class="n">formula</span> <span class="o">&lt;&gt;</span> <span class="n">old_formula</span><span class="p">:</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>        <span class="n">old_formula</span><span class="p">,</span> <span class="n">formula</span> <span class="o">=</span> <span class="n">propagate_unit_clauses</span><span class="p">(</span><span class="n">formula</span><span class="p">)</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>    <span class="n">remaining</span> <span class="o">=</span> <span class="n">variables_in</span><span class="p">(</span><span class="n">formula</span><span class="p">)</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>    <span class="k">if</span> <span class="n">remaining</span><span class="o">.</span><span class="n">isEmpty</span><span class="p">():</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>        <span class="k">if</span> <span class="n">simplify</span><span class="p">(</span><span class="n">formula</span><span class="p">):</span> 
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>            <span class="k">return</span> <span class="n">assumptions</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>        <span class="k">else</span><span class="p">:</span> 
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>            <span class="k">return</span> <span class="kc">False</span>        
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>    <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>        <span class="n">branch</span> <span class="o">=</span> <span class="n">remaining</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>        <span class="n">true_result</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">formula</span> <span class="o">+</span> <span class="p">{</span><span class="n">branch</span><span class="p">},</span> <span class="n">assumptions</span> <span class="o">+</span> <span class="p">{</span><span class="n">branch</span> <span class="p">:</span> <span class="n">true</span><span class="p">})</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>        <span class="k">if</span> <span class="n">true_result</span> <span class="o">&lt;&gt;</span> <span class="kc">False</span><span class="p">:</span> 
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>            <span class="k">return</span> <span class="n">assumptions</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>        <span class="k">else</span><span class="p">:</span> 
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>            <span class="n">false_result</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">formula</span> <span class="o">+</span> <span class="p">{</span><span class="err">!</span><span class="n">branch</span><span class="p">},</span> <span class="n">assumptions</span> <span class="o">+</span> <span class="p">{</span><span class="n">branch</span> <span class="p">:</span> <span class="kc">False</span><span class="p">})</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>            <span class="k">return</span> <span class="n">false_result</span>    
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Hold on...</p>
+<p>Does this actually work? Let's think about testing. We can use PBT to test our solver! What do we need?
+* A <em>generator</em> for clause sets;
+* A <em>predicate</em> that tests whether an instance satisfies a clause set.</p>
+<p>If we try this out, we may find a potential issue. Here's an example we might be concerned about (but notice how many contingencies are involved in generating it!):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>(x1 or x2)
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>(!x1 or x3) 
+</code></pre></div>
+<p>If our solver uses lexical order to decide what to branch on first, it's going to pick <code>x1</code> before the others. And if it tries <code>True</code> first, we'll end up unit-propagating to:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>x1 
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>x3 
+</code></pre></div>
+<p>because the first original clause is subsumed by <code>x1</code>, and the second can be unit-propagated into. Yet, if we only return the assumptions, rather than <em>all</em> derived unit clauses, we'll return <code>{x1: True}</code>, not <code>{x1: True, x3: True}</code>. Beware!</p>
+</div>
+<h3 id="total-or-partial-instances">Total or Partial Instances?<a class="headerlink" href="#total-or-partial-instances" title="Permanent link">&para;</a></h3>
+<p>So far, our algorithm will avoid making assumptions if it doesn't need to. This is good from a performance perspective but bad if the caller expects a <em>total</em> instance that maps every variable to a boolean. But unit propagation can <em>delete</em> clauses, resulting in variables just disappearing from the problem. E.g., solving <code>x1 and (x1 or x5)</code>.</p>
+<p>If our goal is to produce a <em>total</em> solver (and it usually is---Forge, for example, needs values for every possible tuple in every relation, even if they aren't constrained at all), we'll need to post-process the result and pick arbitrary values for variables that have no value in the assumption set. Traditionally, we'll make this easier on ourselves by passing a 3rd argument to the solver: the number of variables.</p>
+<h2 id="heuristics-which-variables-which-values">Heuristics: Which Variables? Which Values?<a class="headerlink" href="#heuristics-which-variables-which-values" title="Permanent link">&para;</a></h2>
+<p>There are a bunch of heuristics for picking variables to branch on, picking boolean values, etc. that are beyond the scope of this class. There is also a second brilliant idea that powers model solvers: <em>learning</em> from failure. In these solvers, reaching a conflict results in learning a "conflict clause" which is added to know the knowledge base, and the solver leverages this to backtrack further than one level of recursion if it's able.</p>
+<p>If you're curious about how solvers are built, check out <a href="http://cs.brown.edu/courses/csci2951-o/">CSCI 2951-O</a>. </p>
+<h2 id="converting-to-cnf">Converting to CNF<a class="headerlink" href="#converting-to-cnf" title="Permanent link">&para;</a></h2>
+<p>How should we convert an arbitrary boolean formula to CNF? </p>
+<h3 id="naive-approach-distributivity">Naive Approach: Distributivity<a class="headerlink" href="#naive-approach-distributivity" title="Permanent link">&para;</a></h3>
+<p>We could start by using the distributive law: <code>x1 and (x2 or x3)</code> is equivalent to <code>(x1 or x2) and (x1 or x3)</code>.</p>
+<p>So if we have:</p>
+<p><code>(x1 and x2) or (x3 and x4)</code></p>
+<p>We could convert it to CNF by applying the distributive law twice to get:</p>
+<p><code>(x1 or x3) and (x1 or x4) and (x2 or x3) and (x2 and x4)</code></p>
+<p>There's a fundamental problem here, though. What do you see?</p>
+<details class="note">
+<summary>Think, then click!</summary>
+<p>This process will increase formula size <em>exponentially</em> in the worst case. That's unacceptable. (Consider what happens if we keep adding terms to the above shape: making the inner <code>and</code> formulas bigger and adding more of them.)</p>
+<p>This is again pretty disappointing: if there <em>is no</em> equivalent CNF available for some formulas that isn't exponentially bigger, how can we practically use the algorithm we just invented?</p>
+</details>
+<h3 id="the-tseitin-transformation">The Tseitin Transformation<a class="headerlink" href="#the-tseitin-transformation" title="Permanent link">&para;</a></h3>
+<p>There's something else we could do. If we can't find an <em>equivalent</em> CNF, maybe we could make a trade-off. To help us on the way, here are a couple of definitions:</p>
+<p>Two formulas A and B over some set of boolean variables V are said to be <em>logically equivalent</em> if they are satisfied by the exact same instances.</p>
+<p>Two formulas A and B are said to be <em>equisatisfiable</em> when A is satisfiable if and only if B is satisfiable. Note that equisatisfiability doesn't require A and B to use the same variable sets; the instances can be over different variables. </p>
+<div class="admonition tip">
+<p class="admonition-title">The Idea</p>
+<p>Of course, mere equisatisfiability doesn't immediately guarantee any structural connection between the two formulas. For this to work, we need to be able to map a solution to problem <code>B</code> back to the original problem <code>A</code>. So maybe there's a way we could productively <em>add variables</em> to the original, retaining the meaning of the original variables, and still somehow avoid the exponential blowup in CNF conversion?</p>
+</div>
+<p>Let's look at that formula again: <code>(x1 and x2) or (x3 and x4)</code>. View it as a boolean circuit. </p>
+<p><img alt="" src="dpll_tree.png" /></p>
+<p>What if we assigned a new variable for every internal node of the tree? We'd have <code>a1</code> and <code>a2</code> for the <code>and</code> nodes, and <code>o1</code> for the <code>or</code> node. The formula is true if and only if the <code>or</code> node is, so we'd have a unit clause: <code>o1</code> in the new formula. </p>
+<p>But what makes <code>o1</code> true? Here's a definition in 3 constraints:</p>
+<ul>
+<li><code>a1 implies o1</code>,</li>
+<li><code>a2 implies o1</code>, and</li>
+<li><code>o1 implies (a1 or a2)</code>.</li>
+</ul>
+<p>We can rewrite these in CNF:</p>
+<ul>
+<li><code>!a1 or o1</code>,</li>
+<li><code>!a2 or o1</code>, and</li>
+<li><code>!o1 or a1 or a2</code>.</li>
+</ul>
+<p>The <code>and</code> nodes have similar definitions:</p>
+<ul>
+<li><code>(x1 and x2) implies a1</code></li>
+<li><code>a1 implies (x1 and x2)</code></li>
+<li><code>(x3 and x4) implies a2</code></li>
+<li><code>a2 implies (x3 and x4)</code></li>
+</ul>
+<p>which can be rewritten:</p>
+<ul>
+<li><code>!x1 or !x2 or a1</code></li>
+<li><code>!a1 or x1</code></li>
+<li><code>!a1 or x2</code></li>
+<li><code>!x3 or !x4 or a2</code></li>
+<li><code>!a2 or x3</code></li>
+<li><code>!a2 or x4</code></li>
+</ul>
+<p>Together, these constraints are <em>equisatisfiable</em> with the original formula. </p>
+<p>Moreover, they're something more than equisatisfiable. Just like we wanted, there's a useful relationship between the original variables and the new variables. We can always read off the values of <code>x1</code>, <code>x2</code>, <code>x3</code>, and <code>x4</code> in a solution to the new constraints and get a solution to the original constraints. The values of the newly added variables express values for the intermediate nodes of the boolean circuit.</p>
+<p>And that's how Forge's translation layer works.</p>
+<h2 id="example-of-a-real-solver">Example of a "real" solver<a class="headerlink" href="#example-of-a-real-solver" title="Permanent link">&para;</a></h2>
+<p>You can see example code solving the N-queens problem via SAT <a href="sat_demo/nqueens-glucose.py">here</a>. I'm using the <a href="https://github.com/audemard/glucose/releases/tag/4.2.1">parallel Glucose solver</a>, but you can plug in any solver you want; this Python script just builds a <a href="https://www21.in.tum.de/~lammich/2015_SS_Seminar_SAT/resources/dimacs-cnf.pdf">DIMACS standard</a> CNF file.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
