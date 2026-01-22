@@ -7,3 +7,6 @@ mike>=2.0.0
 
 # Extensions for admonitions, math, code highlighting
 pymdown-extensions>=10.0
+
+# Forge syntax highlighting lexer
+-e ./docs/lexers
