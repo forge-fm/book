@@ -12,9 +12,9 @@ Implementation of a linked list.
 
  -->
 
-We'll talk about more than just software soon. For now, let's go back to testing. Most of us have learned how to write test cases. Given an input, here's the output to expect. Tests are a kind of pointwise *specification*; a partial one, and not great for fully describing what you want, but a kind of specification nonetheless. They're cheap, non-trivially useful, and better than nothing.
+For now, let's go back to testing. Most of us have learned how to write test cases. Given an input, here's the output to expect. Tests are a kind of pointwise *specification*; a partial one, and not great for fully describing what you want, but a kind of specification nonetheless. They're cheap, non-trivially useful, and better than nothing.
 
-But they also carry our biases, they can't cover an infinite input space, etc. Even more, they're not always adequate carriers of intent: if I am writing a program to compute the statistical median of a dataset, and write `assert median([1,2,3]) == 2`, what exactly is the behavior of the system I'm trying to confirm? Surely I'm not writing the test because I care specifically about `[1,2,3]` only, and not about `[3,4,5]` in the same way? Maybe there was some broader aspect, some _property_ of median I cared about when I wrote that test. 
+But they also carry our biases, they can't cover an infinite input space of inputs. Even more, they're not always adequate carriers of intent: if I am writing a program to compute the statistical median of a dataset, and write `assert median([1,2,3]) == 2`, what exactly is the behavior of the system I'm trying to confirm? Surely I'm not writing the test because I care specifically about `[1,2,3]` only, and have no opinion about `[3,4,5]` in the same way? Maybe there was some broader aspect, some _property_ of median I cared about when I wrote that test. 
 
 **Exercise:** What do you think it was? What makes an implementation of `median` correct?
 
@@ -34,13 +34,13 @@ There isn't always an easy-to-extract property for every unit test. But this ide
 
 ### A New Kind of Testing
 
-#### Cheapest Paths
+#### Example: Path Finding
 
-Consider the problem of finding cheapest paths in a weighted graph. There are quite a few algorithms you might use: Dijkstra, Bellman-Ford, even a plain breadth-first search for an unweighted graph. You might have implemented one of these for another class! 
+Consider the problem of finding paths in a graph. There are quite a few algorithms you might use: Breadth-First Search, Depth-First Search, and so on. 
 
-The problem statement seems simple: take a graph $GRAPH$ and two vertex names $V1$ and $V2$ as input. Produce the cheapest path from $V1$ to $V2$ in $GRAPH$. But it turns out that this problem hides a lurking issue.
+The problem statement seems simple: take a graph $GRAPH$ and two vertex names $V1$ and $V2$ as input. Produce either a path from $V1$ to $V2$ in $GRAPH$ or indicate that no such path exists. But it turns out that this problem hides a lurking issue.
 
-**Exercise:** Find the cheapest path from vertex $G$ to vertex $E$ on the graph below.
+**Exercise:** Find a path from vertex $G$ to vertex $E$ on the graph below. 
 
 ![](./pbt_hypothesis.jpg)
 
@@ -49,53 +49,58 @@ The problem statement seems simple: take a graph $GRAPH$ and two vertex names $V
 
     Great! We have the answer. Now we can go and add a test case for with that graph as input and (G, A, B, E) as the output. 
 
-    Wait -- you found a different path? G to D to B to E?
-
-    And another path? G to H to F to E?
-
+    Wait -- you found a different path? G to D to B to E? Or G to H to F to E? Oh, no... (Those are all the same total cost, too! So if we were finding cheapest paths, we'd have the same problem.)
 
 ---
 
 If we add a traditional test case corresponding to _one_ of the correct answers, our test suite will falsely raise alarms for correct implementations that happen to find different answers. In short, we'll be over-fitting our tests to _one specific implementation_: ours. But there's a fix. Maybe instead of writing:
 
-`shortest(GRAPH, G, E) == [(G, A), (A, B), (B, E)]`
+`search(GRAPH, G, E) == [(G, A), (A, B), (B, E)]`
 
 we write:
 
 ```
-shortest(GRAPH, G, E) == [(G, A), (A, B), (B, E)] or
-shortest(GRAPH, G, E) == [(G, D), (D, B), (B, E)] or
-shortest(GRAPH, G, E) == [(G, H), (H, F), (F, E)]
+search(GRAPH, G, E) == [(G, A), (A, B), (B, E)] or
+search(GRAPH, G, E) == [(G, D), (D, B), (B, E)] or
+search(GRAPH, G, E) == [(G, H), (H, F), (F, E)]
 ```
 
 **Exercise:** What's wrong with the "big or" strategy? Can you think of a graph where it'd be unwise to try to do this?
 
 ??? note "Think, then click!"
-    There are at least two problems. First, we might have missed some possible solutions, which is quite easy to do; the first time Tim was preparing these notes, he missed the third path above! Second, there might be an unmanageable number of equally correct solutions. The most pathological case might be something like a graph with all possible edges present, all of which have weight zero. Then, every path is cheapest.
-
+    There are at least two problems. First, we might have missed some possible solutions, which is quite easy to do; the first time I was writing these notes, I missed the third path above! Second, there might be an unmanageable number of equally correct solutions. The most pathological case might be something like a graph with all possible edges present.
 
 ---
 
-This problem -- multiple correct answers -- occurs in every part of Computer Science. Once you're looking for it, you can't stop seeing it. Most graph problems exhibit it. Worse, so do most optimization problems. Unique solutions are convenient, but the universe isn't built for our convenience. 
+This problem&mdash;multiple correct answers&mdash;occurs in every part of Computer Science. Once you're looking for it, you can't stop seeing it. Most graph problems exhibit it. Worse, so do most optimization problems. Unique solutions are convenient, but the universe isn't built for our convenience. We call such problems _relational_, because the relationship between inputs and outputs isn't a function in the mathematical sense.
 
-**Exercise:** What's the solution? If _test cases_ won't work, is there an alternative? (Hint: instead of defining correctness bottom-up, by small test cases, think top-down: can we say what it __means__ for an implementation to be correct, at a high level?)
+**Exercise:** What's the solution? If _test cases_ won't work, is there an alternative? instead of defining correctness in terms of input-output pairs, think top-down: what does it __mean__ for an output to be correct?
 
 ??? note "Think, then click!"
-    In the cheapest-path case, we can notice that the costs of all cheapest paths are the same. This enables us to write:
+    To be correct, an output path needs to:
+    
+    - start at the correct node;
+    - end at the correct node; and
+    - follow actual edges in the graph, instead of inventing new ones.
+    
+---
+
+<!-- The first three are easy enough to check. We just write a program that accepts _both_ the input and output, checks equality on the start and end nodes, and then runs a `for` loop to make sure the output path's edges exist.
+    
+    We've already made progress! The fourth requirement is harder, though: we can't easily write an efficient program that checks _all_ possible other paths. Fortunately, in the cheapest-path case, the costs of all cheapest paths are the same. This enables us to write someething like this in our test suite:
 
     `cost(cheapest(GRAPH, G, E)) = 11`
 
-    which is now robust against multiple implementations of `cheapest`.
+    The key is that we can combine all four subproperties in each test case: start, end, edges, and minimality. Then we don't need to hard-code an output at all, and our tests are robust against multiple implementations of `cheapest`.  -->
 
 
----
 
+<!-- 
+This might be something you were taught to do when implementing cheapest-path algorithms, or it might be something you did on your own, unconsciously. (You might also have been told to ignore this problem, or not told about it at all. When I learned Dijkstra's algorithm, we tested only the lengths and not the actual paths at all.) We're not going to stop there, however. -->
 
-This might be something you were taught to do when implementing cheapest-path algorithms, or it might be something you did on your own, unconsciously. (You might also have been told to ignore this problem, or not told about it at all...) We're not going to stop there, however.
+We just did something subtle and interesting. Our testing strategy has just evolved past naming _specific_ values of output to checking broader _properties_ of output: the path starts at the correct place, follows actual edges in the graph, and so on. We don't need to know the output path itself, only certain facts about it. Not: "This is the answer." Rather: "This is what a correct answer looks like."
 
-Notice that we just did something subtle and interesting. Even if there are a billion cheapest paths between two vertices in the input graph, they all have that same, minimal length. Our testing strategy has just evolved past naming _specific_ values of output to checking broader _properties_ of output.
-
-Similarly, we can move past specific inputs: randomly generate them. Then, write a function `is_valid` that takes an arbitrary `input, output` pair and returns true if and only if the output is a valid solution for the input. Just pipe in a bunch of inputs, and the function will try them all. You can apply this strategy to most any problem, in any programming language. (For your homework this week, you'll be using Python.) Let's be more careful, though.
+<!-- Similarly, we can move past specific inputs: randomly generate them. Then, write a function `is_valid` that takes an arbitrary `input, output` pair and returns true if and only if the output is a valid solution for the input. Just pipe in a bunch of inputs, and the function will try them all. You can apply this strategy to most any problem, in any programming language. (For your homework this week, you'll be using Python.) Let's be more careful, though.
 
 **Exercise:** Is there something _else_ that `cheapest` needs to guarantee for that input, beyond finding a path with the same cost as our solution?
 
@@ -103,34 +108,38 @@ Similarly, we can move past specific inputs: randomly generate them. Then, write
     We also need to confirm that the path returned by `cheapest` is indeed a path in the graph!
 
 
----
+--- -->
 
-**Exercise:** Now take that list of goals, and see if you can outline a function that tests for it. Remember that the function should take the problem input (in this case, a graph and the source and destination vertices) and the output (in this case, a path). You might generate something like this pseudocode:
+**Exercise:** Now take that list of goals, and see if you can outline a function that tests for it. Remember that the function should take the problem input (in this case, a graph and the source and destination vertices) and the output (in this case, a path). You might generate something like this:
 
 ??? note "Think, then click!"
     ```
-    isValid : input: (graph, vertex, vertex), output: list(vertex) -> bool
-      returns true IFF:
-        (1) output.cost == trustedImplementation(input).cost
-        (2) every vertex in output is in input's graph
-        (3) every step in output is an edge in input
-        ... and so on ...
+    def validate_path(graph: dict, start, end, path: list) -> bool:
+    if not path:
+        return False
+    if path[0] != start or path[-1] != end:
+        return False
+    for i in range(len(path) - 1):
+        if path[i] not in graph or path[i + 1] not in graph[path[i]]:
+            return False
+    return True
     ```
 
+Notice how these kinds of tests can be pretty straightforward to write. Indeed, I "wrote" this with Claude Code. The trick is in accurately describing the properties you care about.
 
 ---
 
-This style of testing is called Property-Based Testing (PBT). When we're using a trusted implementation&mdash;or some other artifact&mdash;to either evaluate the output or to help generate useful inputs, it is also a variety of Model-Based Testing (MBT). 
+This style of testing is called Property-Based Testing (PBT). There's a variation that uses a trusted implementation&mdash;or some other artifact&mdash;as a source of truth to evaluate the output, sometimes called Model-Based Testing (MBT). 
 
 !!! note "Model-Based Testing"
-    There's a lot of techniques under the umbrella of MBT. A model can be another program, a formal specification, or some other type of artifact that we can "run". Often, MBT is used in a more stateful way: to generate sequences of user interactions that drive the system into interesting states. 
+    There are _many_ techniques under the umbrella of MBT. A model can be another program, a formal specification, or some other type of artifact that we can "run". Often, MBT is used in a more stateful way: building a model to help generate sequences of user interactions that drive the system into interesting states. As you might imagine, many people disagree on what "real" PBT and "real" PBT are.
 
-    For now, know that modeling systems can be helpful in generating good tests, in addition to everything else.
+    I don't think it's useful to dive into that debate. For now, just know that modeling systems and thinking about properties more formally can be helpful in generating good tests.
 
 
 There are a few questions, though...
 
-**Question:** Can we really trust a "trusted" implementation?
+**Question:** You said we could test a new implementation against another one. But can we really trust a "trusted" implementation?
 
 No, not completely. It's impossible to reach a hundred percent trust; anybody who tells you otherwise is selling something. Even if you spend years creating a correct-by-construction system, there could be a bug in (say) how it is deployed or connected to other systems. 
 
@@ -138,38 +147,23 @@ But often, questions of correctness are really about the _transfer of confidence
 
 And anyway, often we don't need recourse to any trusted model; we can just phrase the properties directly. 
 
-**Exercise:** What if we don't have a trusted implementation?
+### Input Generation
 
-??? note "Think, then click!"
-    You can use this approach whenever you can write a function that checks the correctness of a given output. It doesn't need to use an existing implementation (it's just easier to talk about that way). In the next example we won't use a trusted implementation at all!
+Now that we've avoided writing hard-coded outputs in our tests, you might wonder: _Where do the inputs come from_? Great question! Some we will manually create based on our own cleverness and understanding of the problem. **You should still write hand-crafted, carefully-curated unit tests.**
 
-
-#### Input Generation
-
-Now you might wonder: _Where do the inputs come from_?
-
-Great question! Some we will manually create based on our own cleverness and understanding of the problem. Others, we'll generate randomly.
-
-Random inputs are used for many purposes in software engineering: "fuzz testing", for instance, creates vast quantities of random inputs in an attempt to find crashes and other serious errors. We'll use that same idea here, except that our notion of correctness is usually a bit more nuanced.
+Others, we'll generate randomly. Random inputs are used for many purposes in software engineering: "fuzz testing", for instance, creates vast quantities of random inputs in an attempt to find crashes and other serious errors. We'll use that same idea here, except that our notion of correctness is usually a bit more nuanced.
 
 Concretely:
 
 ![A diagram of property-based testing. A random input generator, plus some manually-chosen inputs, are sent to the implementation under test. The outputs are then run through the validator function.](./pbt_diagram.jpg)
 
-It's important to note that some creativity is still involved here: you need to come up with an `is_valid` function (the "property"), and you'll almost always want to create some hand-crafted inputs (don't trust a random generator to find the subtle corner cases you already know about!) The strength of this approach lies in its resilience against problems with multiple correct answers, and in its ability to _mine for bugs while you sleep_. Did your random testing find a bug? Fix it, and then add that input to your list of regression tests. Rinse, repeat.
+It's important that some creativity is still involved here. You need to come up with an `is_valid` function (the "property"), and you'll almost always want to create some hand-crafted inputs (don't trust a random generator to find the subtle corner cases you already know about!) The strength of this approach lies in its resilience against problems with multiple correct answers, and in its ability to _mine for bugs while you sleep_. Did your random testing find a bug? Fix it, and then add that input to your list of regression tests. Rinse, repeat.
 
 If we were still thinking in terms of traditional test cases, this would make no sense: where would the outputs come from? Instead, we've created a testing system where concrete outputs aren't something we need to provide. Instead, we check whether the program under test produces _any valid output_.
 
 ### The Hypothesis Library
 
 There are PBT libraries for most every popular language. In this book, we'll be using a library for Python called [Hypothesis](https://hypothesis.readthedocs.io/en/latest/index.html). Hypothesis has many helper functions to make generating random inputs relatively easy. It's worth spending a little time stepping through the library. Let's test a function in Python itself: the `median` function in the `statistics` library, which we began this chapter with. What are some important properties of `median`?
-
-!!! note "CSCI 1710: LLMs and Testing"
-
-    If you're in CSCI 1710, your first homework starts by asking you to generate code using an LLM of your choice, such as ChatGPT. Then, you'll use property-based testing to assess its correctness.  To be clear, **you will not be graded on the correctness of the code you prompt an LLM to generate**. Rather, you will be graded on how good your property-based testing is. 
-
-    Later in the semester, you'll be using PBT again to test more complex software!
-
 
 Now let's use Hypothesis to test at least one of those properties. We'll start with this [template](./pbt.py):
 
@@ -267,6 +261,20 @@ Exercise: **What do you think is going wrong?**
 
     Between the other two options (adding an error term and changing libraries) it depends on the engineering context we're working in. Changing libraries may have consequences for performance or system design. Testing equality _within some small window_ may be the best option in this case, where we know that many inputs will involve `float` division.
 
+### Another Example
+
+The path-finding example is a bit simplistic, so here's another: does an encryption or hash function produce very different ciphertexts for two very similar plaintexts? This is called the [avalanche property](https://en.wikipedia.org/wiki/Avalanche_effect). For instance, if I run [`md5`](https://en.wikipedia.org/wiki/MD5) on two inputs: "Hello World" and "Hello World!" I really ought to get results that are far apart. If I put those strings into separate files, here's what I get:
+
+```
+% md5 hello1.txt 
+MD5 (hello1.txt) = b10a8db164e0754105b7a99be72e3fe5
+% md5 hello2.txt
+MD5 (hello2.txt) = ed076287532e86365e841e92bfc50d8c
+```
+
+These differ on 73 of 128 bits, so this is fine. Whew. But does this always happen? We might try looking for counterexamples via PBT: randomly generate a string (`str_orig`), mutate it by one character (`str_modified`), run `md5` on both, and compute the distance between the resulting hashes. 
+
+Here is [a proof-of-concept Python program](./hash_avalanche_pbt.py) demonstrating the idea. `md5` doesn't do too badly if we only ask for 25% difference, but it should fail with a counterexample at the 50% difference we usually aim for in cryptography. PBT can be very useful for discovering bugs like this, although _failure to find a counterexample is not a proof of correctness!_
 
 ### Takeaways
 
@@ -276,3 +284,7 @@ First, being precise about _what correctness means_ is powerful. With ordinary u
 
 Second, the very act of trying to precisely express, and test, correctness for `median` _taught us (or reminded us about) something subtle about how our programming language works_, which tightened our definition of correctness. Modeling often leads to such a virtuous cycle. 
 
+!!! note "Related Readings"
+    [Choosing Properties for Property-Based Testing](https://fsharpforfunandprofit.com/posts/property-based-testing-2/), part of a series on PBT. The post is a decade old, but still full of useful wisdom. It should give you a few general shapes to consider: round-trip properties, idempotence, etc. It's not exhaustive, but you'll want to read it. 
+
+    Our industry-related reading is an AWS Security blog post: [How AWS uses automated reasoning to help you achieve security at scale](https://aws.amazon.com/blogs/security/protect-sensitive-data-in-the-cloud-with-automated-reasoning-zelkova/). I'm choosing something from AWS in 2018 to demonstrate that solver-based FM has been around for a while, and that companies like Amazon build products based on FM. The tool that the post talks about uses the ideas you'll learn in this book, specifically that security policies can be encoded as a constraint-solving problem.
