@@ -737,7 +737,7 @@ Implementation of a linked list.
 <h4 id="example-path-finding">Example: Path Finding<a class="headerlink" href="#example-path-finding" title="Permanent link">&para;</a></h4>
 <p>Consider the problem of finding paths in a graph. There are quite a few algorithms you might use: Breadth-First Search, Depth-First Search, and so on. </p>
 <p>The problem statement seems simple: take a graph <span class="arithmatex">\(GRAPH\)</span> and two vertex names <span class="arithmatex">\(V1\)</span> and <span class="arithmatex">\(V2\)</span> as input. Produce either a path from <span class="arithmatex">\(V1\)</span> to <span class="arithmatex">\(V2\)</span> in <span class="arithmatex">\(GRAPH\)</span> or indicate that no such path exists. But it turns out that this problem hides a lurking issue.</p>
-<p><strong>Exercise:</strong> Find a path from vertex <span class="arithmatex">\(G\)</span> to vertex <span class="arithmatex">\(E\)</span> on the graph below. </p>
+<p><strong>Exercise:</strong> Find a simple path (i.e., one with no repeated vertices) from vertex <span class="arithmatex">\(G\)</span> to vertex <span class="arithmatex">\(E\)</span> on the graph below. </p>
 <p><img alt="" src="pbt_hypothesis.jpg" /></p>
 <details class="note">
 <summary>Think, then click!</summary>
@@ -809,7 +809,7 @@ This might be something you were taught to do when implementing cheapest-path al
 </details>
 <p>Notice how these kinds of tests can be pretty straightforward to write. Indeed, I "wrote" this with Claude Code. The trick is in accurately describing the properties you care about.</p>
 <hr />
-<p>This style of testing is called Property-Based Testing (PBT). There's a variation that uses a trusted implementation&mdash;or some other artifact&mdash;as a source of truth to evaluate the output, sometimes called Model-Based Testing (MBT). </p>
+<p>This style of testing is called Property-Based Testing (PBT). There's a variation that uses a trusted implementation&mdash;or some other artifact&mdash;as a source of truth to evaluate the output, sometimes called (a type of) Model-Based Testing (MBT). If we had needed to test a <em>shortest</em> path implementation, we might combine the two ideas: use PBT for the shape of the paths themselves, and reference a 2nd implementation for the actual path-length. We could even hard-code lengths into the test suite ourselves.</p>
 <div class="admonition note">
 <p class="admonition-title">Model-Based Testing</p>
 <p>There are <em>many</em> techniques under the umbrella of MBT. A model can be another program, a formal specification, or some other type of artifact that we can "run". Often, MBT is used in a more stateful way: building a model to help generate sequences of user interactions that drive the system into interesting states. As you might imagine, many people disagree on what "real" PBT and "real" MBT are.</p>
