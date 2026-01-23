@@ -1,5 +1,10 @@
 ## How To Read This Book 
 
+!!! warning "Book versioning: This is the 2025 edition!" 
+    This is the 2025 edition of the book, written during the Spring 2025 offering of Logic for Systems at Brown. The newer, 2026 edition is being revised for the Spring 2026 offering, but not all chapters have been revised. I suggest using the 2026 version instead, if it contains the content you need. 
+
+---
+
 Welcome to Logic for Systems! Here are some quick hints that will help you use this book effectively.
 
 !!! note "This book is a draft!"
