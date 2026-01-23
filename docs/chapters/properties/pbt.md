@@ -274,7 +274,11 @@ MD5 (hello2.txt) = ed076287532e86365e841e92bfc50d8c
 
 These differ on 73 of 128 bits, so this is fine. Whew. But does this always happen? We might try looking for counterexamples via PBT: randomly generate a string (`str_orig`), mutate it by one character (`str_modified`), run `md5` on both, and compute the distance between the resulting hashes. 
 
-Here is [a proof-of-concept Python program](./hash_avalanche_pbt.py) demonstrating the idea. `md5` doesn't do too badly if we only ask for 25% difference, but it should fail with a counterexample at the 50% difference we usually aim for in cryptography. PBT can be very useful for discovering bugs like this, although _failure to find a counterexample is not a proof of correctness!_
+Here is [a proof-of-concept Python program](./hash_avalanche_pbt.py) demonstrating the idea. `md5` doesn't do too badly if we only ask for 25% difference, but it should fail with a counterexample at the 50% difference. PBT can be very useful for discovering bugs like this, although _failure to find a counterexample is not a proof of correctness!_
+
+!!! warning "The actual cryptographic property is more complex! This counterexample isn't enough by itself."
+    The actual avalanche property is _probabilistic_. So, when `md5` fails our check here, it doesn't immediately mean that `md5` does not satisfy the real, statistical property. The goal is to demonstrate how useful random testing, and PBT in particular, can be.
+
 
 ### Takeaways
 
