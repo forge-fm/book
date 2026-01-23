@@ -906,7 +906,11 @@ This might be something you were taught to do when implementing cheapest-path al
 <a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>MD5 (hello2.txt) = ed076287532e86365e841e92bfc50d8c
 </code></pre></div>
 <p>These differ on 73 of 128 bits, so this is fine. Whew. But does this always happen? We might try looking for counterexamples via PBT: randomly generate a string (<code>str_orig</code>), mutate it by one character (<code>str_modified</code>), run <code>md5</code> on both, and compute the distance between the resulting hashes. </p>
-<p>Here is <a href="hash_avalanche_pbt.py">a proof-of-concept Python program</a> demonstrating the idea. <code>md5</code> doesn't do too badly if we only ask for 25% difference, but it should fail with a counterexample at the 50% difference we usually aim for in cryptography. PBT can be very useful for discovering bugs like this, although <em>failure to find a counterexample is not a proof of correctness!</em></p>
+<p>Here is <a href="hash_avalanche_pbt.py">a proof-of-concept Python program</a> demonstrating the idea. <code>md5</code> doesn't do too badly if we only ask for 25% difference, but it should fail with a counterexample at the 50% difference. PBT can be very useful for discovering bugs like this, although <em>failure to find a counterexample is not a proof of correctness!</em></p>
+<div class="admonition warning">
+<p class="admonition-title">The actual cryptographic property is more complex! This counterexample isn't enough by itself.</p>
+<p>The actual avalanche property is <em>probabilistic</em>. So, when <code>md5</code> fails our check here, it doesn't immediately mean that <code>md5</code> does not satisfy the real, statistical property. The goal is to demonstrate how useful random testing, and PBT in particular, can be.</p>
+</div>
 <h3 id="takeaways">Takeaways<a class="headerlink" href="#takeaways" title="Permanent link">&para;</a></h3>
 <p>We'll close this section by noticing two things:</p>
 <p>First, being precise about <em>what correctness means</em> is powerful. With ordinary unit tests, we're able to think about behavior only <em>point-wise</em>. Here, we need to broadly describe our goals, and there's a cost to that, but also advantages: comprehensibility, more powerful testing, better coverage, etc. And we can still get value from a partial definition, because we can then at least apply PBT to that portion of the program's behavior. </p>
