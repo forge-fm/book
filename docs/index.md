@@ -1,7 +1,7 @@
 ## How To Read This Book 
 
 !!! warning "Book versioning: This is the 2025 edition!" 
-    This is the 2025 edition of the book, written during the Spring 2025 offering of Logic for Systems at Brown. The newer, 2026 edition is being revised for the Spring 2026 offering, but not all chapters have been revised. I suggest using the 2026 version instead, if it contains the content you need. 
+    This is the 2025 edition of the book, written during the Spring 2025 offering of Logic for Systems at Brown. The newer, [2026 edition](https://forge-fm.github.io/book/2026/) is being revised for the Spring 2026 offering, but not all chapters have been revised. I suggest using the 2026 version instead, if it contains the content you need. **Students in CSCI 1710 should use the 2026 version wherever possible.
 
 ---
 
