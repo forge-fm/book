@@ -40,7 +40,7 @@ Consider the problem of finding paths in a graph. There are quite a few algorith
 
 The problem statement seems simple: take a graph $GRAPH$ and two vertex names $V1$ and $V2$ as input. Produce either a path from $V1$ to $V2$ in $GRAPH$ or indicate that no such path exists. But it turns out that this problem hides a lurking issue.
 
-**Exercise:** Find a path from vertex $G$ to vertex $E$ on the graph below. 
+**Exercise:** Find a simple path (i.e., one with no repeated vertices) from vertex $G$ to vertex $E$ on the graph below. 
 
 ![](./pbt_hypothesis.jpg)
 
@@ -129,7 +129,7 @@ Notice how these kinds of tests can be pretty straightforward to write. Indeed, 
 
 ---
 
-This style of testing is called Property-Based Testing (PBT). There's a variation that uses a trusted implementation&mdash;or some other artifact&mdash;as a source of truth to evaluate the output, sometimes called Model-Based Testing (MBT). 
+This style of testing is called Property-Based Testing (PBT). There's a variation that uses a trusted implementation&mdash;or some other artifact&mdash;as a source of truth to evaluate the output, sometimes called (a type of) Model-Based Testing (MBT). If we had needed to test a _shortest_ path implementation, we might combine the two ideas: use PBT for the shape of the paths themselves, and reference a 2nd implementation for the actual path-length. We could even hard-code lengths into the test suite ourselves.
 
 !!! note "Model-Based Testing"
     There are _many_ techniques under the umbrella of MBT. A model can be another program, a formal specification, or some other type of artifact that we can "run". Often, MBT is used in a more stateful way: building a model to help generate sequences of user interactions that drive the system into interesting states. As you might imagine, many people disagree on what "real" PBT and "real" MBT are.
