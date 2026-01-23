@@ -3,7 +3,7 @@
 Welcome to Logic for Systems! Here are some quick hints that will help you use this book effectively.
 
 !!! warning "Book versioning: This is the 2026 edition!" 
-    This is the 2026 edition of the book, which is being refined somewhat ahead of the Spring 2026 offering of Logic for Systems at Brown. The notes are improved and more complete, but [the 2025 version](https://forge-fm.github.io/book/2026/) is preserved for those who wish to use it and/or have access to chapters that haven't been revised.
+    This is the 2026 edition of the book, which is being refined somewhat ahead of the Spring 2026 offering of Logic for Systems at Brown. The notes are improved and more complete, but [the 2025 version](https://forge-fm.github.io/book/2025/) is preserved for those who wish to use it and/or have access to chapters that haven't been revised.
 
 ---
 
