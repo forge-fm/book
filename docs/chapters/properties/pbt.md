@@ -287,4 +287,6 @@ Second, the very act of trying to precisely express, and test, correctness for `
 !!! note "Related Readings"
     [Choosing Properties for Property-Based Testing](https://fsharpforfunandprofit.com/posts/property-based-testing-2/), part of a series on PBT. The post is a decade old, but still full of useful wisdom. It should give you a few general shapes to consider: round-trip properties, idempotence, etc. It's not exhaustive, but you'll want to read it. 
 
+    Hillel Wayne has a related post on [Metamorphic Testing](https://www.hillelwayne.com/post/metamorphic-testing/), which extends some of the ideas of PBT to cover properties like: "the speech-to-text engine should give the same output if the input volume changes".
+
     Our industry-related reading is an AWS Security blog post: [How AWS uses automated reasoning to help you achieve security at scale](https://aws.amazon.com/blogs/security/protect-sensitive-data-in-the-cloud-with-automated-reasoning-zelkova/). I'm choosing something from AWS in 2018 to demonstrate that solver-based FM has been around for a while, and that companies like Amazon build products based on FM. The tool that the post talks about uses the ideas you'll learn in this book, specifically that security policies can be encoded as a constraint-solving problem.
