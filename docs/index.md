@@ -2,6 +2,11 @@
 
 Welcome to Logic for Systems! Here are some quick hints that will help you use this book effectively.
 
+!!! warning "Book versioning: This is the 2026 edition!" 
+    This is the 2026 edition of the book, which is being refined somewhat ahead of the Spring 2026 offering of Logic for Systems at Brown. The notes are improved and more complete, but the 2025 version is preserved for those who wish to use it and/or have access to chapters that haven't been revised.
+
+---
+
 !!! note "This book is a draft!"
     This book is a draft, and there are some sections that are currently being filled in. If you want to use these materials and need support (e.g., you want to use the Forge homeworks that go with it, or a specific section you need is incomplete), please contact `Tim_Nelson@brown.edu`. 
 
