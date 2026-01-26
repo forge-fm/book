@@ -13,6 +13,10 @@
         <link rel="canonical" href="https://forge-fm.github.io/book/2026/chapters/ttt/ttt.html">
       
       
+        <link rel="prev" href="../properties/pbt.html">
+      
+      
+        <link rel="next" href="../bst/bst.html">
       
       
         
@@ -23,7 +27,7 @@
     
     
       
-        <title>Intro to Modeling Systems (Part 1: Tic-Tac-Toe) - Logic for Systems</title>
+        <title>Tic-Tac-Toe - Logic for Systems</title>
       
     
     
@@ -116,7 +120,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Intro to Modeling Systems (Part 1: Tic-Tac-Toe)
+              Tic-Tac-Toe
             
           </span>
         </div>
@@ -437,6 +441,447 @@
   
 
     
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modeling Static Scenarios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modeling Static Scenarios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tic-Tac-Toe
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="ttt.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tic-Tac-Toe
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#whats-a-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What's a Model?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What&#39;s a Model?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dont-be-afraid-of-imperfect-representations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Don't Be Afraid of Imperfect Representations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-a-system-models-vs-implementations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is a "System"? (Models vs. Implementations)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modeling-tic-tac-toe-boards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modeling Tic-Tac-Toe Boards
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Modeling Tic-Tac-Toe Boards">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#datatypes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Datatypes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#well-formedness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Well-formedness
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-few-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A Few Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#running-forge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running Forge
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reflection-implementation-vs-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reflection: Implementation vs. Model
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#domain-predicates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Domain Predicates
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Domain Predicates">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#starting-boards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Starting Boards
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#turns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Turns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#winning-the-game" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Winning the Game
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practice-with-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Practice with run
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practice with run">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#no-boards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        No Boards
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adding-more" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adding More
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-with-assertions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing with assertions
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bst/bst.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Binary Search Trees
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adder/rca.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ripple-Carry Adder
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qna/static.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q&A: Static Modeling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -696,9 +1141,11 @@
 
 <h1 id="intro-to-modeling-systems-part-1-tic-tac-toe">Intro to Modeling Systems (Part 1: Tic-Tac-Toe)<a class="headerlink" href="#intro-to-modeling-systems-part-1-tic-tac-toe" title="Permanent link">&para;</a></h1>
 <h2 id="whats-a-model">What's a Model?<a class="headerlink" href="#whats-a-model" title="Permanent link">&para;</a></h2>
-<p>A <strong>model</strong> is a <em>representation</em> of a system that faithfully includes some but not all of the system's complexity. There are many different ways to model a system, all of which have different advantages and disadvantages. Think about what a car company does before it produces a new car design. Among other things, it creates multiple models. E.g.,
-* it models the car in some computer-aided design tool; and then
-* creates a physical model of the car, perhaps with clay, for testing in wind tunnels etc.</p>
+<p>A <strong>model</strong> is a <em>representation</em> of a system that faithfully includes some but not all of the system's complexity. There are many different ways to model a system, all of which have different advantages and disadvantages. Think about what a car company does before it produces a new car design. Among other things, it creates multiple models. E.g.,</p>
+<ul>
+<li>it models the car in some computer-aided design tool; and then</li>
+<li>creates a physical model of the car, perhaps with clay, for testing in wind tunnels etc.</li>
+</ul>
 <p>There may be many different models of a system, all of them focused on something different. As the statisticians say, "all models are wrong, but some models are useful". Learning how to model a system is a key skill for engineers, not just within "formal methods". Abstraction is one of the key tools in Computer Science, and modeling lies at the heart of abstraction.</p>
 <p>In this course, <strong>the models we build aren't inert</strong>; we have tools that we can use the explore and analyze them!</p>
 <h3 id="dont-be-afraid-of-imperfect-representations">Don't Be Afraid of Imperfect Representations<a class="headerlink" href="#dont-be-afraid-of-imperfect-representations" title="Permanent link">&para;</a></h3>
@@ -714,36 +1161,46 @@
 <p><strong>Exercise</strong>: Play a quick game of tic-tac-toe by hand. If you can, find a partner, but if not, then play by yourself.</p>
 <p>Notice what just happened. You played the game. In doing so, you ran your own mental implementation of the rules. The result you got was one of many possible games, each with its own specific sequence of legal moves, leading to a particular ending state. Maybe someone won, or maybe the game was a tie. Either way, many different games could have ended with that same board. </p>
 <p>Modeling is different from programming. When you're programming traditionally, you give the computer a set of instructions and it follows them. This is true whether you're programming functionally or imperatively, with or without objects, etc. Declarative modeling languages like Forge work differently. The goal of a model isn't to <em>run instructions</em>, but rather to <em>describe the rules</em> that govern systems. </p>
-<p>Here's a useful comparison to help reinforce the difference (with thanks to Daniel Jackson):
-- An empty program <strong>does nothing</strong>.
-- An empty model <strong>allows every behavior</strong>.</p>
+<p>Here's a useful comparison to help reinforce the difference (with thanks to <a href="https://en.wikipedia.org/wiki/Daniel_Jackson_(computer_scientist)">Daniel Jackson</a>, who first shared this analogy with me):
+- An empty program <strong>does nothing</strong> (because there are no instructions to run).
+- An empty model <strong>allows everything</strong> (because there are no rules).</p>
 <h2 id="modeling-tic-tac-toe-boards">Modeling Tic-Tac-Toe Boards<a class="headerlink" href="#modeling-tic-tac-toe-boards" title="Permanent link">&para;</a></h2>
 <p>What are the essential concepts in a game of tic-tac-toe?</p>
 <div class="admonition tip">
 <p class="admonition-title">Modeling Methodology</p>
 <p>When we're first writing a model, we'll start with <strong>5 steps</strong>. For each step, I'll give examples from tic-tac-toe and also for binary search trees (which we'll start modeling soon) for contrast.</p>
 <ul>
-<li>What are the <strong>datatypes</strong> involved, and their <strong>fields</strong>? </li>
+<li><strong>DATA MODEL:</strong> What are the <strong>datatypes</strong> involved, and their <strong>fields</strong>? <ul>
 <li>For tic-tac-toe: they might be the 3-by-3 board and the <code>X</code> and <code>O</code> marks that go in board locations. </li>
 <li>For a binary search tree: they might be the tree nodes and their left and right children. </li>
-<li>What makes an instance of these datatypes <strong>well formed</strong>? That is, what conditions are needed for them to not be garbage? </li>
+</ul>
+</li>
+<li><strong>WELL-FORMEDNESS</strong>: What makes an instance of these datatypes <strong>well formed</strong>? That is, what conditions are needed for them to not be garbage? <ul>
 <li>For tic-tac-toe, we might require that the indexes used are between <code>0</code> and <code>2</code>, since the board is 3-by-3. (We could just as easily use <code>1</code>, <code>2</code>, and <code>3</code>. I picked <code>0</code> as the starting point out of habit, because list indexes start from <code>0</code> in the programming languages I tend to use.)</li>
 <li>For a binary search tree, we might require that every node has at most one left child, at most one right child, a unique parent, and so on.</li>
-<li>What's a small <strong>example</strong> of how these datatypes can be instantiated?</li>
+</ul>
+</li>
+<li><strong>EXAMPLE INSTANCES:</strong> What's a small <strong>example</strong> of how these datatypes can be instantiated?<ul>
 <li>For tic-tac-toe, the empty board would be an example. So would the board where <code>X</code> moves first into the middle square.</li>
 <li>For a binary search tree, this might be a tree with only one node, or a 3-node tree where the root's left and right children are leaves. </li>
-<li>What does the model look like when <strong>run</strong>?</li>
+</ul>
+</li>
+<li><strong>VIEW AN INSTANCE:</strong> What does the model look like when <strong>run</strong>?<ul>
 <li>For tic-tac-toe, we should see a board with some number of <code>X</code> and <code>O</code> marks.</li>
 <li>For a binary search tree, we should see some set of nodes that forms a single tree via left- and right-children.</li>
-<li>What <strong>domain predicates</strong> are there? Well-formedness defines conditions that are needed for an instantiation to not be "garbage". But whatever we're modeling surely has domain-specific concepts of its own, which may or may not hold. </li>
+</ul>
+</li>
+<li><strong>DOMAIN PREDICATES:</strong> What <strong>domain predicates</strong> are there? Well-formedness defines conditions that are needed for an instantiation to not be "garbage". But whatever we're modeling surely has domain-specific concepts of its own, which may or may not hold. <ul>
 <li>For tic-tac-toe, we care a great deal if the board is a winning board or not. Similarly, we might care if it looks like someone has cheated.</li>
 <li>For a binary search tree, we care if the tree is balanced, or if it satisfies the BST invariant. </li>
 </ul>
-<p>These steps will get us to a point we can begin to iterate: working to <strong>validate and/or refine</strong> the model as we go. It's rare that a model will do everything you need (and do so correctly) on the first try.</p>
+</li>
+</ul>
+<p>These steps will get us to a point we can begin to iterate: working to <strong>validate and/or refine</strong> the model as we go. It's rare that a model will do everything you need (and do so correctly) on the first try&mdash;this process is agile, and frequently loops back.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Well-formedness vs. domain predicates</p>
-<p>Why make this distinction between well-formedness and domain predicates? Because one should always hold in any instance Forge considers, but the other may or may not hold. In fact, we might want to use Forge to <em>verify</em> that a domain predicate always holds! And if we've told Forge that any instance that doesn't satisfy it is garbage, Forge won't find us such an instance.</p>
+<p>Why make this distinction between well-formedness and domain predicates? Because the first should always hold in <em>any</em> instance Forge considers, but the other may or may not hold in a valid instance. In fact, we might want to use Forge to <em>verify</em> that a domain predicate always holds! And if we've told Forge that any instance that doesn't satisfy it is garbage, Forge won't find us such an instance.</p>
 </div>
 <h3 id="datatypes">Datatypes<a class="headerlink" href="#datatypes" title="Permanent link">&para;</a></h3>
 <p>We might list:
@@ -775,6 +1232,10 @@ with the highlighting and play button via theme/book.js, so mislead mdbook a bit
 <a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="o">}</span>
 </code></pre></div>
 <p>Every <code>Board</code> object contains a <code>board</code> field describing the moves made so far. This field is a <em>partial function</em>, or dictionary, for every <code>Board</code> that maps each (<code>Int</code>, <code>Int</code>) pair to at most one <code>Player</code>. </p>
+<div class="admonition tip">
+<p class="admonition-title">There is no heap in Forge unless you model it yourself.</p>
+<p>When I say "dictionary" above, it's important that this isn't exactly the same as a Python dictionary. There is no actual object that gets created to represent this field. Only the actual key-value pairs matter. </p>
+</div>
 <!--
 a table of (`Int`, `Int`, `Player`) tuples for each `Board`. We'll see how to work with this field shortly.
 -->
@@ -782,9 +1243,9 @@ a table of (`Int`, `Int`, `Player`) tuples for each `Board`. We'll see how to wo
 <h3 id="well-formedness">Well-formedness<a class="headerlink" href="#well-formedness" title="Permanent link">&para;</a></h3>
 <p>These definitions sketch the overall shape of a board: players, marks on the board, and so on. But not all boards that fit the definition will be valid. For example:</p>
 <ul>
-<li>Forge integers aren't true mathematical integers, but are bounded by a bitwidth we give whenever we run the tool. So we need to be careful here. We want a classical 3-by-3 board with indexes of (say) <code>0</code>, <code>1</code>, and <code>2</code>, not a board where (e.g.) row <code>-5</code>, column <code>-1</code> is a valid location. </li>
+<li>Forge integers aren't true mathematical integers, but are bounded by a bitwidth we give whenever we run the tool. This resembles what you might have seen in programming languages with a "maximum integer": with 32 bits, you can represent around 4 billion values. Forge has far fewer bits to work with, but there are still more than we really need for tic-tac-toe. So we should be careful here. We want a classical 3-by-3 board with indexes of (say) <code>0</code>, <code>1</code>, and <code>2</code>, not a board where (e.g.) row <code>-5</code>, column <code>-1</code> is a valid location. </li>
 </ul>
-<p>We'll call these <em>well-formedness</em> constraints. They aren't innately enforced by our <code>sig</code> declarations, but we'll almost always want Forge to enforce them, so that it doesn't find "garbage instances". Let's write a <em>wellformedness predicate</em>:</p>
+<p>We'll call these <em>well-formedness</em> constraints. They aren't innately enforced by our <code>sig</code> declarations, but we'll always want Forge to enforce them, so that it doesn't find or consider such "garbage instances". Let's write a <em>wellformedness predicate</em>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">-- a Board is well-formed if and only if:</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kd">pred</span><span class="w"> </span><span class="nf">wellformed</span><span class="o">[</span><span class="n">b</span><span class="p">:</span><span class="w"> </span><span class="n">Board</span><span class="o">]</span><span class="w"> </span><span class="o">{</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="c1">-- row and column numbers used are between 0 and 2, inclusive  </span>
@@ -796,7 +1257,7 @@ a table of (`Int`, `Int`, `Player`) tuples for each `Board`. We'll see how to wo
 </code></pre></div>
 <div class="admonition tip">
 <p class="admonition-title">Comments in Forge</p>
-<p>Forge treats either <code>--</code> or <code>//</code> as beginning a line-level comment, and <code>/* ... */</code> as denoting a block comment. This is different from the Python code we saw in the last section! In Forge, <code>#</code> has a different meaning.</p>
+<p>Forge treats either <code>--</code> or <code>//</code> as beginning a line-level comment, and <code>/* ... */</code> as denoting a block comment. This is different from the Python code we saw in the last section! In Forge, the Python comment character <code>#</code> has a different meaning.</p>
 </div>
 <p>This predicate is true of any <code>Board</code> if and only if the above 2 constraints are satisfied. Let's break down the syntax: 
 * Constraints can quantify over a domain. E.g.,<code>all row, col: Int | ...</code> says that for any pair of integers (up to the given bitwidth), the following condition (<code>...</code>) must hold. Forge also supports, e.g., existential quantification (<code>some</code>), but we don't need that yet. We also have access to standard boolean operators like <code>or</code>, <code>implies</code>, etc. 
@@ -806,11 +1267,11 @@ a table of (`Int`, `Int`, `Player`) tuples for each `Board`. We'll see how to wo
 * A</code>pred` (predicate) in Forge is a helper function that evaluates to a boolean. Thus, its body should always be a formula. </p>
 <div class="admonition tip">
 <p class="admonition-title">Predicates are declarative</p>
-<p>Notice that, rather than describing a process that produces a well-formed board, or even instructions to check well-formedness, we've just given a declarative description of what's necessary and sufficient for a board to be well-formed. If we'd left the predicate body empty, <em>any</em> board would be considered well-formed&mdash;there'd be no formulas to enforce!</p>
+<p>Again, notice that rather than describing a process that produces a well-formed board, or even instructions to check well-formedness, we've just given a declarative description of what's necessary and sufficient for a board to be well-formed. If we'd left the predicate body empty, <em>any</em> board would be considered well-formed&mdash;there'd be no formulas to enforce!</p>
 </div>
 <h3 id="a-few-examples">A Few Examples<a class="headerlink" href="#a-few-examples" title="Permanent link">&para;</a></h3>
 <p>Since a predicate is just a function that returns true or false, depending on its arguments and whichever instance Forge is looking at, we can write tests for it the same way we would for any other boolean-valued function. But even if we're not testing, it can be useful to write a small number of examples, so we can build intuition for what the predicate means.</p>
-<p>In Forge, <code>example</code>s are automatically run whenever your model executes. They describe basic intent about a given predicate; in this case, let's write two examples in Forge:</p>
+<p>In Forge, <code>example</code>s are automatically run whenever your model executes. They describe basic intent about a given predicate, and serve as a basic kind of test case. Let's write two examples in Forge:</p>
 <ul>
 <li>A board where <code>X</code> has moved 3 times in valid locations, and so ought to be considered well formed.</li>
 <li>A board where a player has moved in an invalid location, and shouldn't be considered well formed. </li>
@@ -860,21 +1321,24 @@ a table of (`Int`, `Int`, `Player`) tuples for each `Board`. We'll see how to wo
 
 <div class="admonition warning">
 <p class="admonition-title">Running Forge on Windows</p>
-<p>If you're running on Windows, the Windows-native <code>cmd</code> and PowerShell terminals will not properly load Forge's visualizer. Instead, we suggest using one of many other options on Windows that we've tested and know to work: the VSCode extension (available on the VSCode Marketplace), DrRacket, Git for Windows (e.g., <code>git bash</code>), Windows Subsystem for Linux, or Cygwin.</p>
+<p>If you're running on Windows, the Windows-native <code>cmd</code> and PowerShell terminals will not properly load Forge's visualizer. Instead, we suggest using one of many other options on Windows that we've tested and know to work: the VSCode extension (available on the VSCode Marketplace under <code>forge-fm</code>), DrRacket, Git for Windows (e.g., <code>git bash</code>), Windows Subsystem for Linux, or Cygwin.</p>
 </div>
 <hr />
 <p>There are many options for visualization. The default which loads initially is a directed-graph based one:</p>
+<!-- **(TODO: make this clickable to show it bigger? Want to see the whole window, but then the graph is small.)** -->
+
 <center><img width="70%" src="./ttt-viz.png"/></center>
 
-<p><strong>(TODO: make this clickable to show it bigger? Want to see the whole window, but then the graph is small.)</strong></p>
 <p>This isn't very useful; it looks nothing like a tic-tac-toe board! We can make more progress by using the "Table" visualization&mdash;which isn't ideal either:</p>
 <center><img width="40%" src="./ttt-viz-table.png"/></center>
 
 <p>Forge also allows users to make <em>custom</em> visualizations via short JavaScript programs; <a href="ttt.js">here's</a> an example basic visualizer for this specific tic-tac-toe model that produces images like this one:</p>
 <center><img width="20%" src="./ttt-custom.png"/></center>
 
-<p>We'll talk more about visualization scripts later. For now, let's proceed. <strong>TODO: replace img with one matching the table view</strong>
-<strong>TODO: add side-by-side CSS</strong></p>
+<p>We'll talk more about visualization scripts later. For now, let's proceed. </p>
+<!-- **TODO: replace img with one matching the table view**
+**TODO: add side-by-side CSS** -->
+
 <hr />
 <p>This instance contains a single board, and it has 9 entries. Player <code>O</code> has moved in all of them (the <code>0</code> suffix of <code>O0</code> in the display is an artifact of how Forge's engine works; ignore it for now). It's worth noticing two things:</p>
 <ul>
@@ -883,7 +1347,7 @@ a table of (`Int`, `Int`, `Player`) tuples for each `Board`. We'll see how to wo
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Why <code>Board3</code> when there's only one board?</p>
-<p>Here, we see <code>Board3</code> because the solver had a few options to pick from: we never said there should only ever be one <code>Board</code>, after all. So, under the hood, it was considering the potential existence of multiple boards. And then it happened to pick this one to exist in this instance.</p>
+<p>Here, we see <code>Board3</code> because the solver had a few options to pick from: we never said there should only ever be one <code>Board</code>, after all. So, under the hood, it was considering the potential existence of multiple boards. And then it happened to pick this one to exist in this instance. By default, there can be up to 4 of any top-level type.</p>
 </div>
 <h3 id="reflection-implementation-vs-model">Reflection: Implementation vs. Model<a class="headerlink" href="#reflection-implementation-vs-model" title="Permanent link">&para;</a></h3>
 <p>So far we've just modeled boards, not full games. But we can still contrast our work here against the Python <em>implementation</em> of tic-tac-toe shared above. </p>
@@ -905,7 +1369,7 @@ a table of (`Int`, `Int`, `Player`) tuples for each `Board`. We'll see how to wo
 <a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="o">#{</span><span class="n">row</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">s</span><span class="o">.</span><span class="n">board</span><span class="o">[</span><span class="n">row</span><span class="o">][</span><span class="n">col</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">O</span><span class="o">}</span>
 <a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="o">}</span>
 </code></pre></div>
-<p>Here, we're measuring the size of 2 sets. The <code>{row, col: Int | ...}</code> syntax is called a <em>set comprehension</em>. A set comprehension defines a set. We're defining the set of row-column pairs where the board contains one of the player marks. The <code>#</code> operator gives the size of these sets, which we then compare.</p>
+<p>The <code>{row, col: Int | ...}</code> syntax is called a <em>set comprehension</em>. A set comprehension defines a set. We're defining the set of row-column pairs where the board contains one of the player marks. The <code>#</code> operator gives the size of these sets, which we then compare. We're work more with defining our own sets later, but for now we'll <em>only</em> use them to count elements.</p>
 <p><strong>Exercise:</strong> Is it enough to say that <code>OTurn</code> is the negation of <code>XTurn</code>? That is, we could write: <code>pred OTurn[s: Board] { not XTurn[s: Board]}</code>. This seems reasonable enough; why might we <em>not</em> want to write this?</p>
 <details class="note">
 <summary>Think, then click!</summary>
@@ -926,7 +1390,7 @@ a table of (`Int`, `Int`, `Player`) tuples for each `Board`. We'll see how to wo
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Use <code>add</code> for addition, not <code>+</code></p>
-<p>Don't try to use <code>+</code> for addition in any Forge language. Use <code>add</code> instead; this is because <code>+</code> is reserved for something else (which we'll explain later).</p>
+<p>Don't try to use <code>+</code> for addition in any Forge language. Use <code>add</code> instead; this is because <code>+</code> is reserved for something else (which we'll get to later).</p>
 </div>
 <h3 id="winning-the-game">Winning the Game<a class="headerlink" href="#winning-the-game" title="Permanent link">&para;</a></h3>
 <p>What does it mean to <em>win</em>? A player has won on a given board if:</p>
@@ -970,7 +1434,7 @@ a table of (`Int`, `Int`, `Player`) tuples for each `Board`. We'll see how to wo
 <a id="__codelineno-9-32" name="__codelineno-9-32" href="#__codelineno-9-32"></a><span class="o">}</span>
 </code></pre></div>
 <p>After writing these domain predicates, we're reaching a fairly complete model for a single tic-tac-toe board. Let's decide how to fix the issue we saw above (the reason why <code>OTurn</code> couldn't be the negation of <code>XTurn</code>): perhaps a player has moved too often.</p>
-<p>Should we add something like <code>OTurn[s] or XTurn[s]</code> to our wellformedness predicate? <strong>No!</strong> If we then later enforced wellformedness for all boards, that would exclude "cheating" instances where a player has more moves on the board than are allowed. But this has some risk, depending on how we intend to use the <code>wellformed</code> predicate:</p>
+<p>Should we add something like <code>OTurn[s] or XTurn[s]</code> to our wellformedness predicate? <strong>ABSOLUTELY NOT!</strong> If we then later enforced wellformedness for all boards, that would exclude "cheating" instances where a player has more moves on the board than are allowed. But this has some risk, depending on how we intend to use the <code>wellformed</code> predicate:</p>
 <ul>
 <li>If we were only ever generating <em>valid boards</em>, a cheating state might well be spurious, or at least undesirable. In that case, we might prevent such states in <code>wellformed</code> and rule it out. </li>
 <li>If we were generating arbitrary (not necessarily valid) boards, being able to see a cheating state might be useful. In that case, we'd leave it out of <code>wellformed</code>.</li>
@@ -980,7 +1444,7 @@ a table of (`Int`, `Int`, `Player`) tuples for each `Board`. We'll see how to wo
 <p class="admonition-title">Modeling vs. PBT</p>
 <p>Notice the similarity between this issue and what we do in property-based testing. Here, we're forced to distinguish between what a reasonable <em>board</em> is (analogous to the generator's output in PBT) and what a reasonable <em>behavior</em> is (analogous to the validity predicate in PBT). One narrows the scope of possible worlds to avoid true "garbage"; the other checks whether the system behaves as expected in one of those worlds.</p>
 </div>
-<p>We'll come back to this later, when we've had a bit more modeling experience. For now, let's separate our goal into a new predicate called <code>balanced</code>, and add it to our <code>run</code> command above so that Forge will find us an instance where some board is both <code>balanced</code> and <code>wellformed</code>:</p>
+<p>Now let's separate our goal into a new predicate called <code>balanced</code>, and add it to our <code>run</code> command above so that Forge will find us an instance where some board is both <code>balanced</code> and <code>wellformed</code>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kd">pred</span><span class="w"> </span><span class="nf">balanced</span><span class="o">[</span><span class="n">s</span><span class="p">:</span><span class="w"> </span><span class="n">Board</span><span class="o">]</span><span class="w"> </span><span class="o">{</span>
 <a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="n">XTurn</span><span class="o">[</span><span class="n">s</span><span class="o">]</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="n">OTurn</span><span class="o">[</span><span class="n">s</span><span class="o">]</span>
 <a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="o">}</span>
@@ -1032,10 +1496,8 @@ a table of (`Int`, `Int`, `Player`) tuples for each `Board`. We'll see how to wo
 <p>Before we move on, I want to quickly note that <code>example</code> isn't the only way you can write tests in Forge. The <code>example</code> construct is powerful if you want to write "pointwise" tests in terms of single instances, but can quickly become verbose. If you know what properties you're interested in testing for, you can encode that into an <code>assert</code> in Forge. For example:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1">// I want to check that this predicate is satisfiable for some set of arguments, </span>
 <a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="c1">// but I don&#39;t care about the specific instance(s) that satisfy it.</span>
-<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="kd">assert</span><span class="w"> </span><span class="o">{</span><span class="k">some</span><span class="w"> </span><span class="n">b</span><span class="p">:</span><span class="w"> </span><span class="n">Board</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">XTurn</span><span class="o">[</span><span class="n">b</span><span class="o">]}</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="k">sat</span>
-<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>
-<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="c1">// I want to confirm that OTurn and XTurn are mutually exclusive</span>
-<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="c1">// assert {} TODO ADD</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="kd">assert</span><span class="w"> </span><span class="o">{</span><span class="k">some</span><span class="w"> </span><span class="n">b</span><span class="p">:</span><span class="w"> </span><span class="n">Board</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">XTurn</span><span class="o">[</span><span class="n">b</span><span class="o">]}</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="k">sat</span><span class="w"> </span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="c1">// &quot;is sat&quot; means &quot;is satisfiable&quot;: Forge can find an instance.</span>
 </code></pre></div>
 
 

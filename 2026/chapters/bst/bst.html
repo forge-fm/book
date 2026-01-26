@@ -13,6 +13,10 @@
         <link rel="canonical" href="https://forge-fm.github.io/book/2026/chapters/bst/bst.html">
       
       
+        <link rel="prev" href="../ttt/ttt.html">
+      
+      
+        <link rel="next" href="../adder/rca.html">
       
       
         
@@ -23,7 +27,7 @@
     
     
       
-        <title>Intro to Modeling Systems (Part 2: BSTs) - Logic for Systems</title>
+        <title>Binary Search Trees - Logic for Systems</title>
       
     
     
@@ -116,7 +120,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Intro to Modeling Systems (Part 2: BSTs)
+              Binary Search Trees
             
           </span>
         </div>
@@ -437,6 +441,458 @@
   
 
     
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modeling Static Scenarios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modeling Static Scenarios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ttt/ttt.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tic-Tac-Toe
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Binary Search Trees
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="bst.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Binary Search Trees
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#datatypes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Datatypes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wellformedness-for-binary-trees" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wellformedness for Binary Trees
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#write-an-example-or-two" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Write an example or two
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Write an example or two">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#positive-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Positive examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Positive examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-binary-tree-with-no-nodes-should-be-considered-well-formed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A binary tree with no nodes should be considered well-formed.
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-binary-tree-with-a-single-node-should-be-considered-well-formed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A binary tree with a single node should be considered well-formed.
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-binary-tree-with-more-than-one-row-should-be-considered-well-formed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A binary tree with more than one row should be considered well-formed.
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#an-unbalanced-binary-tree-is-still-well-formed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        An unbalanced binary tree is still well-formed.
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#negative-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Negative examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Negative examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-single-node-that-is-its-own-left-child-is-not-well-formed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A single node that is its own left-child is not well-formed.
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-single-node-that-is-its-own-right-child-is-not-well-formed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A single node that is its own right-child is not well-formed.
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-single-node-thats-reachable-via-a-longer-cycle-using-both-left-and-right-children-is-not-well-formed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A single node that's reachable via a longer cycle using both left- and right-children is not well-formed.
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-forest-of-multiple-disconnected-trees-is-not-well-formed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A "forest" of multiple, disconnected trees is not well-formed.
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-the-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run the examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#view-some-instances" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        View some instances
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#more-domain-predicates-search-invariants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        More Domain Predicates: Search Invariants
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="More Domain Predicates: Search Invariants">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#semantic-differencing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Semantic Differencing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adder/rca.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ripple-Carry Adder
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qna/static.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q&A: Static Modeling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -706,6 +1162,10 @@
 
 
 <h1 id="intro-to-modeling-systems-part-2-bsts">Intro to Modeling Systems (Part 2: BSTs)<a class="headerlink" href="#intro-to-modeling-systems-part-2-bsts" title="Permanent link">&para;</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Revisions Underway!</p>
+<p>This chapter is being revised for Spring 2026.</p>
+</div>
 <p>Now that we've written our first model&mdash;tic-tac-toe boards&mdash;let's switch to something a bit more serious: binary search trees. A binary search tree (BST) is a binary tree with an added property about its structure that allows it to efficiently answer many search queries related to the values it stores. Here's an example, drawn by hand:</p>
 <!-- sips -s format png Bintree.pdf --out BinTree.png  -->
 
