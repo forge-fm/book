@@ -104,11 +104,11 @@ nav:
     - Logic for Systems: chapters/manifesto/manifesto.md
     - From Tests to Properties: chapters/properties/pbt.md
 
-  # - Modeling Static Scenarios:
-  #   - Tic-Tac-Toe: chapters/ttt/ttt.md
-  #   - Binary Search Trees: chapters/bst/bst.md
-  #   - Ripple-Carry Adder: chapters/adder/rca.md
-  #   - "Q&A: Static Modeling": chapters/qna/static.md
+  - Modeling Static Scenarios:
+    - Tic-Tac-Toe: chapters/ttt/ttt.md
+    - Binary Search Trees: chapters/bst/bst.md
+    - Ripple-Carry Adder: chapters/adder/rca.md
+    - "Q&A: Static Modeling": chapters/qna/static.md
 
   # - Discrete Event Systems:
   #   - "Transitions, Traces, and Verification": chapters/ttt/ttt_games.md

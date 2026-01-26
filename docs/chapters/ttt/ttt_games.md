@@ -1,5 +1,9 @@
 ## From Boards to Games
 
+!!! warning "Revisions Underway!"
+    This chapter is being revised for Spring 2026.
+
+
 Now that we've gotten some experience modeling in Forge, let's start thinking about _change_.
 
 What do you think a _game_ of tic-tac-toe looks like? Crucially, a game involves _moves_. 

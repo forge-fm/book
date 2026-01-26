@@ -1,5 +1,8 @@
 # Ripple-Carry Adder 
 
+!!! warning "Revisions Underway!"
+    This chapter is being revised for Spring 2026.
+
 Let's model a third system in Froglet. We'll focus on something even more concrete, something that is implemented in _hardware_: a circuit for adding together two numbers called a _ripple-carry adder_ (RCA). Along the way, even though the adder doesn't "change", we'll still learn a useful technique for modeling systems that change over time. 
 
 To understand an RCA, let's first think about adding together a pair of one-bit numbers. We might draw a table with four rows to represent this:

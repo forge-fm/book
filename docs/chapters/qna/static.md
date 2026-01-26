@@ -1,5 +1,8 @@
 # Anticipated Questions: Static Models
 
+!!! warning "Revisions Underway!"
+    This chapter is being revised for Spring 2026.
+
 ### What Happens When Forge Searches? 
 
 Our first `run` command in Forge was from [tic-tac-toe](../ttt/ttt.md): `run { some b: Board | wellformed[b]}`.

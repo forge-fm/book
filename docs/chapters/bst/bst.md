@@ -1,5 +1,9 @@
 # Intro to Modeling Systems (Part 2: BSTs)
 
+!!! warning "Revisions Underway!"
+    This chapter is being revised for Spring 2026.
+
+
 Now that we've written our first model&mdash;tic-tac-toe boards&mdash;let's switch to something a bit more serious: binary search trees. A binary search tree (BST) is a binary tree with an added property about its structure that allows it to efficiently answer many search queries related to the values it stores. Here's an example, drawn by hand:
 
 <!-- sips -s format png Bintree.pdf --out BinTree.png  -->
@@ -19,7 +23,6 @@ This is obviously a _binary tree_, since it is a tree where every node has *at m
     * the left child of $N$ (if any) has a key less than $N$'s key; and 
     * the right child of $N$ (if any) has a key greater than or equal to $N$'s key.
     With experience, it's straightforward to see that this is too weak; search will break. But at first that isn't so obvious. It would be interesting if we could use Forge to help us understand the difference and its impact on searching the tree.
-
 
 Let's start modeling. As with programming, it's a good idea to start simple, and add complexity and optimization after. So we'll start with plain binary trees, and then add the invariant.
 

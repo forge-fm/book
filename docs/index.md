@@ -101,6 +101,8 @@ Siddhartha Prasad,
 ...
 and the many CSCI 1710 students and TAs at Brown who have kindly given their thoughts.
 
+Starting in 2026, I also keep a [list of readers](./error_finders.md) who have reported technical errors, which I have then fixed. 
+
 ## AI Use 
 
 Some labor involved in hosting and maintaining this book was performed with the help of generative AI, chiefly Claude Code. For example, migrating from `mdbook` to `mkdocs` and debugging various issues. **None of the text, images, or any other content was AI generated.** I think by writing, and this book is an extension of my lecture notes for CSCI 1710 at Brown. I don't dare delegate that thinking to AI.
