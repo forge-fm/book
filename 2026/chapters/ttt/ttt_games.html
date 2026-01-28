@@ -13,6 +13,8 @@
         <link rel="canonical" href="https://forge-fm.github.io/book/2026/chapters/ttt/ttt_games.html">
       
       
+        <link rel="prev" href="../qna/static.html">
+      
       
       
         
@@ -23,7 +25,7 @@
     
     
       
-        <title>Ttt games - Logic for Systems</title>
+        <title>Transitions, Traces, and Verification - Logic for Systems</title>
       
     
     
@@ -116,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Ttt games
+              Transitions, Traces, and Verification
             
           </span>
         </div>
@@ -620,6 +622,331 @@
   
 
     
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Discrete Event Systems
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Discrete Event Systems
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transitions, Traces, and Verification
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="ttt_games.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transitions, Traces, and Verification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#from-boards-to-games" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From Boards to Games
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="From Boards to Games">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#property-preservation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Property Preservation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generating-complete-games" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generating Complete Games
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-evaluator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Evaluator
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Evaluator">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optimization
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#back-to-tic-tac-toe-ending-games" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Back To Tic-Tac-Toe: Ending Games
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#do-the-rules-allow-cheating" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Do The Rules Allow Cheating?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#checking-conjectures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Checking Conjectures
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Checking Conjectures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reminder-the-evaluator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reminder: The Evaluator
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#going-further" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Going Further
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modeling-tip-dealing-with-unsatisfiability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modeling Tip: Dealing with Unsatisfiability
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aside-reminder-about-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Aside: Reminder About Examples
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#traces-good-and-bad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Traces: Good and Bad
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#proving-preservation-inductively" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Proving Preservation Inductively
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Proving Preservation Inductively">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-do-we-write-this-in-forge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How do we write this in Forge?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -853,13 +1180,9 @@
   
 
 
-  <h1>Ttt games</h1>
+  <h1>Transitions, Traces, and Verification</h1>
 
 <h2 id="from-boards-to-games">From Boards to Games<a class="headerlink" href="#from-boards-to-games" title="Permanent link">&para;</a></h2>
-<div class="admonition warning">
-<p class="admonition-title">Revisions Underway!</p>
-<p>This chapter is being revised for Spring 2026.</p>
-</div>
 <p>Now that we've gotten some experience modeling in Forge, let's start thinking about <em>change</em>.</p>
 <p>What do you think a <em>game</em> of tic-tac-toe looks like? Crucially, a game involves <em>moves</em>. </p>
 <p><strong>Exercise:</strong> How could we model the moves between board states? (Hint: start thinking in terms of a graph&mdash;nodes and edges!)</p>
@@ -1157,7 +1480,6 @@
 </code></pre></div>
 <hr />
 <p>You might wonder how <code>assert</code> can be used for predicates that take arguments. For example, suppose we had defined <code>wellformed</code> to take a board, rather than quantifying over <code>all</code> boards in its body. The <code>assert</code> syntax can take (one layer of) quantification. Would <code>move</code> preserve <code>wellformed</code>-ness?</p>
-<p><strong>TODO: mismatch; prior sections do have a 1-ary wellformed?</strong></p>
 <p>Here's how we'd write that. Notice we don't even need to use the <code>Game</code> here (and thus don't need to give the <code>is linear</code> annotation)! We're just asking Forge about 2 boards at a time:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kd">pred</span><span class="w"> </span><span class="nf">someMoveFromWF</span><span class="o">[</span><span class="n">pre</span><span class="p">,</span><span class="w"> </span><span class="n">post</span><span class="p">:</span><span class="w"> </span><span class="n">Board</span><span class="o">]</span><span class="w"> </span><span class="o">{</span><span class="w"> </span>
 <a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span><span class="n">wellformed</span><span class="o">[</span><span class="n">pre</span><span class="o">]</span>
@@ -1181,9 +1503,11 @@
 <p>So if you run Forge and it doesn't seem to ever terminate, it's not necessarily a Forge problem. Overconstraint bugs can produce this behavior, too.</p>
 <p>So, how do you debug a problem like this? The first thing I like to do is reduce the bounds (if possible) and, if I still get unsat, I'll use that smaller, faster run to debug. But at that point, we're kind of stuck. <code>UNSAT</code> isn't very helpful. </p>
 <p>Today I want to show you a very useful technique for discovering the problem. There are more advanced approaches we'll get to later in the course, but for now this one should serve you well. </p>
-<p><strong>TODO: insert unsat core, now that we have good highlighting!</strong></p>
-<p>The idea is: encode an instance you'd expect to see as a set of constraints, run <em>those</em> constraints only, and then use the evaluator to explore why it fails your other constraints. Let's do an example!</p>
-<p><strong>TODO: this is taken from a homework, not one of the above... should rewrite</strong></p>
+<div class="admonition note">
+<p class="admonition-title">Unsatisfiable Cores</p>
+<p>When a run can't be satisfied, it's possible to get the solver to give us a bit of help. This requires changing some of the Forge options, so we'll come back to this later. For now, we'll focus on the more directed debugging below.</p>
+</div>
+<p>The idea is: encode an instance you'd expect to see as a set of constraints, run <em>those</em> constraints only, and then use the evaluator to explore why it fails your other constraints. Let's do an example! We'll look at something other than tic-tac-toe for this, because it's a real problem that came up for me in class.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="kn">#lang</span><span class="w"> </span><span class="nn">froglet</span><span class="w"> </span>
 <a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>
 <a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="kd">sig</span><span class="w"> </span><span class="nc">State</span><span class="w"> </span><span class="o">{</span>
@@ -1238,7 +1562,6 @@
 <p>Since the <code>next</code> field never changes with time, the <code>all</code> constraint doesn't allow states to vary the <code>top</code> of the stack. Instead, we need a weaker constraint to enforce that the stack is shaped like a state.</p>
 </details>
 <h2 id="aside-reminder-about-examples">Aside: Reminder About Examples<a class="headerlink" href="#aside-reminder-about-examples" title="Permanent link">&para;</a></h2>
-<p><strong>TODO: should this part go to the Q and A for traces?</strong></p>
 <p>Where an <code>assert</code> or <code>run</code> is about checking satisfiability or unsatisfiability of some set of constraints, an <code>example</code> is about whether a <em>specific</em> instance satisfies a given predicate. This style of test can be extremely useful for checking that (e.g.) small helper predicates do what you expect.</p>
 <p>Why use <code>example</code> at all? A couple of reasons:</p>
 <ul>
@@ -1335,8 +1658,8 @@
 <p>That second step is still pretty slow on my laptop: around 10 or 11 seconds to yield <code>UNSAT</code>. Can we give the solver any help? Hint: <strong>is the set of possible values for <code>pre</code> bigger than it really needs to be?</strong></p>
 <details class="note">
 <summary>Think, then click!</summary>
-</details>
 <p>If we assume the <code>pre</code> board is well-formed, we'll exclude transitions involving invalid boards. There are a lot of these, even at <code>3 Int</code>, since row and column indexes will range from <code>-4</code> to <code>3</code> (inclusive). We could do this either by asserting <code>wellformed[pre]</code> or by refining the bounds we give Forge.</p>
+</details>
 </div>
 
 
@@ -1399,8 +1722,6 @@
       <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
         <script src="../../javascripts/mathjax.js"></script>
-      
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       

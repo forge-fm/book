@@ -893,6 +893,99 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Discrete Event Systems
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Discrete Event Systems
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ttt/ttt_games.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transitions, Traces, and Verification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -1162,10 +1255,6 @@
 
 
 <h1 id="intro-to-modeling-systems-part-2-bsts">Intro to Modeling Systems (Part 2: BSTs)<a class="headerlink" href="#intro-to-modeling-systems-part-2-bsts" title="Permanent link">&para;</a></h1>
-<div class="admonition warning">
-<p class="admonition-title">Revisions Underway!</p>
-<p>This chapter is being revised for Spring 2026.</p>
-</div>
 <p>Now that we've written our first model&mdash;tic-tac-toe boards&mdash;let's switch to something a bit more serious: binary search trees. A binary search tree (BST) is a binary tree with an added property about its structure that allows it to efficiently answer many search queries related to the values it stores. Here's an example, drawn by hand:</p>
 <!-- sips -s format png Bintree.pdf --out BinTree.png  -->
 
@@ -1174,9 +1263,11 @@
 </center>
 
 <p>Each node of the tree holds some value that the tree supports searching for. We'll call this value the search key, or just the <em>key</em> for each node. The common ancestor of every node in the tree is called the <em>root</em>. </p>
-<p>This is obviously a <em>binary tree</em>, since it is a tree where every node has <em>at most</em> 2 children. What makes it a binary <em>search</em> tree is the invariant that every node <span class="arithmatex">\(N\)</span> obeys: 
-* all left-descendants of <span class="arithmatex">\(N\)</span> have a key less than <span class="arithmatex">\(N\)</span>'s key; and 
-* all right-descendants of <span class="arithmatex">\(N\)</span> have a key greater than or equal to <span class="arithmatex">\(N\)</span>'s key.</p>
+<p>This is obviously a <em>binary tree</em>, since it is a tree where every node has <em>at most</em> 2 children. What makes it a binary <em>search</em> tree is the invariant that every node <span class="arithmatex">\(N\)</span> obeys: </p>
+<ul>
+<li>all left-descendants of <span class="arithmatex">\(N\)</span> have a key less than <span class="arithmatex">\(N\)</span>'s key; and </li>
+<li>all right-descendants of <span class="arithmatex">\(N\)</span> have a key greater than or equal to <span class="arithmatex">\(N\)</span>'s key.</li>
+</ul>
 <div class="admonition warning">
 <p class="admonition-title">A common mistake</p>
 <p>When you're first learning about binary search trees, it's easy to phrase the invariant wrong: 
@@ -1187,13 +1278,15 @@ With experience, it's straightforward to see that this is too weak; search will 
 <p>Let's start modeling. As with programming, it's a good idea to start simple, and add complexity and optimization after. So we'll start with plain binary trees, and then add the invariant.</p>
 <div class="admonition tip">
 <p class="admonition-title">the recipe</p>
-<p>Like with tic-tac-toe, we'll follow this rough 5-step progression:
-  - define the pertinent datatypes and fields;
-  - define a well-formedness predicate;
-  - write some examples;
-  - run and exercise the base model; 
-  - write domain predicates. 
-Keep in mind that this isn't a strict "waterfall" style progression; we may return to previous steps if we discover it's necessary.</p>
+<p>Like with tic-tac-toe, we'll follow this rough 5-step progression:</p>
+<ul>
+<li>define the pertinent datatypes and fields;</li>
+<li>define a well-formedness predicate;</li>
+<li>write some examples;</li>
+<li>run and exercise the base model; </li>
+<li>write domain predicates. </li>
+</ul>
+<p>Keep in mind that this isn't a strict "waterfall" style progression; we may return to previous steps if we discover it's necessary.</p>
 </div>
 <h2 id="datatypes">Datatypes<a class="headerlink" href="#datatypes" title="Permanent link">&para;</a></h2>
 <p>A binary tree is made up of nodes. Each node in the tree has at most one left child and at most one right child. While nodes in the tree can hold values of most any type, for simplicity we'll stick to integers. </p>
@@ -1210,9 +1303,11 @@ Keep in mind that this isn't a strict "waterfall" style progression; we may retu
 <p>Recall that a <code>sig</code> is a datatype, each of which may have a set of <em>fields</em>. Here, we're saying that there is a datatype called <code>Node</code>, and that every <code>Node</code> has a <code>key</code>, <code>left</code>, and <code>right</code> field.</p>
 </div>
 <h2 id="wellformedness-for-binary-trees">Wellformedness for Binary Trees<a class="headerlink" href="#wellformedness-for-binary-trees" title="Permanent link">&para;</a></h2>
-<p>What makes a binary tree a binary tree? We might start by saying that: 
-* it's <em>single-tree-shaped</em>: there are no cycles and all nodes have at most one parent node; and 
-* it's <em>connected</em>: all non-root nodes have a common ancestor. </p>
+<p>What makes a binary tree a binary tree? We might start by saying that: </p>
+<ul>
+<li>it's <em>single-tree-shaped</em>: there are no cycles and all nodes have at most one parent node; and </li>
+<li>it's <em>connected</em>: all non-root nodes have a common ancestor. </li>
+</ul>
 <p>It's sometimes useful to write domain predicates early, and then use them to define wellformedness more clearly. For example, it might be useful to write a helper that describes what it means for a node to be a <em>root</em> node, i.e., the common ancestor of every node in the tree:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kd">pred</span><span class="w"> </span><span class="nf">isRoot</span><span class="o">[</span><span class="n">n</span><span class="p">:</span><span class="w"> </span><span class="n">Node</span><span class="o">]</span><span class="w"> </span><span class="o">{</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="c1">-- a node is a root if it has no ancestor</span>
@@ -1270,7 +1365,10 @@ ourselves with.</p>
 - a <em>name</em> or identity, which we supplied when we named it <code>Node0</code> in the example; and 
 - a value for its <code>key</code> field, which we did not supply (and so Forge filled in). 
 Be careful not to confuse these! There's a rough analogy to programming: it's very possible that (especially if we have a buggy program or model) there might be different nodes with the same key value.</p>
-<p><strong>(TODO: decide: discussion of partial vs. total examples goes where?)</strong></p>
+<div class="admonition warning">
+<p class="admonition-title">Total vs. Partial Examples</p>
+<p>Forge's <code>example</code> construct will allow you to leave some types or fields undefined. In this case, it will check for <em>consistency</em>: is it possible to fill in the unconstrained values so that the example satisfies its condition? We encourage you to <strong>not</strong> use partial examples at this point in the book.</p>
+</div>
 <h4 id="a-binary-tree-with-more-than-one-row-should-be-considered-well-formed">A binary tree with more than one row should be considered well-formed.<a class="headerlink" href="#a-binary-tree-with-more-than-one-row-should-be-considered-well-formed" title="Permanent link">&para;</a></h4>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kd">example</span><span class="w"> </span><span class="nf">p_multi_row</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">wellformed</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="o">{</span>
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="n">Node</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">`</span><span class="n">Node0</span><span class="w"> </span><span class="o">+</span><span class="w">                               </span><span class="c1">-- row 0</span>
@@ -1298,7 +1396,7 @@ Be careful not to confuse these! There's a rough analogy to programming: it's ve
 <p>Wait a moment; there's something strange here. What do you notice about the way we've visualized this tree? </p>
 <details class="note">
 <summary>Think, then click!</summary>
-<p>That visualization is not how we'd choose to draw the tree: it has the <code>left</code> field to the right and the <code>right</code> field to the left! This is because we used Forge's default visualizer. By default, Forge has no way to understand what "left" and "right" mean. We'll come back to this problem soon.</p>
+<p>That visualization is not how we'd choose to draw the tree: it has the <code>left</code> field to the right and the <code>right</code> field to the left! This is because we used Forge's default visualizer. By default, Forge has no way to understand what "left" and "right" mean. This is where the visualizer's <em>spatial constraints</em> are helpful. <strong>TODO: screenshot</strong></p>
 </details>
 <h4 id="an-unbalanced-binary-tree-is-still-well-formed">An unbalanced binary tree is still well-formed.<a class="headerlink" href="#an-unbalanced-binary-tree-is-still-well-formed" title="Permanent link">&para;</a></h4>
 <p>When we draw binary trees, often we draw them in a <em>balanced</em> way: nice and "bushy", with roughly even distribution of nodes to the left and right. But an unbalanced tree is still a tree, and we should make sure it counts as one.</p>
@@ -1418,7 +1516,7 @@ Be careful not to confuse these! There's a rough analogy to programming: it's ve
 <p>The <code>run</code> command searches for instances that satisfy the constraints it is given, and then automatically opens the visualizer to explore those instances. </p>
 <div class="admonition tip">
 <p class="admonition-title">Visualization</p>
-<p>By default, the visualizer will show nearly all relationships as arcs; e.g., the <code>key</code> field of each node will be shown as an arc from the node to the (numeric) key. If you want, you can clean this up a bit by opening the <code>Theme</code> drawer, selecting the <code>key</code> field, and checking to view the field as an attribute.</p>
+<p>By default, the visualizer will show nearly all relationships as arcs; e.g., the <code>key</code> field of each node will be shown as an arc from the node to the (numeric) key. If you want, you can clean this up a bit by opening the <code>Layout</code> drawer and adding a new <strong>Directive</strong> that says to treat the <code>key</code> field as an <strong>Attribute</strong>.  </p>
 </div>
 <p>Here's something you might see in one of the instances:</p>
 <p><img alt="A fragment of an instance visualization, showing a node whose left and right children are the same" src="same-left-right.png" /></p>
@@ -1567,8 +1665,6 @@ and, of course...
       <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
         <script src="../../javascripts/mathjax.js"></script>
-      
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
