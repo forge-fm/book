@@ -1,9 +1,5 @@
 ## From Boards to Games
 
-!!! warning "Revisions Underway!"
-    This chapter is being revised for Spring 2026.
-
-
 Now that we've gotten some experience modeling in Forge, let's start thinking about _change_.
 
 What do you think a _game_ of tic-tac-toe looks like? Crucially, a game involves _moves_. 
@@ -346,8 +342,6 @@ assert moveInMiddle is sufficient for xWins
 
 You might wonder how `assert` can be used for predicates that take arguments. For example, suppose we had defined `wellformed` to take a board, rather than quantifying over `all` boards in its body. The `assert` syntax can take (one layer of) quantification. Would `move` preserve `wellformed`-ness?
 
-**TODO: mismatch; prior sections do have a 1-ary wellformed?**
-
 Here's how we'd write that. Notice we don't even need to use the `Game` here (and thus don't need to give the `is linear` annotation)! We're just asking Forge about 2 boards at a time:
 
 ```forge
@@ -390,11 +384,10 @@ So, how do you debug a problem like this? The first thing I like to do is reduce
 
 Today I want to show you a very useful technique for discovering the problem. There are more advanced approaches we'll get to later in the course, but for now this one should serve you well. 
 
-**TODO: insert unsat core, now that we have good highlighting!**
+!!! note "Unsatisfiable Cores" 
+    When a run can't be satisfied, it's possible to get the solver to give us a bit of help. This requires changing some of the Forge options, so we'll come back to this later. For now, we'll focus on the more directed debugging below.
 
-The idea is: encode an instance you'd expect to see as a set of constraints, run _those_ constraints only, and then use the evaluator to explore why it fails your other constraints. Let's do an example!
-
-**TODO: this is taken from a homework, not one of the above... should rewrite**
+The idea is: encode an instance you'd expect to see as a set of constraints, run _those_ constraints only, and then use the evaluator to explore why it fails your other constraints. Let's do an example! We'll look at something other than tic-tac-toe for this, because it's a real problem that came up for me in class.
 
 ```forge
 #lang froglet 
@@ -459,8 +452,6 @@ Following this process very often leads to discovering an over-constraint bug, o
 
 
 ## Aside: Reminder About Examples
-
-**TODO: should this part go to the Q and A for traces?**
 
 Where an `assert` or `run` is about checking satisfiability or unsatisfiability of some set of constraints, an `example` is about whether a _specific_ instance satisfies a given predicate. This style of test can be extremely useful for checking that (e.g.) small helper predicates do what you expect.
 
@@ -596,7 +587,7 @@ If both of these pass, we've just shown that bad states are impossible to reach 
     That second step is still pretty slow on my laptop: around 10 or 11 seconds to yield `UNSAT`. Can we give the solver any help? Hint: **is the set of possible values for `pre` bigger than it really needs to be?**
 
     ??? note "Think, then click!"
-    If we assume the `pre` board is well-formed, we'll exclude transitions involving invalid boards. There are a lot of these, even at `3 Int`, since row and column indexes will range from `-4` to `3` (inclusive). We could do this either by asserting `wellformed[pre]` or by refining the bounds we give Forge.
+        If we assume the `pre` board is well-formed, we'll exclude transitions involving invalid boards. There are a lot of these, even at `3 Int`, since row and column indexes will range from `-4` to `3` (inclusive). We could do this either by asserting `wellformed[pre]` or by refining the bounds we give Forge.
 
 
 

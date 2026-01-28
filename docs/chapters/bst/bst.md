@@ -1,9 +1,5 @@
 # Intro to Modeling Systems (Part 2: BSTs)
 
-!!! warning "Revisions Underway!"
-    This chapter is being revised for Spring 2026.
-
-
 Now that we've written our first model&mdash;tic-tac-toe boards&mdash;let's switch to something a bit more serious: binary search trees. A binary search tree (BST) is a binary tree with an added property about its structure that allows it to efficiently answer many search queries related to the values it stores. Here's an example, drawn by hand:
 
 <!-- sips -s format png Bintree.pdf --out BinTree.png  -->
@@ -15,8 +11,9 @@ Now that we've written our first model&mdash;tic-tac-toe boards&mdash;let's swit
 Each node of the tree holds some value that the tree supports searching for. We'll call this value the search key, or just the _key_ for each node. The common ancestor of every node in the tree is called the _root_. 
 
 This is obviously a _binary tree_, since it is a tree where every node has *at most* 2 children. What makes it a binary _search_ tree is the invariant that every node $N$ obeys: 
-* all left-descendants of $N$ have a key less than $N$'s key; and 
-* all right-descendants of $N$ have a key greater than or equal to $N$'s key.
+
+  * all left-descendants of $N$ have a key less than $N$'s key; and 
+  * all right-descendants of $N$ have a key greater than or equal to $N$'s key.
 
 !!! warning "A common mistake"
     When you're first learning about binary search trees, it's easy to phrase the invariant wrong: 
@@ -28,11 +25,13 @@ Let's start modeling. As with programming, it's a good idea to start simple, and
 
 !!! tip "the recipe"
     Like with tic-tac-toe, we'll follow this rough 5-step progression:
+
       - define the pertinent datatypes and fields;
       - define a well-formedness predicate;
       - write some examples;
       - run and exercise the base model; 
       - write domain predicates. 
+
     Keep in mind that this isn't a strict "waterfall" style progression; we may return to previous steps if we discover it's necessary.
 
 
@@ -58,8 +57,9 @@ sig Node {
 ## Wellformedness for Binary Trees
 
 What makes a binary tree a binary tree? We might start by saying that: 
-* it's _single-tree-shaped_: there are no cycles and all nodes have at most one parent node; and 
-* it's _connected_: all non-root nodes have a common ancestor. 
+
+  * it's _single-tree-shaped_: there are no cycles and all nodes have at most one parent node; and 
+  * it's _connected_: all non-root nodes have a common ancestor. 
 
 It's sometimes useful to write domain predicates early, and then use them to define wellformedness more clearly. For example, it might be useful to write a helper that describes what it means for a node to be a _root_ node, i.e., the common ancestor of every node in the tree:
 
@@ -139,7 +139,8 @@ In fact, this is what Forge's default visualizer can generate. Notice that the n
 - a value for its `key` field, which we did not supply (and so Forge filled in). 
 Be careful not to confuse these! There's a rough analogy to programming: it's very possible that (especially if we have a buggy program or model) there might be different nodes with the same key value.
 
-**(TODO: decide: discussion of partial vs. total examples goes where?)**
+!!! warning "Total vs. Partial Examples"
+    Forge's `example` construct will allow you to leave some types or fields undefined. In this case, it will check for _consistency_: is it possible to fill in the unconstrained values so that the example satisfies its condition? We encourage you to **not** use partial examples at this point in the book.
 
 #### A binary tree with more than one row should be considered well-formed. 
 
@@ -171,7 +172,7 @@ example p_multi_row is wellformed for {
 Wait a moment; there's something strange here. What do you notice about the way we've visualized this tree? 
 
 ??? note "Think, then click!"
-    That visualization is not how we'd choose to draw the tree: it has the `left` field to the right and the `right` field to the left! This is because we used Forge's default visualizer. By default, Forge has no way to understand what "left" and "right" mean. We'll come back to this problem soon.
+    That visualization is not how we'd choose to draw the tree: it has the `left` field to the right and the `right` field to the left! This is because we used Forge's default visualizer. By default, Forge has no way to understand what "left" and "right" mean. This is where the visualizer's _spatial constraints_ are helpful. **TODO: screenshot**
 
 
 #### An unbalanced binary tree is still well-formed.
@@ -340,7 +341,7 @@ run {wellformed} for exactly 8 Node
 The `run` command searches for instances that satisfy the constraints it is given, and then automatically opens the visualizer to explore those instances. 
 
 !!! tip "Visualization"
-    By default, the visualizer will show nearly all relationships as arcs; e.g., the `key` field of each node will be shown as an arc from the node to the (numeric) key. If you want, you can clean this up a bit by opening the `Theme` drawer, selecting the `key` field, and checking to view the field as an attribute.
+    By default, the visualizer will show nearly all relationships as arcs; e.g., the `key` field of each node will be shown as an arc from the node to the (numeric) key. If you want, you can clean this up a bit by opening the `Layout` drawer and adding a new **Directive** that says to treat the `key` field as an **Attribute**.  
 
 
 Here's something you might see in one of the instances:
