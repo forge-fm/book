@@ -1,8 +1,5 @@
 # Anticipated Questions: Static Models
 
-!!! warning "Revisions Underway!"
-    This chapter is being revised for Spring 2026.
-
 ### What Happens When Forge Searches? 
 
 Our first `run` command in Forge was from [tic-tac-toe](../ttt/ttt.md): `run { some b: Board | wellformed[b]}`.
@@ -63,13 +60,10 @@ I'm trying to express that every entry in the board is different. This should ea
 
     Thus, when you're writing constraints like the above, you need to watch out for `none`: the value for _every_ cell in the initial board is equal to the value for _every_ other cell!
 
-
-
 !!! tip "Reachability and none"
     The `none` value in Forge has at least one more subtlety: `none` is "reachable" from everything if you're using the built-in `reachable` helper predicate. That has an impact even if we don't use `none` explicitly. If I write something like: `reachable[p.spouse, Nim, parent1, parent2]` I'm asking whether, for some person `p`, their spouse is an ancestor of `Nim`. If `p` doesn't have a spouse, then `p.spouse` is `none`, and so this predicate would yield true for `p`.
 
     This is why it's often advisible to qualify your use of `reachable`. E.g., I could write `some p.spouse and reachable[p.spouse, Nim, parent1, parent2]`.
-
 
 ### Some as a Quantifier Versus Some as a Multiplicity
 
