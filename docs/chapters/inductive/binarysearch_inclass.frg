@@ -154,7 +154,7 @@ pred anyTransition[pre: SearchState, post: SearchState] {
 -- Binary search (not so) famously breaks if the array is too long, 
 -- and low+high overflows We can always represent max[Int] (but not 
 -- #Int; we'd never have enough integers since negatives exist) 
-pred safeArraySize[arr: IntArray] {
+pred safeArraySize[theArr: IntArray] {
     -- E.g., if lastIndex is 5, there are 6 elements in the array. 
     -- If the first step takes us from [0, 5] to [3,5] then 
     -- (high+low) = 8, which cannot be represented in Forge with 4 bits. 
@@ -162,10 +162,10 @@ pred safeArraySize[arr: IntArray] {
     -- (See: https://ai.googleblog.com/2006/06/extra-extra-read-all-about-it-nearly.html)
     
     -- A bit conservative, but it works for the model
-    arr.lastIndex < divide[max[Int], 2]
+    theArr.lastIndex < divide[max[Int], 2]
 
     -- Let's also assume the array is non-empty (the empty case should be easy to write a unit test for...)
-    arr.lastIndex >= 0
+    theArr.lastIndex >= 0
 
 }
 
