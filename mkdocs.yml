@@ -111,8 +111,8 @@ nav:
 
   - Discrete Event Systems:
     - "Transitions, Traces, and Verification": chapters/ttt/ttt_games.md
-  #   - Counterexamples to Induction: chapters/inductive/bsearch.md
-  #   - "BSTs: Recursive Descent": chapters/bst/descent.md
+    - Counterexamples to Induction: chapters/inductive/bsearch.md
+    # - "BSTs: Recursive Descent": chapters/bst/descent.md
   #   - Validating Models: chapters/validation/validating_events.md
   #   - "Q&A: Event Systems": chapters/qna/events.md
 
