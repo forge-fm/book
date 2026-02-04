@@ -1,4 +1,4 @@
-#lang forge/bsl 
+#lang forge/froglet
 
 /*
   Rough model of binary search on an array of integers.  
@@ -19,17 +19,17 @@ sig IntArray {
 }
 
 -- think of this like a well-formedness predicate that we will also use as an invariant to check
-pred validArray[arr: IntArray] {
+pred validArray[theArr: IntArray] {
     -- We can make these more efficient, but good enough for now
     
     -- no elements before index 0
-    all i: Int | i < 0 implies no arr.elements[i]
+    all i: Int | i < 0 implies no theArr.elements[i]
     -- if there's an element, either i=0 or there's something at i=1
     -- also the array is sorted:
 
-    all i: Int | some arr.elements[i] implies {
-        i = 0 or some arr.elements[subtract[i, 1]]
-        arr.elements[i] >= arr.elements[subtract[i, 1]]
+    all i: Int | some theArr.elements[i] implies {
+        i = 0 or some theArr.elements[subtract[i, 1]]
+        theArr.elements[i] >= theArr.elements[subtract[i, 1]]
     }
     -- FROM EXERCISE: this could go well in a helper pred, if we were worried about the array
     -- changing. As it is, we're just saying that an element >= its predecessor 
@@ -37,19 +37,19 @@ pred validArray[arr: IntArray] {
 
 
     -- size variable reflects actual size of array    
-    all i: Int | (no arr.elements[i] and some arr.elements[subtract[i, 1]]) implies {
-        arr.lastIndex = subtract[i, 1]
+    all i: Int | (no theArr.elements[i] and some theArr.elements[subtract[i, 1]]) implies {
+        theArr.lastIndex = subtract[i, 1]
     }    
-    {all i: Int | no arr.elements[i]} implies 
-      {arr.lastIndex = -1}
+    {all i: Int | no theArr.elements[i]} implies 
+      {theArr.lastIndex = -1}
 
 }
 
 -- FROM EXERCISE =>: ternary / implies
 
-fun firstIndex[arr: IntArray]: one Int {    
-    arr.lastIndex = -1  => -1    
-                      else  0
+fun firstIndex[theArr: IntArray]: one Int {    
+    theArr.lastIndex = -1  => -1    
+                           else  0
 }
 
 -- Model the current state of a binary-search run on the array: the area to be searched

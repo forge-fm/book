@@ -1,8 +1,11 @@
 # Counterexamples To Induction
 
-This section contains a running exercise where we model binary search on an array. You'll need [this exercise template](./binarysearch_template.frg) to begin. For your reference, the completed version with comments from Q&A, is [here](./binarysearch_inclass.frg).
+This section contains a running exercise where we model binary search on an array. You'll need [this exercise template](./binarysearch_template.frg) to begin. 
 
-**TODO: insert reminder of what binary search is**
+!!! note "Solutions"
+    For your reference, a completed version from 2025's offering of Logic for Systems, with comments from Q&A, is [here](./binarysearch_inclass.frg). 
+
+<!-- **TODO: insert reminder of what binary search is** -->
 
 ## Conceptual Setup
 

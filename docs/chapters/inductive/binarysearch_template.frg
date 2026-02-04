@@ -19,28 +19,28 @@ sig IntArray {
 }
 
 -- think of this like a well-formedness predicate that we will also use as an invariant to check
-pred validArray[arr: IntArray] {
+pred validArray[theArr: IntArray] {
     -- We can make these more efficient, but good enough for now
 
     -- no elements before index 0
-    all i: Int | i < 0 implies no arr.elements[i]
+    all i: Int | i < 0 implies no theArr.elements[i]
     -- if there's an element, either i=0 or there's something at i=1
     -- also the array is sorted:
-    all i: Int | some arr.elements[i] implies {
-        i = 0 or some arr.elements[subtract[i, 1]]
-        arr.elements[i] >= arr.elements[subtract[i, 1]]
+    all i: Int | some theArr.elements[i] implies {
+        i = 0 or some theArr.elements[subtract[i, 1]]
+        theArr.elements[i] >= theArr.elements[subtract[i, 1]]
     }
     -- size variable reflects actual size of array    
-    all i: Int | (no arr.elements[i] and some arr.elements[subtract[i, 1]]) implies {
-        arr.lastIndex = subtract[i, 1]
+    all i: Int | (no theArr.elements[i] and some theArr.elements[subtract[i, 1]]) implies {
+        theArr.lastIndex = subtract[i, 1]
     }    
-    {all i: Int | no arr.elements[i]} implies 
-      {arr.lastIndex = -1}
+    {all i: Int | no theArr.elements[i]} implies 
+      {theArr.lastIndex = -1}
 
 }
 
-fun firstIndex[arr: IntArray]: one Int {    
-    arr.lastIndex = -1  => -1    
+fun firstIndex[theArr: IntArray]: one Int {    
+    theArr.lastIndex = -1  => -1    
                       else  0
 }
 
@@ -139,7 +139,7 @@ pred anyTransition[pre: SearchState, post: SearchState] {
 -- Binary search (not so) famously breaks if the array is too long, 
 -- and low+high overflows We can always represent max[Int] (but not 
 -- #Int; we'd never have enough integers since negatives exist) 
-pred safeArraySize[arr: IntArray] {
+pred safeArraySize[theArr: IntArray] {
     -- E.g., if lastIndex is 5, there are 6 elements in the array. 
     -- If the first step takes us from [0, 5] to [3,5] then 
     -- (high+low) = 8, which cannot be represented in Forge with 4 bits. 
