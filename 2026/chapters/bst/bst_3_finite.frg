@@ -1,4 +1,4 @@
-#lang forge/bsl
+#lang forge/froglet
 
 /*
   Model of binary search trees + descent

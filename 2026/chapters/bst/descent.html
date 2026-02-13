@@ -13,6 +13,10 @@
         <link rel="canonical" href="https://forge-fm.github.io/book/2026/chapters/bst/descent.html">
       
       
+        <link rel="prev" href="../inductive/bsearch.html">
+      
+      
+        <link rel="next" href="../validation/validating_events.html">
       
       
         
@@ -624,10 +628,18 @@
       
   
   
+    
   
   
+  
     
     
+      
+        
+      
+        
+      
+        
       
         
       
@@ -642,13 +654,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
           <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
@@ -669,7 +679,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -723,6 +733,170 @@
     
   
     Counterexamples to Induction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BSTs: Recursive Descent
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="descent.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BSTs: Recursive Descent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#trying-different-invariants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trying Different Invariants
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verifying-bsts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verifying BSTs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#looking-ahead" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Looking Ahead
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../validation/validating_events.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Validating Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qna/events.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q&A: Event Systems
   
 
     
@@ -918,15 +1092,23 @@ If neither can apply, the algorithm is done: either the target has been found, o
 <p>Let's run it!</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">run</span><span class="w"> </span><span class="o">{</span><span class="n">traces</span><span class="o">}</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">exactly</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="n">Node</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="n">SearchState</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="o">{</span><span class="n">nextState</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">plinear</span><span class="o">}</span>
 </code></pre></div>
-<p>The output may initially be overwhelming: by default, it will show <em>all</em> the atoms in the world and their relationships, including each <code>SearchState</code>. You could stay in the default visualizer and mitigate the problem a <em>little</em> by clicking on "Theme" and then "Add Projection" for <code>SearchState</code>. The problem is that this hides the <code>current</code> node indicator for the current state, since the current state becomes implicit. </p>
-<p>Instead, let's use a custom visualization. There are multiple options included with this book:</p>
+<p>The output may initially be overwhelming: by default, it will show <em>all</em> the atoms in the world and their relationships, including each <code>SearchState</code>. You could stay in the default visualizer and mitigate the problem a <em>little</em> by clicking on "Layout" and then adding a "Projection" directive. We could also add constraints to clean up the layout, maybe something like this:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>constraints:
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>  - orientation: {selector: right, directions: [right, below]}
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>  - orientation: {selector: left, directions: [left, below]}
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>directives:
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>  - attribute: {field: key}
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>  - projection: {sig: SearchState}
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>  - flag: hideDisconnectedBuiltIns
+</code></pre></div>
+<p>The problem is that this still hides the <code>current</code> node indicator for the current state, since the current state becomes implicit. We could continue to improve the visualization directives, but this is a good opportunity to show a custom visualization. There are multiple options included with this book:</p>
 <ul>
 <li><a href="bst.js"><code>bst.js</code></a>, which visualizes the tree itself, without any regard to the descent. This is useful for debugging the basic tree model and the invariants themselves.</li>
 <li><a href="bst_descent.js"><code>bst_descent.js</code></a>, which visualizes the <em>descent</em> in one picture. </li>
 <li>(Don't run this yet!) <code>bst_temporal.js</code>, which visualizes a Temporal Forge version of the model, which we'll get to soon.</li>
 </ul>
 <p>If we run <code>bst_descent.js</code> for this instance, it will draw the tree and highlight the path taken in the recursive descent. A node with the target key will have a thick border. A node that's visited in the descent will have a red border. So a correct descent should never show a node with a thick border that isn't red. </p>
-<p><strong>TODO fill: how to run? Did we describe this already?</strong></p>
 <p>This is easier to read, but also a little worrying: we see two nodes visited, and they aren't directly connected! </p>
 <p><strong>Exercise:</strong> What's going on? (Hint: examine the table view. How many search states are there? Are they all in the trace?)</p>
 <details class="note">
@@ -935,19 +1117,19 @@ If neither can apply, the algorithm is done: either the target has been found, o
 * change the visualizer script to only look at states reachable from the first one; or
 * add a constraint that forces all <code>SearchState</code> atoms to be used. </p>
 <p>We'll go for the second fix, adding this line to the <code>traces</code> predicate:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1">-- All SearchStates are used</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="k">all</span><span class="w"> </span><span class="n">s</span><span class="p">:</span><span class="w"> </span><span class="n">SearchState</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">{</span><span class="w"> </span>
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Search</span><span class="o">.</span><span class="n">initialState</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span>
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span><span class="n">reachable</span><span class="o">[</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">Search</span><span class="o">.</span><span class="n">initialState</span><span class="p">,</span><span class="w"> </span><span class="n">Search</span><span class="o">.</span><span class="n">nextState</span><span class="o">]</span>
-<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="o">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1">-- All SearchStates are used</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="k">all</span><span class="w"> </span><span class="n">s</span><span class="p">:</span><span class="w"> </span><span class="n">SearchState</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">{</span><span class="w"> </span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Search</span><span class="o">.</span><span class="n">initialState</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">  </span><span class="n">reachable</span><span class="o">[</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">Search</span><span class="o">.</span><span class="n">initialState</span><span class="p">,</span><span class="w"> </span><span class="n">Search</span><span class="o">.</span><span class="n">nextState</span><span class="o">]</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="o">}</span>
 </code></pre></div>
 </details>
 <p>Ok, that's better, but we still aren't seeing a <em>complete</em> descent. To fix that, we'll say that, eventually, the descent either reaches bottom or a node with the target value:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">run</span><span class="w"> </span><span class="o">{</span>
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="n">binary_tree</span><span class="w"> </span>
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span><span class="n">traces</span>
-<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">  </span><span class="k">some</span><span class="w"> </span><span class="n">s</span><span class="p">:</span><span class="w"> </span><span class="n">SearchState</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">s</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Search</span><span class="o">.</span><span class="n">target</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="o">(</span><span class="k">no</span><span class="w"> </span><span class="n">s</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">left</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="k">no</span><span class="w"> </span><span class="n">s</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">right</span><span class="o">)</span>
-<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="o">}</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">exactly</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="n">Node</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="n">SearchState</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="o">{</span><span class="n">nextState</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">plinear</span><span class="o">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">run</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="n">binary_tree</span><span class="w"> </span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span><span class="n">traces</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">  </span><span class="k">some</span><span class="w"> </span><span class="n">s</span><span class="p">:</span><span class="w"> </span><span class="n">SearchState</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">s</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Search</span><span class="o">.</span><span class="n">target</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="o">(</span><span class="k">no</span><span class="w"> </span><span class="n">s</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">left</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="k">no</span><span class="w"> </span><span class="n">s</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">right</span><span class="o">)</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="o">}</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">exactly</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="n">Node</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="n">SearchState</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="o">{</span><span class="n">nextState</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">plinear</span><span class="o">}</span>
 </code></pre></div>
 <p>That's more like it. But what about the invariants? We only said <code>binary_tree</code> had to hold, which means that the tree being searched isn't necessarily a binary <em>search</em> tree yet.</p>
 <h3 id="trying-different-invariants">Trying Different Invariants<a class="headerlink" href="#trying-different-invariants" title="Permanent link">&para;</a></h3>
@@ -963,14 +1145,14 @@ If neither can apply, the algorithm is done: either the target has been found, o
 <li>the right child of <span class="arithmatex">\(N\)</span> (if any) has a key greater than or equal to <span class="arithmatex">\(N\)</span>'s key.</li>
 </ul>
 <p>We were able to look at trees that met one invariant but not another, but now we can do something much more powerful: we can ask Forge to show us how the differing invariants affect the recursive descent on the tree! If an invariant is "wrong", surely it will cause the descent to fail in some way. Since we've already modeled the descent, this should be easy. Let's try it for <code>invariant_v2</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">run</span><span class="w"> </span><span class="o">{</span>
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="n">binary_tree</span><span class="w">     </span><span class="c1">-- it must be a binary tree</span>
-<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span><span class="k">all</span><span class="w"> </span><span class="n">n</span><span class="p">:</span><span class="w"> </span><span class="n">Node</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">invariant_v2</span><span class="o">[</span><span class="n">n</span><span class="o">]</span><span class="w">    </span><span class="c1">-- additionally, the tree satisfies invariant version 1</span>
-<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">  </span><span class="k">some</span><span class="w"> </span><span class="n">n</span><span class="p">:</span><span class="w"> </span><span class="n">Node</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">n</span><span class="o">.</span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Search</span><span class="o">.</span><span class="n">target</span><span class="w"> </span><span class="c1">-- the target is present</span>
-<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">  </span><span class="n">traces</span><span class="w">          </span><span class="c1">-- do a search descent</span>
-<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">  </span><span class="c1">-- Finally, the trace finishes the search</span>
-<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">  </span><span class="k">some</span><span class="w"> </span><span class="n">s</span><span class="p">:</span><span class="w"> </span><span class="n">SearchState</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">s</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Search</span><span class="o">.</span><span class="n">target</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="k">no</span><span class="w"> </span><span class="o">(</span><span class="n">s</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">left</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">s</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">right</span><span class="o">)</span>
-<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="o">}</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">exactly</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="n">Node</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="n">SearchState</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="o">{</span><span class="n">nextState</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">plinear</span><span class="o">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">run</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="n">binary_tree</span><span class="w">     </span><span class="c1">-- it must be a binary tree</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span><span class="k">all</span><span class="w"> </span><span class="n">n</span><span class="p">:</span><span class="w"> </span><span class="n">Node</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">invariant_v2</span><span class="o">[</span><span class="n">n</span><span class="o">]</span><span class="w">    </span><span class="c1">-- additionally, the tree satisfies invariant version 1</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">  </span><span class="k">some</span><span class="w"> </span><span class="n">n</span><span class="p">:</span><span class="w"> </span><span class="n">Node</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">n</span><span class="o">.</span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Search</span><span class="o">.</span><span class="n">target</span><span class="w"> </span><span class="c1">-- the target is present</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">  </span><span class="n">traces</span><span class="w">          </span><span class="c1">-- do a search descent</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">  </span><span class="c1">-- Finally, the trace finishes the search</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">  </span><span class="k">some</span><span class="w"> </span><span class="n">s</span><span class="p">:</span><span class="w"> </span><span class="n">SearchState</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">s</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Search</span><span class="o">.</span><span class="n">target</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="k">no</span><span class="w"> </span><span class="o">(</span><span class="n">s</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">left</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">s</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">right</span><span class="o">)</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="o">}</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">exactly</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="n">Node</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="n">SearchState</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="o">{</span><span class="n">nextState</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">plinear</span><span class="o">}</span>
 </code></pre></div>
 <p>This will show us instances of a descent for a tree following <code>invariant_v2</code>. To see descents for trees following the other invariant, just change <code>invariant_v2</code> to <code>invariant_v1</code>. If you look at a few instances for <code>invariant_v2</code>, you should notice that one of the invariants can make the descent fail: the tree contains the target, but it's never found. You'll see something like this: </p>
 <p><img alt="a binary tree following invariant 2, where the recursive descent fails to find the target" src="./bst_invar2_buggy.png" width=60%/></p>
@@ -986,15 +1168,15 @@ If neither can apply, the algorithm is done: either the target has been found, o
 <details class="note">
 <summary>Think, then click!</summary>
 <p>I'll write my version as a <code>run</code>, so we can better match the one above. </p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">run</span><span class="w"> </span><span class="o">{</span>
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="n">binary_tree</span><span class="w">    </span>
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span><span class="k">all</span><span class="w"> </span><span class="n">n</span><span class="p">:</span><span class="w"> </span><span class="n">Node</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">invariant_v1</span><span class="o">[</span><span class="n">n</span><span class="o">]</span><span class="w">   </span>
-<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">  </span><span class="k">some</span><span class="w"> </span><span class="n">n</span><span class="p">:</span><span class="w"> </span><span class="n">Node</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">n</span><span class="o">.</span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Search</span><span class="o">.</span><span class="n">target</span><span class="w"> </span><span class="c1">-- the target is present</span>
-<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">  </span><span class="n">traces</span><span class="w">     </span>
-<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">  </span><span class="c1">-- The trace finishes the search without finding the target</span>
-<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">  </span><span class="k">some</span><span class="w"> </span><span class="n">s</span><span class="p">:</span><span class="w"> </span><span class="n">SearchState</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">no</span><span class="w"> </span><span class="o">(</span><span class="n">s</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">left</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">s</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">right</span><span class="o">)</span>
-<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">  </span><span class="k">no</span><span class="w"> </span><span class="n">s</span><span class="p">:</span><span class="w"> </span><span class="n">SearchState</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">s</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Search</span><span class="o">.</span><span class="n">target</span>
-<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="o">}</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">exactly</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="n">Node</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="n">SearchState</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="o">{</span><span class="n">nextState</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">plinear</span><span class="o">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">run</span><span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span><span class="n">binary_tree</span><span class="w">    </span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">  </span><span class="k">all</span><span class="w"> </span><span class="n">n</span><span class="p">:</span><span class="w"> </span><span class="n">Node</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">invariant_v1</span><span class="o">[</span><span class="n">n</span><span class="o">]</span><span class="w">   </span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">  </span><span class="k">some</span><span class="w"> </span><span class="n">n</span><span class="p">:</span><span class="w"> </span><span class="n">Node</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">n</span><span class="o">.</span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Search</span><span class="o">.</span><span class="n">target</span><span class="w"> </span><span class="c1">-- the target is present</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">  </span><span class="n">traces</span><span class="w">     </span>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w">  </span><span class="c1">-- The trace finishes the search without finding the target</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="w">  </span><span class="k">some</span><span class="w"> </span><span class="n">s</span><span class="p">:</span><span class="w"> </span><span class="n">SearchState</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">no</span><span class="w"> </span><span class="o">(</span><span class="n">s</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">left</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">s</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">right</span><span class="o">)</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="w">  </span><span class="k">no</span><span class="w"> </span><span class="n">s</span><span class="p">:</span><span class="w"> </span><span class="n">SearchState</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">s</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Search</span><span class="o">.</span><span class="n">target</span>
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="o">}</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">exactly</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="n">Node</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="n">SearchState</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="o">{</span><span class="n">nextState</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">plinear</span><span class="o">}</span>
 </code></pre></div>
 </details>
 <p><strong>Bonus Exercise:</strong> Do the numeric bounds in the commands above seem OK to you? Is there any situation you might be worried about, beyond example trees that are bigger than 7 nodes?</p>

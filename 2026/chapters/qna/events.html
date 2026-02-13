@@ -13,6 +13,8 @@
         <link rel="canonical" href="https://forge-fm.github.io/book/2026/chapters/qna/events.html">
       
       
+        <link rel="prev" href="../validation/validating_events.html">
+      
       
       
         
@@ -116,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Q&amp;A: Event Systems
+              Q&A: Event Systems
             
           </span>
         </div>
@@ -624,10 +626,18 @@
       
   
   
+    
   
   
+  
     
     
+      
+        
+      
+        
+      
+        
       
         
       
@@ -642,13 +652,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
           <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
@@ -669,7 +677,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -731,6 +739,148 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bst/descent.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BSTs: Recursive Descent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../validation/validating_events.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Validating Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q&A: Event Systems
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="events.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q&A: Event Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#more-on-optimization-inst-syntax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        More on Optimization: inst Syntax
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -801,7 +951,6 @@
 
 
 <h1 id="qa-event-systems">Q&amp;A: Event Systems<a class="headerlink" href="#qa-event-systems" title="Permanent link">&para;</a></h1>
-<p><strong>TODO: consider advanced question: correspondence??? is there one between the array version and the tree version?</strong></p>
 <h2 id="more-on-optimization-inst-syntax">More on Optimization: <code>inst</code> Syntax<a class="headerlink" href="#more-on-optimization-inst-syntax" title="Permanent link">&para;</a></h2>
 <p>The syntax that you use in <code>example</code>s and to say <code>is linear</code> for a field (like you saw in the <a href="../adder/rca.html">ripple-carry adder</a>) is more expressive than you've seen so far. Recall that Forge has <a href="static.html">two phases</a>: deliniating the allowed search space, and solving the constraints within that search space. This new syntax lets you define a <em>partial instance</em>, which affects the first phase to limit the possible instances the solver will consider.</p>
 <p>You can even define a reusable partial instance using the <code>inst</code> command, and use it in the same place you'd use <code>{next is linear}</code> in a <code>run</code>, <code>assert</code>, etc. For example, we could pre-define the set of full adders in the <a href="../adder/rca.html">ripple-carry adder</a> model, giving each an atom name:</p>
