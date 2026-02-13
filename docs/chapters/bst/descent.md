@@ -126,9 +126,20 @@ Let's run it!
 run {traces} for exactly 7 Node, 5 SearchState for {nextState is plinear}
 ```
 
-The output may initially be overwhelming: by default, it will show _all_ the atoms in the world and their relationships, including each `SearchState`. You could stay in the default visualizer and mitigate the problem a _little_ by clicking on "Theme" and then "Add Projection" for `SearchState`. The problem is that this hides the `current` node indicator for the current state, since the current state becomes implicit. 
+The output may initially be overwhelming: by default, it will show _all_ the atoms in the world and their relationships, including each `SearchState`. You could stay in the default visualizer and mitigate the problem a _little_ by clicking on "Layout" and then adding a "Projection" directive. We could also add constraints to clean up the layout, maybe something like this:
 
-Instead, let's use a custom visualization. There are multiple options included with this book:
+```
+constraints:
+  - orientation: {selector: right, directions: [right, below]}
+  - orientation: {selector: left, directions: [left, below]}
+
+directives:
+  - attribute: {field: key}
+  - projection: {sig: SearchState}
+  - flag: hideDisconnectedBuiltIns
+```
+
+The problem is that this still hides the `current` node indicator for the current state, since the current state becomes implicit. We could continue to improve the visualization directives, but this is a good opportunity to show a custom visualization. There are multiple options included with this book:
 
 * [`bst.js`](./bst.js), which visualizes the tree itself, without any regard to the descent. This is useful for debugging the basic tree model and the invariants themselves.
 * [`bst_descent.js`](./bst_descent.js), which visualizes the _descent_ in one picture. 
@@ -136,7 +147,6 @@ Instead, let's use a custom visualization. There are multiple options included w
 
 If we run `bst_descent.js` for this instance, it will draw the tree and highlight the path taken in the recursive descent. A node with the target key will have a thick border. A node that's visited in the descent will have a red border. So a correct descent should never show a node with a thick border that isn't red. 
 
-**TODO fill: how to run? Did we describe this already?**
 
 This is easier to read, but also a little worrying: we see two nodes visited, and they aren't directly connected! 
 

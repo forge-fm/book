@@ -1,9 +1,5 @@
 # Q&A: Event Systems
 
-**TODO: consider advanced question: correspondence??? is there one between the array version and the tree version?**
-
-
-
 ## More on Optimization: `inst` Syntax
 
 The syntax that you use in `example`s and to say `is linear` for a field (like you saw in the [ripple-carry adder](../adder/rca.md)) is more expressive than you've seen so far. Recall that Forge has [two phases](./static.md): deliniating the allowed search space, and solving the constraints within that search space. This new syntax lets you define a _partial instance_, which affects the first phase to limit the possible instances the solver will consider.
