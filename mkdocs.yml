@@ -116,13 +116,13 @@ nav:
     - Validating Models: chapters/validation/validating_events.md
     - "Q&A: Event Systems": chapters/qna/events.md
 
-  # - Modeling Relationships:
-  #   - "Relational Forge, Modeling Logic": chapters/relations/modeling-booleans-1.md
-  #   - Transitive Closure: chapters/relations/reachability.md
-  #   - Modeling Mutual Exclusion: chapters/relations/sets-induction-mutex.md
-  #   - Going Beyond Assertions: chapters/relations/sets-beyond-assertions.md
-  #   - How does Forge Work?: chapters/solvers/bounds_booleans_how_forge_works.md
-  #   - "Q&A: Relations": chapters/qna/relations.md
+  - Modeling Relationships:
+    - "Relational Forge, Modeling Logic": chapters/relations/modeling-booleans-1.md
+    - Transitive Closure: chapters/relations/reachability.md
+    - Modeling Mutual Exclusion: chapters/relations/sets-induction-mutex.md
+    - Going Beyond Assertions: chapters/relations/sets-beyond-assertions.md
+    - How does Forge Work?: chapters/solvers/bounds_booleans_how_forge_works.md
+    - "Q&A: Relations": chapters/qna/relations.md
 
   # - Temporal Specification:
   #   - Liveness and Lassos: chapters/temporal/liveness_and_lassos.md
@@ -140,6 +140,7 @@ nav:
   #   - "Satisfiability Modulo Theories (SMT)": chapters/solvers/smt.md
   #   - "Learning with Solvers: CEGIS": chapters/solvers/cegis.md
 
-  # - Appendix:
-  #   - Glossary: appendix/glossary.md
-  #   - Error Reference: appendix/errors.md
+# These are in the DOCS, which are separate.
+#   - Appendix:
+# #    - Glossary: appendix/glossary.md
+#     - Error Reference: appendix/errors.md
