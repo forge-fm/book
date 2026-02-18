@@ -13,6 +13,10 @@
         <link rel="canonical" href="https://forge-fm.github.io/book/2026/chapters/relations/modeling-booleans-1.html">
       
       
+        <link rel="prev" href="../qna/events.html">
+      
+      
+        <link rel="next" href="reachability.html">
       
       
         
@@ -23,7 +27,7 @@
     
     
       
-        <title>Modeling Boolean Logic (Syntax, Semantics, and Sets) - Logic for Systems</title>
+        <title>Relational Forge, Modeling Logic - Logic for Systems</title>
       
     
     
@@ -116,7 +120,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Modeling Boolean Logic (Syntax, Semantics, and Sets)
+              Relational Forge, Modeling Logic
             
           </span>
         </div>
@@ -813,6 +817,469 @@
     
   
     Q&A: Event Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modeling Relationships
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modeling Relationships
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Relational Forge, Modeling Logic
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="modeling-booleans-1.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Relational Forge, Modeling Logic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#modeling-boolean-formulas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modeling Boolean Formulas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#modeling-boolean-formulas_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modeling Boolean Formulas
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Modeling Boolean Formulas">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wellformedness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wellformedness
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-meaning-of-boolean-circuits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Meaning Of Boolean Circuits
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Meaning Of Boolean Circuits">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#whats-the-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What's the point?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What&#39;s the point?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#language-change" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Language change!
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#is-that-all" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Is That All?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Is That All?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#set-operators-union-intersection-and-difference-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Set Operators: Union (+), Intersection (&amp;), and Difference (-)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returning-to-well-formedness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Returning to well-formedness
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#some-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Some Validation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Some Validation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#consistency-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Consistency Checks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#properties-of-boolean-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Properties of Boolean Logic
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#looking-forward" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Looking Forward
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="reachability.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transitive Closure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sets-induction-mutex.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modeling Mutual Exclusion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sets-beyond-assertions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Going Beyond Assertions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../solvers/bounds_booleans_how_forge_works.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How does Forge Work?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qna/relations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q&A: Relations
   
 
     

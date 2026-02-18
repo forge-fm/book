@@ -13,6 +13,10 @@
         <link rel="canonical" href="https://forge-fm.github.io/book/2026/chapters/relations/reachability.html">
       
       
+        <link rel="prev" href="modeling-booleans-1.html">
+      
+      
+        <link rel="next" href="sets-induction-mutex.html">
       
       
         
@@ -23,7 +27,7 @@
     
     
       
-        <title>Relations and Reachability - Logic for Systems</title>
+        <title>Transitive Closure - Logic for Systems</title>
       
     
     
@@ -116,7 +120,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Relations and Reachability
+              Transitive Closure
             
           </span>
         </div>
@@ -813,6 +817,440 @@
     
   
     Q&A: Event Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modeling Relationships
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modeling Relationships
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="modeling-booleans-1.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Relational Forge, Modeling Logic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transitive Closure
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="reachability.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transitive Closure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#expression-nims-followers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Expression: Nim's followers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#formula-nim-is-reachable-from-tim-via-followers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Formula: Nim is reachable from Tim via "followers"
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#expression-nims-followers-followers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Expression: Nim's followers' followers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#formula-nim-is-reachable-from-tim-via-the-inverse-of-followers-what-we-might-call-following" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Formula: Nim is reachable from Tim via the inverse of "followers" (what we might call "following")?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#formula-nim-is-reachable-from-tim-via-followers-but-not-including-tims-friends" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Formula: Nim is reachable from Tim via followers, but not including Tim's friends?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attempt-2-formula-nim-is-reachable-from-tim-via-the-inverse-of-followers-what-we-might-call-following" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (Attempt 2) Formula: Nim is reachable from Tim via the inverse of "followers" (what we might call "following")?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attempt-2-formula-nim-is-reachable-from-tim-via-followers-but-not-including-tims-friends" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (Attempt 2) Formula: Nim is reachable from Tim via followers, but not including Tim's friends?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-dot-really" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is Dot, Really?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What is Dot, Really?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#friendtim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        friend.Tim
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#friendfriend" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        friend.friend
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-reachability-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Reachability Works
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How Reachability Works">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#transitive-closure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transitive Closure (^)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sets-induction-mutex.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modeling Mutual Exclusion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sets-beyond-assertions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Going Beyond Assertions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../solvers/bounds_booleans_how_forge_works.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How does Forge Work?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qna/relations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q&A: Relations
   
 
     
