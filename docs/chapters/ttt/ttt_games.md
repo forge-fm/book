@@ -426,6 +426,7 @@ run {
 ```
 
 Given this instance, the question is: **why didn't Forge accept it?** There must be some constraint, or constraints, that it violates. Let's find out which one. We'll paste them into the evaluator...
+
 * `some st1, st2: State | st1.top != st2.top`? This evaluates to `#t` (true). No problem there.
 * `  all s: State | all e: Element {
     s.top = e or reachable[e, s.top, next]
