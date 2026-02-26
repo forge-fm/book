@@ -144,3 +144,6 @@ nav:
 #   - Appendix:
 # #    - Glossary: appendix/glossary.md
 #     - Error Reference: appendix/errors.md
+
+  - Miscellaneous:
+    - "Crediting Error Finders": error_finders.md

@@ -215,8 +215,6 @@ Finally, we generate a new row in the result for every pair of matching rows, de
 
 **This is the set of _friend-of-friend_ relationships.** If we computed `friend.friend.friend`, we'd get the _friend-of-friend-of-friend_ relationships, and so on.
 
-**TODO: double-check this**
-
 ---
 
 **Exercise:** What about `Tim.Tim`?
@@ -249,7 +247,7 @@ Forge's `reachable` built-in does this, but it's just a facade over a new relati
 The _transitive closure_ `^R` of a binary relation `R` is the _smallest_ binary relation such that:
 
 * if `x->y` is in `R`, then `x->y` is in `^R`; and
-* if `x->z` is in `R` and `z->y` is in `^R` then `x->y` is in `R`.
+* if `x->z` is in `R` and `z->y` is in `^R` then `x->y` is in `^R`.
 
 That is, `^R` encodes exactly what we were trying to achieve above. The `reachable[to, from, f1, ...]` built-in is just syntactic sugar for:
 
