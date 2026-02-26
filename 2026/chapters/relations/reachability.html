@@ -1807,7 +1807,6 @@
 </tbody>
 </table>
 <p><strong>This is the set of <em>friend-of-friend</em> relationships.</strong> If we computed <code>friend.friend.friend</code>, we'd get the <em>friend-of-friend-of-friend</em> relationships, and so on.</p>
-<p><strong>TODO: double-check this</strong></p>
 <hr />
 <p><strong>Exercise:</strong> What about <code>Tim.Tim</code>?</p>
 <details class="note">
@@ -1830,7 +1829,7 @@
 <p>The <em>transitive closure</em> <code>^R</code> of a binary relation <code>R</code> is the <em>smallest</em> binary relation such that:</p>
 <ul>
 <li>if <code>x-&gt;y</code> is in <code>R</code>, then <code>x-&gt;y</code> is in <code>^R</code>; and</li>
-<li>if <code>x-&gt;z</code> is in <code>R</code> and <code>z-&gt;y</code> is in <code>^R</code> then <code>x-&gt;y</code> is in <code>R</code>.</li>
+<li>if <code>x-&gt;z</code> is in <code>R</code> and <code>z-&gt;y</code> is in <code>^R</code> then <code>x-&gt;y</code> is in <code>^R</code>.</li>
 </ul>
 <p>That is, <code>^R</code> encodes exactly what we were trying to achieve above. The <code>reachable[to, from, f1, ...]</code> built-in is just syntactic sugar for:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="w">    </span><span class="n">to</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">from</span><span class="o">.^(</span><span class="n">f1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="o">...)</span>
