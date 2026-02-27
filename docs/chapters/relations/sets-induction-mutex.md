@@ -24,7 +24,7 @@ The idea comes from how we as humans negotiate access to a shared resource like 
 
 Consider the pseudocode below, and imagine it running on two separate threads of execution. I've marked _program locations_ in square brackets---note how they correspond to the spaces in between lines of code executing.
 
-**TODO: incorporate Pamela's comments on this; return to validation**
+<!-- **TODO: incorporate Pamela's comments on this; return to validation** -->
 
 ```java
 while(true) { 
