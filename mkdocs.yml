@@ -124,9 +124,9 @@ nav:
     - How does Forge Work?: chapters/solvers/bounds_booleans_how_forge_works.md
     - "Q&A: Relations": chapters/qna/relations.md
 
-  # - Temporal Specification:
-  #   - Liveness and Lassos: chapters/temporal/liveness_and_lassos.md
-  #   - Temporal Forge: chapters/temporal/temporal_operators.md
+  - Temporal Specification:
+    - Liveness and Lassos: chapters/temporal/liveness_and_lassos.md
+    - Temporal Forge: chapters/temporal/temporal_operators.md
   #   - Linear Temporal Logic: chapters/temporal/temporal_operators_2.md
   #   - Obligations and the Past: chapters/temporal/obligations_past.md
   #   - "Mutual Exclusion, Revisited": chapters/temporal/fixing_lock_temporal.md
