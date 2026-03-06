@@ -95,7 +95,7 @@ We might first wonder, as we usually should, whether the test allocates enough s
 **Exercise:** What else is wrong?
 
 ??? note "Think, then click!"
-    The `badLasso` predicate wouldn't hold true if the system allowed `ProcessA` to enter the critical section _once_ (and only once). We want `ProcessA` to be able to get access (eventually) whenever it needs that access. That is, we need to say that the _loop_ of the lasso contains no states where `ProcessA` is in the critical section, no matter what happens before the cycle starts.
+    The `badLasso` predicate wouldn't hold true if the system allowed `ProcessA` to enter the critical section _once_ (and only once). We want `ProcessA` to be able to get access (eventually) whenever it needs that access. That is, we need to say that the _loop_ of the lasso contains no states where `ProcessA` is in the critical section, no matter what happens before the cycle starts. The predicate is too weak, and that underlines how subtle temporal properties can be.
 
 </br>
 

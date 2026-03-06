@@ -127,10 +127,10 @@ nav:
   - Temporal Specification:
     - Liveness and Lassos: chapters/temporal/liveness_and_lassos.md
     - Temporal Forge: chapters/temporal/temporal_operators.md
-  #   - Linear Temporal Logic: chapters/temporal/temporal_operators_2.md
-  #   - Obligations and the Past: chapters/temporal/obligations_past.md
-  #   - "Mutual Exclusion, Revisited": chapters/temporal/fixing_lock_temporal.md
-  #   - Testing Temporally: chapters/temporal/testing_temporal.md
+    - Linear Temporal Logic: chapters/temporal/temporal_operators_2.md
+    - Obligations and the Past: chapters/temporal/obligations_past.md
+    - "Mutual Exclusion, Revisited": chapters/temporal/fixing_lock_temporal.md
+    - Testing Temporally: chapters/temporal/testing_temporal.md
 
   # - Boolean Solver Algorithms:
   #   - "Boolean SAT (DPLL)": chapters/solvers/dpll.md
