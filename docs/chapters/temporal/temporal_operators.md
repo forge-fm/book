@@ -147,8 +147,9 @@ When we run, we get something that looks like this:
 ### New Buttons!
 
 In temporal mode, Sterling has 2 "next" buttons, rather than just one. 
-* The "Next Trace" button will hold all non-`var` relations constant, but ask for a new trace that varies the `var` relations. 
-* The "Next Config" button forces the non-`var` relations to differ. 
+    * The "Next Trace" button will hold all non-`var` relations constant, but ask for a new trace that varies the `var` relations. 
+    * The "Next Config" button forces the non-`var` relations to differ. 
+
 Having different buttons for these two ideas is useful, since otherwise Forge is free to change the value of any relation, even if it's not what you want changed. 
 
 ### Trace Minimap
