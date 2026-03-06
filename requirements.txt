@@ -1,0 +1,12 @@
+# MkDocs and Material theme
+mkdocs>=1.5.0
+mkdocs-material>=9.5.0
+
+# Versioning support
+mike>=2.0.0
+
+# Extensions for admonitions, math, code highlighting
+pymdown-extensions>=10.0
+
+# Forge syntax highlighting lexer
+-e ./docs/lexers

@@ -1,0 +1,146 @@
+site_name: "Logic for Systems"
+site_description: "Lightweight Formal Methods for Everybody"
+site_url: https://forge-fm.github.io/book/
+repo_url: https://github.com/forge-fm/book
+repo_name: forge-fm/book
+
+# Use file-based URLs (bst.html) instead of directory URLs (bst/)
+# This preserves relative path behavior from mdbook
+use_directory_urls: false
+
+theme:
+  name: material
+  palette:
+    # Light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep blue
+      accent: amber
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep blue
+      accent: amber
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.sections      # Show section headers in sidebar
+    - navigation.expand        # Expand all sections by default
+    - navigation.indexes       # Section index pages
+    - navigation.top           # Back to top button
+    - search.suggest           # Search suggestions
+    - search.highlight         # Highlight search terms
+    - content.code.copy        # Copy button on code blocks
+    - toc.follow               # TOC follows scroll position
+  icon:
+    repo: fontawesome/brands/github
+
+# Extensions for admonitions, math, code highlighting, etc.
+markdown_extensions:
+  # Admonitions (note, warning, tip, etc.)
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+
+  # Math support (KaTeX-compatible via MathJax)
+  - pymdownx.arithmatex:
+      generic: true
+
+  # Code blocks with highlighting
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+
+  # Tables
+  - tables
+
+  # Table of contents
+  - toc:
+      permalink: true
+
+  # Task lists, strikethrough, etc.
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.mark
+  - pymdownx.tilde
+
+  # Attribute lists (for image sizing)
+  - attr_list
+  - md_in_html
+
+# JavaScript for math rendering
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+
+# Extra CSS if needed
+extra_css:
+  - stylesheets/extra.css
+
+# Plugins
+plugins:
+  - search:
+      lang: en
+      # Minimal separator to preserve operators like + - * in search
+      separator: '[\s]+'
+
+# Version selector (mike) - year-based versioning
+extra:
+  version:
+    provider: mike
+    default: latest
+
+# Navigation structure (from SUMMARY.md)
+nav:
+  - Home: index.md
+
+  - "Preamble: Beyond Testing":
+    - What good is this book?: chapters/manifesto/job.md
+    - Logic for Systems: chapters/manifesto/manifesto.md
+    - From Tests to Properties: chapters/properties/pbt.md
+
+  - Modeling Static Scenarios:
+    - Tic-Tac-Toe: chapters/ttt/ttt.md
+    - Binary Search Trees: chapters/bst/bst.md
+    - Ripple-Carry Adder: chapters/adder/rca.md
+    - "Q&A: Static Modeling": chapters/qna/static.md
+
+  - Discrete Event Systems:
+    - "Transitions, Traces, and Verification": chapters/ttt/ttt_games.md
+    - Counterexamples to Induction: chapters/inductive/bsearch.md
+    - "BSTs: Recursive Descent": chapters/bst/descent.md
+    - Validating Models: chapters/validation/validating_events.md
+    - "Q&A: Event Systems": chapters/qna/events.md
+
+  - Modeling Relationships:
+    - "Relational Forge, Modeling Logic": chapters/relations/modeling-booleans-1.md
+    - Transitive Closure: chapters/relations/reachability.md
+    - Modeling Mutual Exclusion: chapters/relations/sets-induction-mutex.md
+    - Going Beyond Assertions: chapters/relations/sets-beyond-assertions.md
+    - How does Forge Work?: chapters/solvers/bounds_booleans_how_forge_works.md
+    - "Q&A: Relations": chapters/qna/relations.md
+
+  # - Temporal Specification:
+  #   - Liveness and Lassos: chapters/temporal/liveness_and_lassos.md
+  #   - Temporal Forge: chapters/temporal/temporal_operators.md
+  #   - Linear Temporal Logic: chapters/temporal/temporal_operators_2.md
+  #   - Obligations and the Past: chapters/temporal/obligations_past.md
+  #   - "Mutual Exclusion, Revisited": chapters/temporal/fixing_lock_temporal.md
+  #   - Testing Temporally: chapters/temporal/testing_temporal.md
+
+  # - Boolean Solver Algorithms:
+  #   - "Boolean SAT (DPLL)": chapters/solvers/dpll.md
+  #   - "Witnessing Unsat: Propositional Resolution": chapters/solvers/resolution.md
+
+  # - Beyond SAT:
+  #   - "Satisfiability Modulo Theories (SMT)": chapters/solvers/smt.md
+  #   - "Learning with Solvers: CEGIS": chapters/solvers/cegis.md
+
+# These are in the DOCS, which are separate.
+#   - Appendix:
+# #    - Glossary: appendix/glossary.md
+#     - Error Reference: appendix/errors.md

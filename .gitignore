@@ -2,3 +2,6 @@
 deployed-pages
 *~
 .hypothesis
+site/                                                                                             
+__pycache__/
+*.egg-info/ 
