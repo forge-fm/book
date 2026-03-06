@@ -1095,6 +1095,14 @@
       
         
       
+        
+      
+        
+      
+        
+      
+        
+      
     
     
     
@@ -1280,6 +1288,118 @@
     
   
     Temporal Forge
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="temporal_operators_2.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linear Temporal Logic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="obligations_past.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Obligations and the Past
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fixing_lock_temporal.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mutual Exclusion, Revisited
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="testing_temporal.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing Temporally
   
 
     
@@ -1558,7 +1678,7 @@
 <p><strong>Exercise:</strong> What else is wrong?</p>
 <details class="note">
 <summary>Think, then click!</summary>
-<p>The <code>badLasso</code> predicate wouldn't hold true if the system allowed <code>ProcessA</code> to enter the critical section <em>once</em> (and only once). We want <code>ProcessA</code> to be able to get access (eventually) whenever it needs that access. That is, we need to say that the <em>loop</em> of the lasso contains no states where <code>ProcessA</code> is in the critical section, no matter what happens before the cycle starts.</p>
+<p>The <code>badLasso</code> predicate wouldn't hold true if the system allowed <code>ProcessA</code> to enter the critical section <em>once</em> (and only once). We want <code>ProcessA</code> to be able to get access (eventually) whenever it needs that access. That is, we need to say that the <em>loop</em> of the lasso contains no states where <code>ProcessA</code> is in the critical section, no matter what happens before the cycle starts. The predicate is too weak, and that underlines how subtle temporal properties can be.</p>
 </details>
 <p></br></p>
 <p>That sounds like a lot of work: we'd need to identify the sub-sequence of states representing the cycle and properly apply the constraint to only those states. More importantly, it sounds really easy to get this wrong if we write it ourselves, at this low level of abstraction, because the specifics might change as the model evolves. </p>
