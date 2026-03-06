@@ -278,6 +278,7 @@ That may sound OK at a high level, but you shouldn't let me get away with _just_
     What does "produces a set" mean? And what happens if I use `+` (or other set operators) to combine a set and another kind of value? Am I even allowed to do that? If so, what values can I combine with sets? 
 
     This isn't a new question! It comes up in programming contexts, too. 
+
     * What happens when you add together a `float` and an `int` in Python? The result is automatically converted to a `float`. 
     * What happens if you do the same in (say) OCaml? You'll get a type error unless you explicitly say to convert the `int` to a `float`. 
 
