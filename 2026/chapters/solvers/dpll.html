@@ -13,6 +13,10 @@
         <link rel="canonical" href="https://forge-fm.github.io/book/2026/chapters/solvers/dpll.html">
       
       
+        <link rel="prev" href="../temporal/testing_temporal.html">
+      
+      
+        <link rel="next" href="resolution.html">
       
       
         
@@ -23,7 +27,7 @@
     
     
       
-        <title>Satisfiability Solving - Logic for Systems</title>
+        <title>Boolean SAT (DPLL) - Logic for Systems</title>
       
     
     
@@ -116,7 +120,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Satisfiability Solving
+              Boolean SAT (DPLL)
             
           </span>
         </div>
@@ -1323,6 +1327,370 @@
       
   
   
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Boolean Solver Algorithms
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Boolean Solver Algorithms
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Boolean SAT (DPLL)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="dpll.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Boolean SAT (DPLL)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#truth-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Truth Tables
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#can-we-do-better" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Can We Do Better?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lets-try-anyway" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Let's Try Anyway
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Let&#39;s Try Anyway">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-first-try" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A First Try
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maybe-luck-is-with-us" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maybe Luck Is With Us
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#imposing-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Imposing Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conjunctive-normal-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conjunctive Normal Form
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Conjunctive Normal Form">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-powerful-idea-unit-propagation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A Powerful Idea: Unit Propagation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adding-unit-propagation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adding Unit Propagation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#returning-more-than-a-boolean" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Returning more than a boolean
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#total-or-partial-instances" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Total or Partial Instances?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#heuristics-which-variables-which-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Heuristics: Which Variables? Which Values?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#converting-to-cnf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Converting to CNF
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Converting to CNF">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#naive-approach-distributivity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Naive Approach: Distributivity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-tseitin-transformation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Tseitin Transformation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-of-a-real-solver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example of a "real" solver
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="resolution.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Witnessing Unsat: Propositional Resolution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
   
   
     
@@ -1345,10 +1713,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
         
           
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
             
   
   
@@ -1366,8 +1734,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1797,15 +2165,18 @@
 </li>
 </ul>
 </details>
-<p></br></p>
+<!-- </br> -->
+
 <p><strong>Exercise</strong>: Here's a CNF formula. Solve it using unit propagation. </p>
 <p><code>x1 and (x1 or x2 or x3) and (!x3 or x2 or !x4) and (!x2 or !x1) and x3</code></p>
 <details class="note">
 <summary>Think, then click!</summary>
-<p>First, we notice 2 unit clauses: <code>x1</code> and <code>x3</code>. Then:  <br />
-* Propagate <code>x1</code>, which lets us remove a clause entirely, and simplify another: <code>x1 and (!x3 or x2 or !x4) and !x2 and x3</code>. But now we have a new unit clause, as a result of simplifying! 
-* Propagating <code>x3</code> gives us: <code>x1 and (x2 or !x4) and !x2 and x3</code>. 
-* Propagating <code>!x2</code> gives us <code>x1 and !x4 and !x2 and x3</code>. </p>
+<p>First, we notice 2 unit clauses: <code>x1</code> and <code>x3</code>. Then:    </p>
+<ul>
+<li>Propagate <code>x1</code>, which lets us remove a clause entirely, and simplify another: <code>x1 and (!x3 or x2 or !x4) and !x2 and x3</code>. But now we have a new unit clause, as a result of simplifying! </li>
+<li>Propagating <code>x3</code> gives us: <code>x1 and (x2 or !x4) and !x2 and x3</code>. </li>
+<li>Propagating <code>!x2</code> gives us <code>x1 and !x4 and !x2 and x3</code>. </li>
+</ul>
 <p>This is starting to look suspiciously like a boolean instance. <em>The unit clauses are assignments to boolean variables, and part of this process deduces new ones.</em></p>
 </details>
 <p></br></p>
@@ -1850,7 +2221,7 @@
 <p class="admonition-title">Think: Why did we stop substituting?</p>
 <p>In prior versions, we substituted <code>True</code> or <code>False</code> into the formula. Now, we're adding a unit clause to represent the guess instead. Why did we make this change? One reason is that it's easier to explicitly represent the flow of this algorithm via the addition of unit clauses, since half of it is about unit propagation. More reasons may appear as we continue.</p>
 </div>
-<p>This idea---a recursive, backtracking search paired with unit propagation---is the foundation of one of the most famous boolean solver algorithms: <strong>DPLL</strong> (named after the authors: Davis, Putnam, Logemann, and Loveland). DPLL still forms the core of how most modern SAT-solvers work (although there are more ideas and optimizations not yet incorporated, such as learning from failure and deciding which variable to branch on).</p>
+<p>This idea&mdash;a recursive, backtracking search paired with unit propagation&mdash;is the foundation of one of the most famous boolean solver algorithms: <strong>DPLL</strong> (named after the authors: Davis, Putnam, Logemann, and Loveland). DPLL still forms the core of how most modern SAT-solvers work (although there are more ideas and optimizations not yet incorporated, such as learning from failure and deciding which variable to branch on).</p>
 <div class="admonition note">
 <p class="admonition-title">Pure-literal elimination</p>
 <p>DPLL technically has one more feature: pure-literal elimination. I'm glossing over that here. It's technically interesting, but not central to where we are right now. The idea is: if a variable appears in only one "polarity" (that is, only positive or negative throughout all clauses) then if the clause set is satisfiable at all, it must be satisfiable by some instance that agrees with the polarity of that variable. So if we just want to find <em>a</em> satisfying instance, why not just set that variable's value right away?</p>
@@ -1864,7 +2235,8 @@
 <p></br></p>
 <p>But how should we go about returning an instance, rather than <code>True</code>? To find out, let's actually look at the tree of recursive calls, and see what information we have, or could recover. Let's solve:</p>
 <p><code>(!x1 or !x2) and (!x1 or !x3) and (x2 or x3)</code></p>
-<p><img alt="" src="dpll_diagram.jpg" /></p>
+<center><img width="50%" src="./dpll_diagram.jpg" style="background-color:white"/></center>
+
 <p>In that bottom left call, how do we conclude "conflict?" In the other bottom call, how do we conclude "success"?</p>
 <details class="note">
 <summary>Think, then click!</summary>
@@ -1913,7 +2285,10 @@
 <p>If our goal is to produce a <em>total</em> solver (and it usually is---Forge, for example, needs values for every possible tuple in every relation, even if they aren't constrained at all), we'll need to post-process the result and pick arbitrary values for variables that have no value in the assumption set. Traditionally, we'll make this easier on ourselves by passing a 3rd argument to the solver: the number of variables.</p>
 <h2 id="heuristics-which-variables-which-values">Heuristics: Which Variables? Which Values?<a class="headerlink" href="#heuristics-which-variables-which-values" title="Permanent link">&para;</a></h2>
 <p>There are a bunch of heuristics for picking variables to branch on, picking boolean values, etc. that are beyond the scope of this class. There is also a second brilliant idea that powers model solvers: <em>learning</em> from failure. In these solvers, reaching a conflict results in learning a "conflict clause" which is added to know the knowledge base, and the solver leverages this to backtrack further than one level of recursion if it's able.</p>
+<div class="admonition warning">
+<p class="admonition-title">For Brown Students</p>
 <p>If you're curious about how solvers are built, check out <a href="http://cs.brown.edu/courses/csci2951-o/">CSCI 2951-O</a>. </p>
+</div>
 <h2 id="converting-to-cnf">Converting to CNF<a class="headerlink" href="#converting-to-cnf" title="Permanent link">&para;</a></h2>
 <p>How should we convert an arbitrary boolean formula to CNF? </p>
 <h3 id="naive-approach-distributivity">Naive Approach: Distributivity<a class="headerlink" href="#naive-approach-distributivity" title="Permanent link">&para;</a></h3>
@@ -1937,7 +2312,8 @@
 <p>Of course, mere equisatisfiability doesn't immediately guarantee any structural connection between the two formulas. For this to work, we need to be able to map a solution to problem <code>B</code> back to the original problem <code>A</code>. So maybe there's a way we could productively <em>add variables</em> to the original, retaining the meaning of the original variables, and still somehow avoid the exponential blowup in CNF conversion?</p>
 </div>
 <p>Let's look at that formula again: <code>(x1 and x2) or (x3 and x4)</code>. View it as a boolean circuit. </p>
-<p><img alt="" src="dpll_tree.png" /></p>
+<center><img width="50%" src="./dpll_tree.png" style="background-color:white"/></center>
+
 <p>What if we assigned a new variable for every internal node of the tree? We'd have <code>a1</code> and <code>a2</code> for the <code>and</code> nodes, and <code>o1</code> for the <code>or</code> node. The formula is true if and only if the <code>or</code> node is, so we'd have a unit clause: <code>o1</code> in the new formula. </p>
 <p>But what makes <code>o1</code> true? Here's a definition in 3 constraints:</p>
 <ul>

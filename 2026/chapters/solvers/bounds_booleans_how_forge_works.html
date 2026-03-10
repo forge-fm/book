@@ -1458,6 +1458,8 @@
       
         
       
+        
+      
     
     
     
@@ -1483,7 +1485,7 @@
   <span class="md-ellipsis">
     
   
-    Miscellaneous
+    Boolean Solver Algorithms
   
 
     
@@ -1496,6 +1498,127 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Boolean Solver Algorithms
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="dpll.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Boolean SAT (DPLL)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="resolution.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Witnessing Unsat: Propositional Resolution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Miscellaneous
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1926,7 +2049,7 @@
 <p>If we turn off symmetry-breaking, we'll get the expected number of instances in the above run: <span class="arithmatex">\(27\)</span>.</p>
 <div class="admonition note">
 <p class="admonition-title">Symmetry Breaking != Filtering</p>
-<p>Forge doesn't just filter instances after they're generated; it <em>adds</em> extra constraints that try to rule out symmetric instances. These constraints are guaranteed to be satisfied by at least one element of every equivalence class of instances. There's a lot of research work on this area, e.g., <a href="https://kaiyuanw.github.io/papers/paper22-tacas20.pdf">this paper</a> from 2020.</p>
+<p>Forge doesn't just filter instances after they're generated; it <em>adds</em> extra constraints that try to rule out symmetric instances. These constraints are guaranteed to be satisfied by at least one element of every equivalence class of instances. There's a lot of research work on this area, e.g., <a href="https://kaiyuanw.github.io/papers/paper22-tacas20.pdf">this paper</a> from 2020. It's also important that these extra constraints are a <em>best effort</em> to eliminate duplicates, not a guarantee.</p>
 </div>
 
 

@@ -13,6 +13,10 @@
         <link rel="canonical" href="https://forge-fm.github.io/book/2026/chapters/solvers/resolution.html">
       
       
+        <link rel="prev" href="dpll.html">
+      
+      
+        <link rel="next" href="../../error_finders.html">
       
       
         
@@ -23,7 +27,7 @@
     
     
       
-        <title>Resolution Proofs - Logic for Systems</title>
+        <title>Witnessing Unsat: Propositional Resolution - Logic for Systems</title>
       
     
     
@@ -116,7 +120,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Resolution Proofs
+              Witnessing Unsat: Propositional Resolution
             
           </span>
         </div>
@@ -1323,6 +1327,326 @@
       
   
   
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Boolean Solver Algorithms
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Boolean Solver Algorithms
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="dpll.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Boolean SAT (DPLL)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Witnessing Unsat: Propositional Resolution
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="resolution.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Witnessing Unsat: Propositional Resolution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#context-proofs-vs-instances" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Context: Proofs vs. Instances
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-chain-rule-for-cnf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A Chain Rule For CNF
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="A Chain Rule For CNF">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#beyond-modus-ponens" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Beyond Modus Ponens
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#propositional-resolution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Propositional Resolution
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Propositional Resolution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#resolution-proofs_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resolution Proofs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#soundness-and-completeness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Soundness and Completeness
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getting-some-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting Some Practice
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learning-from-conflicts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learning From Conflicts
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#explaining-unsatisfiable-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explaining Unsatisfiable Results
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Explaining Unsatisfiable Results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#combining-sub-proofs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Combining sub-proofs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#takeaway" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Takeaway
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property-based-testing-the-unsatisfiable-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Property-Based Testing (the unsatisfiable case)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
   
   
     
@@ -1345,10 +1669,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
         
           
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
             
   
   
@@ -1366,8 +1690,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1672,7 +1996,7 @@ $\frac{A, A \implies B}{B}$
 <p>In any world where both <span class="arithmatex">\(A\)</span> and <span class="arithmatex">\(A \implies B\)</span> are true, <span class="arithmatex">\(B\)</span> must be true.</p>
 <div class="admonition warning">
 <p class="admonition-title">Remember that <code>implies</code> and <code>or</code> are related!</p>
-<p>In classical logic (our setting for most of 1710), <span class="arithmatex">\(A \implies B\)</span> is equivalent to <span class="arithmatex">\(\neg A \vee B\)</span>. Either <span class="arithmatex">\(A\)</span> is false (and thus no obligation is incurred), <em>or</em> <span class="arithmatex">\(B\)</span> is true (satisfying the obligation whether or not it exists).</p>
+<p>In classical logic (our setting), <span class="arithmatex">\(A \implies B\)</span> is equivalent to <span class="arithmatex">\(\neg A \vee B\)</span>. Either <span class="arithmatex">\(A\)</span> is false (and thus no obligation is incurred), <em>or</em> <span class="arithmatex">\(B\)</span> is true (satisfying the obligation whether or not it exists).</p>
 </div>
 <h3 id="beyond-modus-ponens">Beyond Modus Ponens<a class="headerlink" href="#beyond-modus-ponens" title="Permanent link">&para;</a></h3>
 <p>Suppose we don't have something as straightforward as <span class="arithmatex">\(\{r, r \implies \neg c\}\)</span> to work with. Maybe we only have:</p>
@@ -1828,7 +2152,8 @@ $\frac{(l^1_1 \vee l^1_2 \vee ... \vee l^1_n), (\neg l_1 \vee l^2_1 \vee ... \ve
 <li>each internal node is an application of the resolution rule to two other nodes.</li>
 </ul>
 <p>Here's an example resolution proof that shows the combination of a specific 4 clauses is contradictory:</p>
-<p><img alt="" src="resolution_1.png" /></p>
+<center><img width="50%" src="./resolution_1.png" style="background-color:white"/></center>
+
 <div class="admonition tip">
 <p class="admonition-title">Proof trees are data!</p>
 <p>This tree is not a paragraph of text, and it isn't even a picture written on a sheet of paper. It is a <em>data structure</em>, a computational object, which we can process and manipulate in a program.</p>
@@ -1850,10 +2175,12 @@ $\frac{(l^1_1 \vee l^1_2 \vee ... \vee l^1_n), (\neg l_1 \vee l^2_1 \vee ... \ve
 <details class="note">
 <summary>Prove, then click!</summary>
 <p>Let's just start applying the rule and generating everything we can...    </p>
-<p><img alt="" src="resolution_2.png" /></p>
-<p>Wow, this is a lot of work! Notice two things:
-* we're going to end up with the same kind of 4-clause contradiction pattern as in the prior example; 
-* it would be nice to have a way to guide generation of the proof, rather than just generating <em>every clause we can</em>. An early form of DPLL did just that, but the full algorithm added the branching and backtracking. So, maybe there's a way to use the structure of DPLL to guide proof generation...</p>
+<p><center><img width="50%" src="./resolution_2.png" style="background-color:white"/></center></p>
+<p>Wow, this is a lot of work! Notice two things:</p>
+<ul>
+<li>we're going to end up with the same kind of 4-clause contradiction pattern as in the prior example; </li>
+<li>it would be nice to have a way to guide generation of the proof, rather than just generating <em>every clause we can</em>. An early form of DPLL did just that, but the full algorithm added the branching and backtracking. So, maybe there's a way to use the structure of DPLL to guide proof generation...</li>
+</ul>
 </details>
 <p><br/></p>
 <p>Notice that one of the resolution steps you used was, effectively, a unit propagation step. This should help motivate the idea that unit propagation (into a clause were the unit is negated) is a special case of resolution:</p>
@@ -1931,12 +2258,14 @@ which is always true, and thus usless in our proof, but at least not unsound. So
 </ul>
 <p>The <code>(-2, 4)</code> was an input clause. The <code>(2)</code> was an assumption.</p>
 <p>Now we're done; we have a proof:</p>
-<p><img alt="" src="resolution_3.png" /></p>
+<center><img width="50%" src="./resolution_3.png" style="background-color:white"/></center>
+
 <p>Using only those two input clauses, we know that assuming <code>(2)</code> won't be productive, and (because we have a proof) we can explain why. And, crucially, because the proof is a data structure, we can manipulate it if we need to.</p>
 <h2 id="explaining-unsatisfiable-results">Explaining Unsatisfiable Results<a class="headerlink" href="#explaining-unsatisfiable-results" title="Permanent link">&para;</a></h2>
 <p>This is promising: we have a <em>piece</em> of the overall proof of unsatisfiability that we want. But we can't use it alone as a proof that the <em>input</em> is unsatisfiable: the proof currently has an assumption <code>(2)</code> in it. We'd like to convert this proof into one that derives <code>(-2)</code>---the negation of the assumption responsible---from <em>just</em> the input. </p>
 <p>Let's rewrite the proof we generated before. We'll <em>remove</em> assumptions from the tree and recompute the result of every resolution step, resulting in a proof of something weaker that isn't contingent on any assumptions. To do this, we'll recursively walk the tree, treating inputs as the base case and resolution steps as the recursive case. In the end, we should get something like this:</p>
-<p><img alt="" src="resolution_4.png" /></p>
+<center><img width="50%" src="./resolution_4.png" style="background-color:white"/></center>
+
 <p>Notice that we need to re-run resolution <em>after processing each node's children</em> to produce the new result for that node. This suggests some of the structure we'll need:</p>
 <ul>
 <li>If one child is an assiumption, then "promote" the other child and use that value, without re-running resolution. (<strong>Think: Why is this safe to this? It has to do with the way DPLL makes guesses.</strong>) </li>
@@ -1955,10 +2284,12 @@ which is always true, and thus usless in our proof, but at least not unsound. So
 <p>What properties would you want to hold? </p>
 <details class="note">
 <summary>Think, then click!</summary>
-<p>For the tree to prove that the input is unsatisfiable, you'd need to check:
-* the internal nodes of the tree are valid resolution steps;
-* the leaves of the tree are taken only from the input clauses; and
-* the root of the tree is the empty clause.</p>
+<p>For the tree to prove that the input is unsatisfiable, you'd need to check:</p>
+<ul>
+<li>the internal nodes of the tree are valid resolution steps;</li>
+<li>the leaves of the tree are taken only from the input clauses; and</li>
+<li>the root of the tree is the empty clause.</li>
+</ul>
 </details>
 <!-- ## Pre-Registration!
 
