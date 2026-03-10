@@ -48,7 +48,7 @@ I like to think of rules of inference as little enzymes that operate on formula 
 In any world where both $A$ and $A \implies B$ are true, $B$ must be true.
 
 !!! warning "Remember that `implies` and `or` are related!"
-    In classical logic (our setting for most of 1710), $A \implies B$ is equivalent to $\neg A \vee B$. Either $A$ is false (and thus no obligation is incurred), _or_ $B$ is true (satisfying the obligation whether or not it exists).
+    In classical logic (our setting), $A \implies B$ is equivalent to $\neg A \vee B$. Either $A$ is false (and thus no obligation is incurred), _or_ $B$ is true (satisfying the obligation whether or not it exists).
 
 
 ### Beyond Modus Ponens
@@ -151,7 +151,7 @@ What is a proof? For our purposes today, it's a tree where:
 
 Here's an example resolution proof that shows the combination of a specific 4 clauses is contradictory:
 
-![](./resolution_1.png)
+<center><img width="50%" src="./resolution_1.png" style="background-color:white"/></center>
 
 !!! tip "Proof trees are data!"
     This tree is not a paragraph of text, and it isn't even a picture written on a sheet of paper. It is a _data structure_, a computational object, which we can process and manipulate in a program.
@@ -183,9 +183,10 @@ Can you prove that there's a contradiction here?
 ??? note "Prove, then click!"
     Let's just start applying the rule and generating everything we can...    
 
-    ![](./resolution_2.png)
+    <center><img width="50%" src="./resolution_2.png" style="background-color:white"/></center>
 
     Wow, this is a lot of work! Notice two things:
+
     * we're going to end up with the same kind of 4-clause contradiction pattern as in the prior example; 
     * it would be nice to have a way to guide generation of the proof, rather than just generating _every clause we can_. An early form of DPLL did just that, but the full algorithm added the branching and backtracking. So, maybe there's a way to use the structure of DPLL to guide proof generation...
 
@@ -287,7 +288,7 @@ The `(-2, 4)` was an input clause. The `(2)` was an assumption.
 
 Now we're done; we have a proof:
 
-![](./resolution_3.png)
+<center><img width="50%" src="./resolution_3.png" style="background-color:white"/></center>
 
 Using only those two input clauses, we know that assuming `(2)` won't be productive, and (because we have a proof) we can explain why. And, crucially, because the proof is a data structure, we can manipulate it if we need to.
 
@@ -297,7 +298,8 @@ This is promising: we have a _piece_ of the overall proof of unsatisfiability th
 
 Let's rewrite the proof we generated before. We'll *remove* assumptions from the tree and recompute the result of every resolution step, resulting in a proof of something weaker that isn't contingent on any assumptions. To do this, we'll recursively walk the tree, treating inputs as the base case and resolution steps as the recursive case. In the end, we should get something like this:
 
-![](./resolution_4.png)
+<center><img width="50%" src="./resolution_4.png" style="background-color:white"/></center>
+
 
 Notice that we need to re-run resolution _after processing each node's children_ to produce the new result for that node. This suggests some of the structure we'll need:
 
@@ -325,6 +327,7 @@ What properties would you want to hold?
 
 ??? note "Think, then click!"
     For the tree to prove that the input is unsatisfiable, you'd need to check:
+    
     * the internal nodes of the tree are valid resolution steps;
     * the leaves of the tree are taken only from the input clauses; and
     * the root of the tree is the empty clause.

@@ -125,8 +125,6 @@ Now that you know how to read the input format, you might be able to see how the
 ??? note "Think, then click!"
     There's one variable for every square on the $4 \times 4$ squares. `1 2 3 4` says that there must be a queen somewhere on the first row. `-1 -2` says that if there is a queen at $1,1$ there cannot also be a queen at $1,2$. And so on.
 
-
-
 ## "The world is that which is the case"
 
 Consider this Forge model and corresponding `run` command:
@@ -346,7 +344,7 @@ You can adjust the budget for symmetry breaking via an option:
 If we turn off symmetry-breaking, we'll get the expected number of instances in the above run: $27$.
 
 !!! note "Symmetry Breaking != Filtering"
-    Forge doesn't just filter instances after they're generated; it _adds_ extra constraints that try to rule out symmetric instances. These constraints are guaranteed to be satisfied by at least one element of every equivalence class of instances. There's a lot of research work on this area, e.g., [this paper](https://kaiyuanw.github.io/papers/paper22-tacas20.pdf) from 2020.
+    Forge doesn't just filter instances after they're generated; it _adds_ extra constraints that try to rule out symmetric instances. These constraints are guaranteed to be satisfied by at least one element of every equivalence class of instances. There's a lot of research work on this area, e.g., [this paper](https://kaiyuanw.github.io/papers/paper22-tacas20.pdf) from 2020. It's also important that these extra constraints are a _best effort_ to eliminate duplicates, not a guarantee.
 
 
 

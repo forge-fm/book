@@ -151,7 +151,7 @@ In the third case, we probably can't do any propagation, because there's no conn
     * Does the clause contain the opposite literal as in the unit clause?
         * If so, then the clause `C` cannot possibly be made true by that opposite literal. Delete that literal from `C`.
 
-</br>
+<!-- </br> -->
 
 **Exercise**: Here's a CNF formula. Solve it using unit propagation. 
 
@@ -159,6 +159,7 @@ In the third case, we probably can't do any propagation, because there's no conn
 
 ??? note "Think, then click!"
     First, we notice 2 unit clauses: `x1` and `x3`. Then:    
+    
     * Propagate `x1`, which lets us remove a clause entirely, and simplify another: `x1 and (!x3 or x2 or !x4) and !x2 and x3`. But now we have a new unit clause, as a result of simplifying! 
     * Propagating `x3` gives us: `x1 and (x2 or !x4) and !x2 and x3`. 
     * Propagating `!x2` gives us `x1 and !x4 and !x2 and x3`. 
@@ -216,7 +217,7 @@ Again, the amount of information we get from unit propagation is subject to luck
     In prior versions, we substituted `True` or `False` into the formula. Now, we're adding a unit clause to represent the guess instead. Why did we make this change? One reason is that it's easier to explicitly represent the flow of this algorithm via the addition of unit clauses, since half of it is about unit propagation. More reasons may appear as we continue.
 
 
-This idea---a recursive, backtracking search paired with unit propagation---is the foundation of one of the most famous boolean solver algorithms: **DPLL** (named after the authors: Davis, Putnam, Logemann, and Loveland). DPLL still forms the core of how most modern SAT-solvers work (although there are more ideas and optimizations not yet incorporated, such as learning from failure and deciding which variable to branch on).
+This idea&mdash;a recursive, backtracking search paired with unit propagation&mdash;is the foundation of one of the most famous boolean solver algorithms: **DPLL** (named after the authors: Davis, Putnam, Logemann, and Loveland). DPLL still forms the core of how most modern SAT-solvers work (although there are more ideas and optimizations not yet incorporated, such as learning from failure and deciding which variable to branch on).
 
 !!! note "Pure-literal elimination"
     DPLL technically has one more feature: pure-literal elimination. I'm glossing over that here. It's technically interesting, but not central to where we are right now. The idea is: if a variable appears in only one "polarity" (that is, only positive or negative throughout all clauses) then if the clause set is satisfiable at all, it must be satisfiable by some instance that agrees with the polarity of that variable. So if we just want to find _a_ satisfying instance, why not just set that variable's value right away?
@@ -235,7 +236,7 @@ But how should we go about returning an instance, rather than `True`? To find ou
 
 `(!x1 or !x2) and (!x1 or !x3) and (x2 or x3)`
 
-![](./dpll_diagram.jpg)
+<center><img width="50%" src="./dpll_diagram.jpg" style="background-color:white"/></center>
 
 In that bottom left call, how do we conclude "conflict?" In the other bottom call, how do we conclude "success"?
 
@@ -244,7 +245,6 @@ In that bottom left call, how do we conclude "conflict?" In the other bottom cal
     Because there's one more unit-propagation step in each case that I haven't drawn! Unit propagating `x3` when `!x3` is present will produce the empty clause: `False`. And similarly in the other case: unit propagating `x2` will eliminate the entire `x2 or x3` clause.
 
 </br>
-
 
 Notice that every time we make a recursive call, there's an implicit set of _assumptions_ involved. That is, there's always a _partial instance_ of previously-selected guesses in effect at any point. We can make this explicit by adding a parameter to the function, and returning the guesses that produce a success:
 
@@ -303,7 +303,8 @@ If our goal is to produce a _total_ solver (and it usually is---Forge, for examp
 
 There are a bunch of heuristics for picking variables to branch on, picking boolean values, etc. that are beyond the scope of this class. There is also a second brilliant idea that powers model solvers: _learning_ from failure. In these solvers, reaching a conflict results in learning a "conflict clause" which is added to know the knowledge base, and the solver leverages this to backtrack further than one level of recursion if it's able.
 
-If you're curious about how solvers are built, check out [CSCI 2951-O](http://cs.brown.edu/courses/csci2951-o/). 
+!!! warning "For Brown Students"
+    If you're curious about how solvers are built, check out [CSCI 2951-O](http://cs.brown.edu/courses/csci2951-o/). 
 
 ## Converting to CNF
 
@@ -343,7 +344,7 @@ Two formulas A and B are said to be _equisatisfiable_ when A is satisfiable if a
 
 Let's look at that formula again: `(x1 and x2) or (x3 and x4)`. View it as a boolean circuit. 
 
-![](./dpll_tree.png)
+<center><img width="50%" src="./dpll_tree.png" style="background-color:white"/></center>
 
 What if we assigned a new variable for every internal node of the tree? We'd have `a1` and `a2` for the `and` nodes, and `o1` for the `or` node. The formula is true if and only if the `or` node is, so we'd have a unit clause: `o1` in the new formula. 
 

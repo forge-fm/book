@@ -132,9 +132,9 @@ nav:
     - "Mutual Exclusion, Revisited": chapters/temporal/fixing_lock_temporal.md
     - Testing Temporally: chapters/temporal/testing_temporal.md
 
-  # - Boolean Solver Algorithms:
-  #   - "Boolean SAT (DPLL)": chapters/solvers/dpll.md
-  #   - "Witnessing Unsat: Propositional Resolution": chapters/solvers/resolution.md
+  - Boolean Solver Algorithms:
+    - "Boolean SAT (DPLL)": chapters/solvers/dpll.md
+    - "Witnessing Unsat: Propositional Resolution": chapters/solvers/resolution.md
 
   # - Beyond SAT:
   #   - "Satisfiability Modulo Theories (SMT)": chapters/solvers/smt.md
