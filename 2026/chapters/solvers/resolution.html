@@ -2000,13 +2000,7 @@
 </ul>
 <p>That is, we have a pair of implications: <span class="arithmatex">\(\{u \implies r, r \implies \neg c\}\)</span>. We cannot conclude that it's raining from this knowledge base, but we can still conclude something: that <em>if</em> Tim is carrying an umbrella, <em>then</em> we can't hold class outside. We've learned something new, but it remains contingent: <span class="arithmatex">\(u \implies \neg c\)</span>.</p>
 <p>This generalization of modus ponens lets us chain together implications to generate new ones:</p>
-<center>
-<p>
-
-$\frac{A \implies B, B \implies C}{A \implies C}$
-</p>                
-</center>
-
+<div class="arithmatex">\[\frac{A \implies B, B \implies C}{A \implies C}\]</div>
 <p>Like before, we can check it with a truth table. This time, there are 8 rows because there are 3 inputs to the rule:</p>
 <table>
 <thead>
@@ -2124,21 +2118,10 @@ $\frac{A \implies B, B \implies C}{A \implies C}$
 <li><span class="arithmatex">\((l_2 \vee l_3)\)</span>.</li>
 </ul>
 <p>Notice what just happened. The two opposite literals have cancelled out, leaving us with a new clause containing <em>everything else</em> that was in the two original clauses.</p>
-<center>
-<p>
-
-$\frac{(A \vee B), (\neg B \vee C)}{(A \vee C)}$
-</p>                
-</center>
-
+<div class="arithmatex">\[\frac{(A \vee B), (\neg B \vee C)}{(A \vee C)}\]</div>
 <p>This is called the <em>binary propositional resolution rule</em>. It generalizes to something like this (where I've labeled literals in the two clauses with a superscript to tell them apart):</p>
-<center>
-<p>
-
-$\frac{(l^1_1 \vee l^1_2 \vee ... \vee l^1_n), (\neg l_1 \vee l^2_1 \vee ... \vee l^2_m)}{(l^1_2 \vee l^1_n \vee l^2_1 \vee ... \vee l^2_m)}$
-</p>                
-</center>
-
+<div class="arithmatex">\[\frac{(l^1_1 \vee l^1_2 \vee ... \vee l^1_n), (\neg l^1_1 \vee l^2_1 \vee ... \vee l^2_m)}{(l^1_2 \vee l^1_n \vee l^2_1 \vee ... \vee l^2_m)}\]</div>
+<p>(Note that <span class="arithmatex">\(l^1_1\)</span> appears in the first clause, and its negation <span class="arithmatex">\(\neg l^1_1\)</span> appears in the second clause. This is the only place I've departed from the superscript labeling. This very important clause is the reason that our "chain rule" works.)</p>
 <h3 id="resolution-proofs_1">Resolution Proofs<a class="headerlink" href="#resolution-proofs_1" title="Permanent link">&para;</a></h3>
 <p>What is a proof? For our purposes today, it's a tree where:</p>
 <ul>
@@ -2178,13 +2161,7 @@ $\frac{(l^1_1 \vee l^1_2 \vee ... \vee l^1_n), (\neg l_1 \vee l^2_1 \vee ... \ve
 </details>
 <p><br/></p>
 <p>Notice that one of the resolution steps you used was, effectively, a unit propagation step. This should help motivate the idea that unit propagation (into a clause were the unit is negated) is a special case of resolution:</p>
-<center>
-<p>
-
-$\frac{(A), (\neg A \vee ...)}{(...)}$
-</p>                
-</center>
-
+<div class="arithmatex">\[\frac{(A), (\neg A \vee ...)}{(...)}\]</div>
 <p>You might wonder: what about the other aspect of unit propagation---the removal of clauses entirely when they're subsumed by others? </p>
 <details class="note">
 <summary>Think, then click!</summary>
