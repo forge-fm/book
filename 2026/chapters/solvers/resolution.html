@@ -1949,13 +1949,7 @@
 <p>Because the vast majority of the materials you might find on this topic are written using mathematical notation, I'm using <span class="arithmatex">\(\implies\)</span> for <code>implies</code> and <span class="arithmatex">\(\neg\)</span> for <code>not</code>. If you go reading elsewhere, you might also see <span class="arithmatex">\(\wedge\)</span> for <code>and</code> and <span class="arithmatex">\(\vee\)</span> for <code>or</code>.</p>
 </div>
 <p>Given this knowledge base, can we infer anything new? Yes! We know that if it's raining, we can't hold class outside. But we know it's raining, and therefore we can conclude that class needs to be indoors. This intuition is embodied formally as a logical <em>rule of inference</em> called <em>modus ponens</em>:</p>
-<center>
-<p>
-
-$\frac{A, A \implies B}{B}$
-</p>                
-</center>
-
+<div class="arithmatex">\[\frac{A, \quad A \implies B}{B}\]</div>
 <p>The horizontal bar in this notation divides the inputs to the rule from the outputs. For <em>any</em> <span class="arithmatex">\(A\)</span> and <span class="arithmatex">\(B\)</span>, if we know <span class="arithmatex">\(A\)</span>, and we know <span class="arithmatex">\(A \implies B\)</span>, we can use modus ponens to deduce <span class="arithmatex">\(B\)</span>.</p>
 <div class="admonition tip">
 <p class="admonition-title">Does this remind you of something?</p>
