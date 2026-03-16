@@ -23,12 +23,7 @@ I might write this more mathematically as the set of known facts: $\{r, r \impli
 
 Given this knowledge base, can we infer anything new? Yes! We know that if it's raining, we can't hold class outside. But we know it's raining, and therefore we can conclude that class needs to be indoors. This intuition is embodied formally as a logical _rule of inference_ called _modus ponens_:
 
-<center>
-<p>
-
-$\frac{A, A \implies B}{B}$
-</p>                
-</center>
+$$\frac{A, \quad A \implies B}{B}$$
 
 The horizontal bar in this notation divides the inputs to the rule from the outputs. For _any_ $A$ and $B$, if we know $A$, and we know $A \implies B$, we can use modus ponens to deduce $B$.
 
