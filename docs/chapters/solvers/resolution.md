@@ -57,12 +57,7 @@ That is, we have a pair of implications: $\{u \implies r, r \implies \neg c\}$. 
 
 This generalization of modus ponens lets us chain together implications to generate new ones:
 
-<center>
-<p>
-
-$\frac{A \implies B, B \implies C}{A \implies C}$
-</p>                
-</center>
+$$\frac{A \implies B, B \implies C}{A \implies C}$$
 
 Like before, we can check it with a truth table. This time, there are 8 rows because there are 3 inputs to the rule:
 
@@ -121,21 +116,13 @@ We could then rewrite the implication back into a clause:
 
 Notice what just happened. The two opposite literals have cancelled out, leaving us with a new clause containing _everything else_ that was in the two original clauses.
 
-<center>
-<p>
-
-$\frac{(A \vee B), (\neg B \vee C)}{(A \vee C)}$
-</p>                
-</center>
+$$\frac{(A \vee B), (\neg B \vee C)}{(A \vee C)}$$
 
 This is called the _binary propositional resolution rule_. It generalizes to something like this (where I've labeled literals in the two clauses with a superscript to tell them apart):
 
-<center>
-<p>
+$$\frac{(l^1_1 \vee l^1_2 \vee ... \vee l^1_n), (\neg l^1_1 \vee l^2_1 \vee ... \vee l^2_m)}{(l^1_2 \vee l^1_n \vee l^2_1 \vee ... \vee l^2_m)}$$
 
-$\frac{(l^1_1 \vee l^1_2 \vee ... \vee l^1_n), (\neg l_1 \vee l^2_1 \vee ... \vee l^2_m)}{(l^1_2 \vee l^1_n \vee l^2_1 \vee ... \vee l^2_m)}$
-</p>                
-</center>
+(Note that $l^1_1$ appears in the first clause, and its negation $\neg l^1_1$ appears in the second clause. This is the only place I've departed from the superscript labeling. This very important clause is the reason that our "chain rule" works.)
 
 ### Resolution Proofs
 
@@ -189,12 +176,7 @@ Can you prove that there's a contradiction here?
 
 Notice that one of the resolution steps you used was, effectively, a unit propagation step. This should help motivate the idea that unit propagation (into a clause were the unit is negated) is a special case of resolution:
 
-<center>
-<p>
-
-$\frac{(A), (\neg A \vee ...)}{(...)}$
-</p>                
-</center>
+$$\frac{(A), (\neg A \vee ...)}{(...)}$$
 
 You might wonder: what about the other aspect of unit propagation---the removal of clauses entirely when they're subsumed by others? 
 
