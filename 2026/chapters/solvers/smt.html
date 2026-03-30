@@ -13,6 +13,10 @@
         <link rel="canonical" href="https://forge-fm.github.io/book/2026/chapters/solvers/smt.html">
       
       
+        <link rel="prev" href="resolution.html">
+      
+      
+        <link rel="next" href="../../error_finders.html">
       
       
         
@@ -1446,6 +1450,362 @@
       
   
   
+    
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Beyond SAT
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Beyond SAT
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Satisfiability Modulo Theories (SMT)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="smt.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Satisfiability Modulo Theories (SMT)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#a-key-difference-universal-quantifiers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A Key Difference: Universal Quantifiers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-z3-solver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Z3 Solver
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Z3 Solver">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#boolean" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Boolean
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uninterpreted-functions-and-integer-inequalities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Uninterpreted Functions And Integer Inequalities
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#numbers-integers-vs-reals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Numbers: Integers vs. Reals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#factoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Factoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unsatisfiable-cores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unsatisfiable Cores
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#another-demo-n-queens" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Another Demo: N-Queens
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-going-on-in-the-solver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What's Going On In The Solver?
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What&#39;s Going On In The Solver?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#an-example-theory-solver-linear-inequalities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        An Example Theory-Solver: Linear Inequalities
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#another-example-theory-solver-uninterpreted-functions-with-equality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Another Example Theory-Solver: Uninterpreted Functions With Equality
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#an-unproductive-assignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        An Unproductive Assignment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-productive-assignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A Productive Assignment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#return-to-decidability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Return to Decidability
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#undecidability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Undecidability
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Undecidability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#another-story-outline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Another Story (OUTLINE)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-does-this-have-to-do-with-smt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Does This Have To Do With SMT?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
   
   
     
@@ -1468,10 +1828,10 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
         
           
-          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
             
   
   
@@ -1489,8 +1849,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_8">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1798,12 +2158,13 @@
 
 
 <h1 id="satisfiability-modulo-theories-smt">Satisfiability Modulo Theories (SMT)<a class="headerlink" href="#satisfiability-modulo-theories-smt" title="Permanent link">&para;</a></h1>
-<p><strong>Note well: the 2nd part of this chapter is very rough!</strong></p>
+<p><strong>Note well: the 2nd part of this chapter is very rough, and will be refined during the week of March 30, 2026. In particular, the material about decidability needs to be improved.</strong></p>
 <p><a href="z3demo.py">Livecode link</a></p>
-<p>Boolean solvers are powerful, but not very expressive. If you want to use them to solve a problem involving (e.g.)  arithmetic, you need to encode that idea with booleans. Forge does this with a technique called "bit-blasting": one boolean variable per bit in a fixed bitwidth, along with formulas that build boolean adders, multipliers, etc. as needed. This works well for small examples, but can quickly run into performance issues&mdash;and if you need actual mathematical integers (to say nothing of real numbers!) you're out of luck.</p>
+<p>Boolean solvers are powerful, but not very expressive <em>on their own</em>. If you want to use them to solve a problem involving (e.g.)  arithmetic, you need to encode that idea with booleans. Forge does this with a technique called "bit-blasting": one boolean variable per bit in a fixed bitwidth, along with formulas that build boolean adders, multipliers, etc. as needed. This works well for small examples, but can quickly run into performance issues&mdash;and if you need actual mathematical integers (to say nothing of real numbers!) you're out of luck.</p>
 <p>An SMT solver is a SAT solver that can handle various domain-specific concepts beyond boolean logic. Hence "modulo theories", where "modulo" means "with respect to". SMT solvers solve satisfiability, but with the addition of (say) the theory of linear integer arithmetic or the theory of strings.</p>
 <p>From a certain point of view, Forge is an "SMT" solver, because it includes concepts like relations and bit-vector integers. But this isn't usually how people understand the term these days. </p>
-<p>SMT solvers can be either "eager" or "lazy". An eager solver translates all the domain-specific constraints to boolean logic and then uses a boolean solver engine. That is Forge's approach. In contrast, a lazy solver actually implements domain-specific algorithms and integrates those with a purely-boolean solver core. Most modern SMT solvers tend to be lazy, and so they can benefit from clever domain algorithms. </p>
+<p>SMT solvers can be either "eager" or "lazy". An eager solver translates all the domain-specific constraints to boolean logic and then uses a boolean solver engine. That is Forge's approach. In contrast, a lazy solver actually implements domain-specific algorithms and integrates those with a purely-boolean solver core. </p>
+<p>Most modern SMT solvers tend to be lazy, and so they can benefit from clever domain algorithms. (Why encode prime factorization in booleans, if you have a solver that can do algebra?)</p>
 <div class="admonition note">
 <p class="admonition-title">Theories</p>
 <p>In the logic community, <em>theory</em> is just another word for set of constraints. So when we say "the theory of linear integer arithmetic" we mean the axioms that define the domain of linear integer arithmetic.</p>
@@ -1811,7 +2172,7 @@
 <p>Here are some common domains that SMT solvers tend to support:</p>
 <ul>
 <li>uninterpreted functions with equality;</li>
-<li>integer arithmetic (linear nearly always, non-linear sometimes);</li>
+<li>integer arithmetic (linear nearly always, non-linear often);</li>
 <li>real arithmetic;</li>
 <li>lists and algebraic datatypes;</li>
 <li>strings;</li>
@@ -1819,7 +2180,7 @@
 <li>arrays; and</li>
 <li>datatypes.</li>
 </ul>
-<p>Of course, there are many others implemented in various solvers. The solver we'll use this week supports many of these, but not all.</p>
+<p>Of course, there are many others implemented in various solvers. The solver we'll use, Z3, supports many of the above. Z3 also supports optimization. While Forge does too, we haven't optimized for it. So if you want to find optimal solutions to a problem, an SMT solver is worth trying!</p>
 <h3 id="a-key-difference-universal-quantifiers">A Key Difference: Universal Quantifiers<a class="headerlink" href="#a-key-difference-universal-quantifiers" title="Permanent link">&para;</a></h3>
 <p>Most modern SMT solvers don't have "bounds" in the same way Forge does. You can declare a datatype that's bounded in size, but the engine doesn't process that in the same way that Forge does. And the addition of domains like mathematical integers or lists means that the set of possible objects is infinite. This complicates universal (<code>all</code>) quantification.</p>
 <p>What does it mean to say "For all <span class="arithmatex">\(x\)</span> of type <span class="arithmatex">\(A\)</span>, <span class="arithmatex">\(P(x)\)</span> is true?" In Forge, <span class="arithmatex">\(A\)</span> always has an upper bound, and so the quantifier can always be converted to a big, but finite, "<code>and</code>" constraint. But suppose the type is actual <em>mathematical integers</em>? There are infinitely many integers, which means the solver can't convert the quantifier to a (finite) boolean constraint. This is such an important factor in designing SMT solvers that SMT literature often refers to universal quantification as just "quantification". </p>
@@ -1827,7 +2188,11 @@
 <p class="admonition-title">Universal quantification</p>
 <p><strong>For now</strong>, try to avoid universal quantification in SMT if you can. You can't always avoid it, but make sure you really need it to express your goals.</p>
 </div>
-<p>Universal quantifiction isn't the only issue. Even without it, the domain-specific algorithms the solver uses might not be guaranteed to terminate. (This is a consequence of the fact that some of the problems SMT solvers can express are <em>undecidable</em>, which means it is impossible to produce an always-correct, always-terminating algorithm to solve the general problem.) Because of this, the solver is always working under a timeout. If the solver times out, it will give a new result type, other than "sat" and "unsat": "<em>unknown</em>".</p>
+<p>Universal quantification isn't the only issue. Even without it, the domain-specific algorithms the solver uses might not be guaranteed to terminate. Because of this, the solver is always working under a timeout. If the solver times out, it will give a new result type, other than "sat" and "unsat": "<em>unknown</em>".</p>
+<div class="admonition info">
+<p class="admonition-title">Undecidability</p>
+<p>The "unknown" result is a consequence of the fact that some of the problems SMT solvers can express are <em>undecidable</em>: it is impossible to produce an always-correct, always-terminating algorithm to solve the general case. One example of this is: given a non-linear polynomial, <a href="https://en.wikipedia.org/wiki/Hilbert%27s_tenth_problem">does it have an all-integer solution</a>?</p>
+</div>
 <h2 id="the-z3-solver">The Z3 Solver<a class="headerlink" href="#the-z3-solver" title="Permanent link">&para;</a></h2>
 <p>Let's first step through some of the new things we can express with an SMT solver.</p>
 <h3 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h3>
@@ -1835,7 +2200,7 @@
 <p><code>pip3 install z3-solver</code></p>
 <p>To update to the latest version of the solver, you can run:</p>
 <p><code>pip3 install z3-solver --upgrade</code></p>
-<p>Another great solver is <a href="https://cvc5.github.io">CVC5</a>. Although we won't use it in class, it supports some things that Z3 doesn't (and vice versa). For instance: relations!</p>
+<p>Another great solver is <a href="https://cvc5.github.io">cvc5</a>. Although we won't use it in class, it supports some things that Z3 doesn't (and vice versa). (For instance: cvc5 supports Forge-style relations!)</p>
 <h3 id="boolean">Boolean<a class="headerlink" href="#boolean" title="Permanent link">&para;</a></h3>
 <p>We've still got the boolean-logic capabilities of a normal SAT solver:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">demoBool</span><span class="p">():</span>
@@ -1847,9 +2212,9 @@
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>        <span class="n">s</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Or</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">))</span>
 <a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>        <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">check</span><span class="p">()</span> <span class="o">==</span> <span class="n">sat</span><span class="p">:</span>        
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>            <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">model</span><span class="p">())</span> <span class="c1"># remember, &quot;model&quot; ~= &quot;instance&quot; here </span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>            <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">model</span><span class="p">())</span> <span class="c1"># &quot;model&quot; ~= &quot;instance&quot; here. see below.</span>
 <a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>        <span class="c1"># (Think: how would we get a different instance?)</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>        <span class="c1"># (Think: how would we get a different solution?)</span>
 <a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>
 <a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>        <span class="c1"># getting at pieces of a model for programmatic use</span>
 <a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">model</span><span class="p">()</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">p</span><span class="p">))</span> <span class="c1"># can pass a formula              </span>
@@ -1859,9 +2224,9 @@
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>True
 </code></pre></div></p>
 <div class="admonition warning">
-<p class="admonition-title">Terminology: model</p>
+<p class="admonition-title">Terminology Warning</p>
 <p>Different communities use different terminology. In this book, we use the word <em>model</em> to describe the definitions and constraints you use to model a system, just like an automotive engineer might build a computer model of a car. This is generally what the software-engineering community means by the word. </p>
-<p>The logic community, on the other hand, uses <em>model</em> to mean the same thing that we call an <em>instance</em> in Forge: the valuation that either satisfies or dissatisfies a set of constraints.  There are good historical reasons for this, but for now, just be aware that Z3 will use the word "model" like a logician, not a software engineer.</p>
+<p>The logic community, on the other hand, uses <em>model</em> to mean the same thing that we call an <em>instance</em> in Forge: the valuation that either satisfies or dissatisfies a set of constraints.  For now, just be aware that Z3 will use the word "model" like a logician, not a software engineer.</p>
 </div>
 <h3 id="uninterpreted-functions-and-integer-inequalities">Uninterpreted Functions And Integer Inequalities<a class="headerlink" href="#uninterpreted-functions-and-integer-inequalities" title="Permanent link">&para;</a></h3>
 <p>If a symbol (function, relation, constant, ...) is <em>interpreted</em>, then its meaning is encoded via constraints built into the solver. In Forge, we'd say that:</p>
@@ -1871,9 +2236,9 @@
 </ul>
 <div class="admonition warning">
 <p class="admonition-title">Functions, not relations</p>
-<p>With some exceptions, SMT solvers usually focus on functions, not relations. This is another reason for Froglet to be about functions: they're more useful as a foundation in other tools!</p>
+<p>SMT solvers usually focus on functions, not relations. This is another reason for Froglet to be about functions: they're more useful as a foundation in other tools!</p>
 </div>
-<p>Here is a Z3 function that demonstrates the difference between interpreted and uninterpreted functions:</p>
+<p>Here is a Z3 demo that demonstrates the difference between interpreted and uninterpreted functions:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">demoUninterpreted</span><span class="p">():</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="n">s</span> <span class="o">=</span> <span class="n">Solver</span><span class="p">()</span>
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="c1"># Solver variables: Ints and an uninterpreted functions </span>
@@ -1915,50 +2280,56 @@
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    <span class="n">s</span> <span class="o">=</span> <span class="n">Solver</span><span class="p">()</span>
 <a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
 <a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    <span class="c1"># (x - 2)(x + 2) = x^2 - 4</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    <span class="c1"># Suppose we know the RHS and want to find an *equivalent formula* LHS. </span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    <span class="c1"># Suppose we know &quot;x^2 - 4&quot; and want to factor it. </span>
 <a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    <span class="c1"># We will solve for the roots:</span>
 <a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>    <span class="c1"># (x - ROOT1)(x + ROOT2) = x^2 - 4</span>
 <a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
 <a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>    <span class="n">xi</span><span class="p">,</span> <span class="n">r1i</span><span class="p">,</span> <span class="n">r2i</span> <span class="o">=</span> <span class="n">Ints</span><span class="p">(</span><span class="s1">&#39;x root1 root2&#39;</span><span class="p">)</span> <span class="c1"># int vars</span>
 <a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>
-<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>    <span class="c1"># Note: don&#39;t use xi ** 2 -- gives unsat?</span>
-<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>    <span class="n">s</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ForAll</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="p">(</span><span class="n">xi</span> <span class="o">+</span> <span class="n">r1i</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">xi</span> <span class="o">+</span> <span class="n">r2i</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="n">xi</span> <span class="o">*</span> <span class="n">xi</span><span class="p">)</span> <span class="o">-</span> <span class="mi">4</span>  <span class="p">))</span>
-<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>    <span class="n">result</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">check</span><span class="p">()</span>
-<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>    <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="n">sat</span><span class="p">:</span>
-<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">model</span><span class="p">())</span>    
-<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>    <span class="k">else</span><span class="p">:</span> 
-<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>
-<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>    <span class="n">s</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>   
-<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>
-<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>    <span class="c1"># Try another one: </span>
-<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>    <span class="c1"># (x + 123)(x - 321) = x^2 - 198x - 39483</span>
-<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>    <span class="n">s</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ForAll</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="p">(</span><span class="n">xi</span> <span class="o">+</span> <span class="n">r1i</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">xi</span> <span class="o">+</span> <span class="n">r2i</span><span class="p">)</span> 
-<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>                     <span class="o">==</span> <span class="p">(</span><span class="n">xi</span> <span class="o">*</span> <span class="n">xi</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">198</span> <span class="o">*</span> <span class="n">xi</span><span class="p">)</span> <span class="o">-</span> <span class="mi">39483</span><span class="p">))</span>
-<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a>    <span class="n">result</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">check</span><span class="p">()</span>
-<a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a>    <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="n">sat</span><span class="p">:</span>
-<a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">model</span><span class="p">())</span>    
-<a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a>    <span class="k">else</span><span class="p">:</span> 
-<a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-<a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a>    <span class="c1"># Note how fast, even with numbers up to almost 40k. Power of theory solver.</span>
-<a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a>
-<a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a><span class="k">def</span><span class="w"> </span><span class="nf">demoFactoringReals</span><span class="p">():</span>
-<a id="__codelineno-5-33" name="__codelineno-5-33" href="#__codelineno-5-33"></a>    <span class="n">s</span> <span class="o">=</span> <span class="n">Solver</span><span class="p">()</span>
-<a id="__codelineno-5-34" name="__codelineno-5-34" href="#__codelineno-5-34"></a>    <span class="n">x</span><span class="p">,</span> <span class="n">r1</span><span class="p">,</span> <span class="n">r2</span> <span class="o">=</span> <span class="n">Reals</span><span class="p">(</span><span class="s1">&#39;x root1 root2&#39;</span><span class="p">)</span> <span class="c1"># real number vars</span>
-<a id="__codelineno-5-35" name="__codelineno-5-35" href="#__codelineno-5-35"></a>    <span class="c1"># ^ As before, solve for r1, r2 because they are unbound in outer constraints</span>
-<a id="__codelineno-5-36" name="__codelineno-5-36" href="#__codelineno-5-36"></a>    <span class="c1">#   x is quantified over and therefore not a var to &quot;solve&quot; for</span>
-<a id="__codelineno-5-37" name="__codelineno-5-37" href="#__codelineno-5-37"></a>
-<a id="__codelineno-5-38" name="__codelineno-5-38" href="#__codelineno-5-38"></a>    <span class="c1"># (x + ???)(x + ???) = x^2 - 198x - 39484         </span>
-<a id="__codelineno-5-39" name="__codelineno-5-39" href="#__codelineno-5-39"></a>    <span class="n">s</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ForAll</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">r1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">r2</span><span class="p">)</span> 
-<a id="__codelineno-5-40" name="__codelineno-5-40" href="#__codelineno-5-40"></a>                     <span class="o">==</span> <span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">198</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="mi">39484</span><span class="p">))</span>
-<a id="__codelineno-5-41" name="__codelineno-5-41" href="#__codelineno-5-41"></a>    <span class="n">result</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">check</span><span class="p">()</span>
-<a id="__codelineno-5-42" name="__codelineno-5-42" href="#__codelineno-5-42"></a>    <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="n">sat</span><span class="p">:</span>
-<a id="__codelineno-5-43" name="__codelineno-5-43" href="#__codelineno-5-43"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">model</span><span class="p">())</span>    
-<a id="__codelineno-5-44" name="__codelineno-5-44" href="#__codelineno-5-44"></a>    <span class="k">else</span><span class="p">:</span> 
-<a id="__codelineno-5-45" name="__codelineno-5-45" href="#__codelineno-5-45"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>    <span class="c1"># Note: I&#39;m using * instead of exponentiation here, because in 2025 exponentiation </span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>    <span class="c1"># didn&#39;t work very well when I ran this problem. It might be fine, now! </span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>    <span class="n">s</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ForAll</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="p">(</span><span class="n">xi</span> <span class="o">+</span> <span class="n">r1i</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">xi</span> <span class="o">+</span> <span class="n">r2i</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="n">xi</span> <span class="o">*</span> <span class="n">xi</span><span class="p">)</span> <span class="o">-</span> <span class="mi">4</span>  <span class="p">))</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>    <span class="n">result</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">check</span><span class="p">()</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>    <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="n">sat</span><span class="p">:</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">model</span><span class="p">())</span>    
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>    <span class="k">else</span><span class="p">:</span> 
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>    <span class="n">s</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>   
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>    <span class="c1"># Try another one: </span>
+<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>    <span class="c1"># (x + 123)(x - 321) = x^2 - 198x - 39483</span>
+<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>    <span class="n">s</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ForAll</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="p">(</span><span class="n">xi</span> <span class="o">+</span> <span class="n">r1i</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">xi</span> <span class="o">+</span> <span class="n">r2i</span><span class="p">)</span> 
+<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a>                     <span class="o">==</span> <span class="p">(</span><span class="n">xi</span> <span class="o">*</span> <span class="n">xi</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">198</span> <span class="o">*</span> <span class="n">xi</span><span class="p">)</span> <span class="o">-</span> <span class="mi">39483</span><span class="p">))</span>
+<a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a>    <span class="n">result</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">check</span><span class="p">()</span>
+<a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a>    <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="n">sat</span><span class="p">:</span>
+<a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">model</span><span class="p">())</span>    
+<a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a>    <span class="k">else</span><span class="p">:</span> 
+<a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a>    <span class="c1"># Note how fast, even with numbers up to almost 40k. Power of theory solver.</span>
+<a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a>
+<a id="__codelineno-5-33" name="__codelineno-5-33" href="#__codelineno-5-33"></a>
+<a id="__codelineno-5-34" name="__codelineno-5-34" href="#__codelineno-5-34"></a><span class="err">!!!</span> <span class="n">info</span> <span class="s2">&quot;Exercise&quot;</span> 
+<a id="__codelineno-5-35" name="__codelineno-5-35" href="#__codelineno-5-35"></a>    <span class="n">Could</span> <span class="n">we</span> <span class="n">use</span> <span class="n">SMT</span> <span class="n">to</span> <span class="n">factor</span> <span class="n">a</span> <span class="n">polynomial</span> <span class="n">_without_</span> <span class="n">using</span> <span class="n">universal</span> <span class="n">quantification</span> <span class="n">over</span> <span class="err">`</span><span class="n">x</span><span class="err">`?</span>
+<a id="__codelineno-5-36" name="__codelineno-5-36" href="#__codelineno-5-36"></a>
+<a id="__codelineno-5-37" name="__codelineno-5-37" href="#__codelineno-5-37"></a><span class="k">def</span><span class="w"> </span><span class="nf">demoFactoringReals</span><span class="p">():</span>
+<a id="__codelineno-5-38" name="__codelineno-5-38" href="#__codelineno-5-38"></a>    <span class="n">s</span> <span class="o">=</span> <span class="n">Solver</span><span class="p">()</span>
+<a id="__codelineno-5-39" name="__codelineno-5-39" href="#__codelineno-5-39"></a>    <span class="n">x</span><span class="p">,</span> <span class="n">r1</span><span class="p">,</span> <span class="n">r2</span> <span class="o">=</span> <span class="n">Reals</span><span class="p">(</span><span class="s1">&#39;x root1 root2&#39;</span><span class="p">)</span> <span class="c1"># real number vars</span>
+<a id="__codelineno-5-40" name="__codelineno-5-40" href="#__codelineno-5-40"></a>    <span class="c1"># ^ As before, solve for r1, r2 because they are unbound in outer constraints</span>
+<a id="__codelineno-5-41" name="__codelineno-5-41" href="#__codelineno-5-41"></a>    <span class="c1">#   x is quantified over and therefore not a var to &quot;solve&quot; for</span>
+<a id="__codelineno-5-42" name="__codelineno-5-42" href="#__codelineno-5-42"></a>
+<a id="__codelineno-5-43" name="__codelineno-5-43" href="#__codelineno-5-43"></a>    <span class="c1"># (x + ???)(x + ???) = x^2 - 198x - 39484         </span>
+<a id="__codelineno-5-44" name="__codelineno-5-44" href="#__codelineno-5-44"></a>    <span class="n">s</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ForAll</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">r1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">r2</span><span class="p">)</span> 
+<a id="__codelineno-5-45" name="__codelineno-5-45" href="#__codelineno-5-45"></a>                     <span class="o">==</span> <span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">198</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="mi">39484</span><span class="p">))</span>
+<a id="__codelineno-5-46" name="__codelineno-5-46" href="#__codelineno-5-46"></a>    <span class="n">result</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">check</span><span class="p">()</span>
+<a id="__codelineno-5-47" name="__codelineno-5-47" href="#__codelineno-5-47"></a>    <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="n">sat</span><span class="p">:</span>
+<a id="__codelineno-5-48" name="__codelineno-5-48" href="#__codelineno-5-48"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">model</span><span class="p">())</span>    
+<a id="__codelineno-5-49" name="__codelineno-5-49" href="#__codelineno-5-49"></a>    <span class="k">else</span><span class="p">:</span> 
+<a id="__codelineno-5-50" name="__codelineno-5-50" href="#__codelineno-5-50"></a>        <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="unsatisfiable-cores">Unsatisfiable Cores<a class="headerlink" href="#unsatisfiable-cores" title="Permanent link">&para;</a></h3>
 <p>Let's try the same problem, but with a polynomial without any real roots. We should expect unsat (and indeed that's what we get). But can we get more than "unsat" out of the solver?</p>
+<p>In Forge, you can get <a href="https://forge-fm.github.io/forge-documentation/latest/running-models/options/">an unsatisfiable core</a>: a <em>subset</em> of the constraints that is, itself, unsatisfiable. Z3 provides the same: </p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">demoFactoringRealsUnsat</span><span class="p">():</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    <span class="n">s</span> <span class="o">=</span> <span class="n">Solver</span><span class="p">()</span>
 <a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
@@ -2033,7 +2404,9 @@
 <a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>x &lt; 2y
 </code></pre></div>
 <p>Could you find a solution? Probably (at least, if you Googled or had an old algebra textbook to hand). Or, if you're like me, you might <a href="https://www.wolframalpha.com/input?i=plot++x+%2B+y+%3C+3+and+x+%3C+2y">enter it into Wolfram Alpha</a>:</p>
-<p><img alt="" src="smt_1.png" /></p>
+<!-- ![](./smt_1.png) -->
+<center><img width="50%" src="./smt_1.png" style="background-color:white"/></center>
+
 <p>But suppose we added a bunch of boolean operators into the mix. Now what? You can't solve a "system" if the input involves "or". </p>
 <p>SMT solvers use a technique to separate out the boolean portion of a problem from the theory-specific portion. For example, if I wrote: <code>x &gt; 3 or y &gt; 5</code>, the solver will convert this to a <em>boolean skeleton</em>, replacing all the theory terms with boolean variables: <code>T1 or T2</code>, where <code>T1</code> means <code>x &gt; 3</code> and <code>T2</code> means <code>y &gt; 5</code>.  It can now find an assignment to that boolean skeleton with a normal SAT-solver. And every assignment is implicitly conjunctive: there's no "or"s left! </p>
 <p>Suppose the solver finds <code>T1=True, T2=True</code>. Then we have the system:</p>
@@ -2071,15 +2444,23 @@
 </code></pre></div>
 <p>(I won't even need that fourth constraint to show this skeleton-assignment won't work.)</p>
 <p>This system of equalities can be solved via an algorithm called <em>congruence closure</em>. It goes something like this. First, collect all the terms involved in equalities and make</p>
-<p><img alt="" src="smt_2.png" /></p>
+<!-- ![](./smt_2.png) -->
+<center><img width="50%" src="./smt_2.png" style="background-color:white"/></center>
+
 <p>Now draw undirected edges between the terms that the positive equality constraints force to be equivalent. Since we're being told that <code>f3(a) = a</code>, we'd draw an edge between those nodes. And similarly between <code>f5(a)</code> and <code>a</code>:</p>
-<p><img alt="" src="smt_3.png" /></p>
+<!-- ![](./smt_3.png) -->
+<center><img width="50%" src="./smt_3.png" style="background-color:white"/></center>
+
 <p>But equality is transitive! So we have learned that <code>f5(a)</code> and <code>f3(a)</code> are equivalent. (This is the "closure" part of the algorithm's name.)</p>
 <p>From there, what else can we infer? Well, if <code>f3(a)</code> is the same as <code>a</code>, we can substitute <code>a</code> for <code>f(f(f(a)))</code> inside <code>f(f(f(f(f(a)))))</code>, giving us that <code>f(f(a))</code> (which we're calling <code>f2(a)</code> for brevity) is equivalent to <code>a</code> as well, since <code>f5(a) = a</code>. And since equality is transitive, <code>f2(a)</code> equals all the other things that equal <code>a</code>.</p>
-<p><img alt="" src="smt_4.png" /></p>
+<!-- ![](./smt_4.png) -->
+<center><img width="50%" src="./smt_4.png" style="background-color:white"/></center>
+
 <p>And if <code>f2(a) = a</code>, we can substitute <code>a</code> for <code>f(f(a))</code> within <code>f(f(f(a)))</code>, to get <code>f(a) = a</code>. </p>
 <p>But this contradicts the negative equality constraint <code>f(a) != a</code>. So we've found a contradiction.</p>
-<p><img alt="" src="smt_5.png" /></p>
+<!-- ![](./smt_5.png) -->
+<center><img width="50%" src="./smt_5.png" style="background-color:white"/></center>
+
 <p>Now we've invented a second theory solver. The more of these we have, the more domains the solver can handle intelligently. (A natural question is: will all of these solvers work well together? The answer is not always, but we won't need to worry about that this semester.)</p>
 <h3 id="a-productive-assignment">A Productive Assignment<a class="headerlink" href="#a-productive-assignment" title="Permanent link">&para;</a></h3>
 <p>Another way of solving the boolean skeleton is with the assignment <code>T1=False, T2=False, T3=False, T4=True</code>, which gives us the theory problem:</p>
@@ -2117,7 +2498,8 @@
 <details class="note">
 <summary>Think, then click!</summary>
 <p>Yes! Here's how. For every room <span class="arithmatex">\(i\)</span>, tell that guest to move into room <span class="arithmatex">\(i+1\)</span>. You'll never run out of rooms, and room 0 will be free for the new guest. Every guest will need to do a finite amount of work, but assuming we can send this message to everyone at once, it works out.</p>
-<p><img alt="" src="smt_6.png" /></p>
+<p><!-- <img alt="" src="./smt_6.png" /> -->
+<center><img width="50%" src="./smt_6.png" style="background-color:white"/></center></p>
 </details>
 <p>So, it's the late 1800's. Hilbert's Hotel (and related ideas) have excited the mathematical world. Indeed, can we use this trick to show that <em>every</em> infinite set is the same size? Are all infinities one, in a philosophical sense?</p>
 <p>At this time, there was a non-famous but moderately successful mathematician named Georg Cantor. He was in his 40's when he made a groundbreaking discovery---contradicting the conventional wisdom (thanks, Hardy) that young mathematicians do all the interesting work. <strong>Cantor proved that the power set of <span class="arithmatex">\(\mathbb{N}\)</span>, that is, the set of subsets of <span class="arithmatex">\(\mathbb{N}\)</span>, must be strictly larger than <span class="arithmatex">\(\mathbb{N}\)</span>.</strong></p>
@@ -2205,7 +2587,9 @@
 <p>Argh! Assuming that our halting function h is a program itself: CANNOT EXIST! This is called the "halting problem".</p>
 <p>Exercise: what consequences for us? OK to be philosophical, uncertain.</p>
 <p>"Undecidability"</p>
-<p><img alt="" src="smt_7.png" /></p>
+<!-- ![](./smt_7.png) -->
+<center><img width="50%" src="./smt_7.png" style="background-color:white"/></center>
+
 <h3 id="what-does-this-have-to-do-with-smt">What Does This Have To Do With SMT?<a class="headerlink" href="#what-does-this-have-to-do-with-smt" title="Permanent link">&para;</a></h3>
 <p>Gödel also proved that number theory is undecidable: if you've got the natural numbers, multiplication, and addition, it is impossible to write an algorithm that answers <em>arbitrary</em> questions about number theory in an <em>always correct</em> way, in <em>finite</em> time.</p>
 <p>There are also tricks you'll learn in 1010 that let you say "Well, if I could solve arbitrary questions about number theory, then I could turn the halting problem into a question about number theory!"</p>
