@@ -1,25 +1,26 @@
 # Satisfiability Modulo Theories (SMT)
 
-**Note well: the 2nd part of this chapter is very rough!**
+**Note well: the 2nd part of this chapter is very rough, and will be refined during the week of March 30, 2026. In particular, the material about decidability needs to be improved.**
 
 [Livecode link](./z3demo.py)
 
-Boolean solvers are powerful, but not very expressive. If you want to use them to solve a problem involving (e.g.)  arithmetic, you need to encode that idea with booleans. Forge does this with a technique called "bit-blasting": one boolean variable per bit in a fixed bitwidth, along with formulas that build boolean adders, multipliers, etc. as needed. This works well for small examples, but can quickly run into performance issues&mdash;and if you need actual mathematical integers (to say nothing of real numbers!) you're out of luck.
+Boolean solvers are powerful, but not very expressive *on their own*. If you want to use them to solve a problem involving (e.g.)  arithmetic, you need to encode that idea with booleans. Forge does this with a technique called "bit-blasting": one boolean variable per bit in a fixed bitwidth, along with formulas that build boolean adders, multipliers, etc. as needed. This works well for small examples, but can quickly run into performance issues&mdash;and if you need actual mathematical integers (to say nothing of real numbers!) you're out of luck.
 
 An SMT solver is a SAT solver that can handle various domain-specific concepts beyond boolean logic. Hence "modulo theories", where "modulo" means "with respect to". SMT solvers solve satisfiability, but with the addition of (say) the theory of linear integer arithmetic or the theory of strings.
 
 From a certain point of view, Forge is an "SMT" solver, because it includes concepts like relations and bit-vector integers. But this isn't usually how people understand the term these days. 
 
-SMT solvers can be either "eager" or "lazy". An eager solver translates all the domain-specific constraints to boolean logic and then uses a boolean solver engine. That is Forge's approach. In contrast, a lazy solver actually implements domain-specific algorithms and integrates those with a purely-boolean solver core. Most modern SMT solvers tend to be lazy, and so they can benefit from clever domain algorithms. 
+SMT solvers can be either "eager" or "lazy". An eager solver translates all the domain-specific constraints to boolean logic and then uses a boolean solver engine. That is Forge's approach. In contrast, a lazy solver actually implements domain-specific algorithms and integrates those with a purely-boolean solver core. 
+
+Most modern SMT solvers tend to be lazy, and so they can benefit from clever domain algorithms. (Why encode prime factorization in booleans, if you have a solver that can do algebra?)
 
 !!! note "Theories"
     In the logic community, _theory_ is just another word for set of constraints. So when we say "the theory of linear integer arithmetic" we mean the axioms that define the domain of linear integer arithmetic.
 
-
 Here are some common domains that SMT solvers tend to support:
 
 * uninterpreted functions with equality;
-* integer arithmetic (linear nearly always, non-linear sometimes);
+* integer arithmetic (linear nearly always, non-linear often);
 * real arithmetic;
 * lists and algebraic datatypes;
 * strings;
@@ -27,7 +28,7 @@ Here are some common domains that SMT solvers tend to support:
 * arrays; and
 * datatypes.
 
-Of course, there are many others implemented in various solvers. The solver we'll use this week supports many of these, but not all.
+Of course, there are many others implemented in various solvers. The solver we'll use, Z3, supports many of the above. Z3 also supports optimization. While Forge does too, we haven't optimized for it. So if you want to find optimal solutions to a problem, an SMT solver is worth trying!
 
 ### A Key Difference: Universal Quantifiers
 
@@ -39,7 +40,10 @@ What does it mean to say "For all $x$ of type $A$, $P(x)$ is true?" In Forge, $A
     **For now**, try to avoid universal quantification in SMT if you can. You can't always avoid it, but make sure you really need it to express your goals.
 
 
-Universal quantifiction isn't the only issue. Even without it, the domain-specific algorithms the solver uses might not be guaranteed to terminate. (This is a consequence of the fact that some of the problems SMT solvers can express are _undecidable_, which means it is impossible to produce an always-correct, always-terminating algorithm to solve the general problem.) Because of this, the solver is always working under a timeout. If the solver times out, it will give a new result type, other than "sat" and "unsat": "_unknown_".
+Universal quantification isn't the only issue. Even without it, the domain-specific algorithms the solver uses might not be guaranteed to terminate. Because of this, the solver is always working under a timeout. If the solver times out, it will give a new result type, other than "sat" and "unsat": "_unknown_".
+
+!!! info "Undecidability"
+    The "unknown" result is a consequence of the fact that some of the problems SMT solvers can express are _undecidable_: it is impossible to produce an always-correct, always-terminating algorithm to solve the general case. One example of this is: given a non-linear polynomial, [does it have an all-integer solution](https://en.wikipedia.org/wiki/Hilbert%27s_tenth_problem)?
 
 ## The Z3 Solver
 
@@ -55,7 +59,7 @@ To update to the latest version of the solver, you can run:
 
 `pip3 install z3-solver --upgrade`
 
-Another great solver is [CVC5](https://cvc5.github.io). Although we won't use it in class, it supports some things that Z3 doesn't (and vice versa). For instance: relations!
+Another great solver is [cvc5](https://cvc5.github.io). Although we won't use it in class, it supports some things that Z3 doesn't (and vice versa). (For instance: cvc5 supports Forge-style relations!)
 
 ### Boolean
 
@@ -71,9 +75,9 @@ def demoBool():
         
         s.add(Or(p, q))
         if s.check() == sat:        
-            print(s.model()) # remember, "model" ~= "instance" here 
+            print(s.model()) # "model" ~= "instance" here. see below.
         
-        # (Think: how would we get a different instance?)
+        # (Think: how would we get a different solution?)
 
         # getting at pieces of a model for programmatic use
         print(s.model().evaluate(p)) # can pass a formula              
@@ -85,10 +89,10 @@ When we run this, we get:
 True
 ```
 
-!!! warning "Terminology: model"
+!!! warning "Terminology Warning"
     Different communities use different terminology. In this book, we use the word _model_ to describe the definitions and constraints you use to model a system, just like an automotive engineer might build a computer model of a car. This is generally what the software-engineering community means by the word. 
 
-    The logic community, on the other hand, uses _model_ to mean the same thing that we call an _instance_ in Forge: the valuation that either satisfies or dissatisfies a set of constraints.  There are good historical reasons for this, but for now, just be aware that Z3 will use the word "model" like a logician, not a software engineer.
+    The logic community, on the other hand, uses _model_ to mean the same thing that we call an _instance_ in Forge: the valuation that either satisfies or dissatisfies a set of constraints.  For now, just be aware that Z3 will use the word "model" like a logician, not a software engineer.
 
 
 ### Uninterpreted Functions And Integer Inequalities
@@ -99,10 +103,9 @@ If a symbol (function, relation, constant, ...) is _interpreted_, then its meani
 * relations you add as sig fields are uninterpreted, since without constraints you add yourself, Forge treats their values as arbitrary.
 
 !!! warning "Functions, not relations"
-    With some exceptions, SMT solvers usually focus on functions, not relations. This is another reason for Froglet to be about functions: they're more useful as a foundation in other tools!
+    SMT solvers usually focus on functions, not relations. This is another reason for Froglet to be about functions: they're more useful as a foundation in other tools!
 
-
-Here is a Z3 function that demonstrates the difference between interpreted and uninterpreted functions:
+Here is a Z3 demo that demonstrates the difference between interpreted and uninterpreted functions:
 
 ```python
 def demoUninterpreted():
@@ -159,13 +162,14 @@ def demoFactoringIntWithUniversal():
     s = Solver()
 
     # (x - 2)(x + 2) = x^2 - 4
-    # Suppose we know the RHS and want to find an *equivalent formula* LHS. 
+    # Suppose we know "x^2 - 4" and want to factor it. 
     # We will solve for the roots:
     # (x - ROOT1)(x + ROOT2) = x^2 - 4
 
     xi, r1i, r2i = Ints('x root1 root2') # int vars
 
-    # Note: don't use xi ** 2 -- gives unsat?
+    # Note: I'm using * instead of exponentiation here, because in 2025 exponentiation 
+    # didn't work very well when I ran this problem. It might be fine, now! 
     s.add(ForAll(xi, (xi + r1i) * (xi + r2i) == (xi * xi) - 4  ))
     result = s.check()
     if result == sat:
@@ -186,6 +190,10 @@ def demoFactoringIntWithUniversal():
         print(result)
     # Note how fast, even with numbers up to almost 40k. Power of theory solver.
 
+
+!!! info "Exercise" 
+    Could we use SMT to factor a polynomial _without_ using universal quantification over `x`?
+
 def demoFactoringReals():
     s = Solver()
     x, r1, r2 = Reals('x root1 root2') # real number vars
@@ -205,6 +213,8 @@ def demoFactoringReals():
 ### Unsatisfiable Cores
 
 Let's try the same problem, but with a polynomial without any real roots. We should expect unsat (and indeed that's what we get). But can we get more than "unsat" out of the solver?
+
+In Forge, you can get [an unsatisfiable core](https://forge-fm.github.io/forge-documentation/latest/running-models/options/): a _subset_ of the constraints that is, itself, unsatisfiable. Z3 provides the same: 
 
 ```python
 def demoFactoringRealsUnsat():
@@ -231,7 +241,6 @@ def demoFactoringRealsUnsat():
         # Note: it's a method of the solver, not the result. 
         print(s.unsat_core())         
 ```
-
 
 ### Another Demo: N-Queens
 
@@ -277,6 +286,8 @@ if __name__ == "__main__":
     nQueens(4)
 ```
 
+
+
 ## What's Going On In The Solver?
 
 Modern SMT-solvers tend to be _lazy_ (a technical term): they use a base boolean solver, and call out to domain-specific algorithms ("theory solvers") when needed. This is how Z3 manages to be so fast at algebraic reasoning.
@@ -294,7 +305,9 @@ x < 2y
 
 Could you find a solution? Probably (at least, if you Googled or had an old algebra textbook to hand). Or, if you're like me, you might [enter it into Wolfram Alpha](https://www.wolframalpha.com/input?i=plot++x+%2B+y+%3C+3+and+x+%3C+2y):
 
-![](./smt_1.png)
+<!-- ![](./smt_1.png) -->
+<center><img width="50%" src="./smt_1.png" style="background-color:white"/></center>
+
 
 But suppose we added a bunch of boolean operators into the mix. Now what? You can't solve a "system" if the input involves "or". 
 
@@ -358,23 +371,27 @@ f2(a) = f4(a)
 
 This system of equalities can be solved via an algorithm called _congruence closure_. It goes something like this. First, collect all the terms involved in equalities and make
 
-![](./smt_2.png)
+<!-- ![](./smt_2.png) -->
+<center><img width="50%" src="./smt_2.png" style="background-color:white"/></center>
 
 Now draw undirected edges between the terms that the positive equality constraints force to be equivalent. Since we're being told that `f3(a) = a`, we'd draw an edge between those nodes. And similarly between `f5(a)` and `a`:
 
-![](./smt_3.png)
+<!-- ![](./smt_3.png) -->
+<center><img width="50%" src="./smt_3.png" style="background-color:white"/></center>
 
 But equality is transitive! So we have learned that `f5(a)` and `f3(a)` are equivalent. (This is the "closure" part of the algorithm's name.)
 
 From there, what else can we infer? Well, if `f3(a)` is the same as `a`, we can substitute `a` for `f(f(f(a)))` inside `f(f(f(f(f(a)))))`, giving us that `f(f(a))` (which we're calling `f2(a)` for brevity) is equivalent to `a` as well, since `f5(a) = a`. And since equality is transitive, `f2(a)` equals all the other things that equal `a`.
 
-![](./smt_4.png)
+<!-- ![](./smt_4.png) -->
+<center><img width="50%" src="./smt_4.png" style="background-color:white"/></center>
 
 And if `f2(a) = a`, we can substitute `a` for `f(f(a))` within `f(f(f(a)))`, to get `f(a) = a`. 
 
 But this contradicts the negative equality constraint `f(a) != a`. So we've found a contradiction.
 
-![](./smt_5.png)
+<!-- ![](./smt_5.png) -->
+<center><img width="50%" src="./smt_5.png" style="background-color:white"/></center>
 
 Now we've invented a second theory solver. The more of these we have, the more domains the solver can handle intelligently. (A natural question is: will all of these solvers work well together? The answer is not always, but we won't need to worry about that this semester.)
 
@@ -399,7 +416,6 @@ There's a famous unsolved problem in number theory called [Goldbach's conjecture
 
 !!! warning "1 isn't prime!"
     We generally consider 1 to be a non-prime number nowadays. But in the original formulation of this conjecture, it was meant to be. There are some alternative formulations in the article linked above, e.g., that *every even natural number greater than two is the sum of two primes*.
-
 
 This is simple to state, and it's straightforward to express to Z3 or other SMT solvers. Yet, **we don't know** (at time of writing) whether or not the conjecture holds for _all_ integers greater than 2. Mathematicians have looked for small (and not so small) counterexamples, and haven't found one yet. 
 
@@ -432,7 +448,8 @@ But then, counter-intuitively, $\mathbb{N}$ and $\mathbb{N} \cup \{BrownU\}$ are
 ??? note "Think, then click!"
     Yes! Here's how. For every room $i$, tell that guest to move into room $i+1$. You'll never run out of rooms, and room 0 will be free for the new guest. Every guest will need to do a finite amount of work, but assuming we can send this message to everyone at once, it works out.
 
-    ![](./smt_6.png)
+    <!-- ![](./smt_6.png) -->
+    <center><img width="50%" src="./smt_6.png" style="background-color:white"/></center>
 
 
 So, it's the late 1800's. Hilbert's Hotel (and related ideas) have excited the mathematical world. Indeed, can we use this trick to show that _every_ infinite set is the same size? Are all infinities one, in a philosophical sense?
@@ -517,7 +534,8 @@ Argh! Assuming that our halting function h is a program itself: CANNOT EXIST! Th
 
   "Undecidability"
     
-![](./smt_7.png)
+<!-- ![](./smt_7.png) -->
+<center><img width="50%" src="./smt_7.png" style="background-color:white"/></center>
 
 ### What Does This Have To Do With SMT?
 
