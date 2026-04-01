@@ -1,6 +1,8 @@
 
 I want to tell you a story&mdash;with only _some_ embellishment. 
 
+## How do we count?
+
 First, some context. How do we count things? Does ${1,2,3}$ have the same number of elements as ${A, B, C}$? What about $\mathbb{N}$ vs. $\mathbb{N} \cup \{BrownU\}$? If we're comparing infinite sets, then it seems reasonable to say that they have the same size if we can make a bijection between them: a 1-1 mapping. 
 
 But then, counter-intuitively, $\mathbb{N}$ and $\mathbb{N} \cup \{BrownU\}$ are the same size. Why? The idea is encoded in a thought experiment called _Hilbert's Hotel_: suppose you work at the front desk of an infinite hotel. You have a guest room for every natural number. Tonight, every room is occupied. But then a new guest arrives. Can you find room for them?
@@ -36,6 +38,8 @@ Cantor showed that there must _always_ be a subset of $\mathbb{N}$ that _isn't_ 
 
     This technique is called "Cantor diagonalization".
 
+## How many programs are there?
+
 Why does this matter to *US*? Let me ask you two questions:
 
 **QUESTION 1**: How many syntactically-valid Java program source files are there?
@@ -62,7 +66,7 @@ That would be comforting. Unfortunately, it's not true.
 !!! note "No, AI can't escape this problem."
     There's a lot of speculation about whether artificial intelligence will exceed our current capabilities. Personally, I think that the answer is "yes" in many ways&mdash;but not here. We're talking about a limit baked into mathematics itself. None of the popular-science speculation that I've seen (e.g., quantum computing) escapes this constraint. We'd need to somehow [move the barber out of town](https://en.wikipedia.org/wiki/Barber_paradox).
 
-### Another Story: Halting
+## Another Story: Halting
 
 It's the early 1900's. Hilbert (him again) and many others are wondering whether the study of mathematics can be mechanized. Can we write a procedure that finds proofs for us? More precisely (using today's terms) is it possible to write a program that accepts a conjecture and:
     - always terminates in finite time; 
@@ -106,14 +110,14 @@ Argh! No matter how clever we are with `f`, `h` cannot exist. This is called the
     <center><img width="50%" src="./smt_7.png" style="background-color:white"/></center>
     If we want to analyze programs, we need to give up one of these 4 requirements.
 
-### What Does This Have To Do With SMT?
+## What Does This Have To Do With SMT?
 
-Gödel also proved that number theory is undecidable: if you've got the natural numbers, multiplication, and addition, it is impossible to write an algorithm that answers _arbitrary_ questions about number theory in an _always correct_ way, in _finite_ time.
+Gödel also proved that number theory is undecidable: if you've got [the natural numbers, along with multiplication and addition](https://en.wikipedia.org/wiki/Peano_axioms#Undecidability_and_incompleteness), it is impossible to write an algorithm that answers _arbitrary_ questions about number theory in an _always correct_ way, in _finite_ time. So we should expect a theory-solver for integer arithmetic to be incomplete. 
 
-There are also tricks you'll learn in 1010 that let you say "Well, if I could solve arbitrary questions about number theory, then I could turn the halting problem into a question about number theory!"
+There's a lot more we could talk about. The area is technically deep, and beyond the scope of this book. But here are two more true statements about the world:
 
-There's so much more I'd like to talk about, but this lecture is already pretty disorganized, so I'm not going to plan on saying more today.
-
+* If we give up multiplication, and just keep addition, [an algorithm exists and we know it](https://en.wikipedia.org/wiki/Presburger_arithmetic).
+* If we keep both addition and multiplication, but switch to real numbers instead of integers, an algorithm exists and we know it. ([It's slow, but it exists and always terminates.](https://en.wikipedia.org/wiki/Real_closed_field#Decidability_and_quantifier_elimination))
 
 
 
