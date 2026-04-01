@@ -1,7 +1,5 @@
 # Satisfiability Modulo Theories (SMT)
 
-**Note well: the 2nd part of this chapter is very rough, and will be refined during the week of March 30, 2026. In particular, the material about decidability needs to be improved.**
-
 [Livecode link](./z3demo.py)
 
 Boolean solvers are powerful, but not very expressive *on their own*. If you want to use them to solve a problem involving (e.g.)  arithmetic, you need to encode that idea with booleans. Forge does this with a technique called "bit-blasting": one boolean variable per bit in a fixed bitwidth, along with formulas that build boolean adders, multipliers, etc. as needed. This works well for small examples, but can quickly run into performance issues&mdash;and if you need actual mathematical integers (to say nothing of real numbers!) you're out of luck.
@@ -24,9 +22,8 @@ Here are some common domains that SMT solvers tend to support:
 * real arithmetic;
 * lists and algebraic datatypes;
 * strings;
-* bit vectors;
-* arrays; and
-* datatypes.
+* bit vectors; and
+* arrays.
 
 Of course, there are many others implemented in various solvers. The solver we'll use, Z3, supports many of the above. Z3 also supports optimization. While Forge does too, we haven't optimized for it. So if you want to find optimal solutions to a problem, an SMT solver is worth trying!
 
@@ -286,8 +283,6 @@ if __name__ == "__main__":
     nQueens(4)
 ```
 
-
-
 ## What's Going On In The Solver?
 
 Modern SMT-solvers tend to be _lazy_ (a technical term): they use a base boolean solver, and call out to domain-specific algorithms ("theory solvers") when needed. This is how Z3 manages to be so fast at algebraic reasoning.
@@ -309,34 +304,39 @@ Could you find a solution? Probably (at least, if you Googled or had an old alge
 <center><img width="50%" src="./smt_1.png" style="background-color:white"/></center>
 
 
-But suppose we added a bunch of boolean operators into the mix. Now what? You can't solve a "system" if the input involves "or". 
+But suppose we added a bunch of boolean operators into the mix. Now what? You can't solve a "system" if the system is contingent&mdash;what should it do if we give it:
+```
+(x + y < 3) or (2 * x > 5)
+(x < 2y) implies (3 * y < 6)
+```
+Algebra alone won't help. Part of the problem is boolean, too!
 
-SMT solvers use a technique to separate out the boolean portion of a problem from the theory-specific portion. For example, if I wrote: `x > 3 or y > 5`, the solver will convert this to a _boolean skeleton_, replacing all the theory terms with boolean variables: `T1 or T2`, where `T1` means `x > 3` and `T2` means `y > 5`.  It can now find an assignment to that boolean skeleton with a normal SAT-solver. And every assignment is implicitly conjunctive: there's no "or"s left! 
+SMT solvers use a technique to separate out the boolean portion of a problem from the theory-specific portion. For example, if I wrote: `x > 3 or y > 5`, the solver will convert this to a _boolean skeleton_, replacing all the theory terms with boolean variables: `T1 or T2`, where `T1` means `x > 3` and `T2` means `y > 5`.  It can now find an assignment to that boolean skeleton with a normal SAT-solver. And every _assignment_ is implicitly conjunctive: we know whether or not each theory term is true. All the contingency is gone, at that level. 
 
-Suppose the solver finds `T1=True, T2=True`. Then we have the system:
+Suppose the boolean solver finds `T1=True, T2=True`. Then we have the system:
 
 ```
 x > 3
 y > 5
 ```
 
-If, instead, the solver found `T1=False, T2=True`, we'd have the system:
+If, instead, the boolean solver found `T1=False, T2=True`, we'd have the system:
 
 ```
 x <= 3
 y > 5
 ```
 
-Notice that each of these solutions to the boolean skeleton provide a system of inequalities that we could solve with algebra. We'll call this the _theory solver_; it can solve very restricted kinds of problem (like linear inequalities), but solve them intelligently.
-
+Notice that each of these solutions to the boolean skeleton provide a system of inequalities that we could solve with algebra alone. We'll call this post-boolean solver the _theory solver_; it can solve very restricted kinds of problem (like linear inequalities), but solve them intelligently.
 
 This idea lets us implement a very basic SMT solver by following these 3 steps:
 
 * (1) get another instance that satisfies the boolean skeleton; and then
 * (2) solve the resulting system with algebra.
-* (3) If the result of (2) is unsat, or another solution is desired, restart from (1).
+* (3) If the result of (2) is unsatisfiable, restart from (1).
 
-Modern SMT solvers have more integration between the boolean and theory solvers, but that's outside the scope of this course.
+!!! info "Further Reading"
+    Modern SMT solvers have even more integration between the boolean and theory solvers, but that's outside the scope of this chapter. If you want to learn more about this, search for the name of this framework: `DPLL(T)`, and for ideas like _conflict analysis_ (the two different solvers need to share information with each other).
 
 ### Another Example Theory-Solver: Uninterpreted Functions With Equality
 
@@ -408,7 +408,7 @@ f2(a) != f4(a)
 
 We'd proceed similarly. But this time we don't have many unavoidable equalities between terms: `f3(a)` is linked with `a`, and we could say that `f6(a) = a` via substitution---if we cared about `f6(a)`. But it's not necessary for any of the inequalities to be violated. 
 
-## Return to Decidability
+## But wait, why don't SMT solvers always terminate?
 
 There's a famous unsolved problem in number theory called [Goldbach's conjecture](https://en.wikipedia.org/wiki/Goldbach%27s_conjecture). It states:
 
@@ -422,129 +422,17 @@ This is simple to state, and it's straightforward to express to Z3 or other SMT 
 That illustrates a big problem. To know whether Goldbach's conjecture is _false_, we just need to find an integer greater than 2 that cannot be written as the sum of 3 primes. Here's an algorithm for disproving the conjecture:
 
 ```python
-    for i in Integers:
+    for i in Integers: # assume we're using a bignum library
         for p1, p2, p3 in PrimesUpTo(i):
             if i = p1 + p2 + p3: 
                 continue;
         return i;
 ```
 
-If Goldbach's conjecture is wrong, this computation will eventually terminate and give us the counterexample.
+If Goldbach's conjecture is wrong, this computation will eventually terminate with a counterexample. 
 
 But what about the other direction? What if the conjecture is actually true? Then this computation never terminates, and never gives us an answer. We never learn that the conjecture is true, because we're never done searching for counterexamples. 
 
-Now, just because this specific algorithm isn't great doesn't mean that a better one might not exist. Maybe it's possible to be very smart, and search in a way that will terminate with _either_ true or false. 
+Just because _this_ algorithm isn't great doesn't mean that a better one doesn't exit. Maybe it's possible to be very smart, and search in a way that will terminate with _either_ true or false. We improve algorithms all the time.
 
-Except that it's not _always_ possible. CSCI 1010 talks about this a lot more, but I want to give you a bit of a taste of the ideas now that we're nearing the end of 1710.
-
-## Undecidability 
-
-I want to tell you a story---with only _some_ embellishment. 
-
-First, some context. How do we count things? Does ${1,2,3}$ have the same number of elements as ${A, B, C}$? What about $\mathbb{N}$ vs. $\mathbb{N} \cup \{BrownU\}$? If we're comparing infinite sets, then it seems reasonable to say that they have the same size if we can make a bijection between them: a 1-1 mapping. 
-
-But then, counter-intuitively, $\mathbb{N}$ and $\mathbb{N} \cup \{BrownU\}$ are the same size. Why? Here's the idea, which is often called _Hilbert's Hotel_: suppose you work at the front desk of a hotel with a room for every natural number. And, that night, every room is occupied. A new guest arrives. Can you find room for them?
-
-??? note "Think, then click!"
-    Yes! Here's how. For every room $i$, tell that guest to move into room $i+1$. You'll never run out of rooms, and room 0 will be free for the new guest. Every guest will need to do a finite amount of work, but assuming we can send this message to everyone at once, it works out.
-
-    <!-- ![](./smt_6.png) -->
-    <center><img width="50%" src="./smt_6.png" style="background-color:white"/></center>
-
-
-So, it's the late 1800's. Hilbert's Hotel (and related ideas) have excited the mathematical world. Indeed, can we use this trick to show that _every_ infinite set is the same size? Are all infinities one, in a philosophical sense?
-
-At this time, there was a non-famous but moderately successful mathematician named Georg Cantor. He was in his 40's when he made a groundbreaking discovery---contradicting the conventional wisdom (thanks, Hardy) that young mathematicians do all the interesting work. **Cantor proved that the power set of $\mathbb{N}$, that is, the set of subsets of $\mathbb{N}$, must be strictly larger than $\mathbb{N}$.**
-
-There is pandemonium. There is massive controversy. But, later mathematicians said that his ideas came 100 years before the community was ready for them. Hilbert himself actually said, later, that "No one shall drive us from the paradise Cantor has created for us."
-
-How did Cantor prove this? By contradiction. Assume you're given a bijection between a set $\mathbb{N}$ and its power set. Now, this bijection can be thought of as an infinite table, with subsets of $N$ as rows and elements of $N$ as columns. The cells contain booleans: true if the subset contains the element, and false if it doesn't. 
-
-|   Set   | 0    | 1    | ...  |
-| ------- | ---- | ---- | ---- | 
-| {}      | N    | N    | ...  | 
-| {0}     | Y    | N    | ...  | 
-| {0, 1}  | Y    | Y    | ...  | 
-| ...     | ...  | ...  | ...  | 
-
-
-Cantor showed that there must _always_ be a subset of $\mathbb{N}$ that _isn't_ represented as a row in the table. That is, such a bijection cannot exist. Even with the very permissive definition of "same size" we use for infinite sets, there are _still_ more subsets of the natural numbers than there are natural numbers.
-
-What is the subset that can't be represented as a row in the table?
-
-??? note "Think, then click!"
-    Read off the diagonal from the top-left onward, and invert each boolean. In the table above, the set would contain both 0 and 1 (because those first two rows do not contain them, respectively) and so on.
-
-    This technique is called "Cantor diagonalization".
-
-
-Why does this matter to *US*? Let me ask you two questions:
-
-**QUESTION 1**: How many syntactically-valid Java program source files are there?
-
-??? note "Think, then click!"
-    There are infinitely many. But let's be more precise. A the source code of a program is a _finite_ text file. The size may be unbounded, but each specific file is finite. And the alphabet used for each character is also finite (let's say between 0 and 255, although that isn't always entirely accurate). 
-
-    Thus, we can think of a program source file as a finite sequence of numbers between 0 and 255. This is the same as representing a natural number in base 256. There are as many Java program source files as there are natural numbers.
-
-
-**QUESTION 2**: How many mathematical functions from non-negative integer inputs to `bool` outputs are there, assuming your language has unbounded integers?
-
-??? note "Think, then click!"
-    Each such function returns true or false for any given non-negative integer. In effect, it is defining a specific set of these. There are as many such mathematical functions as there are sets of natural numbers.
-
-
-What is our conclusion? 
-
-Try as you might, it is impossible to express all functions of these in any programming language where program texts are finite. So we know that programs in any language must be unable to express _some_ things (indeed, most things). But is there anything that **no** language can express? Maybe all the things that are inexpressible are things that nobody actually needs or cares about. That would be comforting.
-
-Unfortunately, there are _plenty_ of important ideas that can't be expressed in any finite program. If you're curious about this, you might investigate CSCI 1010. I'm also happy to talk more about it offline. The following (very rough!) notes are meant to sketch one of the most famous problems in this area.
-
-### Another Story (OUTLINE)
-
-It's the early 1900's. Hilbert and others: *IS MATHEMATICS MECHANIZABLE*?
-
-In 30's: Church, Turing, Godel: "No. At least not completely." 
-  
-Why? A few reasons. Here's a challenge. Write for me a program `h(f, v)` that accepts two arguments:
-
-* another program; and
-* an input to that program.
-
-It must:
-
-* always terminate;
-* return true IFF f(v) terminates in finite time;
-* return false IFF f(v) does not terminate in finite time
-
-Suppose `h` exists, and can be embodied in our language. Then consider this program.
-
-```
-def g(x):
-  if h(g, x): # AM I GOING TO HALT? (remember h always terminates)
-    while(1); # NUH UH IM NOT!
-  else:       
-    return;   # HAHAHAHAHA YES I AM
-```
-
-Argh! Assuming that our halting function h is a program itself: CANNOT EXIST! This is called the "halting problem".
-
- 
-  Exercise: what consequences for us? OK to be philosophical, uncertain.
-
-  "Undecidability"
-    
-<!-- ![](./smt_7.png) -->
-<center><img width="50%" src="./smt_7.png" style="background-color:white"/></center>
-
-### What Does This Have To Do With SMT?
-
-Gödel also proved that number theory is undecidable: if you've got the natural numbers, multiplication, and addition, it is impossible to write an algorithm that answers _arbitrary_ questions about number theory in an _always correct_ way, in _finite_ time.
-
-There are also tricks you'll learn in 1010 that let you say "Well, if I could solve arbitrary questions about number theory, then I could turn the halting problem into a question about number theory!"
-
-There's so much more I'd like to talk about, but this lecture is already pretty disorganized, so I'm not going to plan on saying more today.
-
-
-
-
+...except that sometimes, we really can't do any better.
