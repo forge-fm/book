@@ -2,130 +2,134 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://forge-fm.github.io/book/2026/index.html</loc>
-         <lastmod>2026-03-30</lastmod>
+         <lastmod>2026-04-01</lastmod>
     </url>
     <url>
          <loc>https://forge-fm.github.io/book/2026/error_finders.html</loc>
-         <lastmod>2026-03-30</lastmod>
+         <lastmod>2026-04-01</lastmod>
     </url>
     <url>
          <loc>https://forge-fm.github.io/book/2026/appendix/errors.html</loc>
-         <lastmod>2026-03-30</lastmod>
+         <lastmod>2026-04-01</lastmod>
     </url>
     <url>
          <loc>https://forge-fm.github.io/book/2026/appendix/glossary.html</loc>
-         <lastmod>2026-03-30</lastmod>
+         <lastmod>2026-04-01</lastmod>
     </url>
     <url>
          <loc>https://forge-fm.github.io/book/2026/chapters/adder/rca.html</loc>
-         <lastmod>2026-03-30</lastmod>
+         <lastmod>2026-04-01</lastmod>
     </url>
     <url>
          <loc>https://forge-fm.github.io/book/2026/chapters/bst/bst.html</loc>
-         <lastmod>2026-03-30</lastmod>
+         <lastmod>2026-04-01</lastmod>
     </url>
     <url>
          <loc>https://forge-fm.github.io/book/2026/chapters/bst/descent.html</loc>
-         <lastmod>2026-03-30</lastmod>
+         <lastmod>2026-04-01</lastmod>
     </url>
     <url>
          <loc>https://forge-fm.github.io/book/2026/chapters/inductive/bsearch.html</loc>
-         <lastmod>2026-03-30</lastmod>
+         <lastmod>2026-04-01</lastmod>
     </url>
     <url>
          <loc>https://forge-fm.github.io/book/2026/chapters/manifesto/job.html</loc>
-         <lastmod>2026-03-30</lastmod>
+         <lastmod>2026-04-01</lastmod>
     </url>
     <url>
          <loc>https://forge-fm.github.io/book/2026/chapters/manifesto/manifesto.html</loc>
-         <lastmod>2026-03-30</lastmod>
+         <lastmod>2026-04-01</lastmod>
     </url>
     <url>
          <loc>https://forge-fm.github.io/book/2026/chapters/properties/pbt.html</loc>
-         <lastmod>2026-03-30</lastmod>
+         <lastmod>2026-04-01</lastmod>
     </url>
     <url>
          <loc>https://forge-fm.github.io/book/2026/chapters/qna/events.html</loc>
-         <lastmod>2026-03-30</lastmod>
+         <lastmod>2026-04-01</lastmod>
     </url>
     <url>
          <loc>https://forge-fm.github.io/book/2026/chapters/qna/relations.html</loc>
-         <lastmod>2026-03-30</lastmod>
+         <lastmod>2026-04-01</lastmod>
     </url>
     <url>
          <loc>https://forge-fm.github.io/book/2026/chapters/qna/static.html</loc>
-         <lastmod>2026-03-30</lastmod>
+         <lastmod>2026-04-01</lastmod>
     </url>
     <url>
          <loc>https://forge-fm.github.io/book/2026/chapters/relations/modeling-booleans-1.html</loc>
-         <lastmod>2026-03-30</lastmod>
+         <lastmod>2026-04-01</lastmod>
     </url>
     <url>
          <loc>https://forge-fm.github.io/book/2026/chapters/relations/reachability.html</loc>
-         <lastmod>2026-03-30</lastmod>
+         <lastmod>2026-04-01</lastmod>
     </url>
     <url>
          <loc>https://forge-fm.github.io/book/2026/chapters/relations/sets-beyond-assertions.html</loc>
-         <lastmod>2026-03-30</lastmod>
+         <lastmod>2026-04-01</lastmod>
     </url>
     <url>
          <loc>https://forge-fm.github.io/book/2026/chapters/relations/sets-induction-mutex.html</loc>
-         <lastmod>2026-03-30</lastmod>
+         <lastmod>2026-04-01</lastmod>
     </url>
     <url>
          <loc>https://forge-fm.github.io/book/2026/chapters/solvers/bounds_booleans_how_forge_works.html</loc>
-         <lastmod>2026-03-30</lastmod>
+         <lastmod>2026-04-01</lastmod>
     </url>
     <url>
          <loc>https://forge-fm.github.io/book/2026/chapters/solvers/cegis.html</loc>
-         <lastmod>2026-03-30</lastmod>
+         <lastmod>2026-04-01</lastmod>
     </url>
     <url>
          <loc>https://forge-fm.github.io/book/2026/chapters/solvers/dpll.html</loc>
-         <lastmod>2026-03-30</lastmod>
+         <lastmod>2026-04-01</lastmod>
     </url>
     <url>
          <loc>https://forge-fm.github.io/book/2026/chapters/solvers/resolution.html</loc>
-         <lastmod>2026-03-30</lastmod>
+         <lastmod>2026-04-01</lastmod>
     </url>
     <url>
          <loc>https://forge-fm.github.io/book/2026/chapters/solvers/smt.html</loc>
-         <lastmod>2026-03-30</lastmod>
+         <lastmod>2026-04-01</lastmod>
+    </url>
+    <url>
+         <loc>https://forge-fm.github.io/book/2026/chapters/solvers/undecidability.html</loc>
+         <lastmod>2026-04-01</lastmod>
     </url>
     <url>
          <loc>https://forge-fm.github.io/book/2026/chapters/temporal/fixing_lock_temporal.html</loc>
-         <lastmod>2026-03-30</lastmod>
+         <lastmod>2026-04-01</lastmod>
     </url>
     <url>
          <loc>https://forge-fm.github.io/book/2026/chapters/temporal/liveness_and_lassos.html</loc>
-         <lastmod>2026-03-30</lastmod>
+         <lastmod>2026-04-01</lastmod>
     </url>
     <url>
          <loc>https://forge-fm.github.io/book/2026/chapters/temporal/obligations_past.html</loc>
-         <lastmod>2026-03-30</lastmod>
+         <lastmod>2026-04-01</lastmod>
     </url>
     <url>
          <loc>https://forge-fm.github.io/book/2026/chapters/temporal/temporal_operators.html</loc>
-         <lastmod>2026-03-30</lastmod>
+         <lastmod>2026-04-01</lastmod>
     </url>
     <url>
          <loc>https://forge-fm.github.io/book/2026/chapters/temporal/temporal_operators_2.html</loc>
-         <lastmod>2026-03-30</lastmod>
+         <lastmod>2026-04-01</lastmod>
     </url>
     <url>
          <loc>https://forge-fm.github.io/book/2026/chapters/temporal/testing_temporal.html</loc>
-         <lastmod>2026-03-30</lastmod>
+         <lastmod>2026-04-01</lastmod>
     </url>
     <url>
          <loc>https://forge-fm.github.io/book/2026/chapters/ttt/ttt.html</loc>
-         <lastmod>2026-03-30</lastmod>
+         <lastmod>2026-04-01</lastmod>
     </url>
     <url>
          <loc>https://forge-fm.github.io/book/2026/chapters/ttt/ttt_games.html</loc>
-         <lastmod>2026-03-30</lastmod>
+         <lastmod>2026-04-01</lastmod>
     </url>
     <url>
          <loc>https://forge-fm.github.io/book/2026/chapters/validation/validating_events.html</loc>
-         <lastmod>2026-03-30</lastmod>
+         <lastmod>2026-04-01</lastmod>
     </url>
 </urlset>

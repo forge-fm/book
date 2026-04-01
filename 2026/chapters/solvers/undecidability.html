@@ -10,27 +10,31 @@
       
       
       
-        <link rel="canonical" href="https://forge-fm.github.io/book/2026/appendix/glossary.html">
+        <link rel="canonical" href="https://forge-fm.github.io/book/2026/chapters/solvers/undecidability.html">
       
       
+        <link rel="prev" href="smt.html">
+      
+      
+        <link rel="next" href="../../error_finders.html">
       
       
         
       
       
-      <link rel="icon" href="../assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
     
     
       
-        <title>Glossary - Logic for Systems</title>
+        <title>Undecidability (Briefly) - Logic for Systems</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -49,9 +53,9 @@
       
     
     
-      <link rel="stylesheet" href="../stylesheets/extra.css">
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -76,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#glossary" class="md-skip">
+        <a href="#how-do-we-count" class="md-skip">
           Skip to content
         </a>
       
@@ -96,7 +100,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../index.html" title="Logic for Systems" class="md-header__button md-logo" aria-label="Logic for Systems" data-md-component="logo">
+    <a href="../../index.html" title="Logic for Systems" class="md-header__button md-logo" aria-label="Logic for Systems" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -116,7 +120,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Glossary
+              Undecidability (Briefly)
             
           </span>
         </div>
@@ -234,7 +238,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../index.html" title="Logic for Systems" class="md-nav__button md-logo" aria-label="Logic for Systems" data-md-component="logo">
+    <a href="../../index.html" title="Logic for Systems" class="md-nav__button md-logo" aria-label="Logic for Systems" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -264,7 +268,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../index.html" class="md-nav__link">
+      <a href="../../index.html" class="md-nav__link">
         
   
   
@@ -353,7 +357,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../chapters/manifesto/job.html" class="md-nav__link">
+      <a href="../manifesto/job.html" class="md-nav__link">
         
   
   
@@ -381,7 +385,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../chapters/manifesto/manifesto.html" class="md-nav__link">
+      <a href="../manifesto/manifesto.html" class="md-nav__link">
         
   
   
@@ -409,7 +413,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../chapters/properties/pbt.html" class="md-nav__link">
+      <a href="../properties/pbt.html" class="md-nav__link">
         
   
   
@@ -508,7 +512,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../chapters/ttt/ttt.html" class="md-nav__link">
+      <a href="../ttt/ttt.html" class="md-nav__link">
         
   
   
@@ -536,7 +540,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../chapters/bst/bst.html" class="md-nav__link">
+      <a href="../bst/bst.html" class="md-nav__link">
         
   
   
@@ -564,7 +568,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../chapters/adder/rca.html" class="md-nav__link">
+      <a href="../adder/rca.html" class="md-nav__link">
         
   
   
@@ -592,7 +596,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../chapters/qna/static.html" class="md-nav__link">
+      <a href="../qna/static.html" class="md-nav__link">
         
   
   
@@ -693,7 +697,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../chapters/ttt/ttt_games.html" class="md-nav__link">
+      <a href="../ttt/ttt_games.html" class="md-nav__link">
         
   
   
@@ -721,7 +725,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../chapters/inductive/bsearch.html" class="md-nav__link">
+      <a href="../inductive/bsearch.html" class="md-nav__link">
         
   
   
@@ -749,7 +753,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../chapters/bst/descent.html" class="md-nav__link">
+      <a href="../bst/descent.html" class="md-nav__link">
         
   
   
@@ -777,7 +781,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../chapters/validation/validating_events.html" class="md-nav__link">
+      <a href="../validation/validating_events.html" class="md-nav__link">
         
   
   
@@ -805,7 +809,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../chapters/qna/events.html" class="md-nav__link">
+      <a href="../qna/events.html" class="md-nav__link">
         
   
   
@@ -908,7 +912,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../chapters/relations/modeling-booleans-1.html" class="md-nav__link">
+      <a href="../relations/modeling-booleans-1.html" class="md-nav__link">
         
   
   
@@ -936,7 +940,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../chapters/relations/reachability.html" class="md-nav__link">
+      <a href="../relations/reachability.html" class="md-nav__link">
         
   
   
@@ -964,7 +968,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../chapters/relations/sets-induction-mutex.html" class="md-nav__link">
+      <a href="../relations/sets-induction-mutex.html" class="md-nav__link">
         
   
   
@@ -992,7 +996,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../chapters/relations/sets-beyond-assertions.html" class="md-nav__link">
+      <a href="../relations/sets-beyond-assertions.html" class="md-nav__link">
         
   
   
@@ -1020,7 +1024,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../chapters/solvers/bounds_booleans_how_forge_works.html" class="md-nav__link">
+      <a href="bounds_booleans_how_forge_works.html" class="md-nav__link">
         
   
   
@@ -1048,7 +1052,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../chapters/qna/relations.html" class="md-nav__link">
+      <a href="../qna/relations.html" class="md-nav__link">
         
   
   
@@ -1151,7 +1155,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../chapters/temporal/liveness_and_lassos.html" class="md-nav__link">
+      <a href="../temporal/liveness_and_lassos.html" class="md-nav__link">
         
   
   
@@ -1179,7 +1183,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../chapters/temporal/temporal_operators.html" class="md-nav__link">
+      <a href="../temporal/temporal_operators.html" class="md-nav__link">
         
   
   
@@ -1207,7 +1211,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../chapters/temporal/temporal_operators_2.html" class="md-nav__link">
+      <a href="../temporal/temporal_operators_2.html" class="md-nav__link">
         
   
   
@@ -1235,7 +1239,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../chapters/temporal/obligations_past.html" class="md-nav__link">
+      <a href="../temporal/obligations_past.html" class="md-nav__link">
         
   
   
@@ -1263,7 +1267,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../chapters/temporal/fixing_lock_temporal.html" class="md-nav__link">
+      <a href="../temporal/fixing_lock_temporal.html" class="md-nav__link">
         
   
   
@@ -1291,7 +1295,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../chapters/temporal/testing_temporal.html" class="md-nav__link">
+      <a href="../temporal/testing_temporal.html" class="md-nav__link">
         
   
   
@@ -1386,7 +1390,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../chapters/solvers/dpll.html" class="md-nav__link">
+      <a href="dpll.html" class="md-nav__link">
         
   
   
@@ -1414,7 +1418,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../chapters/solvers/resolution.html" class="md-nav__link">
+      <a href="resolution.html" class="md-nav__link">
         
   
   
@@ -1446,8 +1450,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -1464,13 +1470,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
         
           
           <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
@@ -1491,7 +1495,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_8">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1509,7 +1513,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../chapters/solvers/smt.html" class="md-nav__link">
+      <a href="smt.html" class="md-nav__link">
         
   
   
@@ -1534,10 +1538,35 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../chapters/solvers/undecidability.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Undecidability (Briefly)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="undecidability.html" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1553,6 +1582,68 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-do-we-count" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How do we count?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-many-programs-are-there" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How many programs are there?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#another-story-halting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Another Story: Halting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-does-this-have-to-do-with-smt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Does This Have To Do With SMT?
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1630,7 +1721,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../error_finders.html" class="md-nav__link">
+      <a href="../../error_finders.html" class="md-nav__link">
         
   
   
@@ -1675,8 +1766,58 @@
   
   
   
-    
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-do-we-count" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How do we count?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-many-programs-are-there" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How many programs are there?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#another-story-halting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Another Story: Halting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-does-this-have-to-do-with-smt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Does This Have To Do With SMT?
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1696,9 +1837,150 @@
   
 
 
-<h1 id="glossary">Glossary<a class="headerlink" href="#glossary" title="Permanent link">&para;</a></h1>
-<p>This section briefly defines a few terms, most of which are used in Forge. Since Forge has multiple language levels, some of these terms shouldn't be encountered until later in the course; we list them anyway, just in case. </p>
-<p><em>Arity</em>: FILL</p>
+  <h1>Undecidability (Briefly)</h1>
+
+<p>I want to tell you a story&mdash;with only <em>some</em> embellishment. </p>
+<h2 id="how-do-we-count">How do we count?<a class="headerlink" href="#how-do-we-count" title="Permanent link">&para;</a></h2>
+<p>First, some context. How do we count things? Does <span class="arithmatex">\({1,2,3}\)</span> have the same number of elements as <span class="arithmatex">\({A, B, C}\)</span>? What about <span class="arithmatex">\(\mathbb{N}\)</span> vs. <span class="arithmatex">\(\mathbb{N} \cup \{BrownU\}\)</span>? If we're comparing infinite sets, then it seems reasonable to say that they have the same size if we can make a bijection between them: a 1-1 mapping. </p>
+<p>But then, counter-intuitively, <span class="arithmatex">\(\mathbb{N}\)</span> and <span class="arithmatex">\(\mathbb{N} \cup \{BrownU\}\)</span> are the same size. Why? The idea is encoded in a thought experiment called <em>Hilbert's Hotel</em>: suppose you work at the front desk of an infinite hotel. You have a guest room for every natural number. Tonight, every room is occupied. But then a new guest arrives. Can you find room for them?</p>
+<details class="note">
+<summary>Think, then click!</summary>
+<p>Yes! Here's how. For every room <span class="arithmatex">\(i\)</span>, tell that guest to move into room <span class="arithmatex">\(i+1\)</span>. You'll never run out of rooms, and room 0 will be free for the new guest. Every guest will need to do a finite amount of work, but assuming we can send this message to everyone at once, it works out.</p>
+<p><!-- <img alt="" src="./smt_6.png" /> -->
+<center><img width="50%" src="./smt_6.png" style="background-color:white"/></center></p>
+</details>
+<p>So, it's the late 1800's. Ideas like Hilbert's hotel have excited the mathematical world. The fervor is almost spiritual: can we use this trick to show that <em>every</em> infinite set is the same size? Are all infinities one, in a philosophical sense?</p>
+<p>At this time, moderately successful mathematician named Georg Cantor. He was in his 40's when he made a groundbreaking discovery&mdash;contradicting the conventional wisdom (thanks, Hardy) that young mathematicians do all the interesting work. <strong>Cantor proved that the power set of <span class="arithmatex">\(\mathbb{N}\)</span>, that is, the set of subsets of <span class="arithmatex">\(\mathbb{N}\)</span>, must be strictly larger than <span class="arithmatex">\(\mathbb{N}\)</span>.</strong></p>
+<p>At the time, there is pandemonium. Later on, mathematicians said that his ideas came 100 years before the community was ready for them. Hilbert himself actually said, later, that <a href="https://en.wikipedia.org/wiki/Cantor%27s_paradise">"No one shall drive us from the paradise Cantor has created for us."</a> A pretty ringing endorsement from one of the greatest then-living mathematicians.</p>
+<p>How did Cantor prove this? By contradiction. Assume you're given a bijection between a set <span class="arithmatex">\(\mathbb{N}\)</span> and its power set. Now, this bijection can be thought of as an infinite table, with subsets of <span class="arithmatex">\(N\)</span> as rows and elements of <span class="arithmatex">\(N\)</span> as columns. The cells contain booleans: true if the subset (row) contains the element (column), and false if it doesn't. </p>
+<table>
+<thead>
+<tr>
+<th>Set</th>
+<th>0</th>
+<th>1</th>
+<th>...</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>{}</td>
+<td>N</td>
+<td>N</td>
+<td>...</td>
+</tr>
+<tr>
+<td>{0}</td>
+<td>Y</td>
+<td>N</td>
+<td>...</td>
+</tr>
+<tr>
+<td>{0, 1}</td>
+<td>Y</td>
+<td>Y</td>
+<td>...</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<td>\mathbb{N}</td>
+<td>Y</td>
+<td>Y</td>
+<td>...</td>
+</tr>
+<tr>
+<td>evens</td>
+<td>Y</td>
+<td>N</td>
+<td>...</td>
+</tr>
+<tr>
+<td>odds</td>
+<td>N</td>
+<td>Y</td>
+<td>...</td>
+</tr>
+</tbody>
+</table>
+<p>Cantor showed that there must <em>always</em> be a subset of <span class="arithmatex">\(\mathbb{N}\)</span> that <em>isn't</em> represented as a row in the table. That is, such a bijection cannot exist. Even with the very permissive definition of "same size" we use for infinite sets, there are <em>still</em> more subsets of the natural numbers than there are natural numbers. So: what is the subset that can't be represented as a row in the table?</p>
+<details class="note">
+<summary>Think, then click!</summary>
+<p>Read off the diagonal from the top-left onward, and invert each boolean. In the table above, the set would contain both 0 and 1 (because those first two rows do not contain them, respectively) and so on.</p>
+<p>This technique is called "Cantor diagonalization".</p>
+</details>
+<h2 id="how-many-programs-are-there">How many programs are there?<a class="headerlink" href="#how-many-programs-are-there" title="Permanent link">&para;</a></h2>
+<p>Why does this matter to <em>US</em>? Let me ask you two questions:</p>
+<p><strong>QUESTION 1</strong>: How many syntactically-valid Java program source files are there?</p>
+<details class="note">
+<summary>Think, then click!</summary>
+<p>There are infinitely many. But let's be more precise. The <em>source code</em> of any program is a finite text file. The size may be <em>unbounded</em>, but that's not the same as infinite. And the alphabet used for each character is also finite (let's say between 0 and 255, although that isn't always entirely accurate). </p>
+<p>Thus, we can think of a program source file as a finite sequence of numbers between 0 and 255. We can encode a Java program's code as a natural number! There cannot be more Java program source files than there are natural numbers.</p>
+</details>
+<p><strong>QUESTION 2</strong>: How many mathematical functions from non-negative integer inputs to <code>bool</code> outputs are there, assuming your language has unbounded integers?</p>
+<details class="note">
+<summary>Think, then click!</summary>
+<p>Each such function returns true or false for any given non-negative integer. In effect, it is defining a specific set of numbers. There are as many such mathematical functions as there are <em>sets</em> of natural numbers.</p>
+</details>
+<p>Try as you might, it is impossible to express every predicate on numbers in any programming language where program texts are finite. Any given language cannot express some mathematical concepts&mdash;indeed, the overwhelming majority of them!</p>
+<div class="admonition warning">
+<p class="admonition-title">It's not easily fixed.</p>
+<p>You might be tempted to say: let's just define many different programming languages. But think: how do we define a new programming language? Is each definition finite? Then consider the version of Hilbert's hotel where a new guest arrives for <em>every</em> natural number.</p>
+</div>
+<p>In any case, programs have unavoidable limits to their expressive power. But maybe all the inexpressible things don't matter, because nobody actually needs or cares about them? </p>
+<p>That would be comforting. Unfortunately, it's not true.</p>
+<div class="admonition note">
+<p class="admonition-title">No, AI can't escape this problem.</p>
+<p>There's a lot of speculation about whether artificial intelligence will exceed our current capabilities. Personally, I think that the answer is "yes" in many ways&mdash;but not here. We're talking about a limit baked into mathematics itself. None of the popular-science speculation that I've seen (e.g., quantum computing) escapes this constraint. We'd need to somehow <a href="https://en.wikipedia.org/wiki/Barber_paradox">move the barber out of town</a>.</p>
+</div>
+<h2 id="another-story-halting">Another Story: Halting<a class="headerlink" href="#another-story-halting" title="Permanent link">&para;</a></h2>
+<p>It's the early 1900's. Hilbert (him again) and many others are wondering whether the study of mathematics can be mechanized. Can we write a procedure that finds proofs for us? More precisely (using today's terms) is it possible to write a program that accepts a conjecture and:
+    - always terminates in finite time; 
+    - returns a proof if the conjecture holds; 
+    - returns a counterexample if the conjecture doesn't hold. (Does this sound familiar?)</p>
+<p>Then, in the 1930's, Kurt Gödel, Alonzo Church, Alan Turing, and others showed (using different methods) that the that the answer was no&mdash;at least, not completely. Here's a challenge.</p>
+<p>Write for me a program <code>h(f, v)</code> that accepts two arguments:
+    * another program (<code>f</code>); and
+    * an input to that program (<code>v</code>).
+It must:
+    * always terminate;
+    * return true IFF f(v) terminates in finite time; and
+    * return false IFF f(v) does not terminate in finite time.</p>
+<p>Suppose <code>h</code> exists, and can be embodied in whatever language we're using. Now we can write this other program:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>def g(x):
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  if h(g, x):
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    while(1);
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  else:       
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    return;  
+</code></pre></div>
+<details class="warning">
+<summary>Why is this program a problem?</summary>
+<p>For your convenience, I've added comments to <code>h</code>:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>def g(x):
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    if h(g, x): # AM I MYSELF (g) GOING TO HALT? 
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>        while(1); # NUH UH, NO I&#39;M NOT!
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    else:       
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>        return;   # HAHAHAHAHA YES I AM
+</code></pre></div></p>
+</details>
+<p>Argh! No matter how clever we are with <code>f</code>, <code>h</code> cannot exist. This is called the <em>halting problem</em>: it is impossible to write a program that (in finite time, without error) says whether another program terminates on a given input. </p>
+<details class="note">
+<summary>What are consequences for us? It's OK to be philosophical or uncertain.</summary>
+<p>It turns out that it's impossible to write an always-terminating, always-correct oracle for an arbitrary program's behavior&mdash;if the two languages have the same expressive power. This leads to what I call the Triangle of Existential Despair:
+<center><img width="50%" src="./smt_7.png" style="background-color:white"/></center>
+If we want to analyze programs, we need to give up one of these 4 requirements.</p>
+</details>
+<h2 id="what-does-this-have-to-do-with-smt">What Does This Have To Do With SMT?<a class="headerlink" href="#what-does-this-have-to-do-with-smt" title="Permanent link">&para;</a></h2>
+<p>Gödel also proved that number theory is undecidable: if you've got <a href="https://en.wikipedia.org/wiki/Peano_axioms#Undecidability_and_incompleteness">the natural numbers, along with multiplication and addition</a>, it is impossible to write an algorithm that answers <em>arbitrary</em> questions about number theory in an <em>always correct</em> way, in <em>finite</em> time. So we should expect a theory-solver for integer arithmetic to be incomplete. </p>
+<p>There's a lot more we could talk about. The area is technically deep, and beyond the scope of this book. But here are two more true statements about the world:</p>
+<ul>
+<li>If we give up multiplication, and just keep addition, <a href="https://en.wikipedia.org/wiki/Presburger_arithmetic">an algorithm exists and we know it</a>.</li>
+<li>If we keep both addition and multiplication, but switch to real numbers instead of integers, an algorithm exists and we know it. (<a href="https://en.wikipedia.org/wiki/Real_closed_field#Decidability_and_quantifier_elimination">It's slow, but it exists and always terminates.</a>)</li>
+</ul>
 
 
 
@@ -1754,12 +2036,12 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "latest", "provider": "mike"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
-        <script src="../javascripts/mathjax.js"></script>
+        <script src="../../javascripts/mathjax.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
