@@ -54,17 +54,18 @@ Why does this matter to *US*? Let me ask you two questions:
 ??? note "Think, then click!"
     Each such function returns true or false for any given non-negative integer. In effect, it is defining a specific set of numbers. There are as many such mathematical functions as there are _sets_ of natural numbers.
 
-Try as you might, it is impossible to express every predicate on numbers in any programming language where program texts are finite. Any given language cannot express some mathematical concepts&mdash;indeed, the overwhelming majority of them!
+Try as you might, it is impossible for any programming language to express every predicate on numbers. Any given language cannot express some mathematical concepts&mdash;indeed, the overwhelming majority of them!
 
 !!! warning "It's not easily fixed."
     You might be tempted to say: let's just define many different programming languages. But think: how do we define a new programming language? Is each definition finite? Then consider the version of Hilbert's hotel where a new guest arrives for _every_ natural number.
 
-In any case, programs have unavoidable limits to their expressive power. But maybe all the inexpressible things don't matter, because nobody actually needs or cares about them? 
+!!! warning "But can't programs only work with finite data?"
+    Moreover, you might know that no _finite_ subsets of the naturals have cardinality larger than the naturals themselves. (This is true.) Since computers only work with finite data, doesn't that make this all a non-issue? Unfortunately, no. We write programs that _represent_ infinite sets all the time. Here's one written in Python: `lambda x: x % 2 == 0`. 
 
-That would be comforting. Unfortunately, it's not true.
+Programs simply have unavoidable limits to their expressive power. But maybe all the inexpressible things don't matter, because nobody actually needs or cares about them? That would be comforting. But it's not true, either.
 
-!!! note "No, AI can't escape this problem."
-    There's a lot of speculation about whether artificial intelligence will exceed our current capabilities. Personally, I think that the answer is "yes" in many ways&mdash;but not here. We're talking about a limit baked into mathematics itself. None of the popular-science speculation that I've seen (e.g., quantum computing) escapes this constraint. We'd need to somehow [move the barber out of town](https://en.wikipedia.org/wiki/Barber_paradox).
+!!! note "AI can't escape this problem."
+    There's a lot of speculation about whether artificial intelligence will eventually exceed our current capabilities. Personally, I think that the answer is "yes" in many ways&mdash;but not here. We're talking about a limit baked into mathematics itself. None of the popular-science speculation that I've seen (e.g., quantum computing) escapes this constraint. We'd need to somehow ["move the barber out of town"](https://en.wikipedia.org/wiki/Barber_paradox).
 
 ## Another Story: Halting
 
