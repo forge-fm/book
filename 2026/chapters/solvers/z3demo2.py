@@ -112,7 +112,7 @@ def demoFactoringIntWithUniversal():
 #if __name__ == "__main__": demoFactoringIntWithUniversal()
 
 def demoFactoringReals():
-    s = Solver()
+    s = Solver() 
     x, r1, r2 = Reals('x root1 root2') # real number vars
     # ^ As before, solve for r1, r2 because they are unbound in outer constraints
     #   x is quantified over and therefore not a var to "solve" for
@@ -189,4 +189,4 @@ def nQueens(numQ):
             print(' '.join(["Q" if s.model().evaluate(cells[i][j]) else "_" for j in range(0, numQ) ])) # type: ignore
     else: 
         print("unsat")
-# if __name__ == "__main__": nQueens(8)
+if __name__ == "__main__": nQueens(40)
