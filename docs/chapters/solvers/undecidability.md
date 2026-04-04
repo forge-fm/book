@@ -3,9 +3,9 @@ I want to tell you a story&mdash;with only _some_ embellishment.
 
 ## How do we count?
 
-First, some context. How do we count things? Does ${1,2,3}$ have the same number of elements as ${A, B, C}$? What about $\mathbb{N}$ vs. $\mathbb{N} \cup \{BrownU\}$? If we're comparing infinite sets, then it seems reasonable to say that they have the same size if we can make a bijection between them: a 1-1 mapping. 
+First, some context. How do we count things? Does $\{1,2,3\}$ have the same number of elements as $\{A, B, C\}$? What about $\mathbb{N}$ vs. $\mathbb{N} \cup \{BrownU\}$? If we're comparing infinite sets, then it seems reasonable to say that they have the same size if we can make a bijection between them: a 1-1 correspondence.
 
-But then, counter-intuitively, $\mathbb{N}$ and $\mathbb{N} \cup \{BrownU\}$ are the same size. Why? The idea is encoded in a thought experiment called _Hilbert's Hotel_: suppose you work at the front desk of an infinite hotel. You have a guest room for every natural number. Tonight, every room is occupied. But then a new guest arrives. Can you find room for them?
+But then, counter-intuitively, $\mathbb{N}$ and $\mathbb{N} \cup \{BrownU\}$ are the same size. Why? The idea is encoded in a thought experiment called [_Hilbert's Hotel_](https://en.wikipedia.org/wiki/Hilbert%27s_paradox_of_the_Grand_Hotel): suppose you work at the front desk of an infinite hotel. You have a guest room for every natural number. Tonight, every room is occupied. But then a new guest arrives. Can you find room for them?
 
 ??? note "Think, then click!"
     Yes! Here's how. For every room $i$, tell that guest to move into room $i+1$. You'll never run out of rooms, and room 0 will be free for the new guest. Every guest will need to do a finite amount of work, but assuming we can send this message to everyone at once, it works out.
@@ -13,30 +13,35 @@ But then, counter-intuitively, $\mathbb{N}$ and $\mathbb{N} \cup \{BrownU\}$ are
     <!-- ![](./smt_6.png) -->
     <center><img width="50%" src="./smt_6.png" style="background-color:white"/></center>
 
-So, it's the late 1800's. Ideas like Hilbert's hotel have excited the mathematical world. The fervor is almost spiritual: can we use this trick to show that _every_ infinite set is the same size? Are all infinities one, in a philosophical sense?
+Let's go back in time to the late 1800's. Mathematicians wanted to know: is _every_ infinite set the same cardinality? Are all infinities one, in a philosophical sense?
 
-At this time, moderately successful mathematician named Georg Cantor. He was in his 40's when he made a groundbreaking discovery&mdash;contradicting the conventional wisdom (thanks, Hardy) that young mathematicians do all the interesting work. **Cantor proved that the power set of $\mathbb{N}$, that is, the set of subsets of $\mathbb{N}$, must be strictly larger than $\mathbb{N}$.**
+<!-- % Born in 1845
+% First article: 1874 (29)
+% Diagonalization: 1891 -->
 
-At the time, there is pandemonium. Later on, mathematicians said that his ideas came 100 years before the community was ready for them. Hilbert himself actually said, later, that ["No one shall drive us from the paradise Cantor has created for us."](https://en.wikipedia.org/wiki/Cantor%27s_paradise) A pretty ringing endorsement from one of the greatest then-living mathematicians.
+In 1874, a mathematician named [Georg Cantor](https://en.wikipedia.org/wiki/Georg_Cantor) published an article showing that _not all infinites are the same size_. This was groundbreaking, and [extremely controversial](https://en.wikipedia.org/wiki/Controversy_over_Cantor%27s_theory). Mathematicians later said that his ideas came 100 years before the community was ready for them. Hilbert himself actually said (decades later) that ["No one shall drive us from the paradise Cantor has created for us."](https://en.wikipedia.org/wiki/Cantor%27s_paradise) A pretty ringing endorsement from one of the greatest then-living mathematicians.
 
-How did Cantor prove this? By contradiction. Assume you're given a bijection between a set $\mathbb{N}$ and its power set. Now, this bijection can be thought of as an infinite table, with subsets of $N$ as rows and elements of $N$ as columns. The cells contain booleans: true if the subset (row) contains the element (column), and false if it doesn't. 
+But at the time, the controversy motivated him to develop an alternative proof, which he published in 1891. This is the version we usually talk about in set-theory classes today: **The power set of $\mathbb{N}$, that is, the set of subsets of $\mathbb{N}$, is of strictly larger cardinality than $\mathbb{N}$.**
 
-|   Set   | 0    | 1    | ...  |
-| ------- | ---- | ---- | ---- | 
-| {}      | N    | N    | ...  | 
-| {0}     | Y    | N    | ...  | 
-| {0, 1}  | Y    | Y    | ...  | 
-| ...     | ...  | ...  | ...  | 
-| \mathbb{N}  | Y    | Y    | ...  | 
-| evens       | Y    | N    | ...  | 
-| odds        | N    | Y    | ...  | 
+How did Cantor prove this? By contradiction. Assume you're given a bijection between a set $\mathbb{N}$ and its power set. Now, this bijection can be thought of as an infinite table, with rows indexing subsets of $\mathbb{N}$ and columns containing natural numbers. The inner cells say whether or not that set (i.e., row index) contains a given natural number (i.e., column label). **If the two can be put into correspondence, then it should be possible to place every possible subset as a row in the table.** 
+
+| Index |   Contents   | 0    | 1    | ...  |
+| ----- | ------- | ---- | ---- | ---- | 
+| 0     | {}      | N    | N    | ...  | 
+| 1     | {0}     | Y    | N    | ...  | 
+| 2     | {0, 1}  | Y    | Y    | ...  | 
+| 3     | ...     | ...  | ...  | ...  | 
+| 4     | \mathbb{N}  | Y    | Y    | ...  | 
+| 5     | evens       | Y    | N    | ...  | 
+| 6     | odds        | N    | Y    | ...  | 
+| ...   | ...       | ... | ... | ... |
 
 Cantor showed that there must _always_ be a subset of $\mathbb{N}$ that _isn't_ represented as a row in the table. That is, such a bijection cannot exist. Even with the very permissive definition of "same size" we use for infinite sets, there are _still_ more subsets of the natural numbers than there are natural numbers. So: what is the subset that can't be represented as a row in the table?
 
 ??? note "Think, then click!"
     Read off the diagonal from the top-left onward, and invert each boolean. In the table above, the set would contain both 0 and 1 (because those first two rows do not contain them, respectively) and so on.
 
-    This technique is called "Cantor diagonalization".
+    This technique is called ["Cantor diagonalization"](https://en.wikipedia.org/wiki/Cantor%27s_diagonal_argument).
 
 ## How many programs are there?
 
@@ -49,7 +54,7 @@ Why does this matter to *US*? Let me ask you two questions:
 
     Thus, we can think of a program source file as a finite sequence of numbers between 0 and 255. We can encode a Java program's code as a natural number! There cannot be more Java program source files than there are natural numbers.
 
-**QUESTION 2**: How many mathematical functions from non-negative integer inputs to `bool` outputs are there, assuming your language has unbounded integers?
+**QUESTION 2**: How many mathematical functions from non-negative integer inputs to `bool` outputs are there? (Don't worry about 32-bit vs. 64-bit vs. bignums: we're talking about mathematics.)
 
 ??? note "Think, then click!"
     Each such function returns true or false for any given non-negative integer. In effect, it is defining a specific set of numbers. There are as many such mathematical functions as there are _sets_ of natural numbers.
@@ -74,7 +79,7 @@ It's the early 1900's. Hilbert (him again) and many others are wondering whether
     - returns a proof if the conjecture holds; 
     - returns a counterexample if the conjecture doesn't hold. (Does this sound familiar?)
 
-Then, in the 1930's, Kurt Gödel, Alonzo Church, Alan Turing, and others showed (using different methods) that the that the answer was no&mdash;at least, not completely. Here's a challenge.
+Then, in the 1930's, [Kurt Gödel, Alonzo Church, Alan Turing, and others showed](https://plato.stanford.edu/entries/church-turing/decision-problem.html) that the answer was no&mdash;at least, not completely. Different courses cover this in different ways (you can even use diagonalization to prove this!). But here's the most common one:
   
 Write for me a program `h(f, v)` that accepts two arguments:
     * another program (`f`); and
@@ -104,16 +109,20 @@ def g(x):
             return;   # HAHAHAHAHA YES I AM
     ```
 
-Argh! No matter how clever we are with `f`, `h` cannot exist. This is called the _halting problem_: it is impossible to write a program that (in finite time, without error) says whether another program terminates on a given input. 
+Argh! No matter how clever we are, `h` cannot exist. This is called the _halting problem_: it is impossible to write a program that (in finite time, without error) says whether another program terminates on a given input. 
 
 ??? note "What are consequences for us? It's OK to be philosophical or uncertain."
-    It turns out that it's impossible to write an always-terminating, always-correct oracle for an arbitrary program's behavior&mdash;if the two languages have the same expressive power. This leads to what I call the Triangle of Existential Despair:
+    It turns out that it's impossible to write an always-terminating, always-correct oracle for an arbitrary program's behavior&mdash;if the two languages have the same expressive power. This leads to what I call the Triangle of Existential Despair, inspired by the maxim: "Fast, cheap, and good: pick two". If we want to analyze a program (in the general case, with no restrictions on the language), we have to give something up: termination, soundness, or completeness.
     <center><img width="50%" src="./smt_7.png" style="background-color:white"/></center>
-    If we want to analyze programs, we need to give up one of these 4 requirements.
+
+    This is a major reason why domain-specific languages are so useful. We know how to analyze regular expressions, but if they were encoded as arbitrary programs, analyzing them would be much harder unless the program was structured a specific way. 
 
 ## What Does This Have To Do With SMT?
 
-Gödel also proved that number theory is undecidable: if you've got [the natural numbers, along with multiplication and addition](https://en.wikipedia.org/wiki/Peano_axioms#Undecidability_and_incompleteness), it is impossible to write an algorithm that answers _arbitrary_ questions about number theory in an _always correct_ way, in _finite_ time. So we should expect a theory-solver for integer arithmetic to be incomplete. 
+<!-- Incompleteness: Gödel
+Undecidability of integer arithmetic: Church and Turing -->
+
+Church and Turing (building on Gödel's work) proved that number theory is undecidable: if you've got [the natural numbers, along with multiplication and addition](https://en.wikipedia.org/wiki/Peano_axioms#Undecidability_and_incompleteness), it is impossible to write an algorithm that answers _arbitrary_ questions about number theory in an _always correct_ way, in _finite_ time. So we should expect a theory-solver for integer arithmetic to be incomplete. 
 
 There's a lot more we could talk about. The area is technically deep, and beyond the scope of this book. But here are two more true statements about the world:
 
