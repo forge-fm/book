@@ -25,21 +25,18 @@ But at the time, the controversy motivated him to develop an alternative proof, 
 
 How did Cantor prove this? By contradiction. Assume you're given a bijection between a set $\mathbb{N}$ and its power set. Now, this bijection can be thought of as an infinite table, with rows indexing subsets of $\mathbb{N}$ and columns containing natural numbers. The inner cells say whether or not that set (i.e., row index) contains a given natural number (i.e., column label). **If the two can be put into correspondence, then it should be possible to place every possible subset as a row in the table.** 
 
-| Index |   Contents   | 0    | 1    | ...  |
-| ----- | ------- | ---- | ---- | ---- | 
-| 0     | {}      | N    | N    | ...  | 
-| 1     | {0}     | Y    | N    | ...  | 
-| 2     | {0, 1}  | Y    | Y    | ...  | 
-| 3     | ...     | ...  | ...  | ...  | 
-| 4     | \mathbb{N}  | Y    | Y    | ...  | 
-| 5     | evens       | Y    | N    | ...  | 
-| 6     | odds        | N    | Y    | ...  | 
-| ...   | ...       | ... | ... | ... |
+| Index | 0    | 1    | 2    | ...  |
+| ----- | ---- | ---- | ---- | ---- | 
+| 0     | 0    | 0    | 0    | ...  | 
+| 1     | 1    | 0    | 0    | ...  | 
+| 2     | 1    | 1    | 0    | ...  | 
+| 3     | 1    | 1    | 1    | ...  | 
+| ...   | ...  | ...  | ...  | ...  |
 
 Cantor showed that there must _always_ be a subset of $\mathbb{N}$ that _isn't_ represented as a row in the table. That is, such a bijection cannot exist. Even with the very permissive definition of "same size" we use for infinite sets, there are _still_ more subsets of the natural numbers than there are natural numbers. So: what is the subset that can't be represented as a row in the table?
 
 ??? note "Think, then click!"
-    Read off the diagonal from the top-left onward, and invert each boolean. In the table above, the set would contain both 0 and 1 (because those first two rows do not contain them, respectively) and so on.
+    Read off the diagonal from the top-left onward, and flip each bit. In the table above: row 0, column 0 is 0, so the diagonal set _contains_ 0. Row 1, column 1 is 0, so the diagonal set _contains_ 1. Row 2, column 2 is 0, so it _contains_ 2. Row 3, column 3 is 1, so it _does not contain_ 3. And so on.
 
     This technique is called ["Cantor diagonalization"](https://en.wikipedia.org/wiki/Cantor%27s_diagonal_argument).
 
