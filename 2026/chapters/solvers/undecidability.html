@@ -1841,44 +1841,59 @@
 
 <p>I want to tell you a story&mdash;with only <em>some</em> embellishment. </p>
 <h2 id="how-do-we-count">How do we count?<a class="headerlink" href="#how-do-we-count" title="Permanent link">&para;</a></h2>
-<p>First, some context. How do we count things? Does <span class="arithmatex">\({1,2,3}\)</span> have the same number of elements as <span class="arithmatex">\({A, B, C}\)</span>? What about <span class="arithmatex">\(\mathbb{N}\)</span> vs. <span class="arithmatex">\(\mathbb{N} \cup \{BrownU\}\)</span>? If we're comparing infinite sets, then it seems reasonable to say that they have the same size if we can make a bijection between them: a 1-1 mapping. </p>
-<p>But then, counter-intuitively, <span class="arithmatex">\(\mathbb{N}\)</span> and <span class="arithmatex">\(\mathbb{N} \cup \{BrownU\}\)</span> are the same size. Why? The idea is encoded in a thought experiment called <em>Hilbert's Hotel</em>: suppose you work at the front desk of an infinite hotel. You have a guest room for every natural number. Tonight, every room is occupied. But then a new guest arrives. Can you find room for them?</p>
+<p>First, some context. How do we count things? Does <span class="arithmatex">\(\{1,2,3\}\)</span> have the same number of elements as <span class="arithmatex">\(\{A, B, C\}\)</span>? What about <span class="arithmatex">\(\mathbb{N}\)</span> vs. <span class="arithmatex">\(\mathbb{N} \cup \{BrownU\}\)</span>? If we're comparing infinite sets, then it seems reasonable to say that they have the same size if we can make a bijection between them: a 1-1 correspondence.</p>
+<p>But then, counter-intuitively, <span class="arithmatex">\(\mathbb{N}\)</span> and <span class="arithmatex">\(\mathbb{N} \cup \{BrownU\}\)</span> are the same size. Why? The idea is encoded in a thought experiment called <a href="https://en.wikipedia.org/wiki/Hilbert%27s_paradox_of_the_Grand_Hotel"><em>Hilbert's Hotel</em></a>: suppose you work at the front desk of an infinite hotel. You have a guest room for every natural number. Tonight, every room is occupied. But then a new guest arrives. Can you find room for them?</p>
 <details class="note">
 <summary>Think, then click!</summary>
 <p>Yes! Here's how. For every room <span class="arithmatex">\(i\)</span>, tell that guest to move into room <span class="arithmatex">\(i+1\)</span>. You'll never run out of rooms, and room 0 will be free for the new guest. Every guest will need to do a finite amount of work, but assuming we can send this message to everyone at once, it works out.</p>
 <p><!-- <img alt="" src="./smt_6.png" /> -->
 <center><img width="50%" src="./smt_6.png" style="background-color:white"/></center></p>
 </details>
-<p>So, it's the late 1800's. Ideas like Hilbert's hotel have excited the mathematical world. The fervor is almost spiritual: can we use this trick to show that <em>every</em> infinite set is the same size? Are all infinities one, in a philosophical sense?</p>
-<p>At this time, moderately successful mathematician named Georg Cantor. He was in his 40's when he made a groundbreaking discovery&mdash;contradicting the conventional wisdom (thanks, Hardy) that young mathematicians do all the interesting work. <strong>Cantor proved that the power set of <span class="arithmatex">\(\mathbb{N}\)</span>, that is, the set of subsets of <span class="arithmatex">\(\mathbb{N}\)</span>, must be strictly larger than <span class="arithmatex">\(\mathbb{N}\)</span>.</strong></p>
-<p>At the time, there is pandemonium. Later on, mathematicians said that his ideas came 100 years before the community was ready for them. Hilbert himself actually said, later, that <a href="https://en.wikipedia.org/wiki/Cantor%27s_paradise">"No one shall drive us from the paradise Cantor has created for us."</a> A pretty ringing endorsement from one of the greatest then-living mathematicians.</p>
-<p>How did Cantor prove this? By contradiction. Assume you're given a bijection between a set <span class="arithmatex">\(\mathbb{N}\)</span> and its power set. Now, this bijection can be thought of as an infinite table, with subsets of <span class="arithmatex">\(N\)</span> as rows and elements of <span class="arithmatex">\(N\)</span> as columns. The cells contain booleans: true if the subset (row) contains the element (column), and false if it doesn't. </p>
+<p>Let's go back in time to the late 1800's. Mathematicians wanted to know: is <em>every</em> infinite set the same cardinality? Are all infinities one, in a philosophical sense?</p>
+<!-- % Born in 1845
+% First article: 1874 (29)
+% Diagonalization: 1891 -->
+
+<p>In 1874, a mathematician named <a href="https://en.wikipedia.org/wiki/Georg_Cantor">Georg Cantor</a> published an article showing that <em>not all infinites are the same size</em>. This was groundbreaking, and <a href="https://en.wikipedia.org/wiki/Controversy_over_Cantor%27s_theory">extremely controversial</a>. Mathematicians later said that his ideas came 100 years before the community was ready for them. Hilbert himself actually said (decades later) that <a href="https://en.wikipedia.org/wiki/Cantor%27s_paradise">"No one shall drive us from the paradise Cantor has created for us."</a> A pretty ringing endorsement from one of the greatest then-living mathematicians.</p>
+<p>But at the time, the controversy motivated him to develop an alternative proof, which he published in 1891. This is the version we usually talk about in set-theory classes today: <strong>The power set of <span class="arithmatex">\(\mathbb{N}\)</span>, that is, the set of subsets of <span class="arithmatex">\(\mathbb{N}\)</span>, is of strictly larger cardinality than <span class="arithmatex">\(\mathbb{N}\)</span>.</strong></p>
+<p>How did Cantor prove this? By contradiction. Assume you're given a bijection between a set <span class="arithmatex">\(\mathbb{N}\)</span> and its power set. Now, this bijection can be thought of as an infinite table, with rows indexing subsets of <span class="arithmatex">\(\mathbb{N}\)</span> and columns containing natural numbers. The inner cells say whether or not that set (i.e., row index) contains a given natural number (i.e., column label). <strong>If the two can be put into correspondence, then it should be possible to place every possible subset as a row in the table.</strong> </p>
 <table>
 <thead>
 <tr>
-<th>Set</th>
+<th>Index</th>
 <th>0</th>
 <th>1</th>
+<th>2</th>
 <th>...</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>{}</td>
-<td>N</td>
-<td>N</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
 <td>...</td>
 </tr>
 <tr>
-<td>{0}</td>
-<td>Y</td>
-<td>N</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
 <td>...</td>
 </tr>
 <tr>
-<td>{0, 1}</td>
-<td>Y</td>
-<td>Y</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>...</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
 <td>...</td>
 </tr>
 <tr>
@@ -1886,23 +1901,6 @@
 <td>...</td>
 <td>...</td>
 <td>...</td>
-</tr>
-<tr>
-<td>\mathbb{N}</td>
-<td>Y</td>
-<td>Y</td>
-<td>...</td>
-</tr>
-<tr>
-<td>evens</td>
-<td>Y</td>
-<td>N</td>
-<td>...</td>
-</tr>
-<tr>
-<td>odds</td>
-<td>N</td>
-<td>Y</td>
 <td>...</td>
 </tr>
 </tbody>
@@ -1910,8 +1908,8 @@
 <p>Cantor showed that there must <em>always</em> be a subset of <span class="arithmatex">\(\mathbb{N}\)</span> that <em>isn't</em> represented as a row in the table. That is, such a bijection cannot exist. Even with the very permissive definition of "same size" we use for infinite sets, there are <em>still</em> more subsets of the natural numbers than there are natural numbers. So: what is the subset that can't be represented as a row in the table?</p>
 <details class="note">
 <summary>Think, then click!</summary>
-<p>Read off the diagonal from the top-left onward, and invert each boolean. In the table above, the set would contain both 0 and 1 (because those first two rows do not contain them, respectively) and so on.</p>
-<p>This technique is called "Cantor diagonalization".</p>
+<p>Read off the diagonal from the top-left onward, and flip each bit. In the table above: row 0, column 0 is 0, so the diagonal set <em>contains</em> 0. Row 1, column 1 is 0, so the diagonal set <em>contains</em> 1. Row 2, column 2 is 0, so it <em>contains</em> 2. Row 3, column 3 is 1, so it <em>does not contain</em> 3. And so on.</p>
+<p>This technique is called <a href="https://en.wikipedia.org/wiki/Cantor%27s_diagonal_argument">"Cantor diagonalization"</a>.</p>
 </details>
 <h2 id="how-many-programs-are-there">How many programs are there?<a class="headerlink" href="#how-many-programs-are-there" title="Permanent link">&para;</a></h2>
 <p>Why does this matter to <em>US</em>? Let me ask you two questions:</p>
@@ -1921,7 +1919,7 @@
 <p>There are infinitely many. But let's be more precise. The <em>source code</em> of any program is a finite text file. The size may be <em>unbounded</em>, but that's not the same as infinite. And the alphabet used for each character is also finite (let's say between 0 and 255, although that isn't always entirely accurate). </p>
 <p>Thus, we can think of a program source file as a finite sequence of numbers between 0 and 255. We can encode a Java program's code as a natural number! There cannot be more Java program source files than there are natural numbers.</p>
 </details>
-<p><strong>QUESTION 2</strong>: How many mathematical functions from non-negative integer inputs to <code>bool</code> outputs are there, assuming your language has unbounded integers?</p>
+<p><strong>QUESTION 2</strong>: How many mathematical functions from non-negative integer inputs to <code>bool</code> outputs are there? (Don't worry about 32-bit vs. 64-bit vs. bignums: we're talking about mathematics.)</p>
 <details class="note">
 <summary>Think, then click!</summary>
 <p>Each such function returns true or false for any given non-negative integer. In effect, it is defining a specific set of numbers. There are as many such mathematical functions as there are <em>sets</em> of natural numbers.</p>
@@ -1945,7 +1943,7 @@
     - always terminates in finite time; 
     - returns a proof if the conjecture holds; 
     - returns a counterexample if the conjecture doesn't hold. (Does this sound familiar?)</p>
-<p>Then, in the 1930's, Kurt Gödel, Alonzo Church, Alan Turing, and others showed (using different methods) that the that the answer was no&mdash;at least, not completely. Here's a challenge.</p>
+<p>Then, in the 1930's, <a href="https://plato.stanford.edu/entries/church-turing/decision-problem.html">Kurt Gödel, Alonzo Church, Alan Turing, and others showed</a> that the answer was no&mdash;at least, not completely. Different courses cover this in different ways (you can even use diagonalization to prove this!). But here's the most common one:</p>
 <p>Write for me a program <code>h(f, v)</code> that accepts two arguments:
     * another program (<code>f</code>); and
     * an input to that program (<code>v</code>).
@@ -1970,15 +1968,18 @@ It must:
 <a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>        return;   # HAHAHAHAHA YES I AM
 </code></pre></div></p>
 </details>
-<p>Argh! No matter how clever we are with <code>f</code>, <code>h</code> cannot exist. This is called the <em>halting problem</em>: it is impossible to write a program that (in finite time, without error) says whether another program terminates on a given input. </p>
+<p>Argh! No matter how clever we are, <code>h</code> cannot exist. This is called the <em>halting problem</em>: it is impossible to write a program that (in finite time, without error) says whether another program terminates on a given input. </p>
 <details class="note">
 <summary>What are consequences for us? It's OK to be philosophical or uncertain.</summary>
-<p>It turns out that it's impossible to write an always-terminating, always-correct oracle for an arbitrary program's behavior&mdash;if the two languages have the same expressive power. This leads to what I call the Triangle of Existential Despair:
-<center><img width="50%" src="./smt_7.png" style="background-color:white"/></center>
-If we want to analyze programs, we need to give up one of these 4 requirements.</p>
+<p>It turns out that it's impossible to write an always-terminating, always-correct oracle for an arbitrary program's behavior&mdash;if the two languages have the same expressive power. This leads to what I call the Triangle of Existential Despair, inspired by the maxim: "Fast, cheap, and good: pick two". If we want to analyze a program (in the general case, with no restrictions on the language), we have to give something up: termination, soundness, or completeness.
+<center><img width="50%" src="./smt_7.png" style="background-color:white"/></center></p>
+<p>This is a major reason why domain-specific languages are so useful. We know how to analyze regular expressions, but if they were encoded as arbitrary programs, analyzing them would be much harder unless the program was structured a specific way. </p>
 </details>
 <h2 id="what-does-this-have-to-do-with-smt">What Does This Have To Do With SMT?<a class="headerlink" href="#what-does-this-have-to-do-with-smt" title="Permanent link">&para;</a></h2>
-<p>Gödel also proved that number theory is undecidable: if you've got <a href="https://en.wikipedia.org/wiki/Peano_axioms#Undecidability_and_incompleteness">the natural numbers, along with multiplication and addition</a>, it is impossible to write an algorithm that answers <em>arbitrary</em> questions about number theory in an <em>always correct</em> way, in <em>finite</em> time. So we should expect a theory-solver for integer arithmetic to be incomplete. </p>
+<!-- Incompleteness: Gödel
+Undecidability of integer arithmetic: Church and Turing -->
+
+<p>Church and Turing (building on Gödel's work) proved that number theory is undecidable: if you've got <a href="https://en.wikipedia.org/wiki/Peano_axioms#Undecidability_and_incompleteness">the natural numbers, along with multiplication and addition</a>, it is impossible to write an algorithm that answers <em>arbitrary</em> questions about number theory in an <em>always correct</em> way, in <em>finite</em> time. So we should expect a theory-solver for integer arithmetic to be incomplete. </p>
 <p>There's a lot more we could talk about. The area is technically deep, and beyond the scope of this book. But here are two more true statements about the world:</p>
 <ul>
 <li>If we give up multiplication, and just keep addition, <a href="https://en.wikipedia.org/wiki/Presburger_arithmetic">an algorithm exists and we know it</a>.</li>
