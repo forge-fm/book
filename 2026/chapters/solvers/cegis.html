@@ -1737,10 +1737,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#question-1-verify-or-falsify-prims-algorithm" class="md-nav__link">
+  <a href="#question-1-does-prims-only-find-minimal-trees" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Question 1: Verify or Falsify Prim's Algorithm
+        Question 1: Does Prim's Only Find Minimal Trees?
       
     </span>
   </a>
@@ -1771,21 +1771,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#an-idea" class="md-nav__link">
+  <a href="#learning-by-example" class="md-nav__link">
     <span class="md-ellipsis">
       
-        An Idea
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#more-complicated-learning" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        More Complicated Learning
+        Learning by Example
       
     </span>
   </a>
@@ -1794,6 +1783,28 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-general-case-more-complicated-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The General Case: More Complicated Learning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-isnt-traditional-synthesis-made-useless-by-ai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why isn't traditional synthesis made useless by AI?
+      
+    </span>
+  </a>
   
 </li>
       
@@ -1820,6 +1831,8 @@
 <h1 id="cegis-and-synthesis">CEGIS and Synthesis<a class="headerlink" href="#cegis-and-synthesis" title="Permanent link">&para;</a></h1>
 <!-- Note for next year: see board layout in lecture capture. 
      This was likely more effective than trying to do this in Forge as the notes suggest.
+
+     ?? Can we use Z3?
  -->
 
 <h2 id="counterexample-guided-inductive-synthesis-cegis">CounterExample Guided Inductive Synthesis (CEGIS)<a class="headerlink" href="#counterexample-guided-inductive-synthesis-cegis" title="Permanent link">&para;</a></h2>
@@ -1827,26 +1840,24 @@
 <p class="admonition-title">Pseudocode</p>
 <p>Many of the Forge expressions shown in this section will be demonstrative only, and won't actually run. You'll see why as we progress, but be warned!</p>
 </div>
-<p>Consider modeling <a href="https://en.wikipedia.org/wiki/Kruskal%27s_algorithm">Kruskal's</a> or <a href="https://en.wikipedia.org/wiki/Prim%27s_algorithm">Prim–Jarník's</a> approach to finding a minimum spanning tree on a weighted graph. In principle, we should be able to use Forge to reason about these algorithms, right? </p>
-<p>Well, it's complicated.</p>
+<p>Consider modeling <a href="https://en.wikipedia.org/wiki/Kruskal%27s_algorithm">Kruskal's</a> or <a href="https://en.wikipedia.org/wiki/Prim%27s_algorithm">Prim–Jarník's</a> approach to finding a minimum spanning tree on a weighted graph. In principle, we should be able to use solvers like Forge or Z3 to reason about these algorithms. There are a few questions we might want to ask about MSTs in general, and not all of them involve the algorithm. For example, we could tell the solver to:</p>
+<ul>
+<li>(A) Find a minimal spanning tree for a graph, independent of any algorithm model.</li>
+<li>(B) Find a run of Prim's algorithm.</li>
+<li>(C) Find a counter-example to correctness for Prim's algorithm (i.e., falsify "Prim's always produces a minimal spanning tree").</li>
+<li>(D) Find a valid MST that Prim's algorithm cannot produce.</li>
+</ul>
+<p>These questions may seem similar, but they have very different implications for a solver.</p>
 <h2 id="sketching-a-model">Sketching a Model<a class="headerlink" href="#sketching-a-model" title="Permanent link">&para;</a></h2>
+<p>I'm going to use Forge in this example, although we could also use Z3. Forge just happens to be what I had already built the model in! </p>
 <p>How might we start? We'd probably have the usual <code>sig Node</code> with a field <code>edges: pfunc Node -&gt; Int</code> to model the weighted edges. Then we would write some predicates like:</p>
 <ul>
-<li><code>wellformedgraph</code> (a well-formedness predicate to force the graphs to be weighted, directed, etc.);</li>
+<li><code>wellformedgraph</code> (a well-formedness predicate to force the graphs to be weighted and directed);</li>
 <li><code>isSpanningTree[t]</code> (a domain predicate describing the conditions for <code>t</code> to be a spanning tree); and</li>
 <li><code>runPrimComplete</code> (a predicate that produces a complete execution of Prim's algorithm on the underlying graph).</li>
 </ul>
-<p>Along with some helper predicates, and so on. </p>
-<p>There are a few questions we might want to ask about MSTs in general, and not all of them involve the algorithm. For example, we could tell Forge to:</p>
-<ul>
-<li>Find a counter-example to correctness for Prim's algorithm (i.e., falsify "Prim's always produces a minimal spanning tree).</li>
-<li>Find a minimal spanning tree for a graph, independent of any algorithm model.</li>
-</ul>
-<p>These questions have a different character, even though they may seem similar. </p>
-<!-- * Find a valid MST that Prim's algorithm cannot produce.  -->
-
-<h2 id="question-1-verify-or-falsify-prims-algorithm">Question 1: Verify or Falsify Prim's Algorithm<a class="headerlink" href="#question-1-verify-or-falsify-prims-algorithm" title="Permanent link">&para;</a></h2>
-<p>We've set up this kind of analysis before. We'll just say:</p>
+<h2 id="question-1-does-prims-only-find-minimal-trees">Question 1: Does Prim's Only Find <em>Minimal</em> Trees?<a class="headerlink" href="#question-1-does-prims-only-find-minimal-trees" title="Permanent link">&para;</a></h2>
+<p>We've set up this kind of analysis before. We'll just create a helper relation and then say:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">one</span><span class="w"> </span><span class="kd">sig</span><span class="w"> </span><span class="nc">Helper</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">t2</span><span class="p">:</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="n">Node</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">Node</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="kt">Int</span><span class="w"> </span><span class="o">}</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">run</span><span class="w"> </span><span class="o">{</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="n">runPrimComplete</span><span class="w">    </span>
@@ -1856,12 +1867,17 @@
 </code></pre></div>
 <p>Notice that we didn't need any universal quantification to talk about the counterexample. Instead, we could just say "Prim's found some MST. Try to find a cheaper MST". </p>
 <h2 id="question-2-finding-an-arbitrary-mst">Question 2: Finding an arbitrary MST<a class="headerlink" href="#question-2-finding-an-arbitrary-mst" title="Permanent link">&para;</a></h2>
+<p>Intuitively, this version might seem even easier. There's no algorithm involved, after all. But there is one other key difference. What is it?</p>
+<details class="note">
+<summary>Think, then click.</summary>
+</details>
+<p>The previous question <em>already had a specific spanning tree</em>, the one that the Prim's model produced. It then used that as a reference and tried to find a lower-cost spanning tree. Here, we don't have that reference: we're looking for a tree to start with. </p>
 <p>What does it mean to find a <em>minimum spanning tree</em> for an undirected, weighted graph <span class="arithmatex">\(G = (V,E,w)\)</span>? It must be a set of edges <span class="arithmatex">\(T\)</span>, such that:</p>
 <ul>
 <li><span class="arithmatex">\(T \subseteq E\)</span>;</li>
 <li><span class="arithmatex">\(T\)</span> forms a tree;</li>
-<li><span class="arithmatex">\(T\)</span> spans <span class="arithmatex">\(V\)</span> (i.e., <span class="arithmatex">\(V\)</span> contains at least one edge connected to every vertex in <span class="arithmatex">\(V\)</span>); and</li>
-<li>for all other sets of edges <span class="arithmatex">\(T_2\)</span>, if <span class="arithmatex">\(T_2\)</span> satisfies the previous 3 criteria, then the total weight of <span class="arithmatex">\(T_2\)</span> must be no less than the total weight of <span class="arithmatex">\(T\)</span> (i.e., <span class="arithmatex">\(T\)</span> is a <em>minimal</em> weight spanning tree).</li>
+<li><span class="arithmatex">\(T\)</span> spans <span class="arithmatex">\(V\)</span> (i.e., <span class="arithmatex">\(T\)</span> contains at least one edge connected to every vertex in <span class="arithmatex">\(V\)</span>); and</li>
+<li>for all other sets of edges <span class="arithmatex">\(T_2\)</span>, if <span class="arithmatex">\(T_2\)</span> satisfies the previous 3 criteria, then the total weight of <span class="arithmatex">\(T_2\)</span> must be no less than the total weight of <span class="arithmatex">\(T\)</span> (i.e., <span class="arithmatex">\(T\)</span> is a <em>minimal weight</em> spanning tree).</li>
 </ul>
 <p>Checking the final criterion requires higher-order universal quantification. We'd need to write something like this (don't try it!):</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">some</span><span class="w"> </span><span class="n">t</span><span class="p">:</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="n">Node</span><span class="o">-&gt;</span><span class="n">Node</span><span class="w"> </span><span class="o">|</span>
@@ -1869,11 +1885,15 @@
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="k">all</span><span class="w"> </span><span class="n">t2</span><span class="p">:</span><span class="w"> </span><span class="k">set</span><span class="w"> </span><span class="n">Node</span><span class="o">-&gt;</span><span class="n">Node</span><span class="w"> </span><span class="o">|</span><span class="w"> </span>
 <a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="n">isSpanningTree</span><span class="o">[</span><span class="n">t2</span><span class="o">]</span><span class="w"> </span><span class="ow">implies</span><span class="w"> </span><span class="n">weight</span><span class="o">[</span><span class="n">t2</span><span class="o">]</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">weight</span><span class="o">[</span><span class="n">t</span><span class="o">]</span>
 </code></pre></div>
-<p>Forge can eliminate the outer <code>some</code> quantifier via Skolemization: turn it into a new relation to solve for. But it can't do that for the inner <code>all</code> quantifier. How many possible edge sets are there? If there are 5 possible <code>Node</code> objects, then there are 25 possible edges between those objects, and thus <span class="arithmatex">\(2^{25} = 33554432\)</span> possible edge sets. </p>
-<p>The exponent will vary depending on the modeling goals. If you can exclude all self-loops, for example, it will be <span class="arithmatex">\(20\)</span>. Technically, Forge probably could produce a big <code>and</code> formula with 33 million children, this approach doesn't scale. So the solver engine won't even try: it will stop running if given such a constraint.</p>
+<p>This is in contrast to the shape in the previous question. Instead of <code>some t, t2</code> it's <code>some t, all t2</code>. Forge can eliminate the outer <code>some</code> quantifier via Skolemization: turn it into a new relation to solve for. But it can't do that for the inner <code>all</code> quantifier. How many possible edge sets are there? If there are 5 possible <code>Node</code> objects, then there are 25 possible edges between those objects, and thus <span class="arithmatex">\(2^{25} = 33554432\)</span> possible edge sets.  </p>
+<p>The exponent will vary depending on the modeling goals. If you can exclude all self-loops, for example, it will be <span class="arithmatex">\(20\)</span>. Technically, Forge probably could produce a big <code>and</code> formula with 33 million children, but this approach doesn't scale. So the solver engine won't even try: it will stop running if given such a constraint.</p>
+<div class="admonition warning">
+<p class="admonition-title">We can't avoid this problem by making a <code>Tree</code> sig.</p>
+</div>
+<p>If we try this and don't have an enormous bound on <code>Tree</code>, Forge is free to find instances with far fewer trees than exist. This is a hard problem. It's not easily solved in Z3 either.</p>
 <p>We need a different way to attack this problem.</p>
 <h3 id="an-alternative-formula">An Alternative Formula<a class="headerlink" href="#an-alternative-formula" title="Permanent link">&para;</a></h3>
-<p>Suppose that, instead of the above shape, we had a specific edge set <code>t</code> handed to us, with the claim that <code>t</code> was a minimal spanning tree. Well, we could try to falsify <code>t</code>'s minimality:</p>
+<p>Let's be inspired by the difference between these two questions. Suppose that, instead of the above shape, we had a specific edge set <code>t</code> handed to us, with the claim that <code>t</code> was a minimal spanning tree. Well, we could try to falsify <code>t</code>'s minimality&mdash;that's what we did in the first question.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="w">  </span><span class="c1">// ... definition of t is given to us ...</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="c1">// Search for a counter-example to `t` being a MST</span>
@@ -1883,40 +1903,50 @@
 <a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="n">weight</span><span class="o">[</span><span class="n">t2</span><span class="o">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">weight</span><span class="o">[</span><span class="n">t</span><span class="o">]</span>
 <a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">  </span><span class="o">}</span>
 </code></pre></div>
-<p>That is, suppose we had a <em>candidate</em> solution <code>t</code>, and we want to search for <em>better</em> solution. This is fine: Forge can handle higher-order <code>some</code>. So we can use Forge to check a candidate solution.</p>
-<h3 id="an-idea">An Idea<a class="headerlink" href="#an-idea" title="Permanent link">&para;</a></h3>
-<p>The fact that Forge can verify a candidate MST suggests an iterative approach. We'll start by finding a candidate spanning tree. It can be any spanning tree. Call its weight <span class="arithmatex">\(k\)</span>. Then try to find something better, a spanning tree with length less than <span class="arithmatex">\(k\)</span>. 
-* If we find something better, we can add a constraint that says to only find candidates of weight <span class="arithmatex">\(k-1\)</span> or less, and then continue. (We could use the counterexample itself as the new candidate. But in general, this won't always work, so we'll ignore the option.)
-* If we don't find something better, the candidate is actually a MST. </p>
-<p>Since Forge is a Racket library, you can use this technique via loop in Racket. This works for any solver that lets you make iterated queries. Since Z3py is a Python library, you can use this technique in Z3 as well. If you need to backtrack (usually you don't, with this technique), use the <code>pop</code> and <code>push</code> functions in Z3py.</p>
-<h3 id="more-complicated-learning">More Complicated Learning<a class="headerlink" href="#more-complicated-learning" title="Permanent link">&para;</a></h3>
-<p>This technique is pretty specialized, though. It relies on:</p>
+<h3 id="learning-by-example">Learning by Example<a class="headerlink" href="#learning-by-example" title="Permanent link">&para;</a></h3>
+<p>The fact that Forge can verify a <em>potential candidate</em> MST suggests an iterative approach. We'll start by finding a spanning tree. It can be any spanning tree. Call its weight <span class="arithmatex">\(k\)</span>. Then try to find something better, a spanning tree with length less than <span class="arithmatex">\(k\)</span>. 
+  * If we do find something better, we can add a constraint that says to only find candidates of weight <span class="arithmatex">\(k-1\)</span> or less, and then continue. (We could use the counterexample itself as the new candidate. But in general, this won't always work for this general kind of problem, so we'll ignore the option.)
+  * If we don't find something better, the candidate is actually a MST and we can stop. </p>
+<p>Since Forge is a Racket library, you can use this technique via loop in Racket. And Z3py is a Python library, so you can use this technique in Z3 as well. If you need to backtrack (usually you don't, with this technique), use the <code>pop</code> and <code>push</code> functions in Z3py.</p>
+<h2 id="the-general-case-more-complicated-learning">The General Case: More Complicated Learning<a class="headerlink" href="#the-general-case-more-complicated-learning" title="Permanent link">&para;</a></h2>
+<p>The above technique is pretty specialized. It relies on:</p>
 <ul>
-<li>having a metric for <em>goodness</em> (here, total edge weight); and</li>
+<li>having a metric for <em>goodness</em> (here, total edge weight) that the solver can express; and</li>
 <li>a well-defined and easily checkable precondition for candidacy (here, the notion of being a spanning tree). </li>
 </ul>
-<p>Not all higher-order universal constraints exhibit these nice properties, and others which aren't higher-order can still benefit from this idea. </p>
-<p>Here's a classical example from formal methods: program synthesis. Suppose we were trying to <a href="http://www.csl.sri.com/users/tiwari/papers/pldi2011-bitvector.pdf">synthesize a program (see this link for the full work)</a> that takes a machine integer as input, and outputs the number of <code>1</code> bits in that number. We might express the goal roughly as:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">some</span><span class="w"> </span><span class="n">p</span><span class="p">:</span><span class="w"> </span><span class="n">program</span><span class="w"> </span><span class="o">|</span><span class="w">  </span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="k">all</span><span class="w"> </span><span class="n">i</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="w"> </span><span class="o">|</span><span class="w"> </span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="n">p</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">countBitsInInteger</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="c1">// assume we have this helper</span>
+<p>Not all higher-order universal constraints exhibit these nice properties, and others which aren't higher-order (but still lack one or both of the above) can still benefit from this idea. Here's a classic example from formal methods: program synthesis. </p>
+<p>Let's synthesize a program that takes an integer input and returns a boolean that's true if and only if the input is even. We can express programs as syntax trees or as ordered statements; both approaches usually work in Forge and Z3. </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">// I&#39;m ignoring a lot of detail about what a Program looks like.</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">some</span><span class="w"> </span><span class="n">p</span><span class="p">:</span><span class="w"> </span><span class="n">Program</span><span class="w"> </span><span class="o">|</span><span class="w">  </span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="k">all</span><span class="w"> </span><span class="n">i</span><span class="p">:</span><span class="w"> </span><span class="kt">Int</span><span class="w"> </span><span class="o">|</span><span class="w"> </span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="n">p</span><span class="o">.</span><span class="n">returnsTrue</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="ow">iff</span><span class="w"> </span><span class="n">remainder</span><span class="o">[</span><span class="n">i</span><span class="p">,</span><span class="mi">2</span><span class="o">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span>
 </code></pre></div>
-<p>We might proceed as follows:</p>
-<ul>
-<li>Generate a candidate program, any candidate program. Call it <code>p</code>. </li>
-<li>Check it by seeing if <code>some i: Int | p[i] != countBitsInInteger[i]</code> is satisfiable. <ul>
-<li>If no, we've found a good program.</li>
-<li>If yes, there's an integer <code>i</code> that the current program doesn't work for. instantiate the formula <code>p[i] = countBitsInInteger[i]</code> with the concrete value, add it to our constraints, and repeat. This doesn't rule out a <em>lot</em> of the search space, but it does prevent the exact same problem from arising again in future candidates. </li>
-</ul>
-</li>
-</ul>
-<p>This broad technique is called CounterExample Guided Inductive Synthesis (or CEGIS). It and related ideas are used heavily in synthesis tools. Similar ideas are also used inside SMT solvers to help eliminate universal quantifiers.</p>
-<p>Sophisticated versions of CEGIS will try to infer root causes for failure rather than just learning, essentially, "...yes, but make it work for <code>i</code>, too." This tends to be what makes the technique scale well: the more focused a cause you can learn, the more of the search space you can rule out with each iteration. </p>
+<p>This is a toy example. Technically, it even works in Forge without modification, since the <code>Int</code> sig is finite. But let's use it to motivate the technique. </p>
+<p>We might proceed as follows. Initialize a set of constraints <code>C</code> that is initially empty. Then:
+  * Generate a <em>candidate</em> program that satisfies <code>C</code>. (Initially this is probably a wildly bad candidate.)
+  * Check the candidate by seeing if <code>some i: Int | not (p.returnsTrue[i] iff remainder[i,2] == 0)</code> is satisfiable. 
+    * If no, we've found a good program.
+    * If yes, there's an integer <code>i</code> that the current program doesn't work for. Instantiate the formula <code>p.returnsTrue[i] iff remainder[i,2] == 0</code> with the concrete value, add it to our constraints, and repeat. E.g., if the candidate fails on the input <code>100</code>, we'd add <code>p.returnsTrue[100] iff remainder[100,2] == 0</code> to the constraint set. The solver might simplify this, or it might not; that doesn't matter. The point is that we've learned something that might guide the solver to do better for the next candidate. </p>
+<p>Any given iteration might not learn much. We're only preventing the exact same problem from arising again in future candidates. However: 
+  * The impact is up to the solver. If it gets caught in a loop of silly minor changes ("make it work for 100", "make it work for 101", "make it work for 102", ...), we're in trouble. <a href="https://www.kroening.com/papers/cav2018-synthesis.pdf">There is interesting work on avoiding this situation</a>.
+  * If we can find a broader root cause for the problem (e.g., "100 doesn't work because the program contains the code <code>if(x &gt; 50) return false</code>, so avoid that if-condition) <a href="https://tnelson.github.io/publications/ndgk-seconfig19-synth.pdf">we can learn correspondingly more powerful constraints from each counterexample</a>.</p>
+<p>This broad technique is called CounterExample Guided Inductive Synthesis (or CEGIS). It and related ideas turn out to also be useful inside SMT solvers, to help eliminate universal quantifiers.</p>
 <div class="admonition note">
 <p class="admonition-title">Inductive</p>
 <p>If you've used proof by induction before, note that the use of "inductive" here is different! Inductive synthesis learns by example; in essence, automating <a href="https://en.wikipedia.org/wiki/Inductive_reasoning">inductive reasoning</a>, which is not the same thing as the inductive principle in mathematics.</p>
 </div>
-<p>For more information, I suggest skimming the paper linked above about synthesizing bit-vector manipulation programs, or <a href="https://people.csail.mit.edu/asolar/papers/thesis.pdf">Armando Solar-Lezama's PhD thesis</a>, where the idea was introduced.</p>
+<p>For more information, I suggest skimming <a href="http://www.csl.sri.com/users/tiwari/papers/pldi2011-bitvector.pdf">this paper</a> about synthesizing bit-vector manipulation programs, or <a href="https://people.csail.mit.edu/asolar/papers/thesis.pdf">Armando Solar-Lezama's PhD thesis</a>, where the idea was introduced.</p>
+<!-- Why isn't this made moot by AI? -->
+
+<h2 id="why-isnt-traditional-synthesis-made-useless-by-ai">Why isn't traditional synthesis made useless by AI?<a class="headerlink" href="#why-isnt-traditional-synthesis-made-useless-by-ai" title="Permanent link">&para;</a></h2>
+<p>The "I asked ChatGPT and..." intro is overdone. But it seemed appropriate here, so I asked Claude Code (Opus 4.6, April 6, 2026) for its thoughts. I find this is sometimes useful for helping me get out of my old, tried-and-true replies. Here's what it said.</p>
+<blockquote>
+<p>An LLM can generate a plausible <code>abs(x)</code> implementation instantly. But it can't <em>guarantee</em> correctness&mdash;it can only be <em>confident</em>. For a 2-line <code>abs</code>, that's fine. For a bit-manipulation trick, a concurrent protocol, or a cryptographic primitive, "confident" isn't good enough. </p>
+<p>The failure modes are also fundamentally different. When an LLM is wrong, it's wrong in ways that <em>look right</em>&mdash;plausible code with subtle bugs. When CEGIS fails, it either says "no program of this shape exists" or keeps searching. It doesn't silently produce something broken.</p>
+<p>Where might LLMs <em>help</em> CEGIS? The hard part of CEGIS is often defining the program sketch---the template of operations and wiring. An LLM can propose a reasonable sketch, and then CEGIS can fill it in with guarantees. There's active research on using neural models to guide the synthesis search or propose candidates that a solver then verifies.</p>
+<p>The punchline: LLMs are like a very well-read colleague who can suggest code quickly but might be wrong. CEGIS is like a slower colleague who checks every case before answering. You want both. The solver's guarantee is what makes formal methods <em>formal</em>&mdash;and that's not something statistical generation can replace, only augment.</p>
+</blockquote>
+<p>I mostly agree, although I trimmed the response for brevity. </p>
 
 
 
