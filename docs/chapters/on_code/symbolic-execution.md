@@ -8,7 +8,7 @@ Plan:
 
 ---
 
-These notes are adapted from [Alexa VanHattum's](https://cs.wellesley.edu/%7Eavh/) _Modeling for Computer Systems_ course at Wellesley. 
+These notes are adapted from [Alexa VanHattum's](https://cs.wellesley.edu/%7Eavh/) _Modeling for Computer Systems_ course at Wellesley. Any errors are, of course, mine.
 
 ---
 
@@ -144,6 +144,7 @@ What do you notice?
     The test describes two concrete values for two symbolic ones: `x` and `y`. The extra fields have to do with low-level data formatting&mdash;how much space is being used for the values, and so on. In this case, KLEE found the example example I did: `x=0, y=0`. 
 
 But this isn't the only "test" that KLEE generated. I see 4, which are (after I remove all the extra information in those files): 
+
 * `x=16, y=-2147483647`; 
 * `x=1, y=2147483647`; and
 * `x=2, y=1`.
@@ -152,6 +153,7 @@ Why these 4?
 
 ??? note "Think, then click"
     They correspond to code paths in the example program. 
+
     * The assertion failure, with `x=0, y=0`, skips the first `if` statement but enters the third one. 
     * The input (`x=1, y=2147483647`) skips all `if` statements. 
     * The input (`x=16, y=-2147483647`) enters the first `if` statement but skips the second and third ones. 
@@ -171,6 +173,7 @@ Symbolic execution often can't analyze _all_ execution paths. but why?
 But we shouldn't let this limitation get on our way. Any tools we can use to find bugs, the better&mdash;and symbolic execution has a long history of finding real bugs. So let's make progress! 
 
 We can model `if` statements with `and`: to get inside _both_, both conditions need to be true. (Reassignment to values is the only complication, here.) Symbolic execution is based on that idea. At each program point, we track two data structures: 
+
 * (1) a mapping of variables to symbolic values; and 
 * (2) the path conditions to get to that program point.
 
