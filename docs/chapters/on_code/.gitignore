@@ -1,0 +1,3 @@
+klee/examples/*.bc
+klee/examples/klee-*
+
