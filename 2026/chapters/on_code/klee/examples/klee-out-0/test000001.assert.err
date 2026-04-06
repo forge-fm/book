@@ -1,0 +1,8 @@
+Error: ASSERTION FAIL: 0
+File: examples/example.c
+Line: 17
+assembly.ll line: 69
+State: 3
+Stack: 
+	#000000069 in f(x=symbolic, y=symbolic) at examples/example.c:17
+	#100000095 in main() at examples/example.c:25

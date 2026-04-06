@@ -1,0 +1,23 @@
+klee examples/example.bc
+PID: 16
+Using monotonic steady clock with 1/1000000000s resolution
+Started: 2026-04-06 14:22:45
+BEGIN searcher description
+<InterleavedSearcher> containing 2 searchers:
+RandomPathSearcher
+WeightedRandomSearcher::CoveringNew
+</InterleavedSearcher>
+END searcher description
+Finished: 2026-04-06 14:22:45
+Elapsed: 00:00:00
+KLEE: done: explored paths = 6
+KLEE: done: avg. constructs per query = 47
+KLEE: done: total queries = 8
+KLEE: done: valid queries = 1
+KLEE: done: invalid queries = 7
+KLEE: done: query cex = 8
+
+KLEE: done: total instructions = 84
+KLEE: done: completed paths = 3
+KLEE: done: partially completed paths = 3
+KLEE: done: generated tests = 4
