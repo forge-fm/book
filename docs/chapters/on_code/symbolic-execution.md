@@ -10,6 +10,8 @@ Plan:
 
 These notes are adapted from [Alexa VanHattum's](https://cs.wellesley.edu/%7Eavh/) _Modeling for Computer Systems_ course at Wellesley. Any errors are, of course, mine.
 
+[This file](./in-class.py) contains a more detailed version of the first example, filled in during class. See added comments for some conceptual warnings.
+
 ---
 
 Symbolic execution is a technique (often solver-based) that works over actual program code, rather than relying on a simplified abstract model. The core idea is to run programs on "symbolic" inputs rather than concrete values. At each operation and program branch, we update the symbolic state to formulas that represent possible concrete values along that program path.
