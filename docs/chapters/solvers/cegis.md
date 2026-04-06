@@ -16,7 +16,7 @@ Consider modeling [Kruskal's](https://en.wikipedia.org/wiki/Kruskal%27s_algorith
 
 * (A) Find a minimal spanning tree for a graph, independent of any algorithm model.
 * (B) Find a run of Prim's algorithm.
-* (C) Find a counter-example to correctness for Prim's algorithm (i.e., falsify "Prim's always produces a minimal spanning tree).
+* (C) Find a counter-example to correctness for Prim's algorithm (i.e., falsify "Prim's always produces a minimal spanning tree").
 * (D) Find a valid MST that Prim's algorithm cannot produce.
 
 These questions may seem similar, but they have very different implications for a solver.
@@ -58,7 +58,7 @@ What does it mean to find a _minimum spanning tree_ for an undirected, weighted 
 
 * $T \subseteq E$;
 * $T$ forms a tree;
-* $T$ spans $V$ (i.e., $V$ contains at least one edge connected to every vertex in $V$); and
+* $T$ spans $V$ (i.e., $T$ contains at least one edge connected to every vertex in $V$); and
 * for all other sets of edges $T_2$, if $T_2$ satisfies the previous 3 criteria, then the total weight of $T_2$ must be no less than the total weight of $T$ (i.e., $T$ is a _minimal weight_ spanning tree).
 
 Checking the final criterion requires higher-order universal quantification. We'd need to write something like this (don't try it!):
@@ -72,7 +72,7 @@ some t: set Node->Node |
 
 This is in contrast to the shape in the previous question. Instead of `some t, t2` it's `some t, all t2`. Forge can eliminate the outer `some` quantifier via Skolemization: turn it into a new relation to solve for. But it can't do that for the inner `all` quantifier. How many possible edge sets are there? If there are 5 possible `Node` objects, then there are 25 possible edges between those objects, and thus $2^{25} = 33554432$ possible edge sets.  
 
-The exponent will vary depending on the modeling goals. If you can exclude all self-loops, for example, it will be $20$. Technically, Forge probably could produce a big `and` formula with 33 million children, this approach doesn't scale. So the solver engine won't even try: it will stop running if given such a constraint.
+The exponent will vary depending on the modeling goals. If you can exclude all self-loops, for example, it will be $20$. Technically, Forge probably could produce a big `and` formula with 33 million children, but this approach doesn't scale. So the solver engine won't even try: it will stop running if given such a constraint.
 
 !!! warning "We can't avoid this problem by making a `Tree` sig."
   If we try this and don't have an enormous bound on `Tree`, Forge is free to find instances with far fewer trees than exist. This is a hard problem. It's not easily solved in Z3 either.
@@ -140,3 +140,4 @@ This broad technique is called CounterExample Guided Inductive Synthesis (or CEG
 
 For more information, I suggest skimming [this paper](http://www.csl.sri.com/users/tiwari/papers/pldi2011-bitvector.pdf) about synthesizing bit-vector manipulation programs, or [Armando Solar-Lezama's PhD thesis](https://people.csail.mit.edu/asolar/papers/thesis.pdf), where the idea was introduced.
 
+<!-- Why isn't this made moot by AI? -->
