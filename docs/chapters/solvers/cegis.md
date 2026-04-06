@@ -141,3 +141,17 @@ This broad technique is called CounterExample Guided Inductive Synthesis (or CEG
 For more information, I suggest skimming [this paper](http://www.csl.sri.com/users/tiwari/papers/pldi2011-bitvector.pdf) about synthesizing bit-vector manipulation programs, or [Armando Solar-Lezama's PhD thesis](https://people.csail.mit.edu/asolar/papers/thesis.pdf), where the idea was introduced.
 
 <!-- Why isn't this made moot by AI? -->
+
+## Why isn't traditional synthesis made useless by AI?
+
+The "I asked ChatGPT and..." intro is overdone. But it seemed appropriate here, so I asked Claude Code (Opus 4.6, April 6, 2026) for its thoughts. I find this is sometimes useful for helping me get out of my old, tried-and-true replies. Here's what it said.
+
+> An LLM can generate a plausible `abs(x)` implementation instantly. But it can't _guarantee_ correctness&mdash;it can only be _confident_. For a 2-line `abs`, that's fine. For a bit-manipulation trick, a concurrent protocol, or a cryptographic primitive, "confident" isn't good enough. 
+> 
+> The failure modes are also fundamentally different. When an LLM is wrong, it's wrong in ways that _look right_&mdash;plausible code with subtle bugs. When CEGIS fails, it either says "no program of this shape exists" or keeps searching. It doesn't silently produce something broken.
+> 
+> Where might LLMs _help_ CEGIS? The hard part of CEGIS is often defining the program sketch---the template of operations and wiring. An LLM can propose a reasonable sketch, and then CEGIS can fill it in with guarantees. There's active research on using neural models to guide the synthesis search or propose candidates that a solver then verifies.
+> 
+> The punchline: LLMs are like a very well-read colleague who can suggest code quickly but might be wrong. CEGIS is like a slower colleague who checks every case before answering. You want both. The solver's guarantee is what makes formal methods _formal_&mdash;and that's not something statistical generation can replace, only augment.
+
+I mostly agree, although I trimmed the response for brevity. 

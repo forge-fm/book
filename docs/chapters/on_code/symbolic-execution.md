@@ -29,7 +29,7 @@ def f(x: int, y: int):
     z = x * 128   # These may look strange, but they approximate what the 
     w = x % 256   # real C code will do later on. The only major difference
     if w == 0:    # is that Python ints don't overflow.
-      ERROR()
+        ERROR()
 ```
 
 Is it possible for `f` to throw an error? If so, how? If not, why?
