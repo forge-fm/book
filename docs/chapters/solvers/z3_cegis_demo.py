@@ -16,12 +16,12 @@ This was created by Tim in collaboration with Claude Code (Opus 4.6).
 
 Note on types:
   I like static types, but Z3 doesn't always play nicely with Python type checking. 
-  As a result, I've done some "type gymnastics" here. You can probably ignore them.
+  As a result, I've done some "type gymnastics" here. You can probably ignore them.  
 
 """
 
 from z3 import Solver, Int, IntVal, sat, ArithRef, ExprRef, BoolRef, IntNumRef
-import inspect
+import inspect, time
 from z3 import If as _If, And as _And
 from typing import overload
 
@@ -123,7 +123,7 @@ def slot_result(op, arg1, arg2):
     """What does one instruction compute, given its operation and two arguments?
     Returns a Z3 expression.
 
-    Note: AND and SHR1 are defined arithmetically (not via BitVec), since
+    Note: BIT0 and SHR1 are defined arithmetically (not via BitVec), since
     the rest of our model uses Z3 integers. This works correctly for the
     non-negative inputs we'll use with these operations."""
     return If(op == OP_ADD, arg1 + arg2,
@@ -202,7 +202,8 @@ def print_program(model, ops, arg1s, arg2s, num_slots: int,
 # Core CEGIS loop
 #####################################################################
 
-def cegis(spec, num_slots: int, precondition=None, verbose=False) -> None:
+def cegis(spec, num_slots: int, precondition=None, verbose=False,
+          use_input_bounds=True, timeout_s: float = 60.0) -> dict:
     # Infer the number of inputs from the spec's signature.
     num_inputs = len(inspect.signature(spec).parameters)
     input_names = INPUT_NAMES[:num_inputs]
@@ -228,7 +229,10 @@ def cegis(spec, num_slots: int, precondition=None, verbose=False) -> None:
     print(f"=== CEGIS: Synthesizing {spec.__name__}({', '.join(input_names)}) ===")
     print(f"Program template: {num_slots} instruction slots")
     print(f"Available operations: {', '.join(OP_NAMES)}")
-    print(f"Allowed input-value range: [{INPUT_LO}, {INPUT_HI}]")
+    if use_input_bounds:
+        print(f"Allowed input-value range: [{INPUT_LO}, {INPUT_HI}]")
+    else:
+        print(f"Allowed input-value range: unbounded")
     print()
 
     concrete_inputs: list[tuple] = []
@@ -239,6 +243,11 @@ def cegis(spec, num_slots: int, precondition=None, verbose=False) -> None:
     # We initialize the solver once and incrementally add to it.
     synth = Solver()
     synth.add(prog_bounds)
+    t_start = time.time()
+    timeout_ms = int(timeout_s * 1000)
+
+    def remaining_ms():
+        return max(1, timeout_ms - int((time.time() - t_start) * 1000))
 
     while True:
         iteration += 1
@@ -257,9 +266,15 @@ def cegis(spec, num_slots: int, precondition=None, verbose=False) -> None:
         if verbose:
             print(f"{len(synth.assertions())} Constraints: {synth.assertions()}")
 
-        if synth.check() != sat:
-            print("No program of this size satisfies all constraints!")
-            return
+        synth.set("timeout", remaining_ms())
+        synth_result = synth.check()
+        if synth_result != sat:
+            elapsed = time.time() - t_start
+            if elapsed >= timeout_s:
+                print(f"TIMEOUT after {elapsed:.3f}s ({iteration} iterations)")
+                return {"status": "TIMEOUT", "time": elapsed}
+            print(f"No program of this size satisfies all constraints! ({elapsed:.3f}s)")
+            return {"status": "UNSAT", "time": elapsed}
 
         model = synth.model()
         print("Candidate program:")
@@ -274,9 +289,11 @@ def cegis(spec, num_slots: int, precondition=None, verbose=False) -> None:
         # Check: does this candidate work for ALL inputs in the bounded range?
         # We ask Z3 to find inputs where the candidate disagrees with the spec.
         verif = Solver()
+        verif.set("timeout", remaining_ms())
         symbolic_inputs = [Int(name) for name in input_names]
-        for inp in symbolic_inputs:
-            verif.add(And(inp >= INPUT_LO, inp <= INPUT_HI))
+        if use_input_bounds:
+            for inp in symbolic_inputs:
+                verif.add(And(inp >= INPUT_LO, inp <= INPUT_HI))
         if precondition is not None:
             verif.add(precondition(*symbolic_inputs))
         candidate_output = run_program(
@@ -284,12 +301,17 @@ def cegis(spec, num_slots: int, precondition=None, verbose=False) -> None:
             symbolic_inputs, num_slots)
         verif.add(candidate_output != spec(*symbolic_inputs))
 
-        if verif.check() != sat:
+        verif_result = verif.check()
+        if verif_result != sat:
+            elapsed = time.time() - t_start
+            if elapsed >= timeout_s:
+                print(f"TIMEOUT after {elapsed:.3f}s ({iteration} iterations)")
+                return {"status": "TIMEOUT", "time": elapsed}
             print()
-            print("=== Verified! No counterexample found. ===")
+            print(f"=== Verified! No counterexample found. ({elapsed:.3f}s) ===")
             print("Final program:")
             print_program(model, ops, arg1s, arg2s, num_slots, num_inputs)
-            return
+            return {"status": "SOLVED", "time": elapsed}
 
         # There are inputs where the candidate fails. Add them and try again.
         cex_model = verif.model()
@@ -319,7 +341,7 @@ if __name__ == "__main__":
 
     cegis(ones_spec, num_slots=8,
           precondition=lambda x: And(x >= 0, x <= 7))
-    # print("\n" + "="*50 + "\n")
+    print("\n" + "="*50 + "\n")
 
     # We can't synthesize multiplication when both parameters are 
     # unknown, at least when using only the operators declared above. 
