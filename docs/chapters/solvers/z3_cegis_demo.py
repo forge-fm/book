@@ -1,33 +1,67 @@
 """
-CEGIS Demo: Synthesizing abs(x) from a menu of operations. Concretely, 
-this program uses Z3 to synthesize a single-static-assignment program 
+CEGIS Demo: Synthesizing programs from a menu of operations. Concretely,
+this program uses Z3 to synthesize a single-static-assignment program
 (i.e., each line assigns a value, the last value is returned).
 
-This was created by Tim in collaboration with Claude Code (Opus 4.6). 
+This was created by Tim in collaboration with Claude Code (Opus 4.6).
+
+I like static types, but Z3 doesn't always play nicely with Python type checking. 
+As a result, I've done some "type gymnastics" here. You can probably ignore them.
+
+However, notice that we've avoided using ForAll anywhere in this program. The space
+of potential programs is finite: there are only so many lines of code allowed.
 """
 
-from z3 import Solver, Int, If, And, Or, sat, ArithRef
+from z3 import Solver, Int, IntVal, sat, ArithRef, ExprRef, BoolRef, IntNumRef
+import inspect
+from z3 import If as _If, And as _And
+from typing import overload
+
+#####################################################################
+# Type gymnastics
+#####################################################################
+
+@overload
+def If(a: ExprRef, b: ArithRef, c: ArithRef) -> ArithRef: ...
+@overload
+def If(a: ExprRef, b: int, c: int) -> ArithRef: ...
+def If(a, b, c): 
+      """
+      Z3 doesn't always play nicely with Python's type inspection. In particular,
+      Python won't infer that the two branches having type T means the IF has type T itself.
+      """
+      return _If(a, b, c) # type: ignore
+
+def And(*args: BoolRef) -> BoolRef:
+      """Z3's And is typed to return BoolRef | Probe | Unknown. We only use the BoolRef case."""
+      return _And(*args) # type: ignore
+
+def Z3_MULTIPLY(x: ArithRef, y: ArithRef) -> ArithRef:
+    return x * y # type: ignore
+
+def TO_LONG(x) -> int:
+    assert isinstance(x, IntNumRef), f"Expected IntNumRef, got {type(x)}"
+    return x.as_long()
+
+#####################################################################
+# Setup: available operations, bounds on integers considered, etc.
+#####################################################################
 
 # --- Operation menu ---
 # These are the "instructions" our synthesized program can use.
-# We've made the design choice to have all operators be binary in the model, 
+# We've made the design choice to have all operators be binary in the model,
 # hence ZERO ignoring both arguments and NEG ignoring the 2nd argument.
 OP_ADD   = 0   # result = arg1 + arg2
 OP_SUB   = 1   # result = arg1 - arg2
 OP_NEG   = 2   # result = -arg1       (arg2 ignored)
 OP_MAX   = 3   # result = max(arg1, arg2)
-OP_ZERO  = 4   # result = 0           (both args ignored)
-NUM_OPS  = 5
-OP_NAMES = ["ADD", "SUB", "NEG", "MAX", "ZERO"]
-
-# Program size: how many operator applications (i.e., how many SSA lines) 
-# are available? 2 slots is enough for abs(x): e.g. t0 = NEG(x), 
-# t1 = MAX(x, t0). 
-NUM_SLOTS = 2
-
-# But suppose we didn't know that! Let's try 4 operations max.
-# (Of course, this can now produce a program longer than it needs to be. :-)) 
-# NUM_SLOTS = 4
+OP_MIN   = 4   # result = min(arg1, arg2)
+OP_BIT0  = 5   # result = arg1 % 2     (lowest bit; arg2 ignored)
+OP_SHR1  = 6   # result = arg1 / 2    (right-shift by 1; arg2 ignored)
+OP_ONE   = 7   # result = 1           (both args ignored)
+OP_ZERO  = 8   # result = 0           (both args ignored)
+NUM_OPS  = 9
+OP_NAMES = ["ADD", "SUB", "NEG", "MAX", "MIN", "BIT0", "SHR1", "ONE", "ZERO"]
 
 # Bound on input range for the verifier. We keep this finite so Z3 stays
 # fast and doesn't produce astronomically large counterexamples. The CEGIS
@@ -35,110 +69,183 @@ NUM_SLOTS = 2
 INPUT_LO = -10000
 INPUT_HI = 10000
 
-def spec(x):
-    """The specification we want to synthesize."""
+#####################################################################
+# Specifications: a few example programs we want to synthesize.
+#####################################################################
+
+# Each spec is just a Python function that takes a number of Z3 expressions (the inputs)
+# and returns a Z3 expression (the expected output). The CEGIS procedure infers the 
+# number of inputs from the spec's signature.
+
+def abs_spec(x: ArithRef) -> ExprRef: 
+    """abs(x): absolute value of the argument"""
     return If(x >= 0, x, -x)
+
+def max3_spec(x: ArithRef, y: ArithRef, z: ArithRef) -> ArithRef:
+    """max(x, y, z): maximum of the _three_ arguments"""
+    cond: BoolRef = And(x >= y, x >= z)
+    return If(cond,
+              x,
+              If(y>=z, y, z))
+
+def clamp_spec(x: ArithRef, lo: ArithRef, hi: ArithRef):
+    """clamp(x, lo, hi): x "clamped" to [lo, hi].
+    Only meaningful when lo <= hi. Behavior is undefined otherwise."""
+    return If(x < lo, lo, If(x > hi, hi, x))
+
+def mul_spec(x: ArithRef, y: ArithRef) -> ArithRef:
+    """mul(x, y): multiplication. This should be impossible to synthesize
+    with the available operations."""
+    return Z3_MULTIPLY(x, y)
+
+def ones_spec(x: ArithRef) -> ArithRef:
+    """Counts the number of 1-bits in the binary representation of x.
+    Only meaningful for non-negative x; we restrict to 3-bit inputs (0-7)
+    to keep synthesis fast with Z3 integers (nonlinear arithmetic like
+    % and / is expensive for the solver)."""
+    # Unroll the bit extraction for 3 bits: x%2 + (x/2)%2 + (x/4)%2
+    return (x % 2) + ((x / 2) % 2) + ((x / 4) % 2)
+
+
+#####################################################################
+# Program semantics: what is the meaning of a program candidate?
+#####################################################################
 
 def slot_result(op, arg1, arg2):
     """What does one instruction compute, given its operation and two arguments?
-    Returns a Z3 expression."""
+    Returns a Z3 expression.
+
+    Note: AND and SHR1 are defined arithmetically (not via BitVec), since
+    the rest of our model uses Z3 integers. This works correctly for the
+    non-negative inputs we'll use with these operations."""
     return If(op == OP_ADD, arg1 + arg2,
            If(op == OP_SUB, arg1 - arg2,
            If(op == OP_NEG, -arg1,
            If(op == OP_MAX, If(arg1 >= arg2, arg1, arg2),
-              0))))  # OP_ZERO
+           If(op == OP_MIN, If(arg1 <= arg2, arg1, arg2),
+           If(op == OP_BIT0, arg1 % 2,
+           If(op == OP_SHR1, arg1 / 2,
+           If(op == OP_ONE, 1,
+              0))))))))  # OP_ZERO
 
 # As the program runs, each instruction produces a new variable:
-#   x       (the input)
-#   t0      (output of instruction 0)
-#   t1      (output of instruction 1)
+#   x, y, ...   (the inputs)
+#   t0           (output of instruction 0)
+#   t1           (output of instruction 1)
 #   ...
 # When an instruction picks its operands, it chooses which prior
-# variable to read from — the input x, or a prior instruction's output.
+# variable to read from — an input, or a prior instruction's output.
 
 def pick_variable(selector, variables):
-    """Choose a value from the available variables based on a selector index."""
+    """Choose a value from the available variables based on a selector index.
+       (Don't refer to a variable that is only assigned later in the program.)"""
     result = variables[0]
     for i in range(1, len(variables)):
         result = If(selector == i, variables[i], result)
     return result
 
-def run_program(ops: list, arg1s: list, arg2s: list, x) -> ArithRef:
-    """Evaluate a program on input x. ops/arg1s/arg2s can be Z3 variables
-    (during synthesis) or concrete Python ints (during verification).
+def run_program(ops: list, arg1s: list, arg2s: list, inputs: list,
+                num_slots: int) -> ArithRef:
+    """Evaluate a program on a list of inputs. ops/arg1s/arg2s can be Z3
+    variables (during synthesis) or concrete Python ints (during verification).
     Either way, the return value is always a Z3 expression (ArithRef),
-    because slot_result wraps everything in If(...) which produces one."""
-    variables = [x]  # start with just the input
-    for i in range(NUM_SLOTS):
+    because slot_result wraps everything in If(...)."""
+    variables = list(inputs)  # start with the input variables
+    for i in range(num_slots):
         a1 = pick_variable(arg1s[i], variables)
         a2 = pick_variable(arg2s[i], variables)
         variables.append(slot_result(ops[i], a1, a2))
     return variables[-1]  # output = last instruction's result
 
-def reg_name(idx) -> str:
-    """Pretty-print a register index"""
-    return "x" if idx == 0 else f"t{idx - 1}"
+#####################################################################
+# Pretty-printing
+#####################################################################
 
-def print_program(model, ops, arg1s, arg2s) -> None:
+INPUT_NAMES = ["x", "y", "z", "w"]  # names for up to 4 inputs
+
+def var_name(idx: int, num_inputs: int) -> str:
+    """Pretty-print a variable index. First num_inputs are input names,
+    the rest are t0, t1, ..."""
+    if idx < num_inputs:
+        return INPUT_NAMES[idx]
+    return f"t{idx - num_inputs}"
+
+def print_program(model, ops, arg1s, arg2s, num_slots: int,
+                  num_inputs: int) -> None:
     """Print the synthesized program in human-readable form."""
-    for i in range(NUM_SLOTS):
+    for i in range(num_slots):
         op  = model.evaluate(ops[i]).as_long()
         a1  = model.evaluate(arg1s[i]).as_long()
         a2  = model.evaluate(arg2s[i]).as_long()
         name = OP_NAMES[op]
-        out  = reg_name(i + 1)
-        if op == OP_NEG:
-            print(f"  {out} = {name}({reg_name(a1)})")
+        out  = var_name(num_inputs + i, num_inputs)
+        if op in (OP_NEG, OP_BIT0, OP_SHR1):
+            print(f"  {out} = {name}({var_name(a1, num_inputs)})")
         elif op == OP_ZERO:
             print(f"  {out} = 0")
+        elif op == OP_ONE:
+            print(f"  {out} = 1")
         else:
-            print(f"  {out} = {name}({reg_name(a1)}, {reg_name(a2)})")
-    print(f"  output: {reg_name(NUM_SLOTS)}")
+            print(f"  {out} = {name}({var_name(a1, num_inputs)}, {var_name(a2, num_inputs)})")
+    print(f"  output: {var_name(num_inputs + num_slots - 1, num_inputs)}")
 
 
-# --- CEGIS loop ---
+#####################################################################
+# Core CEGIS loop
+#####################################################################
 
-def cegis() -> None:
-    # We have NUM_SLOTS lines of code to work with. 
+def cegis(spec, num_slots: int, precondition=None) -> None:
+    # Infer the number of inputs from the spec's signature.
+    num_inputs = len(inspect.signature(spec).parameters)
+    input_names = INPUT_NAMES[:num_inputs]
+
+    # We have num_slots lines of code to work with.
     # Each line ("instruction slot") has an operation and two operand expressions.
-    ops   = [Int(f"op_{i}")   for i in range(NUM_SLOTS)]
-    arg1s = [Int(f"arg1_{i}") for i in range(NUM_SLOTS)]
-    arg2s = [Int(f"arg2_{i}") for i in range(NUM_SLOTS)]
+    ops   = [Int(f"op_{i}")   for i in range(num_slots)]
+    arg1s = [Int(f"arg1_{i}") for i in range(num_slots)]
+    arg2s = [Int(f"arg2_{i}") for i in range(num_slots)]
 
     # Z3 Int variables range over ALL integers by default. Without these
     # bounds, the solver could pick op_0 = 7 or op_0 = -3, which don't
     # correspond to any operation. Similarly, arg selectors must index
     # into variables that actually exist at that point in the program.
-    # At slot i, variables 0..i are available (the input x plus i prior outputs).
+    # At slot i, variables 0..(num_inputs + i - 1) are available.
     prog_bounds = []
-    for i in range(NUM_SLOTS):
+    for i in range(num_slots):
         prog_bounds.append(And(ops[i] >= 0, ops[i] < NUM_OPS))
-        prog_bounds.append(And(arg1s[i] >= 0, arg1s[i] <= i))  # can use x and prior t's
-        prog_bounds.append(And(arg2s[i] >= 0, arg2s[i] <= i))
+        num_available = num_inputs + i  # inputs + prior instruction outputs
+        prog_bounds.append(And(arg1s[i] >= 0, arg1s[i] < num_available))
+        prog_bounds.append(And(arg2s[i] >= 0, arg2s[i] < num_available))
 
-    print("=== CEGIS: Synthesizing abs(x) ===")
-    print(f"Program template: {NUM_SLOTS} instruction slots")
+    print(f"=== CEGIS: Synthesizing {spec.__name__}({', '.join(input_names)}) ===")
+    print(f"Program template: {num_slots} instruction slots")
     print(f"Available operations: {', '.join(OP_NAMES)}")
-    print(f"Verification range: x in [{INPUT_LO}, {INPUT_HI}]")
+    print(f"Allowed input-value range: [{INPUT_LO}, {INPUT_HI}]")
     print()
 
-    concrete_inputs = []
+    concrete_inputs: list[tuple] = []
     iteration = 0
+
+    # === SYNTHESIZE ===
+    # The synthesizer accumulates constraints: each counterexample adds one.
+    # We initialize the solver once and incrementally add to it.
+    synth = Solver()
+    synth.add(prog_bounds)
 
     while True:
         iteration += 1
         print(f"--- Iteration {iteration} ---")
         print(f"Concrete inputs: {concrete_inputs}")
 
-        # === SYNTHESIZE ===
-        # Find program variables such that the program is correct on every
-        # concrete input we've accumulated so far.
-        synth = Solver()
-        synth.add(prog_bounds)
-        for val in concrete_inputs:
-            # For this specific input value, the program must match the spec.
-            output = run_program(ops, arg1s, arg2s, val)
-            synth.add(output == spec(val))
+        # If we have a new counterexample, add a constraint for it.
+        if concrete_inputs:
+            input_tuple = concrete_inputs[-1]
+            # We wrap values in IntVal so Z3 treats them as integer-sorted
+            # expressions (plain Python ints can cause sort mismatches with
+            # operations like / that would produce Python floats).
+            concrete_vals = [IntVal(v) for v in input_tuple]
+            output = run_program(ops, arg1s, arg2s, concrete_vals, num_slots)
+            synth.add(output == spec(*concrete_vals))
 
         if synth.check() != sat:
             print("No program of this size satisfies all constraints!")
@@ -146,34 +253,68 @@ def cegis() -> None:
 
         model = synth.model()
         print("Candidate program:")
-        print_program(model, ops, arg1s, arg2s)
+        print_program(model, ops, arg1s, arg2s, num_slots, num_inputs)
 
         # Extract concrete program for the verifier.
-        concrete_ops   = [model.evaluate(ops[i]).as_long()   for i in range(NUM_SLOTS)]
-        concrete_arg1s = [model.evaluate(arg1s[i]).as_long() for i in range(NUM_SLOTS)]
-        concrete_arg2s = [model.evaluate(arg2s[i]).as_long() for i in range(NUM_SLOTS)]
+        concrete_ops   = [TO_LONG(model.evaluate(ops[i]))   for i in range(num_slots)]
+        concrete_arg1s = [TO_LONG(model.evaluate(arg1s[i])) for i in range(num_slots)]
+        concrete_arg2s = [TO_LONG(model.evaluate(arg2s[i])) for i in range(num_slots)]
 
         # === VERIFY ===
-        # Check: does this candidate work for ALL x in the bounded range?
-        # We ask Z3 to find an x where the candidate disagrees with abs(x).
+        # Check: does this candidate work for ALL inputs in the bounded range?
+        # We ask Z3 to find inputs where the candidate disagrees with the spec.
         verif = Solver()
-        x = Int('x')
-        verif.add(And(x >= INPUT_LO, x <= INPUT_HI))
-        candidate_output = run_program(concrete_ops, concrete_arg1s, concrete_arg2s, x)
-        verif.add(candidate_output != spec(x))
+        symbolic_inputs = [Int(name) for name in input_names]
+        for inp in symbolic_inputs:
+            verif.add(And(inp >= INPUT_LO, inp <= INPUT_HI))
+        if precondition is not None:
+            verif.add(precondition(*symbolic_inputs))
+        candidate_output = run_program(
+            concrete_ops, concrete_arg1s, concrete_arg2s,
+            symbolic_inputs, num_slots)
+        verif.add(candidate_output != spec(*symbolic_inputs))
 
         if verif.check() != sat:
             print()
             print("=== Verified! No counterexample found. ===")
             print("Final program:")
-            print_program(model, ops, arg1s, arg2s)
+            print_program(model, ops, arg1s, arg2s, num_slots, num_inputs)
             return
 
-        # There's an input where the candidate fails. Add it and try again.
-        cex = verif.model().evaluate(x).as_long()
-        print(f"Counterexample: x = {cex}")
+        # There are inputs where the candidate fails. Add them and try again.
+        cex_model = verif.model()
+        cex_tuple = tuple(TO_LONG(cex_model.evaluate(inp)) for inp in symbolic_inputs)
+        cex_str = ", ".join(f"{name} = {val}" for name, val in zip(input_names, cex_tuple))
+        print(f"Counterexample: {cex_str}")
         print()
-        concrete_inputs.append(cex)
+        concrete_inputs.append(cex_tuple)
 
 if __name__ == "__main__":
-    cegis()
+    cegis(abs_spec, num_slots=3) #2)
+
+    print("\n" + "="*50 + "\n")
+    cegis(max3_spec, num_slots=3) #1)
+
+    print("\n" + "="*50 + "\n")
+    cegis(clamp_spec, num_slots=3, #2,
+          precondition=lambda x, lo, hi: lo <= hi)
+
+    print("\n" + "="*50 + "\n")
+
+    # --- Example 4: popcount / ones(x) — 3-bit inputs (0-7) ---
+    # Count the number of 1-bits. Needs BIT0 and SHR1 operations.
+    # We use 3-bit inputs because the % and / operations create nonlinear
+    # arithmetic that's expensive for Z3 integers at larger sizes.
+    cegis(ones_spec, num_slots=8,
+          precondition=lambda x: And(x >= 0, x <= 7))
+
+    print("\n" + "="*50 + "\n")
+
+    # --- Example 5: multiplication — impossible! ---
+    # Our operation menu has no MUL. You can't synthesize x*y from ADD,
+    # SUB, MAX, MIN, etc. when both x and y are unknown. CEGIS will
+    # accumulate a few counterexamples before concluding failure.
+    # We restrict to small inputs so the solver doesn't give up instantly
+    # on a single huge product.
+    cegis(mul_spec, num_slots=3,
+          precondition=lambda x, y: And(x >= 0, x <= 5, y >= 0, y <= 5))
