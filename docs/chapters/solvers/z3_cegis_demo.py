@@ -1,15 +1,23 @@
 """
-CEGIS Demo: Synthesizing programs from a menu of operations. Concretely,
-this program uses Z3 to synthesize a single-static-assignment program
-(i.e., each line assigns a value, the last value is returned).
+CEGIS Demo: Synthesizing programs from a menu of operations with Z3. 
+
+Design choices:
+  * The programs are single-static-assignment: each line assigns a value, and 
+    the last value is returned. This avoids the complexity of using the 
+    theory of datatypes, or making our own relational structure. It also 
+    avoids loop synthesis, which would complicate things even more.
+  * We're using integers here rather than bit-vectors. This keeps specs simpler,
+    but a real production synthesizer (for fixed-length int languages) would 
+    use the theory of bit-vectors instead.
+  * The space of potential programs is finite: there are only so many 
+    lines of code allowed. This helps avoid ForAll in the model.
 
 This was created by Tim in collaboration with Claude Code (Opus 4.6).
 
-I like static types, but Z3 doesn't always play nicely with Python type checking. 
-As a result, I've done some "type gymnastics" here. You can probably ignore them.
+Note on types:
+  I like static types, but Z3 doesn't always play nicely with Python type checking. 
+  As a result, I've done some "type gymnastics" here. You can probably ignore them.
 
-However, notice that we've avoided using ForAll anywhere in this program. The space
-of potential programs is finite: there are only so many lines of code allowed.
 """
 
 from z3 import Solver, Int, IntVal, sat, ArithRef, ExprRef, BoolRef, IntNumRef
@@ -18,7 +26,7 @@ from z3 import If as _If, And as _And
 from typing import overload
 
 #####################################################################
-# Type gymnastics
+# Type gymnastics (keep scrolling)
 #####################################################################
 
 @overload
@@ -56,16 +64,15 @@ OP_SUB   = 1   # result = arg1 - arg2
 OP_NEG   = 2   # result = -arg1       (arg2 ignored)
 OP_MAX   = 3   # result = max(arg1, arg2)
 OP_MIN   = 4   # result = min(arg1, arg2)
-OP_BIT0  = 5   # result = arg1 % 2     (lowest bit; arg2 ignored)
+OP_BIT0  = 5   # result = arg1 % 2    (lowest bit; arg2 ignored)
 OP_SHR1  = 6   # result = arg1 / 2    (right-shift by 1; arg2 ignored)
 OP_ONE   = 7   # result = 1           (both args ignored)
 OP_ZERO  = 8   # result = 0           (both args ignored)
 NUM_OPS  = 9
 OP_NAMES = ["ADD", "SUB", "NEG", "MAX", "MIN", "BIT0", "SHR1", "ONE", "ZERO"]
 
-# Bound on input range for the verifier. We keep this finite so Z3 stays
-# fast and doesn't produce astronomically large counterexamples. The CEGIS
-# idea works the same way regardless of range.
+# Bound on input range for the verifier. The CEGIS idea works the same
+# regardless, but we want to keep the demo small.
 INPUT_LO = -10000
 INPUT_HI = 10000
 
@@ -88,7 +95,7 @@ def max3_spec(x: ArithRef, y: ArithRef, z: ArithRef) -> ArithRef:
               x,
               If(y>=z, y, z))
 
-def clamp_spec(x: ArithRef, lo: ArithRef, hi: ArithRef):
+def clamp_spec(x: ArithRef, lo: ArithRef, hi: ArithRef) -> ArithRef:
     """clamp(x, lo, hi): x "clamped" to [lo, hi].
     Only meaningful when lo <= hi. Behavior is undefined otherwise."""
     return If(x < lo, lo, If(x > hi, hi, x))
@@ -100,9 +107,10 @@ def mul_spec(x: ArithRef, y: ArithRef) -> ArithRef:
 
 def ones_spec(x: ArithRef) -> ArithRef:
     """Counts the number of 1-bits in the binary representation of x.
-    Only meaningful for non-negative x; we restrict to 3-bit inputs (0-7)
-    to keep synthesis fast with Z3 integers (nonlinear arithmetic like
-    % and / is expensive for the solver)."""
+    Only meaningful for non-negative x. We also make a substantial 
+    restriction to keep the demo small and performant: only the first 
+    3 bits are considered (division is expensive). A real tool would
+    use the theory of bit-vectors instead."""
     # Unroll the bit extraction for 3 bits: x%2 + (x/2)%2 + (x/4)%2
     return (x % 2) + ((x / 2) % 2) + ((x / 4) % 2)
 
@@ -194,7 +202,7 @@ def print_program(model, ops, arg1s, arg2s, num_slots: int,
 # Core CEGIS loop
 #####################################################################
 
-def cegis(spec, num_slots: int, precondition=None) -> None:
+def cegis(spec, num_slots: int, precondition=None, verbose=False) -> None:
     # Infer the number of inputs from the spec's signature.
     num_inputs = len(inspect.signature(spec).parameters)
     input_names = INPUT_NAMES[:num_inputs]
@@ -234,12 +242,14 @@ def cegis(spec, num_slots: int, precondition=None) -> None:
 
     while True:
         iteration += 1
-        print(f"--- Iteration {iteration} ---")
+        print(f"--- Iteration {iteration} for {spec.__name__} ---")
         print(f"Concrete inputs: {concrete_inputs}")
+        if verbose:
+            print(f"{len(synth.assertions())} Constraints: {synth.assertions()}")
 
         # If we have a new counterexample, add a constraint for it.
         if concrete_inputs:
-            input_tuple = concrete_inputs[-1]
+            input_tuple = concrete_inputs[-1] # Already added the rest.
             # We wrap values in IntVal so Z3 treats them as integer-sorted
             # expressions (plain Python ints can cause sort mismatches with
             # operations like / that would produce Python floats).
@@ -290,31 +300,28 @@ def cegis(spec, num_slots: int, precondition=None) -> None:
         concrete_inputs.append(cex_tuple)
 
 if __name__ == "__main__":
-    cegis(abs_spec, num_slots=3) #2)
-
+    # 2 operations should suffice.
+    cegis(abs_spec, num_slots=2)
     print("\n" + "="*50 + "\n")
-    cegis(max3_spec, num_slots=3) #1)
 
+    # If we only had 2 numbers, 1 op would suffice since we have MAX.
+    # Given 3 numbers, we need at least 2 MAX operations.
+    cegis(max3_spec, num_slots=2)
     print("\n" + "="*50 + "\n")
+
+    # 3 operations should suffice, here.
     cegis(clamp_spec, num_slots=3, #2,
           precondition=lambda x, lo, hi: lo <= hi)
-
     print("\n" + "="*50 + "\n")
 
-    # --- Example 4: popcount / ones(x) — 3-bit inputs (0-7) ---
-    # Count the number of 1-bits. Needs BIT0 and SHR1 operations.
-    # We use 3-bit inputs because the % and / operations create nonlinear
-    # arithmetic that's expensive for Z3 integers at larger sizes.
-    cegis(ones_spec, num_slots=8,
-          precondition=lambda x: And(x >= 0, x <= 7))
+    # Count the number of 1-bits.
+    # Inputs are constrained to be small for this example (see the spec docstring).
 
-    print("\n" + "="*50 + "\n")
+    # cegis(ones_spec, num_slots=8,
+    #       precondition=lambda x: And(x >= 0, x <= 7))
+    # print("\n" + "="*50 + "\n")
 
-    # --- Example 5: multiplication — impossible! ---
-    # Our operation menu has no MUL. You can't synthesize x*y from ADD,
-    # SUB, MAX, MIN, etc. when both x and y are unknown. CEGIS will
+    # If the menu of operators doesn't include MUL, we can't synthesize 
+    # multiplication when both parameters are unknown. CEGIS will
     # accumulate a few counterexamples before concluding failure.
-    # We restrict to small inputs so the solver doesn't give up instantly
-    # on a single huge product.
-    cegis(mul_spec, num_slots=3,
-          precondition=lambda x, y: And(x >= 0, x <= 5, y >= 0, y <= 5))
+    cegis(mul_spec, num_slots=4, verbose=True)
