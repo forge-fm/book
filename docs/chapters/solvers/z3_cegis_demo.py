@@ -244,9 +244,6 @@ def cegis(spec, num_slots: int, precondition=None, verbose=False) -> None:
         iteration += 1
         print(f"--- Iteration {iteration} for {spec.__name__} ---")
         print(f"Concrete inputs: {concrete_inputs}")
-        if verbose:
-            print(f"{len(synth.assertions())} Constraints: {synth.assertions()}")
-
         # If we have a new counterexample, add a constraint for it.
         if concrete_inputs:
             input_tuple = concrete_inputs[-1] # Already added the rest.
@@ -256,6 +253,9 @@ def cegis(spec, num_slots: int, precondition=None, verbose=False) -> None:
             concrete_vals = [IntVal(v) for v in input_tuple]
             output = run_program(ops, arg1s, arg2s, concrete_vals, num_slots)
             synth.add(output == spec(*concrete_vals))
+
+        if verbose:
+            print(f"{len(synth.assertions())} Constraints: {synth.assertions()}")
 
         if synth.check() != sat:
             print("No program of this size satisfies all constraints!")
@@ -317,11 +317,12 @@ if __name__ == "__main__":
     # Count the number of 1-bits.
     # Inputs are constrained to be small for this example (see the spec docstring).
 
-    # cegis(ones_spec, num_slots=8,
-    #       precondition=lambda x: And(x >= 0, x <= 7))
+    cegis(ones_spec, num_slots=8,
+          precondition=lambda x: And(x >= 0, x <= 7))
     # print("\n" + "="*50 + "\n")
 
-    # If the menu of operators doesn't include MUL, we can't synthesize 
-    # multiplication when both parameters are unknown. CEGIS will
-    # accumulate a few counterexamples before concluding failure.
-    cegis(mul_spec, num_slots=4, verbose=True)
+    # We can't synthesize multiplication when both parameters are 
+    # unknown, at least when using only the operators declared above. 
+    # CEGIS will accumulate >= 1 counterexample before concluding failure.
+    #cegis(mul_spec, num_slots=4, verbose=False)
+    cegis(mul_spec, num_slots=5, verbose=False)
