@@ -140,7 +140,7 @@ nav:
     - "Satisfiability Modulo Theories (SMT)": chapters/solvers/smt.md
     - "Undecidability (Briefly)": chapters/solvers/undecidability.md
     - "Symbolic Execution": chapters/on_code/symbolic-execution.md
-  #   - "Learning with Solvers: CEGIS": chapters/solvers/cegis.md
+    - "Learning with Solvers: CEGIS": chapters/solvers/cegis.md
 
 # These are in the DOCS, which are separate.
 #   - Appendix:

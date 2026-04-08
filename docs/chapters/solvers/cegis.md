@@ -2,8 +2,6 @@
 
 <!-- Note for next year: see board layout in lecture capture. 
      This was likely more effective than trying to do this in Forge as the notes suggest.
-
-     ?? Can we use Z3?
  -->
 
 ## CounterExample Guided Inductive Synthesis (CEGIS)
@@ -154,4 +152,19 @@ The "I asked ChatGPT and..." intro is overdone. But it seemed appropriate here, 
 > 
 > The punchline: LLMs are like a very well-read colleague who can suggest code quickly but might be wrong. CEGIS is like a slower colleague who checks every case before answering. You want both. The solver's guarantee is what makes formal methods _formal_&mdash;and that's not something statistical generation can replace, only augment.
 
-I mostly agree, although I trimmed the response for brevity. 
+I mostly agree, although I trimmed the response for brevity.
+
+Next: we'll compare the effectiveness of CEGIS vs. `ForAll` in Z3. 
+
+<!-- ## But does CEGIS really make a difference? 
+
+I built [a more complete Python example](./z3_cegis_demo.py) of (basic) program synthesis, and a [test harness](./z3_cegis_vs_forall.py) that compares CEGIS against a plain `ForAll` in Z3. For both, the code compares bounded and unbounded checks. 
+
+!!! warning "This isn't statistically sound."
+  I only ran the comparison once, so there might be cache-warming effects, transient slowdowns, garbage collection, etc. I used Claude Code to prototype the comparison, which sped up building
+  it. But Claude can't run the actual experiments any faster! 
+  
+  I do think that the general trends are informative, though. 
+
+Here are the results. What do you notice?
+ -->

@@ -197,13 +197,12 @@ def print_program(model, ops, arg1s, arg2s, num_slots: int,
             print(f"  {out} = {name}({var_name(a1, num_inputs)}, {var_name(a2, num_inputs)})")
     print(f"  output: {var_name(num_inputs + num_slots - 1, num_inputs)}")
 
-
 #####################################################################
 # Core CEGIS loop
 #####################################################################
 
 def cegis(spec, num_slots: int, precondition=None, verbose=False,
-          use_input_bounds=True, timeout_s: float = 60.0) -> dict:
+          use_input_bounds=True, timeout_ms=30000) -> dict:
     # Infer the number of inputs from the spec's signature.
     num_inputs = len(inspect.signature(spec).parameters)
     input_names = INPUT_NAMES[:num_inputs]
@@ -244,7 +243,6 @@ def cegis(spec, num_slots: int, precondition=None, verbose=False,
     synth = Solver()
     synth.add(prog_bounds)
     t_start = time.time()
-    timeout_ms = int(timeout_s * 1000)
 
     def remaining_ms():
         return max(1, timeout_ms - int((time.time() - t_start) * 1000))
@@ -269,12 +267,12 @@ def cegis(spec, num_slots: int, precondition=None, verbose=False,
         synth.set("timeout", remaining_ms())
         synth_result = synth.check()
         if synth_result != sat:
-            elapsed = time.time() - t_start
-            if elapsed >= timeout_s:
-                print(f"TIMEOUT after {elapsed:.3f}s ({iteration} iterations)")
-                return {"status": "TIMEOUT", "time": elapsed}
-            print(f"No program of this size satisfies all constraints! ({elapsed:.3f}s)")
-            return {"status": "UNSAT", "time": elapsed}
+            elapsed_sec = time.time() - t_start
+            if elapsed_sec >= timeout_ms/1000:
+                print(f"TIMEOUT after {elapsed_sec:.3f}s ({iteration} iterations)")
+                return {"status": "TIMEOUT", "time": elapsed_sec}
+            print(f"No program of this size satisfies all constraints! ({elapsed_sec:.3f}s)")
+            return {"status": "UNSAT", "time": elapsed_sec}
 
         model = synth.model()
         print("Candidate program:")
@@ -304,7 +302,7 @@ def cegis(spec, num_slots: int, precondition=None, verbose=False,
         verif_result = verif.check()
         if verif_result != sat:
             elapsed = time.time() - t_start
-            if elapsed >= timeout_s:
+            if elapsed >= timeout_ms/1000:
                 print(f"TIMEOUT after {elapsed:.3f}s ({iteration} iterations)")
                 return {"status": "TIMEOUT", "time": elapsed}
             print()
@@ -321,6 +319,11 @@ def cegis(spec, num_slots: int, precondition=None, verbose=False,
         print()
         concrete_inputs.append(cex_tuple)
 
+
+#####################################################################
+# Examples -- comment out or reduce parameters if you want fast results.
+#####################################################################
+
 if __name__ == "__main__":
     # 2 operations should suffice.
     cegis(abs_spec, num_slots=2)
@@ -332,13 +335,13 @@ if __name__ == "__main__":
     print("\n" + "="*50 + "\n")
 
     # 3 operations should suffice, here.
-    cegis(clamp_spec, num_slots=3, #2,
+    cegis(clamp_spec, num_slots=3,
           precondition=lambda x, lo, hi: lo <= hi)
     print("\n" + "="*50 + "\n")
 
     # Count the number of 1-bits.
     # Inputs are constrained to be small for this example (see the spec docstring).
-
+    # 8 slots is fast in CEGIS. Not sure about 7.
     cegis(ones_spec, num_slots=8,
           precondition=lambda x: And(x >= 0, x <= 7))
     print("\n" + "="*50 + "\n")
@@ -346,5 +349,4 @@ if __name__ == "__main__":
     # We can't synthesize multiplication when both parameters are 
     # unknown, at least when using only the operators declared above. 
     # CEGIS will accumulate >= 1 counterexample before concluding failure.
-    #cegis(mul_spec, num_slots=4, verbose=False)
-    cegis(mul_spec, num_slots=5, verbose=False)
+    cegis(mul_spec, num_slots=4, verbose=False)
