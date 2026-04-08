@@ -13,6 +13,10 @@
         <link rel="canonical" href="https://forge-fm.github.io/book/2026/chapters/solvers/cegis.html">
       
       
+        <link rel="prev" href="../on_code/symbolic-execution.html">
+      
+      
+        <link rel="next" href="../../error_finders.html">
       
       
         
@@ -23,7 +27,7 @@
     
     
       
-        <title>CEGIS and Synthesis - Logic for Systems</title>
+        <title>Learning with Solvers: CEGIS - Logic for Systems</title>
       
     
     
@@ -116,7 +120,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              CEGIS and Synthesis
+              Learning with Solvers: CEGIS
             
           </span>
         </div>
@@ -1446,8 +1450,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -1457,6 +1463,8 @@
       
         
       
+        
+      
     
     
     
@@ -1466,13 +1474,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
         
           
           <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
@@ -1493,7 +1499,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_8">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1583,6 +1589,175 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Learning with Solvers: CEGIS
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="cegis.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Learning with Solvers: CEGIS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#counterexample-guided-inductive-synthesis-cegis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CounterExample Guided Inductive Synthesis (CEGIS)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sketching-a-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sketching a Model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-1-does-prims-only-find-minimal-trees" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 1: Does Prim's Only Find Minimal Trees?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#question-2-finding-an-arbitrary-mst" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Question 2: Finding an arbitrary MST
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Question 2: Finding an arbitrary MST">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#an-alternative-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        An Alternative Formula
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#learning-by-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learning by Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-general-case-more-complicated-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The General Case: More Complicated Learning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-isnt-traditional-synthesis-made-useless-by-ai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why isn't traditional synthesis made useless by AI?
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1831,8 +2006,6 @@
 <h1 id="cegis-and-synthesis">CEGIS and Synthesis<a class="headerlink" href="#cegis-and-synthesis" title="Permanent link">&para;</a></h1>
 <!-- Note for next year: see board layout in lecture capture. 
      This was likely more effective than trying to do this in Forge as the notes suggest.
-
-     ?? Can we use Z3?
  -->
 
 <h2 id="counterexample-guided-inductive-synthesis-cegis">CounterExample Guided Inductive Synthesis (CEGIS)<a class="headerlink" href="#counterexample-guided-inductive-synthesis-cegis" title="Permanent link">&para;</a></h2>
@@ -1946,7 +2119,20 @@
 <p>Where might LLMs <em>help</em> CEGIS? The hard part of CEGIS is often defining the program sketch---the template of operations and wiring. An LLM can propose a reasonable sketch, and then CEGIS can fill it in with guarantees. There's active research on using neural models to guide the synthesis search or propose candidates that a solver then verifies.</p>
 <p>The punchline: LLMs are like a very well-read colleague who can suggest code quickly but might be wrong. CEGIS is like a slower colleague who checks every case before answering. You want both. The solver's guarantee is what makes formal methods <em>formal</em>&mdash;and that's not something statistical generation can replace, only augment.</p>
 </blockquote>
-<p>I mostly agree, although I trimmed the response for brevity. </p>
+<p>I mostly agree, although I trimmed the response for brevity.</p>
+<p>Next: we'll compare the effectiveness of CEGIS vs. <code>ForAll</code> in Z3. </p>
+<!-- ## But does CEGIS really make a difference? 
+
+I built [a more complete Python example](./z3_cegis_demo.py) of (basic) program synthesis, and a [test harness](./z3_cegis_vs_forall.py) that compares CEGIS against a plain `ForAll` in Z3. For both, the code compares bounded and unbounded checks. 
+
+!!! warning "This isn't statistically sound."
+  I only ran the comparison once, so there might be cache-warming effects, transient slowdowns, garbage collection, etc. I used Claude Code to prototype the comparison, which sped up building
+  it. But Claude can't run the actual experiments any faster! 
+
+  I do think that the general trends are informative, though. 
+
+Here are the results. What do you notice?
+ -->
 
 
 

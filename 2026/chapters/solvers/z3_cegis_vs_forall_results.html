@@ -10,13 +10,9 @@
       
       
       
-        <link rel="canonical" href="https://forge-fm.github.io/book/2026/chapters/relations/sets-beyond-assertions.html">
+        <link rel="canonical" href="https://forge-fm.github.io/book/2026/chapters/solvers/z3_cegis_vs_forall_results.html">
       
       
-        <link rel="prev" href="sets-induction-mutex.html">
-      
-      
-        <link rel="next" href="../solvers/bounds_booleans_how_forge_works.html">
       
       
         
@@ -27,7 +23,7 @@
     
     
       
-        <title>Going Beyond Assertions - Logic for Systems</title>
+        <title>CEGIS vs. Monolithic ForAll: Results - Logic for Systems</title>
       
     
     
@@ -80,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#going-beyond-assertions" class="md-skip">
+        <a href="#cegis-vs-monolithic-forall-results" class="md-skip">
           Skip to content
         </a>
       
@@ -120,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Going Beyond Assertions
+              CEGIS vs. Monolithic ForAll: Results
             
           </span>
         </div>
@@ -841,10 +837,8 @@
       
   
   
-    
   
   
-  
     
     
       
@@ -869,11 +863,13 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
         
           
           <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
@@ -894,7 +890,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
@@ -912,7 +908,7 @@
   
   
     <li class="md-nav__item">
-      <a href="modeling-booleans-1.html" class="md-nav__link">
+      <a href="../relations/modeling-booleans-1.html" class="md-nav__link">
         
   
   
@@ -940,7 +936,7 @@
   
   
     <li class="md-nav__item">
-      <a href="reachability.html" class="md-nav__link">
+      <a href="../relations/reachability.html" class="md-nav__link">
         
   
   
@@ -968,7 +964,7 @@
   
   
     <li class="md-nav__item">
-      <a href="sets-induction-mutex.html" class="md-nav__link">
+      <a href="../relations/sets-induction-mutex.html" class="md-nav__link">
         
   
   
@@ -993,37 +989,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Going Beyond Assertions
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="sets-beyond-assertions.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../relations/sets-beyond-assertions.html" class="md-nav__link">
         
   
   
@@ -1039,87 +1008,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#drawing-the-picture" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Drawing The Picture
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#other-properties" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Other Properties
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Other Properties">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#property-deadlock-freedom" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Property: Deadlock Freedom
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#property-non-starvation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Property: Non-Starvation
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#safety-versus-liveness-intuition" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Safety Versus Liveness: Intuition
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1132,7 +1020,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../solvers/bounds_booleans_how_forge_works.html" class="md-nav__link">
+      <a href="bounds_booleans_how_forge_works.html" class="md-nav__link">
         
   
   
@@ -1498,7 +1386,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../solvers/dpll.html" class="md-nav__link">
+      <a href="dpll.html" class="md-nav__link">
         
   
   
@@ -1526,7 +1414,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../solvers/resolution.html" class="md-nav__link">
+      <a href="resolution.html" class="md-nav__link">
         
   
   
@@ -1625,7 +1513,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../solvers/smt.html" class="md-nav__link">
+      <a href="smt.html" class="md-nav__link">
         
   
   
@@ -1653,7 +1541,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../solvers/undecidability.html" class="md-nav__link">
+      <a href="undecidability.html" class="md-nav__link">
         
   
   
@@ -1709,7 +1597,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../solvers/cegis.html" class="md-nav__link">
+      <a href="cegis.html" class="md-nav__link">
         
   
   
@@ -1850,75 +1738,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#drawing-the-picture" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Drawing The Picture
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#other-properties" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Other Properties
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Other Properties">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#property-deadlock-freedom" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Property: Deadlock Freedom
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#property-non-starvation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Property: Non-Starvation
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#safety-versus-liveness-intuition" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Safety Versus Liveness: Intuition
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -1937,86 +1756,133 @@
   
 
 
-<h1 id="going-beyond-assertions">Going Beyond Assertions<a class="headerlink" href="#going-beyond-assertions" title="Permanent link">&para;</a></h1>
-<p>In the <a href="sets-induction-mutex.html">last section</a>, we were modeling this simplified (and perhaps buggy) mutual-exclusion protocol: </p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>while(true) { 
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>     // [location: uninterested]
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    this.flag = true;  // visible to other threads!
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    //  [location: waiting]
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    while(other.flag == true);    
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    //  [location: in-cs] // &quot;critical section&quot;   
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    this.flag = false;    
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>}
-</code></pre></div>
-<div class="admonition note">
-<p class="admonition-title">Thread vs. Process</p>
-<p>I'm going to use the terms "process" and "thread" interchangably for this model. The difference is vital when programming, but it's not important for our purposes today.</p>
-</div>
-<p><strong>Exercise:</strong> If there are 3 possible locations for each process, and 2 possible flag values for each process, how many possible states are there overall in the system (without considering reachability)?</p>
-<details class="note">
-<summary>Think, then click!</summary>
-<p>Every process has <span class="arithmatex">\(3 \times 2 = 6\)</span> possible states. If 2 processes are executing this loop, there are <span class="arithmatex">\(6^2 = 6 \times 6 = 36\)</span> possible states overall in the system. (Of course, we hope that not all of them are reachable!)</p>
-</details>
-<p>Our mutual exclusion property, which says that at most one process can be running the critical section at a time, is a statement that 4 specific states are unreachable: the ones where both processes are in the critical-section location (with any possible combination of boolean flags).</p>
-<p>That property wasn't "inductive": Forge could find transitions with a good prestate that end in one of those 4 bad states. So we enriched the invariant to <em>also</em> say that any thread in the waiting or critical-section locations must also have a raised flag. This prevented Forge from using many prestates it could use before: <span class="arithmatex">\((InCS, Waiting, 0, 0)\)</span>, for example. </p>
-<p>Now we're going to do two things:</p>
-<ul>
-<li>build intuition for how the above actually worked; and</li>
-<li>talk about how we could approch verifying other, richer, kinds of property.</li>
-</ul>
-<h2 id="drawing-the-picture">Drawing The Picture<a class="headerlink" href="#drawing-the-picture" title="Permanent link">&para;</a></h2>
-<p>I really don't want to draw 36 states along with all their corresponding transition arcs. But maybe I don't need to. Let's agree that there are, in principle, 36 states, but just draw the part of the system that's <em>reachable</em>. We'll start with the initial state: <span class="arithmatex">\((Un, Un, 0, 0)\)</span> and abbrieviate location tags to make writing them convenient for us: <span class="arithmatex">\(Un\)</span> for "uninterested", <span class="arithmatex">\(CS\)</span> for "critical section", and <span class="arithmatex">\(W\)</span> for "waiting".</p>
-<p><strong>TODO: redraw with "un" rather than "dis"</strong></p>
-<p><img alt="" src="mutex_state1.png" /></p>
-<p>Fill in the rest of the reachable states and transitions; don't add unreachable states at all. You should find the picture is significantly smaller than it would be if we had drawn <em>all</em> states.</p>
-<p><img alt="" src="mutex_state2.png" /></p>
-<p>Keep going! In diagrams like this, where there are only 2 processes, I like to split the state and draw the transition arcs for each process moving separately in different directions. (We're assuming, for now, that only one process moves at a time, even though they are executing concurrently.)</p>
-<p><img alt="" src="mutex_reachable.png" /></p>
-<p>I've marked the inability of a process to make progress with an "<strong>X</strong>"; it's a transition that can't be taken.</p>
-<p>By drawing the entire graph of reachable states, we can see that the "bad" states are not reachable. <strong>This protocol satisfies mutual exclusion</strong> (as Forge showed us in the last section).</p>
-<h2 id="other-properties">Other Properties<a class="headerlink" href="#other-properties" title="Permanent link">&para;</a></h2>
-<p>Just mutual exclusion isn't good enough! After all, a protocol that never gave access to the critical section would guarantee mutual exclusion. We need at least one other property, one that might turn out to be more complex. We'll get there in 2 steps.</p>
-<h3 id="property-deadlock-freedom">Property: Deadlock Freedom<a class="headerlink" href="#property-deadlock-freedom" title="Permanent link">&para;</a></h3>
-<p>If, at some point, <em>nobody</em> can make progress, then surely the protocol isn't working. Both processes would be waiting forever, unable to ever actually get work done. </p>
-<p>A state where <em>no</em> process can transition is called a <em>deadlock state</em>. Verifying that a system is free of deadlocks is a common verification goal.</p>
-<p><strong>Exercise:</strong> Does the system above satisfy deadlock-freedom? (You can check using the diagram we produced.)</p>
-<details>
-
-No. The state $(W, W, 1, 1)$ is reachable, but has no exit transitions: neither thread can make progress in that state. Once the system is there, it's stuck there. And we can see that just by doing a visual search of the sub-system for the reachable states.
-
-</details>
-
-<p>This kind of verification problem---checking properties of a transition system---is called <em>model checking</em>. Interestingly, there are other kinds of verification tools that use this graph-search approach, rather than the logic- and solver-based approach that Forge uses; you'll hear these tools referred to as <em>explicit-state model checkers</em> and <em>symbolic model checkers</em> respectively.</p>
-<p><strong>Exercise:</strong> How could we check for deadlocks using just the graph we drew and our eyes?</p>
-<details class="note">
-<summary>Think, then click!</summary>
-<p>In the same way we looked for a failure of mutual exclusion. We seek a reachable state with <em>no</em> transitions out. And in this case, we find such a state.</p>
-</details>
-<p><strong>Exercise:</strong> How could we check for deadlock in Forge?</p>
-<p>We could either try the inductive approach, or use the finite-trace method. In the former, we would express that a "good" state is one where some transition is enabled---that is, one where the guard portion of some transition evaluates to true.</p>
-<p><strong>Exercise:</strong> Working from the graph you drew, how could we fix the problem?</p>
-<p>We could add a transition from the deadlock state. Maybe we could allow the first thread to always take priority over the second:</p>
-<p><img alt="" src="mutex_state3.png" /></p>
-<p>This might manifest in the code as an extra way to escape the <code>while</code> loop. Of course, if we prioritize the first thread, the second thread is going to be very unhappy with this fix! But, regardless, adding this transition technically fixes the deadlock problem, and this property will now pass as well.</p>
-<h3 id="property-non-starvation">Property: Non-Starvation<a class="headerlink" href="#property-non-starvation" title="Permanent link">&para;</a></h3>
-<p>Even if there are no deadlocks, it's still possible for one thread to be waiting forever. We'd prefer a system where it's impossible for one thread to be kept waiting while the other thread continues to completely hog the critical section. This property is called <em>non-starvation</em>; more formally, it says that every thread must <em>always</em> (at any point) <em>eventually</em> (at some point) get access to the resource.</p>
-<p><strong>Exercise:</strong> How could we check non-starvation in this graph?</p>
-<details class="note">
-<summary>Think, then click!</summary>
-<p>Not by looking for a single "bad state". That won't suffice.</p>
-</details>
-<h3 id="safety-versus-liveness-intuition">Safety Versus Liveness: Intuition<a class="headerlink" href="#safety-versus-liveness-intuition" title="Permanent link">&para;</a></h3>
-<p>Notice the differences between these properties. In particular, consider what a <em>full counterexample trace</em> for each must look like, if we were inclined to produce one. 
-* For mutual-exclusion and (in this formulation) deadlock-freedom, a counterexample trace could be finite. After some number of transitions, we'd reach a state where a deadlock or failure of mutual-exclusion has occurred. At that point, it's impossible for the system to recover; we've found an issue and the trace has served its purpose.
-* For a failure of non-starvation, on the other hand, no finite trace can suffice. It's always possible that just ahead, the system will suddenly recover and prevent a thread from being starved. So here, we need some notion of an <em>infinite counterexample trace</em> such that some thread never, ever, gets access.</p>
-<p>The difference here is a fundamental distinction in verification. We call properties that have finite counterexamples <em>safety properties</em>, and properties with only infinite counterexamples <em>liveness properties</em>. </p>
-<div class="admonition note">
-<p class="admonition-title">Definitions</p>
-<p>People often describe safety properties as "something bad never happens" and liveness properties as "something good must happen". I don't like this wording, because it assumes an understanding of "goodness" and "badness". Instead, think about what a counterexample needs to look like. Then, one kind of property really is fundamentally different from the other, without requiring a notion of "good" or "bad".</p>
-</div>
-<p>You'll usually find that a liveness property is more computationally complex to check. This doesn't mean that verifying liveness properties is always slower. It's just that we, and Forge, usually have to bring some additional tricks to bear. <strong>In the context of a <em>finite</em> state system, searching for an infinite counterexample amounts to looking for a reachable <em>cycle</em> in the graph, rather than just a single bad state.</strong></p>
-<hr />
-<p>We'll take a short break in the next section to say more about how Forge works. Then we'll return to the problem of defining infinite counterexample traces.</p>
+<h1 id="cegis-vs-monolithic-forall-results">CEGIS vs. Monolithic ForAll: Results<a class="headerlink" href="#cegis-vs-monolithic-forall-results" title="Permanent link">&para;</a></h1>
+<p>Input range for bounded variants: [-10000, 10000]</p>
+<table>
+<thead>
+<tr>
+<th>Benchmark</th>
+<th style="text-align: right;">Slots</th>
+<th>Method</th>
+<th>Result</th>
+<th>Time (s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>abs</td>
+<td style="text-align: right;">2</td>
+<td>CEGIS (bounded)</td>
+<td>SOLVED</td>
+<td>0.041</td>
+</tr>
+<tr>
+<td>abs</td>
+<td style="text-align: right;">2</td>
+<td>CEGIS (unbounded)</td>
+<td>SOLVED</td>
+<td>0.016</td>
+</tr>
+<tr>
+<td>abs</td>
+<td style="text-align: right;">2</td>
+<td>Monolithic (bounded)</td>
+<td>SOLVED</td>
+<td>0.385</td>
+</tr>
+<tr>
+<td>abs</td>
+<td style="text-align: right;">2</td>
+<td>Monolithic (unbounded)</td>
+<td>SOLVED</td>
+<td>0.280</td>
+</tr>
+<tr>
+<td>max3</td>
+<td style="text-align: right;">2</td>
+<td>CEGIS (bounded)</td>
+<td>SOLVED</td>
+<td>0.036</td>
+</tr>
+<tr>
+<td>max3</td>
+<td style="text-align: right;">2</td>
+<td>CEGIS (unbounded)</td>
+<td>SOLVED</td>
+<td>0.036</td>
+</tr>
+<tr>
+<td>max3</td>
+<td style="text-align: right;">2</td>
+<td>Monolithic (bounded)</td>
+<td>TIMEOUT</td>
+<td>60.060</td>
+</tr>
+<tr>
+<td>max3</td>
+<td style="text-align: right;">2</td>
+<td>Monolithic (unbounded)</td>
+<td>SOLVED</td>
+<td>0.024</td>
+</tr>
+<tr>
+<td>clamp</td>
+<td style="text-align: right;">3</td>
+<td>CEGIS (bounded)</td>
+<td>SOLVED</td>
+<td>0.475</td>
+</tr>
+<tr>
+<td>clamp</td>
+<td style="text-align: right;">3</td>
+<td>CEGIS (unbounded)</td>
+<td>SOLVED</td>
+<td>0.298</td>
+</tr>
+<tr>
+<td>clamp</td>
+<td style="text-align: right;">3</td>
+<td>Monolithic (bounded)</td>
+<td>TIMEOUT</td>
+<td>60.046</td>
+</tr>
+<tr>
+<td>clamp</td>
+<td style="text-align: right;">3</td>
+<td>Monolithic (unbounded)</td>
+<td>TIMEOUT</td>
+<td>60.075</td>
+</tr>
+<tr>
+<td>ones</td>
+<td style="text-align: right;">8</td>
+<td>CEGIS (bounded)</td>
+<td>SOLVED</td>
+<td>0.537</td>
+</tr>
+<tr>
+<td>ones</td>
+<td style="text-align: right;">8</td>
+<td>CEGIS (unbounded)</td>
+<td>TIMEOUT</td>
+<td>60.003</td>
+</tr>
+<tr>
+<td>ones</td>
+<td style="text-align: right;">8</td>
+<td>Monolithic (bounded)</td>
+<td>TIMEOUT</td>
+<td>60.050</td>
+</tr>
+<tr>
+<td>ones</td>
+<td style="text-align: right;">8</td>
+<td>Monolithic (unbounded)</td>
+<td>TIMEOUT</td>
+<td>60.062</td>
+</tr>
+</tbody>
+</table>
 
 
 
