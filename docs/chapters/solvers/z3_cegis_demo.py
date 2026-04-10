@@ -242,10 +242,18 @@ def cegis(spec, num_slots: int, precondition=None, verbose=False,
     # We initialize the solver once and incrementally add to it.
     synth = Solver()
     synth.add(prog_bounds)
-    t_start = time.time()
+    # We measure CPU time (time.process_time) rather than wall clock: Z3 is
+    # single-threaded and CPU-bound, so this gives more stable numbers under
+    # system load. Z3's own "timeout" param is wall-clock, so we use wall clock
+    # for that budget separately.
+    t_start_cpu = time.process_time()
+    t_start_wall = time.time()
 
     def remaining_ms():
-        return max(1, timeout_ms - int((time.time() - t_start) * 1000))
+        return max(1, timeout_ms - int((time.time() - t_start_wall) * 1000))
+
+    def elapsed_cpu():
+        return time.process_time() - t_start_cpu
 
     while True:
         iteration += 1
@@ -267,12 +275,13 @@ def cegis(spec, num_slots: int, precondition=None, verbose=False,
         synth.set("timeout", remaining_ms())
         synth_result = synth.check()
         if synth_result != sat:
-            elapsed_sec = time.time() - t_start
-            if elapsed_sec >= timeout_ms/1000:
-                print(f"TIMEOUT after {elapsed_sec:.3f}s ({iteration} iterations)")
-                return {"status": "TIMEOUT", "time": elapsed_sec}
-            print(f"No program of this size satisfies all constraints! ({elapsed_sec:.3f}s)")
-            return {"status": "UNSAT", "time": elapsed_sec}
+            wall_elapsed = time.time() - t_start_wall
+            cpu_elapsed = elapsed_cpu()
+            if wall_elapsed >= timeout_ms/1000:
+                print(f"TIMEOUT after {cpu_elapsed:.3f}s CPU ({iteration} iterations)")
+                return {"status": "TIMEOUT", "time": cpu_elapsed}
+            print(f"No program of this size satisfies all constraints! ({cpu_elapsed:.3f}s CPU)")
+            return {"status": "UNSAT", "time": cpu_elapsed}
 
         model = synth.model()
         print("Candidate program:")
@@ -301,15 +310,16 @@ def cegis(spec, num_slots: int, precondition=None, verbose=False,
 
         verif_result = verif.check()
         if verif_result != sat:
-            elapsed = time.time() - t_start
-            if elapsed >= timeout_ms/1000:
-                print(f"TIMEOUT after {elapsed:.3f}s ({iteration} iterations)")
-                return {"status": "TIMEOUT", "time": elapsed}
+            wall_elapsed = time.time() - t_start_wall
+            cpu_elapsed = elapsed_cpu()
+            if wall_elapsed >= timeout_ms/1000:
+                print(f"TIMEOUT after {cpu_elapsed:.3f}s CPU ({iteration} iterations)")
+                return {"status": "TIMEOUT", "time": cpu_elapsed}
             print()
-            print(f"=== Verified! No counterexample found. ({elapsed:.3f}s) ===")
+            print(f"=== Verified! No counterexample found. ({cpu_elapsed:.3f}s CPU) ===")
             print("Final program:")
             print_program(model, ops, arg1s, arg2s, num_slots, num_inputs)
-            return {"status": "SOLVED", "time": elapsed}
+            return {"status": "SOLVED", "time": cpu_elapsed}
 
         # There are inputs where the candidate fails. Add them and try again.
         cex_model = verif.model()
@@ -325,19 +335,19 @@ def cegis(spec, num_slots: int, precondition=None, verbose=False,
 #####################################################################
 
 if __name__ == "__main__":
-    # 2 operations should suffice.
-    cegis(abs_spec, num_slots=2)
-    print("\n" + "="*50 + "\n")
+    # # 2 operations should suffice.
+    # cegis(abs_spec, num_slots=2)
+    # print("\n" + "="*50 + "\n")
 
-    # If we only had 2 numbers, 1 op would suffice since we have MAX.
-    # Given 3 numbers, we need at least 2 MAX operations.
-    cegis(max3_spec, num_slots=2)
-    print("\n" + "="*50 + "\n")
+    # # If we only had 2 numbers, 1 op would suffice since we have MAX.
+    # # Given 3 numbers, we need at least 2 MAX operations.
+    # cegis(max3_spec, num_slots=2)
+    # print("\n" + "="*50 + "\n")
 
-    # 3 operations should suffice, here.
-    cegis(clamp_spec, num_slots=3,
-          precondition=lambda x, lo, hi: lo <= hi)
-    print("\n" + "="*50 + "\n")
+    # # 3 operations should suffice, here.
+    # cegis(clamp_spec, num_slots=3,
+    #       precondition=lambda x, lo, hi: lo <= hi)
+    # print("\n" + "="*50 + "\n")
 
     # Count the number of 1-bits.
     # Inputs are constrained to be small for this example (see the spec docstring).
@@ -346,7 +356,7 @@ if __name__ == "__main__":
           precondition=lambda x: And(x >= 0, x <= 7))
     print("\n" + "="*50 + "\n")
 
-    # We can't synthesize multiplication when both parameters are 
-    # unknown, at least when using only the operators declared above. 
-    # CEGIS will accumulate >= 1 counterexample before concluding failure.
-    cegis(mul_spec, num_slots=4, verbose=False)
+    # # We can't synthesize multiplication when both parameters are 
+    # # unknown, at least when using only the operators declared above. 
+    # # CEGIS will accumulate >= 1 counterexample before concluding failure.
+    # cegis(mul_spec, num_slots=4, verbose=False)

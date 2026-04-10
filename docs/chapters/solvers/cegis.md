@@ -154,17 +154,50 @@ The "I asked ChatGPT and..." intro is overdone. But it seemed appropriate here, 
 
 I mostly agree, although I trimmed the response for brevity.
 
-Next: we'll compare the effectiveness of CEGIS vs. `ForAll` in Z3. 
 
-<!-- ## But does CEGIS really make a difference? 
+## But does CEGIS really make a difference? 
 
-I built [a more complete Python example](./z3_cegis_demo.py) of (basic) program synthesis, and a [test harness](./z3_cegis_vs_forall.py) that compares CEGIS against a plain `ForAll` in Z3. For both, the code compares bounded and unbounded checks. 
+I built [a more complete Python example](./z3_cegis_demo.py) of (basic) program synthesis. Here's a table comparing its performance vs. a baseline using `ForAll` in Z3 instead. 
+
+<!-- , and a [test harness](./z3_cegis_vs_forall.py) that compares CEGIS against a plain `ForAll` in Z3. For both, the code compares bounded and unbounded checks.  -->
 
 !!! warning "This isn't statistically sound."
-  I only ran the comparison once, so there might be cache-warming effects, transient slowdowns, garbage collection, etc. I used Claude Code to prototype the comparison, which sped up building
-  it. But Claude can't run the actual experiments any faster! 
-  
+  I only ran the comparison once, so there might be cache-warming effects, transient slowdowns, garbage collection, etc. There's also non-determinism involved in the solver. For the bounded variants, the inputs were limited to: [-10000, 10000]. Times are CPU seconds (`time.process_time`), not wall clock. But Z3's timeout uses wall-clock time, so the timeout is not comparable with the timer. 
+
   I do think that the general trends are informative, though. 
 
-Here are the results. What do you notice?
- -->
+See the file for more specifics. The four specs are:
+
+* absolute value;
+* maximum of 3 elements; 
+* ``clamping'' a value to a min and max;
+* counting the 1-bits in a value; and 
+* multiplication (without sufficient operators&mdash;unsat).
+
+
+
+| Benchmark | Slots | Method | Result | CPU Time (s) |
+|-----------|------:|--------|--------|-------------:|
+| abs | 2 | CEGIS (bounded) | SOLVED | 0.017 |
+| abs | 2 | CEGIS (unbounded) | SOLVED | 0.016 |
+| abs | 2 | Monolithic (bounded) | SOLVED | 0.413 |
+| abs | 2 | Monolithic (unbounded) | SOLVED | 0.306 |
+| max3 | 2 | CEGIS (bounded) | SOLVED | 0.039 |
+| max3 | 2 | CEGIS (unbounded) | SOLVED | 0.037 |
+| max3 | 2 | Monolithic (bounded) | TIMEOUT | > 60 (wall) |
+| max3 | 2 | Monolithic (unbounded) | SOLVED | 1.024 |
+| clamp | 3 | CEGIS (bounded) | SOLVED | 0.302 |
+| clamp | 3 | CEGIS (unbounded) | SOLVED | 0.369 |
+| clamp | 3 | Monolithic (bounded) | TIMEOUT | > 60 (wall) |
+| clamp | 3 | Monolithic (unbounded) | TIMEOUT | > 60 (wall) |
+| ones | 8 | CEGIS (bounded) | TIMEOUT | > 60 (wall) |
+| ones | 8 | CEGIS (unbounded) | TIMEOUT | > 60 (wall) |
+| ones | 8 | Monolithic (bounded) | TIMEOUT | > 60 (wall) |
+| ones | 8 | Monolithic (unbounded) | TIMEOUT | > 60 (wall) |
+| mul | 4 | CEGIS (bounded) | UNSAT | 0.595 |
+| mul | 4 | CEGIS (unbounded) | UNSAT | 12.641 |
+| mul | 4 | Monolithic (bounded) | TIMEOUT | > 60 (wall) |
+| mul | 4 | Monolithic (unbounded) | TIMEOUT | > 60 (wall) |
+
+What do you notice?
+
