@@ -6,8 +6,9 @@ elimination over the full input space in one shot, which is often much slower
 (or times out) compared to the incremental CEGIS approach.
 """
 
-from z3 import Solver, Int, sat, unsat, ForAll
+from z3 import Solver, Int, sat, unsat, ForAll, Context
 from z3 import If as _If, And as _And
+import z3 as _z3
 import time, inspect
 
 from z3_cegis_demo import (
@@ -18,7 +19,8 @@ from z3_cegis_demo import (
 )
 
 
-TIMEOUT_MS = 60000
+TIMEOUT_MS = 20000
+#TIMEOUT_MS = 1000
 
 
 
@@ -108,6 +110,7 @@ if __name__ == "__main__":
     rows = []  # (benchmark, slots, method, status, time)
 
     for name, spec, slots, pre in benchmarks:
+        _z3._main_ctx = Context()  # fresh Z3 context — no carryover from prior benchmarks
         print(f"\n{'='*60}")
         print(f" Benchmark: {name} ({slots} slots)")
         print(f"{'='*60}")
