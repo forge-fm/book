@@ -10,7 +10,7 @@
       
       
       
-        <link rel="canonical" href="https://forge-fm.github.io/book/2026/chapters/solvers/z3_cegis_vs_forall_results.html">
+        <link rel="canonical" href="https://forge-fm.github.io/book/2026/chapters/solvers/results_20s_apr10.html">
       
       
       
@@ -1759,9 +1759,6 @@
 <h1 id="cegis-vs-monolithic-forall-results">CEGIS vs. Monolithic ForAll: Results<a class="headerlink" href="#cegis-vs-monolithic-forall-results" title="Permanent link">&para;</a></h1>
 <p>Input range for bounded variants: [-10000, 10000]</p>
 <p>Times are CPU seconds (<code>time.process_time</code>), not wall clock.</p>
-<p>Note: Z3's <code>timeout</code> is wall-clock, so on TIMEOUT the CPU number is
-whatever Z3 managed before the wall budget tripped — not comparable
-to SOLVED rows. TIMEOUT rows are shown as <code>&gt; {budget}s</code>.</p>
 <table>
 <thead>
 <tr>
@@ -1778,7 +1775,7 @@ to SOLVED rows. TIMEOUT rows are shown as <code>&gt; {budget}s</code>.</p>
 <td style="text-align: right;">2</td>
 <td>CEGIS (bounded)</td>
 <td>SOLVED</td>
-<td style="text-align: right;">0.017</td>
+<td style="text-align: right;">0.024</td>
 </tr>
 <tr>
 <td>abs</td>
@@ -1792,126 +1789,126 @@ to SOLVED rows. TIMEOUT rows are shown as <code>&gt; {budget}s</code>.</p>
 <td style="text-align: right;">2</td>
 <td>Monolithic (bounded)</td>
 <td>SOLVED</td>
-<td style="text-align: right;">0.413</td>
+<td style="text-align: right;">0.422</td>
 </tr>
 <tr>
 <td>abs</td>
 <td style="text-align: right;">2</td>
 <td>Monolithic (unbounded)</td>
 <td>SOLVED</td>
-<td style="text-align: right;">0.306</td>
+<td style="text-align: right;">0.312</td>
 </tr>
 <tr>
 <td>max3</td>
 <td style="text-align: right;">2</td>
 <td>CEGIS (bounded)</td>
+<td>SOLVED</td>
+<td style="text-align: right;">0.040</td>
+</tr>
+<tr>
+<td>max3</td>
+<td style="text-align: right;">2</td>
+<td>CEGIS (unbounded)</td>
 <td>SOLVED</td>
 <td style="text-align: right;">0.039</td>
 </tr>
 <tr>
 <td>max3</td>
 <td style="text-align: right;">2</td>
-<td>CEGIS (unbounded)</td>
-<td>SOLVED</td>
-<td style="text-align: right;">0.037</td>
-</tr>
-<tr>
-<td>max3</td>
-<td style="text-align: right;">2</td>
 <td>Monolithic (bounded)</td>
 <td>TIMEOUT</td>
-<td style="text-align: right;">&gt; 60 (wall)</td>
+<td style="text-align: right;">20.004</td>
 </tr>
 <tr>
 <td>max3</td>
 <td style="text-align: right;">2</td>
 <td>Monolithic (unbounded)</td>
 <td>SOLVED</td>
-<td style="text-align: right;">1.024</td>
+<td style="text-align: right;">8.652</td>
 </tr>
 <tr>
 <td>clamp</td>
 <td style="text-align: right;">3</td>
 <td>CEGIS (bounded)</td>
 <td>SOLVED</td>
-<td style="text-align: right;">0.302</td>
+<td style="text-align: right;">0.083</td>
 </tr>
 <tr>
 <td>clamp</td>
 <td style="text-align: right;">3</td>
 <td>CEGIS (unbounded)</td>
 <td>SOLVED</td>
-<td style="text-align: right;">0.369</td>
+<td style="text-align: right;">1.538</td>
 </tr>
 <tr>
 <td>clamp</td>
 <td style="text-align: right;">3</td>
 <td>Monolithic (bounded)</td>
-<td>TIMEOUT</td>
-<td style="text-align: right;">&gt; 60 (wall)</td>
+<td>SOLVED</td>
+<td style="text-align: right;">2.655</td>
 </tr>
 <tr>
 <td>clamp</td>
 <td style="text-align: right;">3</td>
 <td>Monolithic (unbounded)</td>
-<td>TIMEOUT</td>
-<td style="text-align: right;">&gt; 60 (wall)</td>
+<td>SOLVED</td>
+<td style="text-align: right;">10.438</td>
 </tr>
 <tr>
 <td>ones</td>
 <td style="text-align: right;">8</td>
 <td>CEGIS (bounded)</td>
-<td>TIMEOUT</td>
-<td style="text-align: right;">&gt; 60 (wall)</td>
+<td>SOLVED</td>
+<td style="text-align: right;">14.209</td>
 </tr>
 <tr>
 <td>ones</td>
 <td style="text-align: right;">8</td>
 <td>CEGIS (unbounded)</td>
 <td>TIMEOUT</td>
-<td style="text-align: right;">&gt; 60 (wall)</td>
+<td style="text-align: right;">19.984</td>
 </tr>
 <tr>
 <td>ones</td>
 <td style="text-align: right;">8</td>
 <td>Monolithic (bounded)</td>
 <td>TIMEOUT</td>
-<td style="text-align: right;">&gt; 60 (wall)</td>
+<td style="text-align: right;">19.932</td>
 </tr>
 <tr>
 <td>ones</td>
 <td style="text-align: right;">8</td>
 <td>Monolithic (unbounded)</td>
 <td>TIMEOUT</td>
-<td style="text-align: right;">&gt; 60 (wall)</td>
+<td style="text-align: right;">19.959</td>
 </tr>
 <tr>
 <td>mul</td>
 <td style="text-align: right;">4</td>
 <td>CEGIS (bounded)</td>
 <td>UNSAT</td>
-<td style="text-align: right;">0.595</td>
+<td style="text-align: right;">2.287</td>
 </tr>
 <tr>
 <td>mul</td>
 <td style="text-align: right;">4</td>
 <td>CEGIS (unbounded)</td>
 <td>UNSAT</td>
-<td style="text-align: right;">12.641</td>
+<td style="text-align: right;">1.388</td>
 </tr>
 <tr>
 <td>mul</td>
 <td style="text-align: right;">4</td>
 <td>Monolithic (bounded)</td>
 <td>TIMEOUT</td>
-<td style="text-align: right;">&gt; 60 (wall)</td>
+<td style="text-align: right;">24.938</td>
 </tr>
 <tr>
 <td>mul</td>
 <td style="text-align: right;">4</td>
 <td>Monolithic (unbounded)</td>
 <td>TIMEOUT</td>
-<td style="text-align: right;">&gt; 60 (wall)</td>
+<td style="text-align: right;">19.875</td>
 </tr>
 </tbody>
 </table>

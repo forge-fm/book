@@ -1754,6 +1754,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#but-does-cegis-really-make-a-difference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        But does CEGIS really make a difference?
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1983,6 +1994,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#but-does-cegis-really-make-a-difference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        But does CEGIS really make a difference?
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2120,19 +2142,177 @@
 <p>The punchline: LLMs are like a very well-read colleague who can suggest code quickly but might be wrong. CEGIS is like a slower colleague who checks every case before answering. You want both. The solver's guarantee is what makes formal methods <em>formal</em>&mdash;and that's not something statistical generation can replace, only augment.</p>
 </blockquote>
 <p>I mostly agree, although I trimmed the response for brevity.</p>
-<p>Next: we'll compare the effectiveness of CEGIS vs. <code>ForAll</code> in Z3. </p>
-<!-- ## But does CEGIS really make a difference? 
+<h2 id="but-does-cegis-really-make-a-difference">But does CEGIS really make a difference?<a class="headerlink" href="#but-does-cegis-really-make-a-difference" title="Permanent link">&para;</a></h2>
+<p>I built <a href="z3_cegis_demo.py">a more complete Python example</a> of (basic) program synthesis. Here's a table comparing its performance vs. a baseline using <code>ForAll</code> in Z3 instead. </p>
+<!-- , and a [test harness](./z3_cegis_vs_forall.py) that compares CEGIS against a plain `ForAll` in Z3. For both, the code compares bounded and unbounded checks.  -->
 
-I built [a more complete Python example](./z3_cegis_demo.py) of (basic) program synthesis, and a [test harness](./z3_cegis_vs_forall.py) that compares CEGIS against a plain `ForAll` in Z3. For both, the code compares bounded and unbounded checks. 
-
-!!! warning "This isn't statistically sound."
-  I only ran the comparison once, so there might be cache-warming effects, transient slowdowns, garbage collection, etc. I used Claude Code to prototype the comparison, which sped up building
-  it. But Claude can't run the actual experiments any faster! 
-
-  I do think that the general trends are informative, though. 
-
-Here are the results. What do you notice?
- -->
+<div class="admonition warning">
+<p class="admonition-title">This isn't statistically sound.</p>
+</div>
+<p>I only ran the comparison once, so there might be cache-warming effects, transient slowdowns, garbage collection, etc. There's also non-determinism involved in the solver. For the bounded variants, the inputs were limited to: [-10000, 10000]. Times are CPU seconds (<code>time.process_time</code>), not wall clock. But Z3's timeout uses wall-clock time, so the timeout is not comparable with the timer. </p>
+<p>I do think that the general trends are informative, though. </p>
+<p>See the file for more specifics. The four specs are:</p>
+<ul>
+<li>absolute value;</li>
+<li>maximum of 3 elements; </li>
+<li>``clamping'' a value to a min and max;</li>
+<li>counting the 1-bits in a value; and </li>
+<li>multiplication (without sufficient operators&mdash;unsat).</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Benchmark</th>
+<th style="text-align: right;">Slots</th>
+<th>Method</th>
+<th>Result</th>
+<th style="text-align: right;">CPU Time (s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>abs</td>
+<td style="text-align: right;">2</td>
+<td>CEGIS (bounded)</td>
+<td>SOLVED</td>
+<td style="text-align: right;">0.017</td>
+</tr>
+<tr>
+<td>abs</td>
+<td style="text-align: right;">2</td>
+<td>CEGIS (unbounded)</td>
+<td>SOLVED</td>
+<td style="text-align: right;">0.016</td>
+</tr>
+<tr>
+<td>abs</td>
+<td style="text-align: right;">2</td>
+<td>Monolithic (bounded)</td>
+<td>SOLVED</td>
+<td style="text-align: right;">0.413</td>
+</tr>
+<tr>
+<td>abs</td>
+<td style="text-align: right;">2</td>
+<td>Monolithic (unbounded)</td>
+<td>SOLVED</td>
+<td style="text-align: right;">0.306</td>
+</tr>
+<tr>
+<td>max3</td>
+<td style="text-align: right;">2</td>
+<td>CEGIS (bounded)</td>
+<td>SOLVED</td>
+<td style="text-align: right;">0.039</td>
+</tr>
+<tr>
+<td>max3</td>
+<td style="text-align: right;">2</td>
+<td>CEGIS (unbounded)</td>
+<td>SOLVED</td>
+<td style="text-align: right;">0.037</td>
+</tr>
+<tr>
+<td>max3</td>
+<td style="text-align: right;">2</td>
+<td>Monolithic (bounded)</td>
+<td>TIMEOUT</td>
+<td style="text-align: right;">&gt; 60 (wall)</td>
+</tr>
+<tr>
+<td>max3</td>
+<td style="text-align: right;">2</td>
+<td>Monolithic (unbounded)</td>
+<td>SOLVED</td>
+<td style="text-align: right;">1.024</td>
+</tr>
+<tr>
+<td>clamp</td>
+<td style="text-align: right;">3</td>
+<td>CEGIS (bounded)</td>
+<td>SOLVED</td>
+<td style="text-align: right;">0.302</td>
+</tr>
+<tr>
+<td>clamp</td>
+<td style="text-align: right;">3</td>
+<td>CEGIS (unbounded)</td>
+<td>SOLVED</td>
+<td style="text-align: right;">0.369</td>
+</tr>
+<tr>
+<td>clamp</td>
+<td style="text-align: right;">3</td>
+<td>Monolithic (bounded)</td>
+<td>TIMEOUT</td>
+<td style="text-align: right;">&gt; 60 (wall)</td>
+</tr>
+<tr>
+<td>clamp</td>
+<td style="text-align: right;">3</td>
+<td>Monolithic (unbounded)</td>
+<td>TIMEOUT</td>
+<td style="text-align: right;">&gt; 60 (wall)</td>
+</tr>
+<tr>
+<td>ones</td>
+<td style="text-align: right;">8</td>
+<td>CEGIS (bounded)</td>
+<td>TIMEOUT</td>
+<td style="text-align: right;">&gt; 60 (wall)</td>
+</tr>
+<tr>
+<td>ones</td>
+<td style="text-align: right;">8</td>
+<td>CEGIS (unbounded)</td>
+<td>TIMEOUT</td>
+<td style="text-align: right;">&gt; 60 (wall)</td>
+</tr>
+<tr>
+<td>ones</td>
+<td style="text-align: right;">8</td>
+<td>Monolithic (bounded)</td>
+<td>TIMEOUT</td>
+<td style="text-align: right;">&gt; 60 (wall)</td>
+</tr>
+<tr>
+<td>ones</td>
+<td style="text-align: right;">8</td>
+<td>Monolithic (unbounded)</td>
+<td>TIMEOUT</td>
+<td style="text-align: right;">&gt; 60 (wall)</td>
+</tr>
+<tr>
+<td>mul</td>
+<td style="text-align: right;">4</td>
+<td>CEGIS (bounded)</td>
+<td>UNSAT</td>
+<td style="text-align: right;">0.595</td>
+</tr>
+<tr>
+<td>mul</td>
+<td style="text-align: right;">4</td>
+<td>CEGIS (unbounded)</td>
+<td>UNSAT</td>
+<td style="text-align: right;">12.641</td>
+</tr>
+<tr>
+<td>mul</td>
+<td style="text-align: right;">4</td>
+<td>Monolithic (bounded)</td>
+<td>TIMEOUT</td>
+<td style="text-align: right;">&gt; 60 (wall)</td>
+</tr>
+<tr>
+<td>mul</td>
+<td style="text-align: right;">4</td>
+<td>Monolithic (unbounded)</td>
+<td>TIMEOUT</td>
+<td style="text-align: right;">&gt; 60 (wall)</td>
+</tr>
+</tbody>
+</table>
+<p>What do you notice?</p>
 
 
 

@@ -6,8 +6,9 @@ elimination over the full input space in one shot, which is often much slower
 (or times out) compared to the incremental CEGIS approach.
 """
 
-from z3 import Solver, Int, sat, unsat, ForAll
+from z3 import Solver, Int, sat, unsat, ForAll, Context
 from z3 import If as _If, And as _And
+import z3 as _z3
 import time, inspect
 
 from z3_cegis_demo import (
@@ -19,6 +20,7 @@ from z3_cegis_demo import (
 
 
 TIMEOUT_MS = 60000
+#TIMEOUT_MS = 1000
 
 
 
@@ -69,22 +71,25 @@ def monolithic(spec, num_slots: int, precondition=None,
     print(f"=== Monolithic ({label}): {spec.__name__}({', '.join(input_names)}) ===")
     print(f"  {num_slots} slots, timeout {timeout_ms}ms")
 
-    t0_sec = time.time()
+    # CPU time for the metric; wall clock just for the TIMEOUT message.
+    t0_cpu = time.process_time()
+    t0_wall = time.time()
     result = s.check()
-    elapsed_sec: float = time.time() - t0_sec
+    cpu_elapsed: float = time.process_time() - t0_cpu
+    wall_elapsed: float = time.time() - t0_wall
 
     if result == sat:
-        print(f"  SOLVED in {elapsed_sec:.3f}s")
+        print(f"  SOLVED in {cpu_elapsed:.3f}s CPU")
         print_program(s.model(), ops, arg1s, arg2s, num_slots, num_inputs)
-        return {"status": "SOLVED", "time": elapsed_sec}
+        return {"status": "SOLVED", "time": cpu_elapsed}
     elif result == unsat:
-        print(f"  UNSAT (no program exists) in {elapsed_sec:.3f}s")
-        return {"status": "UNSAT", "time": elapsed_sec}
+        print(f"  UNSAT (no program exists) in {cpu_elapsed:.3f}s CPU")
+        return {"status": "UNSAT", "time": cpu_elapsed}
     else:
-        print(f"  UNKNOWN / TIMEOUT after {elapsed_sec:.3f}s (Z3 timeout was {timeout_ms}ms; Z3 timeouts are approximate)")
+        print(f"  UNKNOWN / TIMEOUT after {cpu_elapsed:.3f}s CPU / {wall_elapsed:.3f}s wall (Z3 timeout was {timeout_ms}ms; Z3 timeouts are approximate)")
         reason = s.reason_unknown()
         print(f"  Reason: {reason}")
-        return {"status": "TIMEOUT", "time": elapsed_sec}
+        return {"status": "TIMEOUT", "time": cpu_elapsed}
 
 
 #####################################################################
@@ -105,32 +110,46 @@ if __name__ == "__main__":
         ("mul",   mul_spec,   4, None)
     ]
 
-    rows = []  # (benchmark, slots, method, status, time)
+    rows = []  # (benchmark, slots, method, status, cpu_time)
+
+    def record(name, slots, method, r):
+        rows.append((name, slots, method, r["status"], r["time"]))
 
     for name, spec, slots, pre in benchmarks:
+        _z3._main_ctx = Context()  # fresh Z3 context — no carryover from prior benchmarks
         print(f"\n{'='*60}")
         print(f" Benchmark: {name} ({slots} slots)")
         print(f"{'='*60}")
 
         print(f"\n--- CEGIS ---")
-        r = cegis(spec, slots, precondition=pre,timeout_ms=TIMEOUT_MS)
-        rows.append((name, slots, "CEGIS (bounded)", r["status"], r["time"]))
-        r = cegis(spec, slots, precondition=pre, use_input_bounds=False,timeout_ms=TIMEOUT_MS)
-        rows.append((name, slots, "CEGIS (unbounded)", r["status"], r["time"]))
+        record(name, slots, "CEGIS (bounded)",
+               cegis(spec, slots, precondition=pre, timeout_ms=TIMEOUT_MS))
+        record(name, slots, "CEGIS (unbounded)",
+               cegis(spec, slots, precondition=pre, use_input_bounds=False, timeout_ms=TIMEOUT_MS))
 
         print(f"\n--- Monolithic ---")
-        r = monolithic(spec, slots, precondition=pre,timeout_ms=TIMEOUT_MS)
-        rows.append((name, slots, "Monolithic (bounded)", r["status"], r["time"]))
-        r = monolithic(spec, slots, precondition=pre,timeout_ms=TIMEOUT_MS, use_input_bounds=False)
-        rows.append((name, slots, "Monolithic (unbounded)", r["status"], r["time"]))
+        record(name, slots, "Monolithic (bounded)",
+               monolithic(spec, slots, precondition=pre, timeout_ms=TIMEOUT_MS))
+        record(name, slots, "Monolithic (unbounded)",
+               monolithic(spec, slots, precondition=pre, timeout_ms=TIMEOUT_MS, use_input_bounds=False))
 
-    # Write markdown summary
+    # Write markdown summary. Times are CPU time (time.process_time),
+    # which is less noisy than wall clock under system load.
     out_path = "z3_cegis_vs_forall_results.md"
     with open(out_path, "w") as f:
         f.write("# CEGIS vs. Monolithic ForAll: Results\n\n")
         f.write(f"Input range for bounded variants: [{INPUT_LO}, {INPUT_HI}]\n\n")
-        f.write("| Benchmark | Slots | Method | Result | Time (s) |\n")
-        f.write("|-----------|------:|--------|--------|----------|\n")
+        f.write("Times are CPU seconds (`time.process_time`), not wall clock.\n\n")
+        f.write("Note: Z3's `timeout` is wall-clock, so on TIMEOUT the CPU number is\n")
+        f.write("whatever Z3 managed before the wall budget tripped — not comparable\n")
+        f.write("to SOLVED rows. TIMEOUT rows are shown as `> {budget}s`.\n\n")
+        f.write("| Benchmark | Slots | Method | Result | CPU Time (s) |\n")
+        f.write("|-----------|------:|--------|--------|-------------:|\n")
+        wall_budget_s = TIMEOUT_MS / 1000
         for name, slots, method, status, elapsed in rows:
-            f.write(f"| {name} | {slots} | {method} | {status} | {elapsed:.3f} |\n")
+            if status == "TIMEOUT":
+                cell = f"> {wall_budget_s:.0f} (wall)"
+            else:
+                cell = f"{elapsed:.3f}"
+            f.write(f"| {name} | {slots} | {method} | {status} | {cell} |\n")
     print(f"\nResults written to {out_path}")
