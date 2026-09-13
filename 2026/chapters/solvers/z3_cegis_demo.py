@@ -22,7 +22,7 @@ Note on types:
 
 from z3 import Solver, Int, IntVal, sat, ArithRef, ExprRef, BoolRef, IntNumRef
 import inspect, time
-from z3 import If as _If, And as _And
+from z3 import If as _If, And as _And, Or, Implies
 from typing import overload
 
 #####################################################################
@@ -105,14 +105,25 @@ def mul_spec(x: ArithRef, y: ArithRef) -> ArithRef:
     with the available operations."""
     return Z3_MULTIPLY(x, y)
 
-def ones_spec(x: ArithRef) -> ArithRef:
-    """Counts the number of 1-bits in the binary representation of x.
-    Only meaningful for non-negative x. We also make a substantial 
-    restriction to keep the demo small and performant: only the first 
-    3 bits are considered (division is expensive). A real tool would
-    use the theory of bit-vectors instead."""
-    # Unroll the bit extraction for 3 bits: x%2 + (x/2)%2 + (x/4)%2
-    return (x % 2) + ((x / 2) % 2) + ((x / 4) % 2)
+def make_ones_spec(n_bits: int):
+    """Build a spec that counts the number of 1-bits in the low `n_bits`
+    of x. Only meaningful for non-negative x. We bake `n_bits` in at
+    construction time rather than passing it as a Z3 input, because
+    `cegis` infers input arity from the spec's Python signature, and
+    because a symbolic bit count would require quantifiers or bit-vector
+    theory to handle cleanly."""
+    def ones_spec(x: ArithRef) -> ArithRef:
+        # Unroll the bit extraction: sum of (x / 2^i) % 2 for i in 0..n_bits-1.
+        total = (x % 2)
+        for i in range(1, n_bits):
+            total = total + ((x / (2 ** i)) % 2)
+        return total
+    ones_spec.__name__ = f"ones{n_bits}_spec"
+    return ones_spec
+
+def ones_precondition(n_bits: int):
+    """Matching precondition: 0 <= x < 2^n_bits."""
+    return lambda x: And(x >= 0, x <= 2 ** n_bits - 1)
 
 
 #####################################################################
@@ -198,11 +209,40 @@ def print_program(model, ops, arg1s, arg2s, num_slots: int,
     print(f"  output: {var_name(num_inputs + num_slots - 1, num_inputs)}")
 
 #####################################################################
+# Optional synthesis optimizations
+#
+# Each of these is a sound pruning of the candidate-program search space:
+# they never rule out a semantically-valid program, they just break
+# symmetries or use caller-provided hints. Toggled via cegis() parameters.
+#####################################################################
+
+def _symmetry_breaking_constraints(ops, arg1s, arg2s, num_slots):
+    """Canonicalize template symmetries:
+       - commutative ops (ADD/MAX/MIN): force arg1 <= arg2
+       - unary ops (NEG/BIT0/SHR1): pin the unused arg2 to 0
+       - constant ops (ONE/ZERO): pin both args to 0
+    Every semantic solution survives; we only break ties between
+    equivalent programs the synthesizer would otherwise explore."""
+    cs = []
+    for i in range(num_slots):
+        op, a1, a2 = ops[i], arg1s[i], arg2s[i]
+        commutative = Or(op == OP_ADD, op == OP_MAX, op == OP_MIN)
+        unary       = Or(op == OP_NEG, op == OP_BIT0, op == OP_SHR1)
+        constant    = Or(op == OP_ONE, op == OP_ZERO)
+        cs.append(Implies(commutative, a1 <= a2))
+        cs.append(Implies(unary,       a2 == 0))
+        cs.append(Implies(constant,    And(a1 == 0, a2 == 0)))
+    return cs
+
+#####################################################################
 # Core CEGIS loop
 #####################################################################
 
 def cegis(spec, num_slots: int, precondition=None, verbose=False,
-          use_input_bounds=True, timeout_ms=30000) -> dict:
+          use_input_bounds=True, timeout_ms=30000,
+          symmetry_breaking: bool = False,
+          allowed_ops: list | None = None,
+          seed_inputs: list | None = None) -> dict:
     # Infer the number of inputs from the spec's signature.
     num_inputs = len(inspect.signature(spec).parameters)
     input_names = INPUT_NAMES[:num_inputs]
@@ -220,14 +260,23 @@ def cegis(spec, num_slots: int, precondition=None, verbose=False,
     # At slot i, variables 0..(num_inputs + i - 1) are available.
     prog_bounds = []
     for i in range(num_slots):
-        prog_bounds.append(And(ops[i] >= 0, ops[i] < NUM_OPS))
+        if allowed_ops is not None:
+            prog_bounds.append(Or(*[ops[i] == k for k in allowed_ops]))
+        else:
+            prog_bounds.append(And(ops[i] >= 0, ops[i] < NUM_OPS))
         num_available = num_inputs + i  # inputs + prior instruction outputs
         prog_bounds.append(And(arg1s[i] >= 0, arg1s[i] < num_available))
         prog_bounds.append(And(arg2s[i] >= 0, arg2s[i] < num_available))
 
     print(f"=== CEGIS: Synthesizing {spec.__name__}({', '.join(input_names)}) ===")
     print(f"Program template: {num_slots} instruction slots")
-    print(f"Available operations: {', '.join(OP_NAMES)}")
+    active_op_names = ([OP_NAMES[k] for k in allowed_ops]
+                       if allowed_ops is not None else OP_NAMES)
+    print(f"Available operations: {', '.join(active_op_names)}")
+    if symmetry_breaking:
+        print("Symmetry breaking: ON")
+    if seed_inputs:
+        print(f"Seeded inputs: {list(seed_inputs)}")
     if use_input_bounds:
         print(f"Allowed input-value range: [{INPUT_LO}, {INPUT_HI}]")
     else:
@@ -242,6 +291,17 @@ def cegis(spec, num_slots: int, precondition=None, verbose=False,
     # We initialize the solver once and incrementally add to it.
     synth = Solver()
     synth.add(prog_bounds)
+    if symmetry_breaking:
+        synth.add(_symmetry_breaking_constraints(ops, arg1s, arg2s, num_slots))
+    # Seed the synthesizer with caller-provided concrete inputs before
+    # entering the CEGIS loop. For small, fully-enumerable input domains
+    # this can collapse the loop to a single iteration.
+    if seed_inputs:
+        for input_tuple in seed_inputs:
+            concrete_vals = [IntVal(v) for v in input_tuple]
+            output = run_program(ops, arg1s, arg2s, concrete_vals, num_slots)
+            synth.add(output == spec(*concrete_vals))
+        concrete_inputs.extend(seed_inputs)
     # We measure CPU time (time.process_time) rather than wall clock: Z3 is
     # single-threaded and CPU-bound, so this gives more stable numbers under
     # system load. Z3's own "timeout" param is wall-clock, so we use wall clock
@@ -349,11 +409,15 @@ if __name__ == "__main__":
     #       precondition=lambda x, lo, hi: lo <= hi)
     # print("\n" + "="*50 + "\n")
 
-    # Count the number of 1-bits.
-    # Inputs are constrained to be small for this example (see the spec docstring).
-    # 8 slots is fast in CEGIS. Not sure about 7.
-    cegis(ones_spec, num_slots=8,
-          precondition=lambda x: And(x >= 0, x <= 7))
+    # Count the number of 1-bits in the low N bits of x.
+    # Inputs are constrained to [0, 2^N - 1] (see the spec docstring).
+    # 8 slots is fast in CEGIS for N=3 and N=4.
+    N = 4 # [0,15]
+    #N = 5 # [0,31]
+    cegis(make_ones_spec(N), num_slots=8, timeout_ms=120000,
+          precondition=ones_precondition(N),
+          symmetry_breaking=True,
+          allowed_ops=[OP_ADD, OP_SUB, OP_SHR1, OP_BIT0, OP_ONE, OP_ZERO])
     print("\n" + "="*50 + "\n")
 
     # # We can't synthesize multiplication when both parameters are 

@@ -5,6 +5,14 @@
   overflow-x: auto;
 }
 
+/* Admonitions and collapsible "click to open" (details/summary) boxes
+   default to a smaller font-size than body text in the theme; match them
+   to the surrounding content instead. */
+.md-typeset .admonition,
+.md-typeset details {
+  font-size: inherit;
+}
+
 /* =============================================================
    FORGE SYNTAX HIGHLIGHTING COLORS
 
